@@ -1,6 +1,6 @@
 #include <iostream>
-using samespace std;
-void main(){
+using namespace std;
+int main(){
 
   
 }
