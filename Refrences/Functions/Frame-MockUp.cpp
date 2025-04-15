@@ -1,32 +1,40 @@
 #include <iostream>
 using namespace std;
 
-int WIDTH = 80;
-int HEIGHT = 24;
+const int WIDTH = 80;
+const int HEIGHT = 24;
 
-void drawGameFrame(){
-    
-    // Blue border
-    cout << "\033[34m";
-    cout << "+";
-    for (int i = 1; i < WIDTH-1; i++) cout << "=";
-    cout << "+";
-    cout << "\033[0m" << endl;
+void drawGameFrame(char border[HEIGHT][WIDTH]) {
+    // Top border
+    border[0][0] = '+';
+    for (int i = 1; i < WIDTH - 1; i++) border[0][i] = '=';
+    border[0][WIDTH - 1] = '+';
 
-    for (int i = 0; i < HEIGHT; i++) {
-        cout << "\033[34m|\033[0m";
-        for (int j = 0; j < WIDTH - 2; j++) cout << " ";
-        cout << "\033[34m|\033[0m" << endl;
+    // Middle section with side borders
+    for (int i = 1; i < HEIGHT - 1; i++) {
+        border[i][0] = '|';
+        for (int j = 1; j < WIDTH - 1; j++) border[i][j] = ' ';
+        border[i][WIDTH - 1] = '|';
     }
 
-    cout << "\033[34m";
-    cout << "+";
-    for (int i = 1; i < WIDTH-1; i++) cout << "=";
-    cout << "+";
-    cout << "\033[0m" << endl;
+    // Bottom border
+    border[HEIGHT - 1][0] = '+';
+    for (int i = 1; i < WIDTH - 1; i++) border[HEIGHT - 1][i] = '=';
+    border[HEIGHT - 1][WIDTH - 1] = '+';
 }
-void drawBar(int health,  int deaths,  string weapon, int ammo, int armor) {
-    // ANSI color codes as variables
+
+void printGameFrame(char border[HEIGHT][WIDTH]) {
+    cout << "\033[34m"; // Blue color
+    for (int i = 0; i < HEIGHT; i++) {
+        for (int j = 0; j < WIDTH; j++) {
+            cout << border[i][j];
+        }
+        cout << endl;
+    }
+    cout << "\033[0m"; // Reset color
+}
+
+void drawBar(int health, int deaths, string weapon, int ammo, int armor) {
     char green[] = "\033[32m";
     char blue[] = "\033[34m";
     char red[] = "\033[31m";
@@ -39,12 +47,14 @@ void drawBar(int health,  int deaths,  string weapon, int ammo, int armor) {
     for (int i = 0; i < WIDTH; i++) cout << "=";
     cout << "\033[0m" << endl;
 
-    // Print the bar
-    cout << blue  << "|" << reset<<  "        HEALTH " << green << bold << health << "%" << reset << "  |  DEATHS " << yellow << bold << deaths << reset << "  |  " << yellow << bold << weapon << reset << "  |  AMMO " << yellow << bold << ammo << reset << "  |  ARMOR " << red << bold << armor << "%" << reset << blue << "          |" << reset << endl;
+    cout << blue << "|" << reset << "        HEALTH " << green << bold << health << "%" << reset << "  |  DEATHS " << yellow << bold << deaths << reset << "  |  " << yellow << bold << weapon << reset << "  |  AMMO " << yellow << bold << ammo << reset << "  |  ARMOR " << red << bold << armor << "%" << reset << blue << "         |" << reset << endl;
 }
 
 int main() {
-    drawBar(10 , 0 , "Pistol" , 24/24 , 100);
-    drawGameFrame();
+    char border[HEIGHT][WIDTH] = {};
+
+    drawGameFrame(border);
+    drawBar(10, 0, "Pistol", 24, 100);
+    printGameFrame(border);
 
 }
