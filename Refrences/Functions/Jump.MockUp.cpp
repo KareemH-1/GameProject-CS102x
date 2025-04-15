@@ -111,6 +111,22 @@ int main() {
                         cout << endl;
                     }
                 }
+
+
+                //Fix sticking on a wall when jumping left
+				if (board[posIHero+1][posJHero] == ' ') {
+                    while (posIHero + 1 < 23 && board[posIHero + 1][posJHero] == ' ') {
+                        board[posIHero][posJHero] = ' ';
+                        posIHero++;
+                        board[posIHero][posJHero] = '#';
+
+                        system("cls");
+                        for (int i = 0; i < 24; i++) {
+                            for (int j = 0; j < 80; j++) cout << board[i][j];
+                            cout << endl;
+                        }
+                    }
+				}
             }
             else if (isWalking == 2) {
                 // Jump right
@@ -144,6 +160,21 @@ int main() {
                     for (int i = 0; i < 24; i++) {
                         for (int j = 0; j < 80; j++) cout << board[i][j];
                         cout << endl;
+                    }
+                }
+
+                //Fix sticking on a wall when jumping right
+                if (board[posIHero + 1][posJHero] == ' ') {
+                    while (posIHero + 1 < 23 && board[posIHero + 1][posJHero] == ' ') {
+                        board[posIHero][posJHero] = ' ';
+                        posIHero++;
+                        board[posIHero][posJHero] = '#';
+
+                        system("cls");
+                        for (int i = 0; i < 24; i++) {
+                            for (int j = 0; j < 80; j++) cout << board[i][j];
+                            cout << endl;
+                        }
                     }
                 }
             }
