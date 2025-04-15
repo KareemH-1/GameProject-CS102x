@@ -1,4 +1,3 @@
-//There is still a bug in which when the hero jumps into a wall they get stuck on it (will fix later)
 #include <iostream>
 #include <conio.h>
 using namespace std;
