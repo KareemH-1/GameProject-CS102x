@@ -12,5 +12,5 @@ struct player {
 
 int main() {
 	int width = 80, height = 24; // Lets keep the width and height stored as variables incase we want to change them later
-    char board[height][width]; // Border for the game frame
+    char board[24][80]; // Border for the game frame
 }
