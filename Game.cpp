@@ -13,7 +13,7 @@ char bold[] = "\033[1m";
 
 struct player {
 	int Row, Col; //Position
-	int maxHeight, maxWidth; //Max height and width
+	int maxHeight = 11, maxWidth = 9; //Max height and width
 	int Health;
 	int coins; //Either coins or Level , until decided i will leave it as coins
 
@@ -97,9 +97,49 @@ void dispBoard(char board[24][80]) {
 	for (int i = 0; i < 80; i++) {
 		cout << board[23][i];
 	}
+	cout << endl;
 	cout << reset;
 
 }
+
+void drawPlayerRightFrame1(char board[24][80], int Row, int Col) {
+
+	//left leg
+	board[Row][Col] = '/';
+	board[Row - 1][Col + 1] = '/';
+	board[Row - 2][Col + 2] = '/';
+
+	//right leg
+	board[Row-2][Col+3] = '\\';
+	board[Row - 1][Col + 4] = '\\';
+	board[Row][Col + 5] = '\\';
+
+	//body
+	board[Row - 3][Col + 2] = '|';board[Row - 3][Col + 3] = '|';
+	board[Row - 4][Col + 2] = '|'; board[Row - 4][Col + 3] = '|';
+	board[Row - 5][Col + 2] = '|'; board[Row - 5][Col + 3] = '|';
+	board[Row - 6][Col + 2] = '|'; board[Row - 6][Col + 3] = '|';
+
+	//Left arm
+	board[Row - 4][Col] = '/';
+	board[Row - 5][Col+1] = '/';
+
+	//Right arm
+	board[Row - 5][Col + 4] = '\\';
+
+	//Head
+	board[Row - 9][Col + 1] = '/';
+	board[Row - 8][Col] = '|';
+	board[Row - 7][Col + 1] = '\\';
+	board[Row-7][Col + 2] = '_'; board[Row - 7][Col + 3] = '_';
+	board[Row - 10][Col + 2] = '_'; board[Row - 10][Col + 3] = '_';
+	board[Row - 7][Col + 4] = '/';
+	board[Row - 8][Col + 4] = '.';
+	board[Row - 8][Col + 5] = ')';
+	board[Row - 9][Col + 4] = '\\';
+}
+
+
 
 
 int main() {
@@ -113,11 +153,12 @@ int main() {
 
 	char gun[] = "Pistol";
 	dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
+	drawPlayerRightFrame1(board, Player.Row, Player.Col); //intialize player draw
 	dispBoard(board); // Display the board
 
 
 	//Intialize the movement vaiables
-	int isWalking =0 , isJumping = 0, isClimbing=0 , isShooting = 0, isReloading = 0;
+	int isWalking = 0, isJumping = 0, isClimbing = 0, isShooting = 0, isReloading = 0;
 	//Iswalking =0 standing ,isWalking = 1 walkign right , isWalking = 2 walking left
 	//isJumping = 0 standing , isJumping = 1 jumping (player shouldnt be able to move if isJumping = 1)
 	//isClimbing = 0 standing , isClimbing = 1 climbing (player shouldnt be able to move left or right if isClimbing = 1)
