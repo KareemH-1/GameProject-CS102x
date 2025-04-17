@@ -43,35 +43,37 @@ void initializeBoard(char border[24][80]) {
 		}
 	}
 
-	// Top border
-	border[0][0] = '+';
+	// Top border 
+	border[0][0] = char(201);
 	for (int j = 1; j < 80 - 1; j++) {
-		border[0][j] = '=';
+		border[0][j] = char(205);
 	}
-	border[0][79] = '+';
+	border[0][79] = char(187);
 
 	// Middle section with side borders
 	for (int i = 1; i < 24 - 1; i++) {
-		border[i][0] = '|';
-		border[i][79] = '|';
+		border[i][0] = char(186);
+		border[i][79] = char(186);
 	}
 
 	// Bottom border
-	border[23][0] = '+';
+	border[23][0] = char(200);
 	for (int j = 1; j < 80 - 1; j++) {
-		border[23][j] = '=';
+		border[23][j] = char(205);
 	}
-	border[23][79] = '+';
+	border[23][79] = char(188);
 }
 void dispBar(int health, int coins, int ammo, int maxAmmo, char gun[]) {
 	cout << blue;
 	//upper border
-	for (int i = 0; i < 80; i++) {
-		cout << "=";
+	cout << char(201);
+	for (int i = 1; i < 79; i++) {
+		cout << char(205);
 	}
+	cout << char(187);
 	cout << endl;
 	cout << reset;
-	cout << blue << "|" << reset << "           HEALTH " << green << bold << health << "%" << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << gun << reset << "  |  AMMO " << yellow << bold << ammo << " / " << maxAmmo << reset << blue << "                |" << reset << endl;
+	cout << blue << char(186) << reset << "           HEALTH " << green << bold << health << "%" << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << gun << reset << "  |  AMMO " << yellow << bold << ammo << " / " << maxAmmo << reset << blue << "                " << char(186) << reset << endl;
 }
 
 void dispBoard(char board[24][80]) {
@@ -110,19 +112,19 @@ void drawPlayerRightFrame1(char board[24][80], int Row, int Col) {
 	board[Row - 2][Col + 2] = '/';
 
 	//right leg
-	board[Row-2][Col+3] = '\\';
+	board[Row - 2][Col + 3] = '\\';
 	board[Row - 1][Col + 4] = '\\';
 	board[Row][Col + 5] = '\\';
 
 	//body
-	board[Row - 3][Col + 2] = '|';board[Row - 3][Col + 3] = '|';
+	board[Row - 3][Col + 2] = '|'; board[Row - 3][Col + 3] = '|';
 	board[Row - 4][Col + 2] = '|'; board[Row - 4][Col + 3] = '|';
 	board[Row - 5][Col + 2] = '|'; board[Row - 5][Col + 3] = '|';
 	board[Row - 6][Col + 2] = '|'; board[Row - 6][Col + 3] = '|';
 
 	//Left arm
 	board[Row - 4][Col] = '/';
-	board[Row - 5][Col+1] = '/';
+	board[Row - 5][Col + 1] = '/';
 
 	//Right arm
 	board[Row - 5][Col + 4] = '\\';
@@ -131,7 +133,7 @@ void drawPlayerRightFrame1(char board[24][80], int Row, int Col) {
 	board[Row - 9][Col + 1] = '/';
 	board[Row - 8][Col] = '|';
 	board[Row - 7][Col + 1] = '\\';
-	board[Row-7][Col + 2] = '_'; board[Row - 7][Col + 3] = '_';
+	board[Row - 7][Col + 2] = '_'; board[Row - 7][Col + 3] = '_';
 	board[Row - 10][Col + 2] = '_'; board[Row - 10][Col + 3] = '_';
 	board[Row - 7][Col + 4] = '/';
 	board[Row - 8][Col + 4] = '.';
