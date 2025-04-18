@@ -1,4 +1,5 @@
 #include <iostream>
+#include <conio.h>
 using namespace std;
 
 
@@ -64,6 +65,9 @@ void initializeBoard(char border[24][80]) {
 	border[23][79] = char(188);
 }
 void dispBar(int health, int coins, int ammo, int maxAmmo, char gun[]) {
+
+	system("cls");
+
 	cout << blue;
 	//upper border
 	cout << char(201);
@@ -76,33 +80,7 @@ void dispBar(int health, int coins, int ammo, int maxAmmo, char gun[]) {
 	cout << blue << char(186) << reset << "           HEALTH " << green << bold << health << "%" << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << gun << reset << "  |  AMMO " << yellow << bold << ammo << " / " << maxAmmo << reset << blue << "                " << char(186) << reset << endl;
 }
 
-void dispBoard(char board[24][80]) {
 
-
-	cout << blue; // Blue color for the board
-
-	for (int i = 0; i < 80; i++) {
-		cout << board[0][i];
-	}
-	cout << endl;
-	//i =1 to ignore first border and i<23 to ignore last border
-	for (int i = 1; i < 23; i++) {
-		cout << board[i][0]; //Left border
-		cout << reset; //reset the blue color , as we dont want the whole board to be blue
-		for (int j = 1; j < 79; j++) {
-			cout << board[i][j];
-		}
-		cout << blue; //Blue color for the right board
-		cout << board[i][79]; //Right border
-		cout << endl;
-	}
-	for (int i = 0; i < 80; i++) {
-		cout << board[23][i];
-	}
-	cout << endl;
-	cout << reset;
-
-}
 
 void drawPlayerRightFrame1(char board[24][80], int Row, int Col) {
 
@@ -141,11 +119,107 @@ void drawPlayerRightFrame1(char board[24][80], int Row, int Col) {
 	board[Row - 9][Col + 4] = '\\';
 }
 
+void clearMap(char board[24][80]) {
+	for (int i = 0; i < 24; i++) {
+		for (int j = 0; j < 80; j++) {
+			board[i][j] = ' ';
+		}
+	}
+}
+void addBorders(char border[24][80]) {
+	border[0][0] = char(201);
+	for (int j = 1; j < 80 - 1; j++) {
+		border[0][j] = char(205);
+	}
+	border[0][79] = char(187);
+
+	// Middle section with side borders
+	for (int i = 1; i < 24 - 1; i++) {
+		border[i][0] = char(186);
+		border[i][79] = char(186);
+	}
+
+	// Bottom border
+	border[23][0] = char(200);
+	for (int j = 1; j < 80 - 1; j++) {
+		border[23][j] = char(205);
+	}
+	border[23][79] = char(188);
+}
+
+void Clear_LoadMap(char board[24][80]) {
+	for (int i = 0; i < 24; i++) {
+		if (i == 0 || i == 23) {
+			cout << blue << board[i];
+			cout << reset << endl;
+		}
+		else {
+			for (int j = 0; j < 80; j++) {
+				if (j == 0 || j == 79) {
+					cout << blue << board[i][j] << reset;
+				}
+				else {
+					cout << board[i][j];
+				}
+			}
+			cout << endl;
+		}
+	}
+}
+
+void moveRight(char board[24][80] , int posJHero , int posIHero , int widthHero){
+	if (posJHero +(widthHero-1) + 1 < 79 && board[posIHero][posJHero +(widthHero-1) + 1] == ' ') posJHero++;
+}
+
+void moveLeft(char board[24][80], int posJHero, int posIHero) {
+	if (posJHero - 1 > 0 && board[posIHero][posJHero -1] == ' ' ) posJHero--;
+}
+
+void gravityAfterJump(char board[24][80], int& posJHero, int& posIHero, int direction, player Player, char gun[]) {
+
+	//Fall straight
+	if (direction == 0) {
+		for (; posIHero + 1 < 23 && board[posIHero + 1][posJHero] == ' ';) {
+			posIHero++;
+			clearMap(board);
+			addBorders(board);
+			drawPlayerRightFrame1(board, posIHero, posJHero);
+			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
+			Clear_LoadMap(board); // Clear the screen and load the map
+
+		}
+	}
+}
+
+void jump( char board[24][80] ,int &posJHero , int& posIHero ,int maxHeight , int & isWalking , int& isJumping , player Player , char gun[]) {
+	
+	if (isWalking == 0) {
+		// Straight jump
+		for (int i = 0; i < 3; i++) {
+			if (posIHero - (maxHeight - 1) - 1 > 0 && board[posIHero - (maxHeight - 1) - 1][posJHero] == ' ') {
+				posIHero--;
+				clearMap(board);
+				addBorders(board);
+				drawPlayerRightFrame1(board, posIHero, posJHero);
+				dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
+				Clear_LoadMap(board); // Clear the screen and load the map
+
+				isJumping = 1;
+			}
+			else break;
+		}
+
+		gravityAfterJump(board, posJHero, posIHero, 0 , Player , gun);
+	}
+}
+
+void gravity() {
+
+}
 
 
 
 int main() {
-	int width = 80, height = 24; // Lets keep the width and height stored as variables incase we want to change them later
 	char board[24][80]; // Border for the game frame
 
 	player Player;
@@ -155,18 +229,39 @@ int main() {
 
 	char gun[] = "Pistol";
 	dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
-	drawPlayerRightFrame1(board, Player.Row, Player.Col); //intialize player draw
-	dispBoard(board); // Display the board
-
 	
 	//Intialize the movement vaiables
-	int isWalking = 0, isJumping = 0, isClimbing = 0, isShooting = 0, isReloading = 0;
+	int isWalking = 0, isJumping = 0 ,isFalling = 0, isClimbing = 0, isShooting = 0, isReloading = 0 ;
 	//Iswalking =0 standing ,isWalking = 1 walkign right , isWalking = 2 walking left
 	//isJumping = 0 standing , isJumping = 1 jumping (player shouldnt be able to move if isJumping = 1)
 	//isClimbing = 0 standing , isClimbing = 1 climbing (player shouldnt be able to move left or right if isClimbing = 1)
+	//isFalling = 0  not falling , isFalling = 1 falling (player shouldnt be able move or jump if isFalling = 1)
 	//isShooting = 0 not shooting , isShooting = 1 shooting (player shouldnt be able to climb if isshooting = 1)
 	//isReloading = 0 not reloading , isReloading = 1 reloading (player shouldnt be able to jump or shoot if isReloading = 1)
+	
+	int isWon = 0;
+	for (; !isWon;) {
+		clearMap(board);
+		addBorders(board);
+		drawPlayerRightFrame1(board, Player.Row, Player.Col);
+		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
+		Clear_LoadMap(board); // Clear the screen and load the map
 
+		if (_kbhit()) {
+			char key = _getch();
+			if ((key == 'a' || key == 'A') && isClimbing == 0 && isFalling ==0){
+				moveLeft(board, Player.Col, Player.Row);
+				isWalking = 2;
+			}
+			else if ((key == 'd' || key == 'D' )&& isClimbing == 0 && isFalling ==0) {
+				moveRight( board, Player.Col, Player.Row, Player.maxWidth);
+				isWalking = 1;
+			}
+			else if ((key == 'w' || key == 'W') && isJumping == 0 && isFalling == 0 && isReloading == 0) { 
+
+			}
+		}
+	}
 
 
 }
