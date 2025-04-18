@@ -1,4 +1,5 @@
 #include <iostream>
+#include <conio.h>
 using namespace std;
 
 
@@ -142,6 +143,55 @@ void drawPlayerRightFrame1(char board[24][80], int Row, int Col) {
 }
 
 
+///////////////////////////////
+
+void clearMap(char board[24][80]) {
+	for (int i = 0; i < 24; i++) {
+		for (int j = 0; j < 80; j++) {
+			board[i][j] = ' ';
+		}
+	}
+}
+void addBorders(char border[24][80]) {
+	border[0][0] = char(201);
+	for (int j = 1; j < 80 - 1; j++) {
+		border[0][j] = char(205);
+	}
+	border[0][79] = char(187);
+
+	// Middle section with side borders
+	for (int i = 1; i < 24 - 1; i++) {
+		border[i][0] = char(186);
+		border[i][79] = char(186);
+	}
+
+	// Bottom border
+	border[23][0] = char(200);
+	for (int j = 1; j < 80 - 1; j++) {
+		border[23][j] = char(205);
+	}
+	border[23][79] = char(188);
+}
+
+void Clear_LoadMap(char board[24][80]) {
+		for (int i = 0; i < 24; i++) {
+			for (int j = 0; j < 80; j++) {
+				if( i == 0 || i == 23) {
+					cout << blue << board[i][j] << reset;
+				}
+				else if (j == 0 || j == 79) {
+					cout << blue << board[i][j] << reset;
+				}
+				else {
+					cout << board[i][j];
+				}
+				
+			}
+			cout << endl;
+		}
+}
+	
+/////////////////////////////////////
 
 
 int main() {
@@ -159,14 +209,33 @@ int main() {
 	dispBoard(board); // Display the board
 
 	
+	
 	//Intialize the movement vaiables
-	int isWalking = 0, isJumping = 0, isClimbing = 0, isShooting = 0, isReloading = 0;
+	int isWalking = 0, isJumping = 0 ,isFalling = 0, isClimbing = 0, isShooting = 0, isReloading = 0 ;
 	//Iswalking =0 standing ,isWalking = 1 walkign right , isWalking = 2 walking left
 	//isJumping = 0 standing , isJumping = 1 jumping (player shouldnt be able to move if isJumping = 1)
 	//isClimbing = 0 standing , isClimbing = 1 climbing (player shouldnt be able to move left or right if isClimbing = 1)
+	//isFalling = 0  not falling , isFalling = 1 falling (player shouldnt be able move or jump if isFalling = 1)
 	//isShooting = 0 not shooting , isShooting = 1 shooting (player shouldnt be able to climb if isshooting = 1)
 	//isReloading = 0 not reloading , isReloading = 1 reloading (player shouldnt be able to jump or shoot if isReloading = 1)
+	
+	
+	int isWon = 0;
+	for (; !isWon;) {
+		clearMap(board);
+		addBorders(board);
+		drawPlayerRightFrame1(board, Player.Row, Player.Col);
+		system("cls");
+		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
+		Clear_LoadMap(board); // Clear the screen and load the map
 
+		if (_kbhit()) {
+			char key = _getch();
+			if ((key == 'a' || key == 'A') && isClimbing == 0 && isFalling ==0){
+				Player.Col--;
+			}
+		}
+	}
 
 
 }
