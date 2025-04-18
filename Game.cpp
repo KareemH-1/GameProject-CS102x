@@ -28,6 +28,59 @@ struct Enemy{
 	int maxHeight = 1, maxWidth = 1; //Max height and width
 	int Health;
 };
+void showMainMenu(int& choice) {
+    cout << "==================================================" << endl;
+    cout << "||                                              ||" << endl;
+    cout << "||                                              ||" << endl;
+    cout << "||           C S 1 0 2 x  P r o j e c t         ||" << endl;
+    cout << "||                                              ||" << endl;
+    cout << "||                1. Start Game                 ||" << endl;
+    cout << "||                2. Instructions               ||" << endl;
+    cout << "||                3. Credits                    ||" << endl;
+    cout << "||                4. Exit                       ||" << endl;
+    cout << "||                                              ||" << endl;
+    cout << "==================================================" << endl;
+	cout << "Please select an option: ";
+	cin >> choice;
+}
+
+void displayInstructions() {
+    cout << "===================================================" << endl;
+    cout << "||           I N S T R U C T I O N S             ||" << endl;
+    cout << "===================================================" << endl;
+    cout << "||  1. Use 'W' to jump or climb up.              ||" << endl;
+    cout << "||  2. Use 'A' to move left.                     ||" << endl;
+    cout << "||  3. Use 'D' to move right.                    ||" << endl;
+    cout << "||  4. Use 'S' to climb down.                    ||" << endl;
+    cout << "||  5. Use 'R' to reload.                        ||" << endl;
+    cout << "||  6. Use 'Q' to switch weapons.                ||" << endl;
+    cout << "||  7. Use 'J' to shoot.                         ||" << endl;
+    cout << "==================================================" << endl;
+    cout << "||  Press any key to return to main menu...      ||" << endl;
+    cout << "==================================================" << endl;
+
+    char Key;
+    cin >> Key;
+}
+
+
+void displayCredits() {
+    cout << "==================================================" << endl;
+    cout << "||                C R E D I T S                 ||" << endl;
+    cout << "==================================================" << endl;
+    cout << "||  Game developed by:                          ||" << endl;
+    cout << "||                                              ||" << endl;
+    cout << "||  1. Kareem Ahmed Taha    - 254915            ||" << endl;
+    cout << "||  2. Mazen Mahmoud Gamal  - 254720            ||" << endl;
+    cout << "||  3. Ahmed Emad Mohammed  - 251147            ||" << endl;
+    cout << "==================================================" << endl;
+    cout << "||  Press any key to return to main menu...     ||" << endl;
+    cout << "==================================================" << endl;
+
+    char Key;
+    cin >> Key;
+}
+
 
 void initializePlayerValues(int& Row, int& Col, int& maxHeight, int& maxWidth, int& Health, int& coins, int& gun, int& ammo, int& maxAmmo) {
 	Row = 22;
@@ -511,16 +564,42 @@ int main() {
 	int width = 80, height = 24; // Lets keep the width and height stored as variables incase we want to change them later
 	char board[24][80]; // Border for the game frame
 
-	player Player;
 
+	int choice;
+	for(;;){
+	system("cls"); // Clear the screen
+	showMainMenu(choice);
+	if(choice == 4) {
+		cout << "Exiting game..." << endl;
+		system("cls");
+		break;
+	}
+	else if (choice == 1) {
+		cout << "Starting Game..." << endl;
+		system("cls");
+		break; // Exit the loop to start the game
+	}
+	else
+	if (choice == 2) {
+		cout << "Instructions..." << endl;
+		system("cls");
+		displayInstructions(); // Call the function to display instructions
+	}
+	else if (choice == 3) {
+		cout << "Credits..." << endl;
+		system("cls");
+		displayCredits(); // Call the function to display credits
+	}
+	
+}
+
+if(choice == 1) {
+	system("cls");
+	player Player;
 	initializePlayerValues(Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, Player.Health, Player.coins, Player.gun, Player.ammo, Player.maxAmmo);
 	initializeBoard(board); // Initialize the board
 
 	char gun[] = "Pistol";
-	dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
-	drawPlayerRightFrame1(board, Player.Row, Player.Col); //intialize player draw
-	dispBoard(board); // Display the board
-
 	
 	
 	//Intialize the movement vaiables
@@ -562,6 +641,7 @@ int main() {
 
 		}
 	}
-
+}
+else return 0;
 
 }
