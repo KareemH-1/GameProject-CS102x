@@ -111,6 +111,40 @@ void dispBoard(char board[24][80]) {
 
 }
 
+
+
+void drawEnemyBirdLEft(char board[24][80], int row, int col) {
+	//base
+	board[row][col+2] = '`';
+	board[row][col + 3] = '-';
+	board[row][col + 4] = '-';
+	board[row][col + 5] = '-';
+	board[row][col + 6] = '-';
+	board[row][col + 7] = '\'';
+
+	//right
+	board[row-1][col + 7] = '_';
+	board[row-1][col + 6] = '.';
+	board[row-1][col + 8] = '>';
+
+	//top
+	board[row-2][col + 7] = '_';
+	board[row-2][col + 6] = '_';
+	board[row-2][col + 5] = '_';
+	board[row-2][col + 4] = ')';
+	board[row-2][col + 3] = ' ';	
+	board[row-3][col+4] ='_';
+	board[row-3][col+3] = '_';
+
+	//left
+	board[row-2][col + 2] = 'o';
+	board[row-2][col + 1] = '(';
+	board[row-1][col + 1] = '(';
+	board[row-2][col ] = '<';
+}
+
+
+
 void drawPlayerRightFrame1(char board[24][80], int row, int col) {
     //left arm
 	board[row-3][col]='/';
