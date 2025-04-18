@@ -45,18 +45,20 @@ void showMainMenu(int& choice) {
 }
 
 void displayInstructions() {
-    cout << "===================================================" << endl;
-    cout << "||           I N S T R U C T I O N S             ||" << endl;
-    cout << "===================================================" << endl;
-    cout << "||  1. Use 'W' to jump or climb up.              ||" << endl;
-    cout << "||  2. Use 'A' to move left.                     ||" << endl;
-    cout << "||  3. Use 'D' to move right.                    ||" << endl;
-    cout << "||  4. Use 'S' to climb down.                    ||" << endl;
-    cout << "||  5. Use 'R' to reload.                        ||" << endl;
-    cout << "||  6. Use 'Q' to switch weapons.                ||" << endl;
-    cout << "||  7. Use 'J' to shoot.                         ||" << endl;
     cout << "==================================================" << endl;
-    cout << "||  Press any key to return to main menu...      ||" << endl;
+    cout << "||              I N S T R U C T I O N S         ||" << endl;
+    cout << "==================================================" << endl;
+    cout << "||  Controls:                                   ||" << endl;
+    cout << "||                                              ||" << endl;
+    cout << "||  W  - Jump / Climb Up                        ||" << endl;
+    cout << "||  A  - Move Left                              ||" << endl;
+    cout << "||  D  - Move Right                             ||" << endl;
+    cout << "||  S  - Climb Down                             ||" << endl;
+    cout << "||  R  - Reload                                 ||" << endl;
+    cout << "||  Q  - Switch Weapons                         ||" << endl;
+    cout << "||  J  - Shoot                                  ||" << endl;
+    cout << "==================================================" << endl;
+    cout << "||  Press any key to return to main menu...     ||" << endl;
     cout << "==================================================" << endl;
 
     char Key;
