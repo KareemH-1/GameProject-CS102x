@@ -1,10 +1,14 @@
 Bird:
-
+Left:
           __
        <(o )___
         (    ._> 
          `----'  
-
+right:
+       __
+   ___( o)>
+  <_.    )
+   '----`
 
 Falling crystals that deal damage:
 

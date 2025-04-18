@@ -113,7 +113,7 @@ void dispBoard(char board[24][80]) {
 
 
 
-void drawEnemyBirdLEft(char board[24][80], int row, int col) {
+void drawEnemyBirdLeft(char board[24][80], int row, int col) {
 	//base
 	board[row][col+2] = '`';
 	board[row][col + 3] = '-';
@@ -133,8 +133,8 @@ void drawEnemyBirdLEft(char board[24][80], int row, int col) {
 	board[row-2][col + 5] = '_';
 	board[row-2][col + 4] = ')';
 	board[row-2][col + 3] = ' ';	
-	board[row-3][col+4] ='_';
-	board[row-3][col+3] = '_';
+	board[row-3][col+3] ='_';
+	board[row-3][col+2] = '_';
 
 	//left
 	board[row-2][col + 2] = 'o';
@@ -143,6 +143,35 @@ void drawEnemyBirdLEft(char board[24][80], int row, int col) {
 	board[row-2][col ] = '<';
 }
 
+void drawEnemyBirdRight(char board[24][80], int row, int col) {
+	//base
+	board[row][col+1] = '\'';
+	board[row][col + 2] = '-';
+	board[row][col + 3] = '-';
+	board[row][col + 4] = '-';
+	board[row][col + 5] = '-';
+	board[row][col + 6] = '`';
+
+	//Right
+	board[row-1][col+7] = ')';
+	board[row-2][col+7] = ')';
+	board[row-2][col+8] = '>';
+	board[row-2][col+6] = 'o';
+
+	//top
+
+	board[row-3][col+6] = '_';
+	board[row-3][col+5] = '_';
+	board[row-2][col+4] ='(';
+	board[row-2][col+3] ='_';
+	board[row-2][col+2] ='_';
+	board[row-2][col+1] ='_';
+
+	//Left
+	board[row-1][col] = '<';
+	board[row-1][col+1] = '_';
+	board[row-1][col+2] = '.';
+}
 
 
 void drawPlayerRightFrame1(char board[24][80], int row, int col) {
@@ -388,6 +417,9 @@ void Clear_LoadMap(char board[24][80]) {
 //Call dynamic objects
 
 void callObj (char board[24][80]) {
+		
+	drawEnemyBirdLeft(board, 5, 60); // Draw the enemy bird
+	drawEnemyBirdRight(board, 10, 10); // Draw the enemy bird
 	
 }
 
@@ -499,16 +531,16 @@ int main() {
 	//isFalling = 0  not falling , isFalling = 1 falling (player shouldnt be able move or jump if isFalling = 1)
 	//isShooting = 0 not shooting , isShooting = 1 shooting (player shouldnt be able to climb if isshooting = 1)
 	//isReloading = 0 not reloading , isReloading = 1 reloading (player shouldnt be able to jump or shoot if isReloading = 1)
-	
-	
+
 	int isWon = 0;
 	for (; !isWon;) {
-		clearMap(board);
-		addBorders(board);
-		drawPlayerRightFrame1(board, Player.Row, Player.Col);
-		system("cls");
-		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
-		Clear_LoadMap(board); // Clear the screen and load the map
+			clearMap(board);
+			addBorders(board);
+			drawPlayerRightFrame1(board, Player.Row, Player.Col);
+			callObj(board); // Call dynamic objects here
+			system("cls");
+			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
+			Clear_LoadMap(board); // Clear the screen and load the map
 
 		if (_kbhit()) {
 			char key = _getch();
