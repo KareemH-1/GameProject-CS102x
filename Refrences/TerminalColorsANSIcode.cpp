@@ -18,7 +18,7 @@ int main() {
     }
 
 
-    //Background colors
+	//BACKGROUND COLORS
     cout << "\033[40m        \033[0m"; // Black background
     cout << "\033[41m        \033[0m"; // Red background
     cout << "\033[42m        \033[0m"; // Green background
@@ -33,4 +33,12 @@ int main() {
     for (int i = 0; i < 8; i++) {
 		cout << "\033[4" << i << ";1m                                            \033[0m" << endl;
 	}
+    //TEXT FORMATTING
+    cout << "\033[1mBold Text\033[0m" << endl; // Bold text
+    cout << "\033[3mItalic Text\033[0m" << endl; // Italic text
+    cout << "\033[4mUnderlined Text\033[0m" << endl; // Underlined text
+    cout << "\033[7mInverted Colors\033[0m" << endl; // Inverted colors
+    cout << "\033[9mStrikethrough Text\033[0m" << endl; // Strikethrough text
+
+
 }
