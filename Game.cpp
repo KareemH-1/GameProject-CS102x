@@ -32,8 +32,8 @@ struct Enemy{
 void initializePlayerValues(int& Row, int& Col, int& maxHeight, int& maxWidth, int& Health, int& coins, int& gun, int& ammo, int& maxAmmo) {
 	Row = 22;
 	Col = 3;
-	maxHeight = 1;
-	maxWidth = 1;
+	maxHeight = 9;
+	maxWidth = 15;
 	Health = 100;
 	coins = 0;
 	gun = 1; //Start with gun
@@ -389,15 +389,11 @@ void moveLeft(char board[24][80], int& posJHero, int& posIHero, int heightHero) 
 
 void jumpStraight(char board[24][80], int &pX , int &pY , int pHeight , int pWidth ,int & isJumping, player Player , char gun[]){
 	for(int i = 0; i<3; i++){
-		int check =0;
-		//Check everycell in the row above the player to if its empty , if its not then player cant move there
-		for (int i = pX - 1; i >= pX - pHeight; i--) {
-			for (int j = pY; j <= pY + pWidth - 1; j++) {
-				if (board[i][j] != ' ') {
-					check =0;
-					break;
-				}
-				else check =1;
+		int check =1;
+		for(int j = pY; j <= pY + (pWidth - 1); j++){
+			if (board[pX-pHeight][j] != ' ') {
+				check = 0;
+				break;
 			}
 		}
 		if (pX - (pHeight - 1) - 1 > 0 && board[pX - (pHeight - 1) - 1][pY] == ' ' && check ==1) {
@@ -406,6 +402,7 @@ void jumpStraight(char board[24][80], int &pX , int &pY , int pHeight , int pWid
 			addBorders(board);
 			drawPlayerRightFrame1(board, pX, pY);
 			callObj(board); // Call dynamic objects here
+			system("cls");
 			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
 			Clear_LoadMap(board); // Clear the screen and load the map
 
@@ -414,8 +411,36 @@ void jumpStraight(char board[24][80], int &pX , int &pY , int pHeight , int pWid
 		else break;
 		
 	}
+	isJumping =0;
 }
-///////////////////////////////
+
+/*
+NEXT STEPS:
+1. Add a function to check if the player is falling and apply gravity (apply after jump and after every movement)
+2. Add jumpDiagonal function (jump left or right) , and add a function to check if the player is falling after jump diagonal and apply gravity (apply after jump diagonal)
+3. Implement looking direction of the player
+4. implement walking frames left and right 
+5. implement jumping frames up , left diagonal and right diagonal 
+6. implement shooting (hitboxes)...pistol or lazer
+8. implement reloading , for pistol and lazerbeam
+7. implement climbing ** (up and down) , add climbing frames
+8. implement enemies
+9. implement maps 
+10. implement elevator
+11.add reloading , climbing , elevator animations and implement them
+12. implement shooting animation
+13. add coins and health pickups
+14. add level up system (level up = increase max health)
+15. add player hitbox
+16. add boss Level
+17. add boss hitbox
+18. add boss health bar
+19. add boss attack animation
+20. add boss attack hitbox
+21. change game bar if needed
+22. change game frame size if needed
+
+*/
 int main() {
 	int width = 80, height = 24; // Lets keep the width and height stored as variables incase we want to change them later
 	char board[24][80]; // Border for the game frame
