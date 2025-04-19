@@ -10,20 +10,24 @@ right:
   <_.    )
    '----`
 
-Falling crystals that deal damage:
+   Falling crystals that deal damage:
 
-    ^^^^^^^^^^
+Frame 1:    ^^^^^^^^^^
 
-    ^_      _^
-       -\/-
+Frame 2:    ^^^'--'^^^
 
-        /\
-       (  )
-        \/
+Frame 3:    ^^'-__-'^^
 
-        /\
-       (  )
-        \/
+Frame 4:    ^_      _^
+               -\/-
+
+                /\
+ Frame 5:      (  )
+                \/
+
+                /\
+               (  )
+                \/
 
 
 
