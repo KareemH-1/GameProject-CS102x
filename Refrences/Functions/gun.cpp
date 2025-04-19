@@ -84,7 +84,6 @@ int main() {
 
     int gun_y = 15, gun_x = 40;
     board[gun_y][gun_x] = (char)254;
-    draw_board();
 
     char hit;
     for (;;) {
