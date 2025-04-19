@@ -103,6 +103,9 @@ int main() {
 
         clearBoard(board);
         DrawFrame(board);
+        for (int i = 20; i < 30; i++) {
+            board[1][i] = '^';
+        }
         board[4][24] = '/';
         board[4][25] = '\\';
         board[5][23] = '(';
@@ -112,7 +115,54 @@ int main() {
         system("cls");
         PrintBoard(board);
         Sleep(200);
+        ////////////////////////////////////////////////////////////////////
 
+        clearBoard(board);
+        DrawFrame(board);
+        for (int i = 20; i < 30; i++) {
+            board[1][i] = '^';
+        }
+        board[8][24] = '/';
+        board[8][25] = '\\';
+        board[9][23] = '(';
+        board[9][26] = ')';
+        board[10][24] = '\\';
+        board[10][25] = '/';
+        system("cls");
+        PrintBoard(board);
+        Sleep(200);
+        ////////////////////////////////////////////////////////////////////
+
+        clearBoard(board);
+        DrawFrame(board);
+        for (int i = 20; i < 30; i++) {
+            board[1][i] = '^';
+        }
+        board[12][24] = '/';
+        board[12][25] = '\\';
+        board[13][23] = '(';
+        board[13][26] = ')';
+        board[14][24] = '\\';
+        board[14][25] = '/';
+        system("cls");
+        PrintBoard(board);
+        Sleep(200);
+        ////////////////////////////////////////////////////////////////////
+
+        clearBoard(board);
+        DrawFrame(board);
+        for (int i = 20; i < 30; i++) {
+            board[1][i] = '^';
+        }
+        board[16][24] = '/';
+        board[16][25] = '\\';
+        board[17][23] = '(';
+        board[17][26] = ')';
+        board[18][24] = '\\';
+        board[18][25] = '/';
+        system("cls");
+        PrintBoard(board);
+        Sleep(200);
     }
 
     return 0;
