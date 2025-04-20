@@ -163,6 +163,80 @@ int main() {
         system("cls");
         PrintBoard(board);
         Sleep(200);
+        ////////////////////////////////////////////////////////////////////
+
+        clearBoard(board);
+        DrawFrame(board);
+        for (int i = 20; i < 30; i++) {
+            board[1][i] = '^';
+        }
+        board[20][24] = '/';
+        board[20][25] = '\\';
+        board[21][23] = '(';
+        board[21][26] = ')';
+        board[22][24] = '\\';
+        board[22][25] = '/';
+        system("cls");
+        PrintBoard(board);
+        Sleep(200);
+        ////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////
+
+        clearBoard(board);
+        DrawFrame(board);
+        for (int i = 20; i < 30; i++) {
+            board[1][i] = '^';
+        }
+        board[21][24] = '/';
+        board[21][25] = '\\';
+        board[22][23] = '(';
+        board[22][26] = ')';
+        system("cls");
+        PrintBoard(board);
+        Sleep(200);
+        ////////////////////////////////////////////////////////////////////
+        clearBoard(board);
+        DrawFrame(board);
+        for (int i = 20; i < 30; i++) {
+            board[1][i] = '^';
+        }
+        board[22][22] = '>';
+        board[22][23] = '\'';
+        board[22][24] = '#';
+        board[22][25] = '&';
+        board[22][26] = '&';
+        board[22][27] = '<';
+
+        board[21][23] = ';';
+        board[21][25] = ':';
+        board[21][26] = ';';
+
+        board[20][22] = '^';
+        board[20][27] = '^';
+        system("cls");
+        PrintBoard(board);
+        Sleep(200);
+        ////////////////////////////////////////////////////////////////////
+        clearBoard(board);
+        DrawFrame(board);
+        for (int i = 20; i < 30; i++) {
+            board[1][i] = '^';
+        }
+        board[22][22] = '_';
+        board[22][23] = '_';
+        board[22][26] = '_';
+        board[22][27] = '_';
+
+
+        board[20][23] = ';';
+        board[20][25] = '\'';
+        board[20][26] = '.';
+
+        board[19][22] = '^';
+        board[19][27] = '^';
+        system("cls");
+        PrintBoard(board);
+        Sleep(200);
     }
 
     return 0;
