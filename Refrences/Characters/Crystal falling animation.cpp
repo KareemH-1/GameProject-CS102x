@@ -20,7 +20,7 @@ void DrawFrame(char board[24][80]) {
     board[23][79] = '#';
 }
 
-void PrintBoard(char board[24][80]) {
+void PrintBoard(char board[24][80]) { //
     for (int r = 0; r < 24; r++) {
         for (int c = 0; c < 80; c++) {
             cout << board[r][c];
