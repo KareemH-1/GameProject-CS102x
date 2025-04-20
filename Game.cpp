@@ -314,78 +314,265 @@ void DrawPlayerLeftFrame1(char board[24][80], int row, int col){
 
 //head
 
-board[row-6][col+4]='\\';
-board[row-7][col+4]='/';
-board[row-8][col+5]='_';
-board[row-8][col+6]='_';
+board[row-7][col+10]='\\';
+board[row-6][col+10]='/';
 board[row-8][col+7]='_';
-board[row-7][col+8]=')';
-board[row-7][col+5]='(';
-board[row-7][col+6]='.';
+board[row-8][col+8]='_';
+board[row-8][col+9]='_';
+board[row-7][col+9]=')';
+board[row-7][col+6]='(';
 board[row-7][col+7]='.';
-board[row-6][col+8]='/';
+board[row-7][col+8]='.';
+board[row-6][col+6]='\\';
 board[row-6][col+7]='-';
-board[row-6][col+6]='-';
-board[row-6][col+5]='-';
+board[row-6][col+8]='-';
+board[row-6][col+9]='-';
 
 	
 
 	//body
 
-board[row-2][col+3]='\\';
-board[row-2][col+4]='_';
-board[row-2][col+5]='_';
+board[row-2][col+5]='\\';
+board[row-2][col+9]='_';
+board[row-2][col+10]='_';
 board[row-2][col+6]='_';
 board[row-2][col+7]='_';
 board[row-2][col+8]='_';
-board[row-2][col+9]='/';
-board[row-3][col+9]='|';
-board[row-4][col+9]='|';
-board[row-5][col+9]='|';
-board[row-3][col+3]='|';
-board[row-4][col+3]='|';
-board[row-5][col+3]='|';
-board[row-5][col+4]='-';
-board[row-5][col+5]='-';
-board[row-5][col+6]='v';
+board[row-2][col+11]='/';
+board[row-3][col+11]='|';
+board[row-4][col+11]='|';
+board[row-5][col+11]='|';
+board[row-3][col+5]='|';
+board[row-4][col+5]='|';
+board[row-5][col+5]='|';
+board[row-5][col+6]='-';
 board[row-5][col+7]='-';
-board[row-5][col+8]='-';
-
-
-//right arm
-board[row-4][col+10]='-';
-board[row-4][col+11]='-';
-board[row-4][col+12]='-';
-board[row-4][col+13]='|';
-board[row-4][col+14]='/';
-board[row-5][col+14]='\\';
-board[row-5][col+13]='|';
-board[row-5][col+12]='-';
-board[row-5][col+11]='-';
+board[row-5][col+8]='v';
+board[row-5][col+9]='-';
 board[row-5][col+10]='-';
+
+
+//left arm
+board[row-4][col+4]='-';
+board[row-4][col+2]='-';
+board[row-4][col+3]='-';
+board[row-4][col+1]='|';
+board[row-5][col]='/';
+board[row-4][col]='\\';
+board[row-5][col+1]='|';
+board[row-5][col+2]='-';
+board[row-5][col+3]='-';
+board[row-5][col+4]='-';
 
 
 
 //right leg
-board[row][col+7]='|';
-board[row][col+8]='_';
 board[row][col+9]='|';
-board[row-1][col+7]='|';
+board[row][col+10]='_';
+board[row][col+11]='|';
 board[row-1][col+9]='|';
+board[row-1][col+11]='|';
 
 
-//left arm
-board[row-3][col]='/';
-board[row-4][col+1]='/';
-board[row-5][col+2]='/';
+//right arm
+board[row-3][col+12]='\\';
+board[row-4][col+13]='\\';
+board[row-5][col+14]='\\';
 
 
 //left leg
-board[row][col+3]='|';
-board[row-1][col+3]='|';
-board[row][col+4]='_';
 board[row][col+5]='|';
 board[row-1][col+5]='|';
+board[row][col+6]='_';
+board[row][col+7]='|';
+board[row-1][col+7]='|';
+
+
+
+}
+
+
+
+
+void jumprightframe(char board[24][80], int row, int col){
+
+ //head
+
+board[row-6][col+5]='\\';
+board[row-6][col+9]='/';
+board[row-6][col+6]='_';
+board[row-6][col+7]='_';
+board[row-6][col+8]='_';
+board[row-8][col+6]='_';
+board[row-8][col+7]='_';
+board[row-8][col+8]='_';
+board[row-8][col+9]='_';
+board[row-7][col+5]='/';
+board[row-7][col+6]='(';
+board[row-7][col+7]='.';
+board[row-7][col+8]='.';
+board[row-7][col+9]=')';
+
+
+//body
+
+board[row-2][col+4]='\\';
+board[row-2][col+5]='_';
+board[row-2][col+6]='_';
+board[row-2][col+7]='_';
+board[row-2][col+8]='_';
+board[row-2][col+9]='_';
+board[row-2][col+10]='/';
+board[row-3][col+10]='|';
+board[row-4][col+10]='|';
+board[row-5][col+10]='|';
+board[row-3][col+4]='|';
+board[row-4][col+4]='|';
+board[row-5][col+4]='|';
+board[row-5][col+6]='-';
+board[row-5][col+5]='-';
+board[row-5][col+7]='v';
+board[row-5][col+8]='-';
+board[row-5][col+9]='-';
+
+
+
+
+//left arm
+
+board[row-6][col]='_';
+board[row-6][col+1]='_';
+board[row-6][col+2]='_';
+board[row-6][col+3]='_';
+board[row-5][col+4]='_';
+board[row-5][col]='|';
+board[row-4][col]='|';
+board[row-4][col+2]='|';
+board[row-4][col+1]='_';
+board[row-5][col+3]='_';
+
+
+
+
+//right arm
+board[row-5][col+11]='_';
+board[row-5][col+12]='_';
+board[row-5][col+13]='_';
+board[row-5][col+14]='|';
+board[row-6][col+14]='|';
+board[row-6][col+11]='_';
+board[row-6][col+12]='|';
+board[row-7][col+13]='_';
+
+
+
+
+//left leg
+board[row][col+4]='|';
+board[row-1][col+4]='|';
+board[row][col+5]='_';
+board[row][col+6]='|';
+board[row-1][col+6]='|';
+
+
+
+//right leg
+board[row-1][col+10]='/';
+board[row-1][col+8]='/';
+board[row-1][col+9]='_';
+
+}
+
+
+
+void jumpleftframe(char board[24][80], int row, int col){
+
+
+//head
+
+board[row-6][col+5]='\\';
+board[row-6][col+9]='/';
+board[row-6][col+6]='_';
+board[row-6][col+7]='_';
+board[row-6][col+8]='_';
+board[row-8][col+6]='_';
+board[row-8][col+7]='_';
+board[row-8][col+8]='_';
+board[row-8][col+5]='_';
+board[row-7][col+9]='\\';
+board[row-7][col+5]='(';
+board[row-7][col+7]='.';
+board[row-7][col+6]='.';
+board[row-7][col+9]='8';
+
+
+//body
+
+board[row-2][col+4]='\\';
+board[row-2][col+5]='_';
+board[row-2][col+6]='_';
+board[row-2][col+7]='_';
+board[row-2][col+8]='_';
+board[row-2][col+9]='_';
+board[row-2][col+10]='/';
+board[row-3][col+10]='|';
+board[row-4][col+10]='|';
+board[row-5][col+10]='|';
+board[row-3][col+4]='|';
+board[row-4][col+4]='|';
+board[row-5][col+4]='|';
+board[row-5][col+6]='-';
+board[row-5][col+5]='-';
+board[row-5][col+7]='v';
+board[row-5][col+8]='-';
+board[row-5][col+9]='-';
+
+
+
+
+//right arm
+
+board[row-6][col+11]='_';
+board[row-6][col+12]='_';
+board[row-6][col+13]='_';
+board[row-6][col+14]='_';
+board[row-5][col+11]='_';
+board[row-4][col+13]='_';
+board[row-5][col+14]='|';
+board[row-4][col+14]='|';
+board[row-4][col+12]='|';
+board[row-4][col+13]='_';
+
+
+
+
+
+//left arm
+board[row-5][col+1]='_';
+board[row-5][col+2]='_';
+board[row-5][col+3]='_';
+board[row-6][col]='|';
+board[row-5][col]='|';
+board[row-7][col+1]='_';
+board[row-6][col+2]='|';
+board[row-6][col+3]='_';
+
+
+
+
+//right leg
+board[row][col+8]='|';
+board[row-1][col+8]='|';
+board[row][col+9]='_';
+board[row][col+10]='|';
+board[row-1][col+10]='|';
+
+
+
+//left leg
+board[row-1][col+4]='\\';
+board[row-1][col+6]='\\';
+board[row-1][col+5]='_';
 
 
 
