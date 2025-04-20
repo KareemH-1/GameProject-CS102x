@@ -1,19 +1,7 @@
-
 #include <iostream>
 #include <conio.h>
 #include <windows.h>  // For Sleep() function to pause the game
 using namespace std;
-
-
-char green[] = "\033[32m";
-char blue[] = "\033[34m";
-char red[] = "\033[31m";
-char yellow[] = "\033[33m";
-char cyan[] = "\033[36m";
-char reset[] = "\033[0m";
-char bold[] = "\033[1m";
-
-
 
 
 char board[24][80];
@@ -31,33 +19,42 @@ void shoot() {
     }
 
 
-    int c = posc+1;
+    int r = posr + 1;
     int ct = 0;
-    for (int r = posr+1; r < 24; r++) {
-        board[r][c] = 'o';
-            cout << board[r][c];
-            c++;
-            ct++;
-            if (ct == 11)
-            {
-                break;
-            }
-    }
-
-
-    system("cls");  // Clear screen before drawing
-    for (int r = 0; r < 24; r++) {
-        for (int c = 0; c < 80; c++) {
-            cout << board[r][c];
-            if (board[r][c] == 'o')
-            {
-                Sleep(50);
-                board[r][c] == ' ';
-            }
+    int h = 1;
+    for (int c = posc + 1; c < 80; c++) {
+        if (board[r][c] == ' ')
+        {
+            board[r][c] = 'o';
         }
-        cout << endl;
+        else
+        {
+            h = -1;
+        }
+
+        system("cls");
+        for (int i = 0; i < 24; i++) {
+            for (int j = 0; j < 80; j++) {
+                cout << board[i][j];
+            }
+            cout << endl;
+        }
+
+        Sleep(50);
+        if (board[r][c] == 'o')
+        {
+            board[r][c] = ' ';
+        }
+        if (h == 1)
+            r++;
+        else r--;
+
+        ct++;
+        if (ct == 11)
+            break;
     }
 }
+
 
 //The main function
 int main() {
@@ -67,7 +64,7 @@ int main() {
         }
     }
 
-    // Create borders
+    // Create the borders
     for (int j = 0; j < 80; j++) {
         board[0][j] = '-';
         board[23][j] = '-';
@@ -82,9 +79,14 @@ int main() {
     board[23][79] = '#';
     board[23][0] = '#';
 
-    int gun_y = 15, gun_x = 40;
-    board[gun_y][gun_x] = (char)254;
-    draw_board();
+
+    board[15][40] = (char)254; // the gun
+    for (int r = 0; r < 24; r++) {
+        for (int c = 0; c < 80; c++) {
+            cout << board[r][c];
+        }
+        cout << endl;
+    }
 
     char hit;
     for (;;) {
@@ -95,6 +97,10 @@ int main() {
             {
                 shoot();
             }
+            if (hit == 'q') {
+                cout << "\nExiting game... Goodbye!" << endl;
+                break;
+            }
         }
 
     }
@@ -103,6 +109,3 @@ int main() {
 
 
 
-///
-///////////////
-///
