@@ -589,6 +589,17 @@ void climbFrame(char board[24][80], int row, int col) {
 	//head  
 
 	board[row - 8][col + 3] = '_';
+	board[row - 8][col + 3] = '_';
+	board[row - 8][col + 3] = '_';
+	board[row - 8][col + 3] = '_';
+	board[row - 8][col + 3] = '_';
+	
+
+
+
+
+
+
 	//body
 
 	board[row - 2][col + 3] = '\\';
