@@ -408,12 +408,12 @@ void drawPlayerRightFrame3 (char board[24][80], int row, int col, int& shootR, i
 	board[row - 5][col + 2] = '/';
 
 	//left leg
-    board[row-2][col + 1] = '_';
-    board[row-1][col] = '|';
-    board[row-1][col + 1] = '_';
+    board[row-2][col + 2] = '_';
+    board[row-1][col+1] = '|';
     board[row-1][col + 2] = '_';
     board[row-1][col + 3] = '_';
-    board[row-1][col + 4] = '|';    
+    board[row-1][col + 4] = '_';
+    board[row-1][col + 5] = '|';    
     
     //right leg
     board[row][col+6] = '|';
@@ -581,8 +581,8 @@ void drawPlayerRightFrame5 (char board[24][80], int row, int col, int& shootR, i
     board[row-1][col+4] = '\\';
     board[row-1][col+6] = '\\';
     board[row][col+5] = '\\';
-    board[row][col+5] = '_';
-    board[row][col+6] ='\\';
+    board[row][col+6] = '_';
+    board[row][col+7] ='\\';
 
 	//right arm
 	board[row - 4][col + 10] = '-';
