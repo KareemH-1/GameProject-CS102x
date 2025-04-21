@@ -1636,12 +1636,8 @@ void jumpLeft(char board[24][80], int& pX, int& pY, int pHeight, int pWidth, int
 
 
 
-
-//Tomorrow:
-//fix jumping and falling , add jumping to left and jumping to right and make the game smoother by using sleep()
 /*
 NEXT STEPS:
-4. implement walking frames left and right
 6. implement shooting (hitboxes)...pistol or lazer
 8. implement reloading , for pistol and lazerbeam
 7. implement climbing ** (up and down) , add climbing frames
