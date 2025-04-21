@@ -320,9 +320,12 @@ void DrawPlayerLeftFrame1(char board[24][80], int row, int col, int& shootingR, 
 	//head
 	board[row - 7][col + 10] = '\\';
 	board[row - 6][col + 10] = '/';
+
+	board[row - 8][col + 6] = '_';
 	board[row - 8][col + 7] = '_';
 	board[row - 8][col + 8] = '_';
 	board[row - 8][col + 9] = '_';
+
 	board[row - 7][col + 9] = ')';
 	board[row - 7][col + 6] = '(';
 	board[row - 7][col + 7] = '.';
@@ -331,6 +334,7 @@ void DrawPlayerLeftFrame1(char board[24][80], int row, int col, int& shootingR, 
 	board[row - 6][col + 7] = '-';
 	board[row - 6][col + 8] = '-';
 	board[row - 6][col + 9] = '-';
+
 
 
 	//body
@@ -669,8 +673,8 @@ void DrawPlayerLeftFrame5(char board[24][80], int R, int C, int& shootingR, int&
 
     //Left leg
     board[R][C+7] = '/';
-    board[R][C+7] = '_';
-    board[R][C+8] = '/';
+    board[R][C+8] = '_';
+    board[R][C+9] = '/';
     board[R-1][C+8] = '/';
     board[R-1][C+10] = '/';
 

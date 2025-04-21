@@ -270,8 +270,8 @@ void DrawPlayerLeftFrame5(char board[24][80], int R, int C, int& shootingR, int&
 
     //Left leg
     board[R][C+7] = '/';
-    board[R][C+7] = '_';
-    board[R][C+8] = '/';
+    board[R][C+8] = '_';
+    board[R][C+9] = '/';
     board[R-1][C+8] = '/';
     board[R-1][C+10] = '/';
 
