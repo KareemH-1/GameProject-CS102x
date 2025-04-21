@@ -974,11 +974,7 @@ void jumpLeft(char board[24][80], int& pX, int& pY, int pHeight, int pWidth, int
 //fix jumping and falling , add jumping to left and jumping to right and make the game smoother by using sleep()
 /*
 NEXT STEPS:
-1. Add a function to check if the player is falling and apply gravity (apply after jump and after every movement)
-2. Add jumpDiagonal function (jump left or right) , and add a function to check if the player is falling after jump diagonal and apply gravity (apply after jump diagonal)
-3. Implement looking direction of the player
 4. implement walking frames left and right
-5. implement jumping frames up , left diagonal and right diagonal
 6. implement shooting (hitboxes)...pistol or lazer
 8. implement reloading , for pistol and lazerbeam
 7. implement climbing ** (up and down) , add climbing frames
