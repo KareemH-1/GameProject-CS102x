@@ -328,3 +328,323 @@ void DrawPlayerLeftFrame5(char board[24][80], int R, int C, int& shootingR, int&
 
 
 ///////RightFrames
+
+
+void drawPlayerRightFrame2 (char board[24][80], int row, int col, int& shootR, int shootC) {
+	//left arm
+	board[row - 3][col] = '/';
+	board[row - 4][col + 1] = '/';
+	board[row - 5][col + 2] = '/';
+
+	//left leg
+    board[row][col +2 ] = '/';
+    board[row][col +3 ] = '_';
+    board[row][col +4 ] = '/';
+    board[row-1][col +3 ] = '|';
+    board[row-1][col +5 ] = '|';
+    //right leg
+    board[row-1][col + 7] = '\\';    
+    board[row-1][col + 9] = '\\';    
+    board[row][col + 8] = '\\';    
+    board[row][col + 9] = '_';    
+    board[row][col + 10] = '\\';   
+
+    
+	//right arm
+	board[row - 4][col + 10] = '-';
+	board[row - 4][col + 11] = '-';
+	board[row - 4][col + 12] = '-';
+	board[row - 4][col + 13] = '|';
+	board[row - 4][col + 14] = '/';
+	shootR = row - 4;
+	shootC = col + 15;
+	board[row - 5][col + 14] = '\\';
+	board[row - 5][col + 13] = '|';
+	board[row - 5][col + 12] = '-';
+	board[row - 5][col + 11] = '-';
+	board[row - 5][col + 10] = '-';
+
+	//body
+
+	board[row - 2][col + 3] = '\\';
+	board[row - 2][col + 4] = '_';
+	board[row - 2][col + 5] = '_';
+	board[row - 2][col + 6] = '_';
+	board[row - 2][col + 7] = '_';
+	board[row - 2][col + 8] = '_';
+	board[row - 2][col + 9] = '/';
+	board[row - 3][col + 9] = '|';
+	board[row - 4][col + 9] = '|';
+	board[row - 5][col + 9] = '|';
+	board[row - 3][col + 3] = '|';
+	board[row - 4][col + 3] = '|';
+	board[row - 5][col + 3] = '|';
+	board[row - 5][col + 4] = '-';
+	board[row - 5][col + 5] = '-';
+	board[row - 5][col + 6] = 'v';
+	board[row - 5][col + 7] = '-';
+	board[row - 5][col + 8] = '-';
+
+
+
+
+	//head
+
+	board[row - 6][col + 4] = '\\';
+	board[row - 7][col + 4] = '/';
+	board[row - 8][col + 5] = '_';
+	board[row - 8][col + 6] = '_';
+	board[row - 8][col + 7] = '_';
+	board[row - 7][col + 8] = ')';
+	board[row - 7][col + 5] = '(';
+	board[row - 7][col + 6] = '.';
+	board[row - 7][col + 7] = '.';
+	board[row - 6][col + 8] = '/';
+	board[row - 6][col + 7] = '-';
+	board[row - 6][col + 6] = '-';
+	board[row - 6][col + 5] = '-';
+
+
+
+
+
+}
+void drawPlayerRightFrame3 (char board[24][80], int row, int col, int& shootR, int shootC) {
+	//left arm
+	board[row - 3][col+1] = '\\';
+	board[row - 4][col + 1] = '/';
+	board[row - 5][col + 2] = '/';
+
+	//left leg
+    board[row-2][col + 1] = '_';
+    board[row-1][col] = '|';
+    board[row-1][col + 1] = '_';
+    board[row-1][col + 2] = '_';
+    board[row-1][col + 3] = '_';
+    board[row-1][col + 4] = '|';    
+    
+    //right leg
+    board[row][col+6] = '|';
+    board[row][col + 7] = '_';
+    board[row][col + 8] = '|';
+    board[row-1][col + 6] = '\\';
+    board[row-1][col + 8] = '\\';
+
+	//right arm
+	board[row - 4][col + 10] = '-';
+	board[row - 4][col + 11] = '-';
+	board[row - 4][col + 12] = '-';
+	board[row - 4][col + 13] = '|';
+	board[row - 4][col + 14] = '/';
+	shootR = row - 4;
+	shootC = col + 15;
+	board[row - 5][col + 14] = '\\';
+	board[row - 5][col + 13] = '|';
+	board[row - 5][col + 12] = '-';
+	board[row - 5][col + 11] = '-';
+	board[row - 5][col + 10] = '-';
+
+	//body
+
+	board[row - 2][col + 3] = '\\';
+	board[row - 2][col + 4] = '_';
+	board[row - 2][col + 5] = '_';
+	board[row - 2][col + 6] = '_';
+	board[row - 2][col + 7] = '_';
+	board[row - 2][col + 8] = '_';
+	board[row - 2][col + 9] = '/';
+	board[row - 3][col + 9] = '|';
+	board[row - 4][col + 9] = '|';
+	board[row - 5][col + 9] = '|';
+	board[row - 3][col + 3] = '|';
+	board[row - 4][col + 3] = '|';
+	board[row - 5][col + 3] = '|';
+	board[row - 5][col + 4] = '-';
+	board[row - 5][col + 5] = '-';
+	board[row - 5][col + 6] = 'v';
+	board[row - 5][col + 7] = '-';
+	board[row - 5][col + 8] = '-';
+
+
+
+
+	//head
+
+	board[row - 6][col + 4] = '\\';
+	board[row - 7][col + 4] = '/';
+	board[row - 8][col + 5] = '_';
+	board[row - 8][col + 6] = '_';
+	board[row - 8][col + 7] = '_';
+	board[row - 7][col + 8] = ')';
+	board[row - 7][col + 5] = '(';
+	board[row - 7][col + 6] = '.';
+	board[row - 7][col + 7] = '.';
+	board[row - 6][col + 8] = '/';
+	board[row - 6][col + 7] = '-';
+	board[row - 6][col + 6] = '-';
+	board[row - 6][col + 5] = '-';
+
+
+}
+
+
+void drawPlayerRightFrame4 (char board[24][80], int row, int col, int& shootR, int shootC) {
+	//left arm
+	board[row - 3][col] = '/';
+	board[row - 4][col + 1] = '/';
+	board[row - 5][col + 2] = '/';
+
+	//left leg
+    board[row][col +3 ] = '|';
+    board[row][col +4 ] = '_';
+    board[row][col +5 ] = '|';
+
+    board[row-1][col +3 ] = '\\';
+    board[row-1][col +5 ] = '\\';
+
+    //right leg
+    board[row][col + 7] = '/';    
+    board[row][col + 8] = '_';    
+    board[row][col + 9] = '/';    
+    board[row-1][col + 7] = '\\';    
+    board[row-1][col + 9] = '\\';    
+
+    
+	//right arm
+	board[row - 4][col + 10] = '-';
+	board[row - 4][col + 11] = '-';
+	board[row - 4][col + 12] = '-';
+	board[row - 4][col + 13] = '|';
+	board[row - 4][col + 14] = '/';
+	shootR = row - 4;
+	shootC = col + 15;
+	board[row - 5][col + 14] = '\\';
+	board[row - 5][col + 13] = '|';
+	board[row - 5][col + 12] = '-';
+	board[row - 5][col + 11] = '-';
+	board[row - 5][col + 10] = '-';
+
+	//body
+
+	board[row - 2][col + 3] = '\\';
+	board[row - 2][col + 4] = '_';
+	board[row - 2][col + 5] = '_';
+	board[row - 2][col + 6] = '_';
+	board[row - 2][col + 7] = '_';
+	board[row - 2][col + 8] = '_';
+	board[row - 2][col + 9] = '/';
+	board[row - 3][col + 9] = '|';
+	board[row - 4][col + 9] = '|';
+	board[row - 5][col + 9] = '|';
+	board[row - 3][col + 3] = '|';
+	board[row - 4][col + 3] = '|';
+	board[row - 5][col + 3] = '|';
+	board[row - 5][col + 4] = '-';
+	board[row - 5][col + 5] = '-';
+	board[row - 5][col + 6] = 'v';
+	board[row - 5][col + 7] = '-';
+	board[row - 5][col + 8] = '-';
+
+
+
+
+	//head
+
+	board[row - 6][col + 4] = '\\';
+	board[row - 7][col + 4] = '/';
+	board[row - 8][col + 5] = '_';
+	board[row - 8][col + 6] = '_';
+	board[row - 8][col + 7] = '_';
+	board[row - 7][col + 8] = ')';
+	board[row - 7][col + 5] = '(';
+	board[row - 7][col + 6] = '.';
+	board[row - 7][col + 7] = '.';
+	board[row - 6][col + 8] = '/';
+	board[row - 6][col + 7] = '-';
+	board[row - 6][col + 6] = '-';
+	board[row - 6][col + 5] = '-';
+
+
+
+
+
+}
+
+
+void drawPlayerRightFrame5 (char board[24][80], int row, int col, int& shootR, int shootC) {
+	//left arm
+	board[row - 3][col+1] = '\\';
+	board[row - 4][col + 1] = '/';
+	board[row - 5][col + 2] = '/';
+
+    //Left leg
+    board[row-2][col+2] = '_';
+    board[row-1][col+2] = '|';
+    board[row-1][col+3] = '_';
+    board[row-1][col+7] = '_';
+    board[row-1][col+8] = '|';
+
+    //Right leg
+
+    board[row-1][col+4] = '\\';
+    board[row-1][col+6] = '\\';
+    board[row][col+5] = '\\';
+    board[row][col+5] = '_';
+    board[row][col+6] ='\\';
+
+	//right arm
+	board[row - 4][col + 10] = '-';
+	board[row - 4][col + 11] = '-';
+	board[row - 4][col + 12] = '-';
+	board[row - 4][col + 13] = '|';
+	board[row - 4][col + 14] = '/';
+	shootR = row - 4;
+	shootC = col + 15;
+	board[row - 5][col + 14] = '\\';
+	board[row - 5][col + 13] = '|';
+	board[row - 5][col + 12] = '-';
+	board[row - 5][col + 11] = '-';
+	board[row - 5][col + 10] = '-';
+
+	//body
+
+	board[row - 2][col + 3] = '\\';
+	board[row - 2][col + 4] = '_';
+	board[row - 2][col + 5] = '_';
+	board[row - 2][col + 6] = '_';
+	board[row - 2][col + 7] = '_';
+	board[row - 2][col + 8] = '_';
+	board[row - 2][col + 9] = '/';
+	board[row - 3][col + 9] = '|';
+	board[row - 4][col + 9] = '|';
+	board[row - 5][col + 9] = '|';
+	board[row - 3][col + 3] = '|';
+	board[row - 4][col + 3] = '|';
+	board[row - 5][col + 3] = '|';
+	board[row - 5][col + 4] = '-';
+	board[row - 5][col + 5] = '-';
+	board[row - 5][col + 6] = 'v';
+	board[row - 5][col + 7] = '-';
+	board[row - 5][col + 8] = '-';
+
+
+
+
+	//head
+
+	board[row - 6][col + 4] = '\\';
+	board[row - 7][col + 4] = '/';
+	board[row - 8][col + 5] = '_';
+	board[row - 8][col + 6] = '_';
+	board[row - 8][col + 7] = '_';
+	board[row - 7][col + 8] = ')';
+	board[row - 7][col + 5] = '(';
+	board[row - 7][col + 6] = '.';
+	board[row - 7][col + 7] = '.';
+	board[row - 6][col + 8] = '/';
+	board[row - 6][col + 7] = '-';
+	board[row - 6][col + 6] = '-';
+	board[row - 6][col + 5] = '-';
+
+
+}
