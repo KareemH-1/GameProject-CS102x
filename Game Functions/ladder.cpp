@@ -1,10 +1,9 @@
 #include<iostream>
 #include<conio.h>
 using namespace std;
-void drawladder(char board[24][80], int row, int col) {
     void drawladder(char board[24][80], int row, int col) {
         //retard ladder under construction still
-    
+
         board[row - 1][col] = '|';
         board[row - 2][col] = '|';
         board[row - 3][col] = '|';
@@ -14,7 +13,7 @@ void drawladder(char board[24][80], int row, int col) {
         board[row - 7][col] = '|';
         board[row - 8][col] = '|';
         board[row - 9][col] = '|';
-        
+
         board[row - 1][col + 1] = '|';
         board[row - 2][col + 1] = '|';
         board[row - 3][col + 1] = '|';
@@ -24,47 +23,47 @@ void drawladder(char board[24][80], int row, int col) {
         board[row - 7][col + 1] = '|';
         board[row - 8][col + 1] = '|';
         board[row - 9][col + 1] = '|';
-    
+
         board[row - 1][col + 2] = '-';
         board[row - 1][col + 3] = '-';
         board[row - 1][col + 4] = '-';
-    
+
         board[row - 2][col + 2] = '-';
         board[row - 2][col + 3] = '-';
         board[row - 2][col + 4] = '-';
-    
-    
+
+
         board[row - 3][col + 2] = '-';
         board[row - 3][col + 3] = '-';
         board[row - 3][col + 4] = '-';
-    
+
         board[row - 4][col + 2] = '-';
         board[row - 4][col + 3] = '-';
         board[row - 4][col + 4] = '-';
-    
+
         board[row - 5][col + 2] = '-';
         board[row - 5][col + 3] = '-';
         board[row - 5][col + 4] = '-';
-        
-    
+
+
         board[row - 6][col + 2] = '-';
         board[row - 6][col + 3] = '-';
         board[row - 6][col + 4] = '-';
-    
+
         board[row - 7][col + 2] = '-';
         board[row - 7][col + 3] = '-';
         board[row - 7][col + 4] = '-';
-    
-    
+
+
         board[row - 8][col + 2] = '-';
         board[row - 8][col + 3] = '-';
         board[row - 8][col + 4] = '-';
-    
+
         board[row - 9][col + 2] = '-';
         board[row - 9][col + 3] = '-';
         board[row - 9][col + 4] = '-';
-    
-    
+
+
         board[row - 1][col + 5] = '|';
         board[row - 2][col + 5] = '|';
         board[row - 3][col + 5] = '|';
@@ -74,7 +73,7 @@ void drawladder(char board[24][80], int row, int col) {
         board[row - 7][col + 5] = '|';
         board[row - 8][col + 5] = '|';
         board[row - 9][col + 5] = '|';
-    
+
         board[row - 1][col + 6] = '|';
         board[row - 2][col + 6] = '|';
         board[row - 3][col + 6] = '|';
@@ -83,13 +82,13 @@ void drawladder(char board[24][80], int row, int col) {
         board[row - 6][col + 6] = '|';
         board[row - 7][col + 6] = '|';
         board[row - 8][col + 6] = '|';
-        board[row - 9][col+6]='|';
-    
+        board[row - 9][col + 6] = '|';
+
     }
-}
 
 
-void main(){
+
+void main() {
     char board[24][80] = { ' ' };
     int row = 10, col = 10;
     drawladder(board, row, col);
