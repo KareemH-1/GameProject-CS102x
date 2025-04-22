@@ -5,112 +5,146 @@ using namespace std;
 
 
 char board[24][80];
-void shootlaser() {
-    int posr, posc;
-    for (int r = 0; r < 24; r++) {
-        for (int c = 0; c < 80; c++) {
-            if (board[r][c] == (char)254)
-            {
-                posr = r;
-                posc = c;
-            }
 
-        }
-    }
-    int h = 1;
-    while (board[posr][posc + h] == ' ' && h < 20)
-    {
-        board[posr][posc + h] = '=';
-        h++;
 
-        system("cls");
+
+struct Laser {
+    void shootlaser() {
+        int posr, posc;
         for (int r = 0; r < 24; r++) {
             for (int c = 0; c < 80; c++) {
-
-                cout << board[r][c];
+                if (board[r][c] == (char)254)
+                {
+                    posr = r;
+                    posc = c;
+                }
 
             }
-            cout << endl;
+        }
+        int h = 1;
+        while (board[posr][posc + h] == ' ' && h < 20)
+        {
+            board[posr][posc + h] = '=';
+            h++;
+
+            system("cls");
+            for (int r = 0; r < 24; r++) {
+                for (int c = 0; c < 80; c++) {
+
+                    cout << board[r][c];
+
+                }
+                cout << endl;
+            }
+        }
+        int k = h;
+        h = 1;
+        while (true) {
+
+            if (board[posr][posc + h] == '=')
+            {
+                board[posr][posc + h] = ' ';
+            }
+            system("cls");
+            for (int r = 0; r < 24; r++) {
+                for (int c = 0; c < 80; c++) {
+
+                    cout << board[r][c];
+
+                }
+                cout << endl;
+            }
+            h++;
+            if (h == k)
+            {
+                break;
+            }
+        }
+
+
+
+    }
+};
+
+struct Ammo
+{
+    int count = 10;
+    void use() {
+        if (count > 0) {
+            count--;
+            cout << "Ammo used. Remaining: " << count << endl;
+        }
+        else {
+            cout << "Ammo is out!" << endl;
         }
     }
-    int k = h;
-    h = 1;
-    while (true) {
+    void reload(int amount) {
+        count += amount;
+        cout << "Ammo reloaded! Current ammo: " << count << endl;
+    }
+};
 
-        if (board[posr][posc + h] == '=')
-        {
-            board[posr][posc+h] = ' ';
-        }
-        system("cls");
+struct Gun {
+    void shootGun() {
+        int posr;
+        int posc;
         for (int r = 0; r < 24; r++) {
             for (int c = 0; c < 80; c++) {
- 
-                cout << board[r][c];
-
+                if (board[r][c] == (char)254)
+                {
+                    posr = r;
+                    posc = c;
+                }
             }
-            cout << endl;
         }
-        h++;
-        if (h == k)
-        {
-            break;
-        }
-    }
 
 
-
-}
-
-void shootGun() {
-    int posr;
-    int posc;
-    for (int r = 0; r < 24; r++) {
-        for (int c = 0; c < 80; c++) {
-            if (board[r][c] == (char)254)
+        int r = posr + 1;
+        int ct = 0;
+        int h = 1;
+        for (int c = posc + 1; c < 80; c++) {
+            if (board[r][c] == ' ')
             {
-                posr = r;
-                posc = c;
+                board[r][c] = 'o';
             }
+            else
+            {
+                h = -1;
+            }
+
+            system("cls");
+            for (int i = 0; i < 24; i++) {
+                for (int j = 0; j < 80; j++) {
+                    cout << board[i][j];
+                }
+                cout << endl;
+            }
+
+            Sleep(50);
+            if (board[r][c] == 'o')
+            {
+                board[r][c] = ' ';
+            }
+            if (h == 1)
+                r++;
+            else r--;
+
+            ct++;
+            if (ct == 11)
+                break;
         }
     }
 
 
-    int r = posr + 1;
-    int ct = 0;
-    int h = 1;
-    for (int c = posc + 1; c < 80; c++) {
-        if (board[r][c] == ' ')
-        {
-            board[r][c] = 'o';
-        }
-        else
-        {
-            h = -1;
-        }
+};
 
-        system("cls");
-        for (int i = 0; i < 24; i++) {
-            for (int j = 0; j < 80; j++) {
-                cout << board[i][j];
-            }
-            cout << endl;
-        }
-
-        Sleep(50);
-        if (board[r][c] == 'o')
-        {
-            board[r][c] = ' ';
-        }
-        if (h == 1)
-            r++;
-        else r--;
-
-        ct++;
-        if (ct == 11)
-            break;
-    }
-}
-
+struct Player
+{
+    int health = 100;
+    Ammo ammo;
+    Gun gun;
+    Laser laser;
+};
 
 //The main function
 int main() {
@@ -144,6 +178,8 @@ int main() {
         cout << endl;
     }
 
+    Player player;
+
     char hit;
     int ct = 0;
     for (;;) {
@@ -159,7 +195,13 @@ int main() {
                 cout << "Laser mode" << endl;
                 if (hit == 'f')
                 {
-                    shootlaser();
+                    if (player.ammo.count > 0) {
+                        player.laser.shootlaser();
+                        player.ammo.use();
+                    }
+                    else {
+                        cout << "Out of ammo!" << endl;
+                    }
                 }
             }
 
@@ -168,8 +210,17 @@ int main() {
                 cout << "Gun mode" << endl;
                 if (hit == 'f')
                 {
-                    shootGun();
+                    if (player.ammo.count > 0) {
+                        player.gun.shootGun();
+                        player.ammo.use();
+                    }
+                    else {
+                        cout << "Out of ammo!" << endl;
+                    }
                 }
+            }
+            if (hit == 'r') {  
+                player.ammo.reload(5);
             }
             if (hit == 'q') {
                 cout << "\nExiting game... Goodbye!" << endl;
