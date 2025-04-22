@@ -1471,196 +1471,200 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 	isJumping = 0, isFalling = 0; // Reset jumping and falling states after landing
 }
 
-
 void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int& isFalling, int& isWalking, int dispR , int dispC) {
-	int check = 1;
-	// Check every cell in the column to the right of the player
-	for (int i = pX; i >= pX - pHeight + 1; i--) {
-		if (board[i][pY + pWidth] != ' ') {
-			check = 0;
-			break;
-		}
-	}
+    int check = 1;
 
-	for (int j = pY; j <= pY + (pWidth - 1) && j < 1000; j++) {
-		if (board[pX - pHeight][j] != ' ') {
-			check = 0;
-			break;
-		}
-	}
+    // Check every cell in the column to the right of the player (pY + pWidth for right side)
+    for (int i = pX; i >= pX - pHeight + 1; i--) {
+        if (board[i][pY + pWidth] != ' ') {
+            check = 0;
+            break;
+        }
+    }
 
-	for (int a = 0; a < 3; a++) {
-		if (pX - (pHeight + 1) - 1 >= 0 && pY + pWidth < 999 && board[pX - (pHeight - 1) - 1][pY + 1] == ' ' && check == 1) {
-			for (int i = pX; i >= pX - pHeight + 1; i--) {
-				if (board[i][pY + pWidth] != ' ') {
-					check = 0;
-					break;
-				}
-			}
+    // Check the space the player occupies (height and width)
+    for (int j = pY; j <= pY + (pWidth - 1) && j < 1000; j++) {
+        if (board[pX - pHeight][j] != ' ') {
+            check = 0;
+            break;
+        }
+    }
 
+    // Jumping right
+    for (int a = 0; a < 4; a++) {
+        if (pX - (pHeight + 1) - 1 >= 0 && pY + pWidth < 999 && board[pX - (pHeight - 1) - 1][pY + 1] == ' ' && check == 1) {
+            // Check again before moving
+            for (int i = pX; i >= pX - pHeight + 1; i--) {
+                if (board[i][pY + pWidth] != ' ') {
+                    check = 0;
+                    break;
+                }
+            }
 
-			if (pX - pHeight < 0)break;
+            // If the player's X-coordinate goes off the top of the screen, stop
+            if (pX - pHeight < 0) break;
 
-			for (int j = pY; j <= pY + (pWidth - 1) && j < 1000; j++) {
-				if (board[pX - pHeight][j] != ' ') {
-					check = 0;
-					break;
-				}
-			}
+            // Check the space the player occupies after the jump
+            for (int j = pY; j <= pY + (pWidth - 1) && j < 1000; j++) {
+                if (board[pX - pHeight][j] != ' ') {
+                    check = 0;
+                    break;
+                }
+            }
 
-			if (check == 0) break;
+            if (check == 0) break;
 
-			pX--;
-			pY++;
+            pX--;
+            pY++;
 
-            scroll(board, pY,pX, Player.maxWidth, Player.maxHeight , dispR , dispC);
-			clearMap(board, dispR, dispC);
-			callObj(board); // Call the function to draw the objects
-			addBorders(board, dispR, dispC);
-			jumprightframe(board, pX, pY); // Draw the player jumping up
+            scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+            clearMap(board, dispR, dispC);
+            callObj(board); // Call the function to draw the objects
+            addBorders(board, dispR, dispC);
+            jumprightframe(board, pX, pY); // Draw the player jumping up
 
-			system("cls");
-			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
-			Clear_LoadMap(board , dispR , dispC); // Clear the screen and load the map
+            system("cls");
+            dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
+            Clear_LoadMap(board, dispR, dispC); // Clear the screen and load the map
 
-			isJumping = 1;
-		}
-		else {
-			break;
-		}
+            isJumping = 1;
+        } else {
+            break;
+        }
+    }
 
-	}
+    check = 1;
+    for (int j = pY; j <= pY + (pWidth - 1); j++) {
+        if (board[pX + 1][j] != ' ') {
+            check = 0;
+            break;
+        }
+    }
 
-	check = 1;
-	for (int j = pY; j <= pY + (pWidth - 1); j++) {
-		if (board[pX + 1][j] != ' ') {
-			check = 0;
-			break;
-		}
-	}
+    for (; pX + 1 < 99 && board[pX + 1][pY] == ' ' && pY + pWidth < 999;) {
+        int checkDiagonal = 1;
+        for (int j = pY; j <= pY + (pWidth - 1); j++) {
+            if (board[pX + 1][j] != ' ') {
+                checkDiagonal = 0;
+                break;
+            }
+        }
 
-	for (; pX + 1 < 99 && board[pX + 1][pY] == ' ' && pY + pWidth < 999;) {
-		int checkDiagonal = 1;
-		for (int j = pY; j <= pY + (pWidth - 1); j++) {
-			if (board[pX + 1][j] != ' ') {
-				checkDiagonal = 0;
-				break;
-			}
-		}
+        if (checkDiagonal && check) {
+            pX++;
+            pY += 2;  // Move right 2 steps instead of 1
+            scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+            clearMap(board, dispR, dispC);
+            callObj(board);
+            addBorders(board, dispR, dispC);
+            jumprightframe(board, pX, pY);
+            system("cls");
+            dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
+            Clear_LoadMap(board, dispR, dispC);
+            isFalling = 1;
+        }
+    }
 
-
-		if (checkDiagonal && check) {
-			pX++;
-			pY++;
-            scroll(board, pY,pX, Player.maxWidth, Player.maxHeight , dispR , dispC);
-			clearMap(board , dispR, dispC);
-			callObj(board);
-			addBorders(board , dispR , dispC);
-			jumprightframe(board, pX, pY);
-			system("cls");
-			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
-			Clear_LoadMap(board , dispR , dispC);
-			isFalling = 1;
-		}
-	} 
-	isWalking = 0;
-	isJumping = 0, isFalling = 0; // Reset jumping and falling states after landing
+    isWalking = 0;
+    isJumping = 0;
+    isFalling = 0; // Reset jumping and falling states after landing
 }
-void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int& isFalling, int& isWalking , int dispR , int dispC) {
-	int check = 1;
+void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int& isFalling, int& isWalking, int dispR , int dispC) {
+    int check = 1;
 
-	for (int j = pY; j <= pY + (pWidth - 1) && j < 1000; j++) {
-		if (board[pX - pHeight][j] != ' ') {
-			check = 0;
-			break;
-		}
-	}
+    // Check the space the player occupies to the left
+    for (int j = pY; j <= pY + (pWidth - 1) && j < 1000; j++) {
+        if (board[pX - pHeight][j] != ' ') {
+            check = 0;
+            break;
+        }
+    }
 
-	for (int i = pX; i >= pX - pHeight + 1; i--) {
-		if (board[i][pY - 1] != ' ') {
-			check = 0;
-			break;
-		}
-		
-	}
-	
-	for (int a = 0; a < 3; a++) {
-		if (pX - (pHeight + 1) - 1 >= 0 && pY - 1 > 0 && board[pX - (pHeight + 1) - 1][pY - 1] == ' ' && check == 1) {
-			for (int i = pX; i >= pX - pHeight + 1; i--) {
-				if (board[i][pY + pWidth] != ' ') {
-					check = 0;
-					break;
-				}
-			}
+    // Check the left column before moving
+    for (int i = pX; i >= pX - pHeight + 1; i--) {
+        if (board[i][pY - 1] != ' ') {
+            check = 0;
+            break;
+        }
+    }
 
+    // Jumping left
+    for (int a = 0; a < 4; a++) {
+        if (pX - (pHeight + 1) - 1 >= 0 && pY - 1 > 0 && board[pX - (pHeight + 1) - 1][pY - 1] == ' ' && check == 1) {
+            for (int i = pX; i >= pX - pHeight + 1; i--) {
+                if (board[i][pY + pWidth] != ' ') {
+                    check = 0;
+                    break;
+                }
+            }
 
-			if (pX - pHeight < 1) break;
+            // If the player's X-coordinate goes off the top of the screen, stop
+            if (pX - pHeight < 1) break;
 
-			for (int j = pY; j <= pY + (pWidth - 1) && j < 1000; j++) {
-				if (board[pX - pHeight][j] != ' ') {
-					check = 0;
-					break;
-				}
-			}
+            // Check after jumping
+            for (int j = pY; j <= pY + (pWidth - 1) && j < 1000; j++) {
+                if (board[pX - pHeight][j] != ' ') {
+                    check = 0;
+                    break;
+                }
+            }
 
-			if (check == 0) break;
+            if (check == 0) break;
 
-			pX--;
-			pY--;
-            scroll(board, pY,pX, Player.maxWidth, Player.maxHeight , dispR , dispC);
-			clearMap(board , dispR ,dispC);
-			callObj(board); // Call the function to draw the objects
-			addBorders(board ,  dispR ,  dispC);
+            pX--;
+            pY -= 2;  // Move left 2 steps instead of 1
 
-			jumpleftframe(board, pX, pY); // Draw the player jumping up
+            scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+            clearMap(board, dispR, dispC);
+            callObj(board); // Call the function to draw the objects
+            addBorders(board, dispR, dispC);
+            jumpleftframe(board, pX, pY); // Draw the player jumping up
 
-			system("cls");
-			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
-			Clear_LoadMap(board , dispR , dispC ); // Clear the screen and load the map
+            system("cls");
+            dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
+            Clear_LoadMap(board, dispR, dispC); // Clear the screen and load the map
 
-			isJumping = 1;
-		}
-		else {
-			break;
-		}
+            isJumping = 1;
+        } else {
+            break;
+        }
+    }
 
-	}
+    check = 1;
+    for (int j = pY; j <= pY + (pWidth - 1); j++) {
+        if (board[pX + 1][j] != ' ') {
+            check = 0;
+            break;
+        }
+    }
 
-	check = 1;
-	for (int j = pY; j <= pY + (pWidth - 1); j++) {
-		if (board[pX + 1][j] != ' ') {
-			check = 0;
-			break;
-		}
-	}
+    for (; pX + 1 < 99 && board[pX + 1][pY] == ' ' && pY > 1;) {
+        int checkDiagonal = 1;
+        for (int j = pY; j <= pY + (pWidth - 1); j++) {
+            if (board[pX + 1][j] != ' ') {
+                checkDiagonal = 0;
+                break;
+            }
+        }
 
-	for (; pX + 1 < 99 && board[pX + 1][pY] == ' ' && pY > 1;) {
-		int checkDiagonal = 1;
-		for (int j = pY; j <= pY + (pWidth - 1); j++) {
-			if (board[pX + 1][j] != ' ') {
-				checkDiagonal = 0;
-				break;
-			}
-		}
+        if (checkDiagonal && check) {
+            pX++;
+            pY--;  // Move left 2 steps instead of 1
+            scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+            clearMap(board, dispR, dispC);
+            callObj(board);
+            addBorders(board, dispR, dispC);
+            jumpleftframe(board, pX, pY);
+            system("cls");
+            dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
+            Clear_LoadMap(board, dispR, dispC);
+            isFalling = 1;
+        }
+    }
 
-
-		if (checkDiagonal && check) {
-			pX++;
-			pY--;
-            scroll(board, pY,pX, Player.maxWidth, Player.maxHeight , dispR , dispC);
-			clearMap(board ,dispR , dispC);
-			callObj(board);
-			addBorders(board , dispR , dispC );
-			jumpleftframe(board, pX, pY);
-			system("cls");
-			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
-			Clear_LoadMap(board , dispR , dispC);
-			isFalling = 1;
-		}
-	} 
-	isWalking = 0;
-	isJumping = 0, isFalling = 0; // Reset jumping and falling states after landing
-	
+    isWalking = 0;
+    isJumping = 0;
+    isFalling = 0; // Reset jumping and falling states after landing
 }
 
 
