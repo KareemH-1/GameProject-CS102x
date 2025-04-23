@@ -21,7 +21,6 @@
             for (int j = 0; j < mapWidth; j++) {
                 gameMap[i][j] = ' ';
             }
-            gameMap[i][mapWidth] = '\0';
         }
     }
 
@@ -48,7 +47,7 @@
     }
 
     void renderMap() {
-        system("cls"); // Only this is from windows, will replace if needed
+        system("cls"); 
         for (int i = 0; i < mapHeight; i++) {
             cout << gameMap[i] << endl;
         }
@@ -127,7 +126,6 @@
 
             updatePhysics();
 
-            for (int delay = 0; delay < 5000000; delay++) {} // simple delay loop
         }
 
         return 0;
