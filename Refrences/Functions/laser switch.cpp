@@ -7,8 +7,10 @@ char board[24][80];
 
 struct Enemy {
     int health = 100;
-    int row = 15;
-    int col = 50;
+    int row = 20;
+    int col = 30;
+    int width = 15;  // From col+7 to col+15 = 9 width
+    int height = 4;   // From row-3 to row = 4 height
 
     void createEnemy(int row, int col) {
         this->row = row;
@@ -35,9 +37,23 @@ struct Enemy {
     }
 };
 
+void checkEnemyHit(int row, int col, Enemy& enemy, int& checkhit) {
+    checkhit = 0;
+    // Enemy bounding box
+    int top = enemy.row - 3;
+    int bottom = enemy.row;
+    int left = enemy.col + 7;
+    int right = enemy.col + 15;
+
+    if (row >= top && row <= bottom && col >= left && col <= right) {
+        checkhit = 1;
+    }
+}
+
 struct Laser {
     void shootLaser(Enemy& enemy, int& killed) {
         int posr = -1, posc = -1;
+        int checkhit = 0;
         for (int r = 0; r < 24; r++) {
             for (int c = 0; c < 80; c++) {
                 if (board[r][c] == (char)254) {
@@ -48,19 +64,21 @@ struct Laser {
         }
 
         if (posr != -1 && posc != -1) {
+            int alreadyHit = 0;
             int h = 1;
             while (board[posr][posc + h] == ' ' && h < 20) {
                 board[posr][posc + h] = '=';
 
                 // Check for collision with the enemy
-                if (posr == enemy.row - 1 && posc + h >= enemy.col && posc + h <= enemy.col + 14) {
+                checkEnemyHit(posr, posc + h, enemy, checkhit);
+                if (!alreadyHit && (checkhit == 1)) {
                     enemy.health -= 10;  // Laser deals 10 damage
-                    cout << "Enemy hit! Health: " << enemy.health << endl;
-                    if (enemy.health == 0)
-                    {
-                        cout << "you killed the duck :(" << endl;
+                    cout << "Laser hit! Enemy health: " << enemy.health << endl;
+                    if (enemy.health <= 0) {
+                        cout << "You killed the duck :(" << endl;
                         killed = 1;
                     }
+                    alreadyHit = true;
                 }
 
                 h++;
@@ -116,8 +134,9 @@ struct Ammo {
 };
 
 struct Gun {
-    void shootGun(Enemy& enemy, int &killed) {
+    void shootGun(Enemy& enemy, int& killed) {
         int posr = -1, posc = -1;
+        int checkhit = 0;
         for (int r = 0; r < 24; r++) {
             for (int c = 0; c < 80; c++) {
                 if (board[r][c] == (char)254) {
@@ -131,6 +150,8 @@ struct Gun {
             int r = posr + 1;
             int ct = 0;
             int h = 1;
+            int hitRegistered = 0;
+
             for (int c = posc + 1; c < 80; c++) {
                 if (board[r][c] == ' ') {
                     board[r][c] = 'o';
@@ -140,14 +161,16 @@ struct Gun {
                 }
 
                 // Check for collision with the enemy
-                if (r == enemy.row && c >= enemy.col && c <= enemy.col + 14) {
+                checkEnemyHit(r, c, enemy, checkhit);
+                if (!hitRegistered && (checkhit == 1)) {
                     enemy.health -= 10;  // Gun deals 10 damage
-                    cout << "Enemy hit! Health: " << enemy.health << endl;
-                    if (enemy.health == 0)
-                    {
-                        cout << "you killed the duck :(" << endl;
+                    cout << "Bullet hit! Enemy health: " << enemy.health << endl;
+                    if (enemy.health <= 0) {
+                        cout << "You killed the duck :(" << endl;
                         killed = 1;
                     }
+                    hitRegistered = true;
+                    break;  // Stop the bullet after hit
                 }
 
                 system("cls");
@@ -180,8 +203,7 @@ struct Player {
     Laser laser;
 };
 
-// The main function
-int main() {
+void initializeBoard() {
     for (int i = 0; i < 24; i++) {
         for (int j = 0; j < 80; j++) {
             board[i][j] = ' ';
@@ -202,19 +224,26 @@ int main() {
     board[0][79] = '#';
     board[23][79] = '#';
     board[23][0] = '#';
+}
 
-    Enemy enemy;
-    enemy.createEnemy(16, 50);
-
-    board[15][40] = (char)254; // the laser
+void drawBoard() {
+    system("cls");
     for (int r = 0; r < 24; r++) {
         for (int c = 0; c < 80; c++) {
             cout << board[r][c];
         }
         cout << endl;
     }
+}
 
+int main() {
+    initializeBoard();
 
+    Enemy enemy;
+    enemy.createEnemy(21, 40);
+
+    board[15][40] = (char)254; // the laser
+    drawBoard();
 
     Player player;
 
@@ -222,19 +251,12 @@ int main() {
     int ct = 0;
     int killed = 0;
     for (;;) {
-        system("cls");
-        // Redraw the board
-        for (int r = 0; r < 24; r++) {
-            for (int c = 0; c < 80; c++) {
-                cout << board[r][c];
-            }
-            cout << endl;
-        }
+        drawBoard();
 
         cout << "Enemy Health: " << enemy.health << endl;
         cout << "Ammo: " << player.ammo.count << endl;
         if (ct % 2 == 0)
-            cout << "laser mode" << endl;
+            cout << "Laser mode" << endl;
         else
             cout << "Gun mode" << endl;
         cout << "Controls: F (fire), T (toggle weapon), R (reload), Q (quit)" << endl;
@@ -245,21 +267,18 @@ int main() {
         }
 
         if (ct % 2 == 0) {
-            cout << "Laser mode" << endl;
             if (hit == 'f') {
                 if (player.ammo.count > 0) {
                     player.laser.shootLaser(enemy, killed);
                     player.ammo.use();
-
                 }
                 else {
                     cout << "Out of ammo!" << endl;
+                    Sleep(1000);
                 }
             }
         }
-
-        if (ct % 2 != 0) {
-            cout << "Gun mode" << endl;
+        else {
             if (hit == 'f') {
                 if (player.ammo.count > 0) {
                     player.gun.shootGun(enemy, killed);
@@ -267,12 +286,14 @@ int main() {
                 }
                 else {
                     cout << "Out of ammo!" << endl;
+                    Sleep(1000);
                 }
             }
         }
 
         if (hit == 'r') {
             player.ammo.reload(5);
+            Sleep(1000);
         }
 
         if (hit == 'q' || killed == 1) {
