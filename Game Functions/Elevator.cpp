@@ -85,7 +85,7 @@ void displayCredits() {
 
 
 void initializePlayerValues(int& Row, int& Col, int& maxHeight, int& maxWidth, int& Health, int& coins, int& gun, int& ammo, int& maxAmmo, int& shootC, int& shootR) {
-	Row = 19;
+	Row = 95;
 	Col = 3;
 	maxHeight = 9;
 	maxWidth = 15;
@@ -1290,8 +1290,8 @@ void climbFrame(char board[100][1000], int row, int col) {
 
 
 void drawElevator(char board[100][1000], int R, int C) {
-	board[R-1][C] = char(186); board[R-1][C + 17] = char(186);
-	board[R-2][C] = char(186);  board[R-2][C + 17] = char(186);
+	board[R - 1][C] = char(186); board[R - 1][C + 17] = char(186);
+	board[R - 2][C] = char(186);  board[R - 2][C + 17] = char(186);
 	board[R - 3][C] = char(186); board[R - 3][C + 17] = char(186);
 	board[R - 4][C] = char(186); board[R - 4][C + 17] = char(186);
 	board[R - 5][C] = char(186); board[R - 5][C + 17] = char(186);
@@ -1302,23 +1302,23 @@ void drawElevator(char board[100][1000], int R, int C) {
 
 	board[R][C] = char(200);
 
-	board[R-10][C] = char(201);
+	board[R - 10][C] = char(201);
 	board[R - 10][C + 1] = char(205);
 	board[R - 10][C + 2] = char(205);
 	board[R - 10][C + 3] = char(205);
 	board[R - 10][C + 4] = char(205);
 	board[R - 10][C + 5] = char(205);
 	board[R - 10][C + 6] = char(205);
-	board[R-10][C + 7] = char(205);
-	board[R-10][C + 8] = char(205);
-	board[R-10][C + 9] = char(205);
-	board[R-10][C + 10] = char(205);
-	board[R-10][C + 11] = char(205);
-	board[R-10][C + 12] = char(205);
-	board[R-10][C + 13] = char(205);
-	board[R-10][C + 14] = char(205);
-	board[R-10][C + 15] = char(205);
-	board[R-10][C + 16] = char(205);
+	board[R - 10][C + 7] = char(205);
+	board[R - 10][C + 8] = char(205);
+	board[R - 10][C + 9] = char(205);
+	board[R - 10][C + 10] = char(205);
+	board[R - 10][C + 11] = char(205);
+	board[R - 10][C + 12] = char(205);
+	board[R - 10][C + 13] = char(205);
+	board[R - 10][C + 14] = char(205);
+	board[R - 10][C + 15] = char(205);
+	board[R - 10][C + 16] = char(205);
 	board[R - 10][C + 17] = char(187);
 
 
@@ -1336,7 +1336,7 @@ void drawElevator(char board[100][1000], int R, int C) {
 	board[R][C + 12] = char(205);
 	board[R][C + 13] = char(205);
 	board[R][C + 14] = char(205);
-	board[R][C+15] = char(205);
+	board[R][C + 15] = char(205);
 	board[R][C + 16] = char(205);
 	board[R][C + 17] = char(188);
 
@@ -1346,9 +1346,9 @@ void drawElevator(char board[100][1000], int R, int C) {
 
 void callObj(char board[100][1000]) {
 
-	drawEnemyBirdLeft(board, 5, 60); // Draw the enemy bird
-	drawEnemyBirdRight(board, 5, 10); // Draw the enemy bird
-	drawElevator(board, 24, 55);
+	drawEnemyBirdLeft(board, 82, 60); // Draw the enemy bird
+	drawEnemyBirdRight(board, 84, 10); // Draw the enemy bird
+	drawElevator(board, 97, 55);
 }
 
 ///////////////////////////////
@@ -1358,9 +1358,9 @@ void scroll(char board[100][1000], int& posJHero, int& posIHero, int widthHero, 
 	if (dispC < 0) dispC = 0;
 	if (dispC > 1000 - 80) dispC = 1000 - 80;
 
-	dispR = posIHero;
-	if (dispR < 24) dispR = 24;
-	if (dispR > 76) dispR = 76;
+	dispR = posIHero + 5;
+	if (dispR < 24) dispR = 23;
+	if (dispR > 76) dispR = 98;
 
 }
 
@@ -1492,7 +1492,7 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int& isFalling, int animation, int dispR, int dispC) {
 	int check = 1;
 	for (int j = pY; j <= pY + (pWidth - 1); j++) {
-		if (board[pX + 1][j] != ' ' && board[pX+1][j] != char(186)) {
+		if (board[pX + 1][j] != ' ' && board[pX + 1][j] != char(186)) {
 			check = 0;
 			break;
 		}
@@ -1502,7 +1502,7 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 	for (; pX + 1 < 99 && (board[pX + 1][pY] == ' ' || board[pX + 1][pY] == char(186)) && check; ) {
 		if (pX - pHeight < 0) break;
 		for (int j = pY; j <= pY + (pWidth - 1) && j < 1000; j++) {
-			if (board[pX - pHeight][j] != ' ' && board[pX - pHeight] [j] != char(186)) {
+			if (board[pX - pHeight][j] != ' ' && board[pX - pHeight][j] != char(186)) {
 				check = 0;
 				break;
 			}
@@ -1539,7 +1539,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 
 	// Check the space the player occupies (height and width)
 	for (int j = pY; j <= pY + (pWidth - 1) && j < 1000; j++) {
-		if (board[pX - pHeight][j] != ' ' && board[pX-pHeight][j] != char(186)) {
+		if (board[pX - pHeight][j] != ' ' && board[pX - pHeight][j] != char(186)) {
 			check = 0;
 			break;
 		}
@@ -1550,7 +1550,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		if (pX - (pHeight + 1) - 1 >= 0 && pY + pWidth < 999 && (board[pX - (pHeight - 1) - 1][pY + 1] == ' ' || board[pX - (pHeight - 1) - 1][pY + 1] == char(186)) && check == 1) {
 			// Check again before moving
 			for (int i = pX; i >= pX - pHeight + 1; i--) {
-				if (board[i][pY + pWidth] != ' ' &&  board[i][pY + pWidth] != char(186)) {
+				if (board[i][pY + pWidth] != ' ' && board[i][pY + pWidth] != char(186)) {
 					check = 0;
 					break;
 				}
@@ -1591,16 +1591,16 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 
 	check = 1;
 	for (int j = pY; j <= pY + (pWidth - 1); j++) {
-		if (board[pX + 1][j] != ' ' && board[pX+1][j] != char(186)) {
+		if (board[pX + 1][j] != ' ' && board[pX + 1][j] != char(186)) {
 			check = 0;
 			break;
 		}
 	}
 
-	for (; pX + 1 < 99 && (board[pX + 1][pY] == ' '  || board[pX + 1][pY] == char(186)) && pY + pWidth < 999;) {
+	for (; pX + 1 < 99 && (board[pX + 1][pY] == ' ' || board[pX + 1][pY] == char(186)) && pY + pWidth < 999;) {
 		int checkDiagonal = 1;
 		for (int j = pY; j <= pY + (pWidth - 1); j++) {
-			if (board[pX + 1][j] != ' ' && board[pX+1][j] != char(186)) {
+			if (board[pX + 1][j] != ' ' && board[pX + 1][j] != char(186)) {
 				checkDiagonal = 0;
 				break;
 			}
@@ -1638,7 +1638,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 
 	// Check the left column before moving
 	for (int i = pX; i >= pX - pHeight + 1; i--) {
-		if (board[i][pY - 1] != ' ' && board[i][pY-1] != char(186)) {
+		if (board[i][pY - 1] != ' ' && board[i][pY - 1] != char(186)) {
 			check = 0;
 			break;
 		}
@@ -1646,7 +1646,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 
 	// Jumping left
 	for (int a = 0; a < 4; a++) {
-		if (pX - (pHeight + 1) - 1 >= 0 && pY - 1 > 0 && (board[pX - (pHeight + 1) - 1][pY - 1] == ' '  || board[pX - (pHeight + 1) - 1][pY - 1] == char(186)) && check == 1) {
+		if (pX - (pHeight + 1) - 1 >= 0 && pY - 1 > 0 && (board[pX - (pHeight + 1) - 1][pY - 1] == ' ' || board[pX - (pHeight + 1) - 1][pY - 1] == char(186)) && check == 1) {
 			for (int i = pX; i >= pX - pHeight + 1; i--) {
 				if (board[i][pY + pWidth] != ' ' && board[i][pY + pWidth] != char(186)) {
 					check = 0;
@@ -1689,7 +1689,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 
 	check = 1;
 	for (int j = pY; j <= pY + (pWidth - 1); j++) {
-		if (board[pX + 1][j] != ' ' && board[pX+1][j] != char(186)) {
+		if (board[pX + 1][j] != ' ' && board[pX + 1][j] != char(186)) {
 			check = 0;
 			break;
 		}
@@ -1698,7 +1698,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 	for (; pX + 1 < 99 && board[pX + 1][pY] == ' ' && pY > 1;) {
 		int checkDiagonal = 1;
 		for (int j = pY; j <= pY + (pWidth - 1); j++) {
-			if (board[pX + 1][j] != ' ' && board[pX+1][j] != char(186)) {
+			if (board[pX + 1][j] != ' ' && board[pX + 1][j] != char(186)) {
 				checkDiagonal = 0;
 				break;
 			}
@@ -1807,7 +1807,7 @@ NEXT STEPS:
 int main() {
 	int width = 80, height = 24; // Lets keep the width and height stored as variables incase we want to change them later
 	char board[100][1000]; // Border for the game frame
-	int dispR = 19, dispC = 3;
+	int dispR = 95, dispC = 3;
 	char choice;
 	for (;;) {
 		system("cls"); // Clear the screen
