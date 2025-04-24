@@ -237,7 +237,7 @@ void drawEnemyBirdRight(char board[100][1000], int row, int col) {
 
 
 
-void drawPlayerRightFrame1(char board[100][1000], int row, int col, int& shootR, int shootC) {
+void drawPlayerRightFrame1(char board[100][1000], int row, int col, int& shootR, int shootC, int LC[9]) {
 	//left arm
 	board[row - 3][col] = '/';
 	board[row - 4][col + 1] = '/';
@@ -257,7 +257,6 @@ void drawPlayerRightFrame1(char board[100][1000], int row, int col, int& shootR,
 	board[row - 1][col + 7] = '|';
 	board[row - 1][col + 9] = '|';
 
-
 	//right arm
 	board[row - 4][col + 10] = '-';
 	board[row - 4][col + 11] = '-';
@@ -281,12 +280,19 @@ void drawPlayerRightFrame1(char board[100][1000], int row, int col, int& shootR,
 	board[row - 2][col + 7] = '_';
 	board[row - 2][col + 8] = '_';
 	board[row - 2][col + 9] = '/';
+
 	board[row - 3][col + 9] = '|';
+
 	board[row - 4][col + 9] = '|';
+
 	board[row - 5][col + 9] = '|';
+
 	board[row - 3][col + 3] = '|';
+
 	board[row - 4][col + 3] = '|';
+
 	board[row - 5][col + 3] = '|';
+
 	board[row - 5][col + 4] = '-';
 	board[row - 5][col + 5] = '-';
 	board[row - 5][col + 6] = 'v';
@@ -299,7 +305,9 @@ void drawPlayerRightFrame1(char board[100][1000], int row, int col, int& shootR,
 	//head
 
 	board[row - 6][col + 4] = '\\';
+
 	board[row - 7][col + 4] = '/';
+
 	board[row - 8][col + 5] = '_';
 	board[row - 8][col + 6] = '_';
 	board[row - 8][col + 7] = '_';
@@ -307,39 +315,47 @@ void drawPlayerRightFrame1(char board[100][1000], int row, int col, int& shootR,
 	board[row - 7][col + 5] = '(';
 	board[row - 7][col + 6] = '.';
 	board[row - 7][col + 7] = '.';
+
 	board[row - 6][col + 8] = '/';
+
 	board[row - 6][col + 7] = '-';
 	board[row - 6][col + 6] = '-';
 	board[row - 6][col + 5] = '-';
 
-
-
-
+	LC[0] = col + 9;
+	LC[1] = col + 9;
+	LC[2] = col + 9;
+	LC[3] = col + 9;
+	LC[4] = col + 14;
+	LC[5] = col + 14;
+	LC[6] = col + 8;
+	LC[7] = col + 8;
+	LC[8] = col + 7;
 
 }
 
 
 
-void drawPlayerRightFrame2 (char board[100][1000], int row, int col, int& shootR, int shootC) {
+void drawPlayerRightFrame2(char board[100][1000], int row, int col, int& shootR, int shootC, int LC[9]) {
 	//left arm
 	board[row - 3][col] = '/';
 	board[row - 4][col + 1] = '/';
 	board[row - 5][col + 2] = '/';
 
 	//left leg
-    board[row][col +2 ] = '/';
-    board[row][col +3 ] = '_';
-    board[row][col +4 ] = '/';
-    board[row-1][col +3 ] = '|';
-    board[row-1][col +5 ] = '|';
-    //right leg
-    board[row-1][col + 7] = '\\';    
-    board[row-1][col + 9] = '\\';    
-    board[row][col + 8] = '\\';    
-    board[row][col + 9] = '_';    
-    board[row][col + 10] = '\\';   
+	board[row][col + 2] = '/';
+	board[row][col + 3] = '_';
+	board[row][col + 4] = '/';
+	board[row - 1][col + 3] = '|';
+	board[row - 1][col + 5] = '|';
+	//right leg
+	board[row - 1][col + 7] = '\\';
+	board[row - 1][col + 9] = '\\';
+	board[row][col + 8] = '\\';
+	board[row][col + 9] = '_';
+	board[row][col + 10] = '\\';
 
-    
+
 	//right arm
 	board[row - 4][col + 10] = '-';
 	board[row - 4][col + 11] = '-';
@@ -395,30 +411,38 @@ void drawPlayerRightFrame2 (char board[100][1000], int row, int col, int& shootR
 	board[row - 6][col + 5] = '-';
 
 
-
+	LC[0] = col + 10; // row     (feet: '\\' at col+10)
+	LC[1] = col + 9;  // row - 1 (legs: '\\' at col+9)
+	LC[2] = col + 9;  // row - 2 (torso: '/' at col+9)
+	LC[3] = col + 9;  // row - 3 (left arm/body: '|' at col+9)
+	LC[4] = col + 14; // row - 4 (right arm: '/' at col+14)
+	LC[5] = col + 14; // row - 5 (upper body: '\\' at col+14)
+	LC[6] = col + 8;  // row - 6 (head base: '/' at col+8)
+	LC[7] = col + 8;  // row - 7 (eyes: ')' at col+8)
+	LC[8] = col + 7;  // row - 8 (top head: '_' at col+7)
 
 
 }
-void drawPlayerRightFrame3 (char board[100][1000], int row, int col, int& shootR, int shootC) {
+void drawPlayerRightFrame3(char board[100][1000], int row, int col, int& shootR, int shootC, int LC[9]) {
 	//left arm
-	board[row - 3][col+1] = '\\';
+	board[row - 3][col + 1] = '\\';
 	board[row - 4][col + 1] = '/';
 	board[row - 5][col + 2] = '/';
 
 	//left leg
-    board[row-2][col + 2] = '_';
-    board[row-1][col+1] = '|';
-    board[row-1][col + 2] = '_';
-    board[row-1][col + 3] = '_';
-    board[row-1][col + 4] = '_';
-    board[row-1][col + 5] = '|';    
-    
-    //right leg
-    board[row][col+6] = '|';
-    board[row][col + 7] = '_';
-    board[row][col + 8] = '|';
-    board[row-1][col + 6] = '\\';
-    board[row-1][col + 8] = '\\';
+	board[row - 2][col + 2] = '_';
+	board[row - 1][col + 1] = '|';
+	board[row - 1][col + 2] = '_';
+	board[row - 1][col + 3] = '_';
+	board[row - 1][col + 4] = '_';
+	board[row - 1][col + 5] = '|';
+
+	//right leg
+	board[row][col + 6] = '|';
+	board[row][col + 7] = '_';
+	board[row][col + 8] = '|';
+	board[row - 1][col + 6] = '\\';
+	board[row - 1][col + 8] = '\\';
 
 	//right arm
 	board[row - 4][col + 10] = '-';
@@ -474,32 +498,41 @@ void drawPlayerRightFrame3 (char board[100][1000], int row, int col, int& shootR
 	board[row - 6][col + 6] = '-';
 	board[row - 6][col + 5] = '-';
 
+	LC[0] = col + 8;  // row     (feet: '|' at col+8)
+	LC[1] = col + 8;  // row - 1 (legs: '\\' at col+8)
+	LC[2] = col + 9;  // row - 2 (torso: '/' at col+9)
+	LC[3] = col + 9;  // row - 3 (left arm/body: '|' at col+9)
+	LC[4] = col + 14; // row - 4 (right arm: '/' at col+14)
+	LC[5] = col + 14; // row - 5 (upper body: '\\' at col+14)
+	LC[6] = col + 8;  // row - 6 (head base: '/' at col+8)
+	LC[7] = col + 8;  // row - 7 (eyes: ')' at col+8)
+	LC[8] = col + 7;  // row - 8 (top head: '_' at col+7)
 
 }
 
 
-void drawPlayerRightFrame4 (char board[100][1000], int row, int col, int& shootR, int shootC) {
+void drawPlayerRightFrame4(char board[100][1000], int row, int col, int& shootR, int shootC, int LC[9]) {
 	//left arm
 	board[row - 3][col] = '/';
 	board[row - 4][col + 1] = '/';
 	board[row - 5][col + 2] = '/';
 
 	//left leg
-    board[row][col +3 ] = '|';
-    board[row][col +4 ] = '_';
-    board[row][col +5 ] = '|';
+	board[row][col + 3] = '|';
+	board[row][col + 4] = '_';
+	board[row][col + 5] = '|';
 
-    board[row-1][col +3 ] = '\\';
-    board[row-1][col +5 ] = '\\';
+	board[row - 1][col + 3] = '\\';
+	board[row - 1][col + 5] = '\\';
 
-    //right leg
-    board[row][col + 7] = '/';    
-    board[row][col + 8] = '_';    
-    board[row][col + 9] = '/';    
-    board[row-1][col + 7] = '\\';    
-    board[row-1][col + 9] = '\\';    
+	//right leg
+	board[row][col + 7] = '/';
+	board[row][col + 8] = '_';
+	board[row][col + 9] = '/';
+	board[row - 1][col + 7] = '\\';
+	board[row - 1][col + 9] = '\\';
 
-    
+
 	//right arm
 	board[row - 4][col + 10] = '-';
 	board[row - 4][col + 11] = '-';
@@ -554,33 +587,39 @@ void drawPlayerRightFrame4 (char board[100][1000], int row, int col, int& shootR
 	board[row - 6][col + 6] = '-';
 	board[row - 6][col + 5] = '-';
 
-
-
-
+	LC[0] = col + 9;  // row     (feet: '/' at col+9)
+	LC[1] = col + 9;  // row - 1 (legs: '\\' at col+9)
+	LC[2] = col + 9;  // row - 2 (torso: '/' at col+9)
+	LC[3] = col + 9;  // row - 3 (left arm/body: '|' at col+9)
+	LC[4] = col + 14; // row - 4 (right arm: '/' at col+14)
+	LC[5] = col + 14; // row - 5 (upper body: '\\' at col+14)
+	LC[6] = col + 8;  // row - 6 (head base: '/' at col+8)
+	LC[7] = col + 8;  // row - 7 (eyes: ')' at col+8)
+	LC[8] = col + 7;  // row - 8 (top head: '_' at col+7)
 
 }
 
 
-void drawPlayerRightFrame5 (char board[100][1000], int row, int col, int& shootR, int shootC) {
+void drawPlayerRightFrame5(char board[100][1000], int row, int col, int& shootR, int shootC, int LC[9]) {
 	//left arm
-	board[row - 3][col+1] = '\\';
+	board[row - 3][col + 1] = '\\';
 	board[row - 4][col + 1] = '/';
 	board[row - 5][col + 2] = '/';
 
-    //Left leg
-    board[row-2][col+2] = '_';
-    board[row-1][col+2] = '|';
-    board[row-1][col+3] = '_';
-    board[row-1][col+7] = '_';
-    board[row-1][col+8] = '|';
+	//Left leg
+	board[row - 2][col + 2] = '_';
+	board[row - 1][col + 2] = '|';
+	board[row - 1][col + 3] = '_';
+	board[row - 1][col + 7] = '_';
+	board[row - 1][col + 8] = '|';
 
-    //Right leg
+	//Right leg
 
-    board[row-1][col+4] = '\\';
-    board[row-1][col+6] = '\\';
-    board[row][col+5] = '\\';
-    board[row][col+6] = '_';
-    board[row][col+7] ='\\';
+	board[row - 1][col + 4] = '\\';
+	board[row - 1][col + 6] = '\\';
+	board[row][col + 5] = '\\';
+	board[row][col + 6] = '_';
+	board[row][col + 7] = '\\';
 
 	//right arm
 	board[row - 4][col + 10] = '-';
@@ -635,7 +674,15 @@ void drawPlayerRightFrame5 (char board[100][1000], int row, int col, int& shootR
 	board[row - 6][col + 7] = '-';
 	board[row - 6][col + 6] = '-';
 	board[row - 6][col + 5] = '-';
-
+	LC[0] = col + 7;  // row     (feet: '\\' at col+7)
+	LC[1] = col + 8;  // row - 1 (legs: '|' at col+8)
+	LC[2] = col + 9;  // row - 2 (torso: '/' at col+9)
+	LC[3] = col + 9;  // row - 3 (left arm/body: '|' at col+9)
+	LC[4] = col + 14; // row - 4 (right arm: '/' at col+14)
+	LC[5] = col + 14; // row - 5 (upper body: '\\' at col+14)
+	LC[6] = col + 8;  // row - 6 (head base: '/' at col+8)
+	LC[7] = col + 8;  // row - 7 (eyes: ')' at col+8)
+	LC[8] = col + 7;  // row - 8 (top head: '_' at col+7)
 
 }
 /////////////////////////////////////////////
@@ -646,7 +693,7 @@ void drawPlayerRightFrame5 (char board[100][1000], int row, int col, int& shootR
 
 
 // Walking Left Frames
-void DrawPlayerLeftFrame1(char board[100][1000], int row, int col, int& shootingR, int& shootingC) {
+void DrawPlayerLeftFrame1(char board[100][1000], int row, int col, int& shootingR, int& shootingC , int LC[9]) {
 
 	//head
 	board[row - 7][col + 10] = '\\';
@@ -727,335 +774,383 @@ void DrawPlayerLeftFrame1(char board[100][1000], int row, int col, int& shooting
 	board[row][col + 7] = '|';
 	board[row - 1][col + 7] = '|';
 
+	LC[0] = col + 5;   // Correct (left leg '|')
+	LC[1] = col + 5;   // Correct (left leg '|')
+	LC[2] = col + 5;   // Correct (body '\')
+	LC[3] = col + 5;   // Correct (body '|')
+	LC[4] = col;       // Correct (left arm '\')
+	LC[5] = col;       // Correct (left arm '/')
+	LC[6] = col + 6;   // Correct (head '\')
+	LC[7] = col + 6;   // Correct (head '(')
+	LC[8] = col + 6;   // Correct (head '_')
+}
 
+
+void DrawPlayerLeftFrame2(char board[100][1000], int R, int C, int& shootingR, int& shootingC , int LC[9]) {
+
+	//Left arm
+	board[R - 4][C] = '\\';
+	board[R - 4][C + 1] = '|';
+	board[R - 4][C + 2] = '-';
+	board[R - 4][C + 3] = '-';
+	board[R - 4][C + 4] = '-';
+	shootingR = R - 4;
+	shootingC = C - 1;
+	board[R - 5][C] = '/';
+	board[R - 5][C + 1] = '|';
+	board[R - 5][C + 2] = '-';
+	board[R - 5][C + 3] = '-';
+	board[R - 5][C + 4] = '-';
+
+
+	//Right arm
+
+	board[R - 5][C + 12] = '\\';
+	board[R - 4][C + 13] = '\\';
+	board[R - 3][C + 14] = '\\';
+
+	//Left leg
+
+	board[R][C + 4] = '/';
+	board[R][C + 5] = '_';
+	board[R][C + 6] = '/';
+	board[R - 1][C + 5] = '/';
+	board[R - 1][C + 7] = '/';
+
+	//Right leg
+	board[R][C + 10] = '\\';
+	board[R][C + 11] = '_';
+	board[R][C + 12] = '\\';
+	board[R - 1][C + 9] = '|';
+	board[R - 1][C + 11] = '|';
+
+	//Body
+	board[R - 2][C + 5] = '\\';
+	board[R - 2][C + 6] = '_';
+	board[R - 2][C + 7] = '_';
+	board[R - 2][C + 8] = '_';
+	board[R - 2][C + 9] = '_';
+	board[R - 2][C + 10] = '_';
+	board[R - 2][C + 11] = '/';
+
+	board[R - 3][C + 5] = '|';
+	board[R - 3][C + 11] = '|';
+	board[R - 4][C + 5] = '|';
+	board[R - 4][C + 11] = '|';
+	board[R - 5][C + 5] = '|';
+	board[R - 5][C + 11] = '|';
+
+	board[R - 5][C + 6] = '-';
+	board[R - 5][C + 7] = '-';
+	board[R - 5][C + 8] = 'v';
+	board[R - 5][C + 9] = '-';
+	board[R - 5][C + 10] = '-';
+
+	//Head
+	board[R - 7][C + 10] = '\\';
+	board[R - 6][C + 10] = '/';
+
+	board[R - 8][C + 6] = '_';
+	board[R - 8][C + 7] = '_';
+	board[R - 8][C + 8] = '_';
+	board[R - 8][C + 9] = '_';
+
+	board[R - 7][C + 9] = ')';
+	board[R - 7][C + 6] = '(';
+	board[R - 7][C + 7] = '.';
+	board[R - 7][C + 8] = '.';
+	board[R - 6][C + 6] = '\\';
+	board[R - 6][C + 7] = '-';
+	board[R - 6][C + 8] = '-';
+	board[R - 6][C + 9] = '-';
+
+	LC[0] = C + 4;   // Correct (left leg '/')
+	LC[1] = C + 5;   // Should be col + 5 (left leg '/')
+	LC[2] = C + 5;   // Correct (body '\')
+	LC[3] = C + 5;   // Correct (body '|')
+	LC[4] = C;       // Correct (left arm '\')
+	LC[5] = C;       // Correct (left arm '/')
+	LC[6] = C + 6;   // Correct (head '\')
+	LC[7] = C + 6;   // Correct (head '(')
+	LC[8] = C + 6;   // Correct (head '_')
+}
+
+void DrawPlayerLeftFrame3(char board[100][1000], int R, int C, int& shootingR, int& shootingC , int LC[9] ) {
+
+	//Left arm
+	board[R - 4][C] = '\\';
+	board[R - 4][C + 1] = '|';
+	board[R - 4][C + 2] = '-';
+	board[R - 4][C + 3] = '-';
+	board[R - 4][C + 4] = '-';
+	shootingR = R - 4;
+	shootingC = C - 1;
+	board[R - 5][C] = '/';
+	board[R - 5][C + 1] = '|';
+	board[R - 5][C + 2] = '-';
+	board[R - 5][C + 3] = '-';
+	board[R - 5][C + 4] = '-';
+
+
+	//Right arm
+
+	board[R - 5][C + 12] = '\\';
+	board[R - 4][C + 13] = '\\';
+	board[R - 3][C + 13] = '/';
+
+
+	//Left leg
+	board[R][C + 5] = '|';
+	board[R][C + 6] = '_';
+	board[R][C + 7] = '|';
+	board[R - 1][C + 5] = '/';
+	board[R - 1][C + 7] = '/';
+
+	//Right Leg
+	board[R - 1][C + 10] = '|';
+	board[R - 1][C + 11] = '_';
+	board[R - 1][C + 12] = '_';
+	board[R - 1][C + 13] = '_';
+	board[R - 1][C + 14] = '|';
+	board[R - 2][C + 12] = '_';
+	board[R - 2][C + 13] = '_';
+
+
+	//Body
+	board[R - 2][C + 5] = '\\';
+	board[R - 2][C + 6] = '_';
+	board[R - 2][C + 7] = '_';
+	board[R - 2][C + 8] = '_';
+	board[R - 2][C + 9] = '_';
+	board[R - 2][C + 10] = '_';
+	board[R - 2][C + 11] = '/';
+
+	board[R - 3][C + 5] = '|';
+	board[R - 3][C + 11] = '|';
+	board[R - 4][C + 5] = '|';
+	board[R - 4][C + 11] = '|';
+	board[R - 5][C + 5] = '|';
+	board[R - 5][C + 11] = '|';
+
+	board[R - 5][C + 6] = '-';
+	board[R - 5][C + 7] = '-';
+	board[R - 5][C + 8] = 'v';
+	board[R - 5][C + 9] = '-';
+	board[R - 5][C + 10] = '-';
+
+	//Head
+	board[R - 7][C + 10] = '\\';
+	board[R - 6][C + 10] = '/';
+
+	board[R - 8][C + 6] = '_';
+	board[R - 8][C + 7] = '_';
+	board[R - 8][C + 8] = '_';
+	board[R - 8][C + 9] = '_';
+
+	board[R - 7][C + 9] = ')';
+	board[R - 7][C + 6] = '(';
+	board[R - 7][C + 7] = '.';
+	board[R - 7][C + 8] = '.';
+	board[R - 6][C + 6] = '\\';
+	board[R - 6][C + 7] = '-';
+	board[R - 6][C + 8] = '-';
+	board[R - 6][C + 9] = '-';
+
+	LC[0] = C + 5;   // R      (left leg: '|' at col+5)
+	LC[1] = C + 5;   // R - 1  (left leg: '/' at col+5)
+	LC[2] = C + 5;   // R - 2  (body: '\' at col+5)
+	LC[3] = C + 5;   // R - 3  (body: '|' at col+5)
+	LC[4] = C;       // R - 4  (left arm: '\' at col+0)
+	LC[5] = C;       // R - 5  (left arm: '/' at col+0)
+	LC[6] = C + 6;   // R - 6  (head: '\' at col+6)
+	LC[7] = C + 6;   // R - 7  (head: '(' at col+6)
+	LC[8] = C + 6;   // R - 8  (head: '_' at col+6)
 
 }
 
 
-void DrawPlayerLeftFrame2(char board[100][1000], int R, int C, int& shootingR, int& shootingC) {
 
-    //Left arm
-    board[R-4][C] = '\\';
-    board[R-4][C+1] = '|';
-    board[R-4][C+2] = '-';
-    board[R-4][C+3] = '-';
-    board[R-4][C+4] = '-';
-    shootingR = R-4;
-    shootingC = C-1;
-    board[R-5][C] = '/';
-    board[R-5][C+1] = '|';
-    board[R-5][C+2] = '-';
-    board[R-5][C+3] = '-';
-    board[R-5][C+4] = '-';
+void DrawPlayerLeftFrame4(char board[100][1000], int R, int C, int& shootingR, int& shootingC , int LC[9]) {
 
-
-    //Right arm
-
-    board[R-5][C+12] = '\\';
-    board[R-4][C+13] = '\\';
-    board[R-3][C+14] = '\\';
-
-    //Left leg
-
-    board[R][C+4] = '/';
-    board[R][C+5] = '_';
-    board[R][C+6] = '/';
-    board[R-1][C+5] = '/';
-    board[R-1][C+7] = '/';
-
-    //Right leg
-    board[R][C+10] = '\\';
-    board[R][C+11] = '_';
-    board[R][C+12] = '\\';
-    board[R-1][C+9] = '|';
-    board[R-1][C+11] = '|';
-
-    //Body
-    board[R-2][C+5] = '\\';
-    board[R-2][C+6] = '_';
-    board[R-2][C+7] = '_';
-    board[R-2][C+8] = '_';
-    board[R-2][C+9] = '_';
-    board[R-2][C+10] = '_';
-    board[R-2][C+11] = '/';
-    
-    board[R-3][C+5] = '|';
-    board[R-3][C+11] = '|';
-    board[R-4][C+5] = '|';
-    board[R-4][C+11] = '|';
-    board[R-5][C+5] = '|';
-    board[R-5][C+11] = '|';
-
-    board[R-5][C+6] ='-';
-    board[R-5][C+7] ='-';
-    board[R-5][C+8] ='v';
-    board[R-5][C+9] ='-';
-    board[R-5][C+10] ='-';
-
-    //Head
-    board[R - 7][C + 10] = '\\';
-    board[R - 6][C + 10] = '/';
-
-    board[R - 8][C + 6] = '_';
-    board[R - 8][C + 7] = '_';
-    board[R - 8][C + 8] = '_';
-    board[R - 8][C + 9] = '_';
-
-    board[R - 7][C + 9] = ')';
-    board[R - 7][C + 6] = '(';
-    board[R - 7][C + 7] = '.';
-    board[R - 7][C + 8] = '.';
-    board[R - 6][C + 6] = '\\';
-    board[R - 6][C + 7] = '-';
-    board[R - 6][C + 8] = '-';
-    board[R - 6][C + 9] = '-';
-
-}
-
-void DrawPlayerLeftFrame3(char board[100][1000], int R, int C, int& shootingR, int& shootingC) {
-
-    //Left arm
-    board[R-4][C] = '\\';
-    board[R-4][C+1] = '|';
-    board[R-4][C+2] = '-';
-    board[R-4][C+3] = '-';
-    board[R-4][C+4] = '-';
-    shootingR = R-4;
-    shootingC = C-1;
-    board[R-5][C] = '/';
-    board[R-5][C+1] = '|';
-    board[R-5][C+2] = '-';
-    board[R-5][C+3] = '-';
-    board[R-5][C+4] = '-';
+	//Left arm
+	board[R - 4][C] = '\\';
+	board[R - 4][C + 1] = '|';
+	board[R - 4][C + 2] = '-';
+	board[R - 4][C + 3] = '-';
+	board[R - 4][C + 4] = '-';
+	shootingR = R - 4;
+	shootingC = C - 1;
+	board[R - 5][C] = '/';
+	board[R - 5][C + 1] = '|';
+	board[R - 5][C + 2] = '-';
+	board[R - 5][C + 3] = '-';
+	board[R - 5][C + 4] = '-';
 
 
-    //Right arm
+	//Right arm
 
-    board[R-5][C+12] = '\\';
-    board[R-4][C+13] = '\\';
-    board[R-3][C+13] = '/';
-
-
-    //Left leg
-    board[R][C+5] = '|';
-    board[R][C+6] = '_';
-    board[R][C+7] = '|';
-    board[R-1][C+5] = '/';
-    board[R-1][C+7] = '/';
-
-    //Right Leg
-    board[R-1][C+10] = '|';
-    board[R-1][C+11] = '_';
-    board[R-1][C+12] = '_';
-    board[R-1][C+13] = '_';
-    board[R-1][C+14] = '|';
-    board[R-2][C+12] = '_';
-    board[R-2][C+13] = '_';
+	board[R - 5][C + 12] = '\\';
+	board[R - 4][C + 13] = '\\';
+	board[R - 3][C + 14] = '\\';
 
 
-    //Body
-    board[R-2][C+5] = '\\';
-    board[R-2][C+6] = '_';
-    board[R-2][C+7] = '_';
-    board[R-2][C+8] = '_';
-    board[R-2][C+9] = '_';
-    board[R-2][C+10] = '_';
-    board[R-2][C+11] = '/';
-    
-    board[R-3][C+5] = '|';
-    board[R-3][C+11] = '|';
-    board[R-4][C+5] = '|';
-    board[R-4][C+11] = '|';
-    board[R-5][C+5] = '|';
-    board[R-5][C+11] = '|';
+	//Left leg
+	board[R][C + 5] = '\\';
+	board[R][C + 6] = '_';
+	board[R][C + 7] = '\\';
+	board[R - 1][C + 5] = '/';
+	board[R - 1][C + 7] = '/';
 
-    board[R-5][C+6] ='-';
-    board[R-5][C+7] ='-';
-    board[R-5][C+8] ='v';
-    board[R-5][C+9] ='-';
-    board[R-5][C+10] ='-';
+	//Right leg
+	board[R][C + 9] = '|';
+	board[R][C + 10] = '_';
+	board[R][C + 11] = '|';
+	board[R - 1][C + 9] = '/';
+	board[R - 1][C + 11] = '/';
 
-    //Head
-    board[R - 7][C + 10] = '\\';
-    board[R - 6][C + 10] = '/';
+	//Body
+	board[R - 2][C + 5] = '\\';
+	board[R - 2][C + 6] = '_';
+	board[R - 2][C + 7] = '_';
+	board[R - 2][C + 8] = '_';
+	board[R - 2][C + 9] = '_';
+	board[R - 2][C + 10] = '_';
+	board[R - 2][C + 11] = '/';
 
-    board[R - 8][C + 6] = '_';
-    board[R - 8][C + 7] = '_';
-    board[R - 8][C + 8] = '_';
-    board[R - 8][C + 9] = '_';
+	board[R - 3][C + 5] = '|';
+	board[R - 3][C + 11] = '|';
+	board[R - 4][C + 5] = '|';
+	board[R - 4][C + 11] = '|';
+	board[R - 5][C + 5] = '|';
+	board[R - 5][C + 11] = '|';
 
-    board[R - 7][C + 9] = ')';
-    board[R - 7][C + 6] = '(';
-    board[R - 7][C + 7] = '.';
-    board[R - 7][C + 8] = '.';
-    board[R - 6][C + 6] = '\\';
-    board[R - 6][C + 7] = '-';
-    board[R - 6][C + 8] = '-';
-    board[R - 6][C + 9] = '-';
-}
+	board[R - 5][C + 6] = '-';
+	board[R - 5][C + 7] = '-';
+	board[R - 5][C + 8] = 'v';
+	board[R - 5][C + 9] = '-';
+	board[R - 5][C + 10] = '-';
 
+	//Head
+	board[R - 7][C + 10] = '\\';
+	board[R - 6][C + 10] = '/';
 
+	board[R - 8][C + 6] = '_';
+	board[R - 8][C + 7] = '_';
+	board[R - 8][C + 8] = '_';
+	board[R - 8][C + 9] = '_';
 
-void DrawPlayerLeftFrame4(char board[100][1000], int R, int C, int& shootingR, int& shootingC) {
+	board[R - 7][C + 9] = ')';
+	board[R - 7][C + 6] = '(';
+	board[R - 7][C + 7] = '.';
+	board[R - 7][C + 8] = '.';
+	board[R - 6][C + 6] = '\\';
+	board[R - 6][C + 7] = '-';
+	board[R - 6][C + 8] = '-';
+	board[R - 6][C + 9] = '-';
 
-    //Left arm
-    board[R-4][C] = '\\';
-    board[R-4][C+1] = '|';
-    board[R-4][C+2] = '-';
-    board[R-4][C+3] = '-';
-    board[R-4][C+4] = '-';
-    shootingR = R-4;
-    shootingC = C-1;
-    board[R-5][C] = '/';
-    board[R-5][C+1] = '|';
-    board[R-5][C+2] = '-';
-    board[R-5][C+3] = '-';
-    board[R-5][C+4] = '-';
+	LC[0] = C + 5;   // R      (left leg: '\' at col+5)
+	LC[1] = C + 5;   // R - 1  (left leg: '/' at col+5)
+	LC[2] = C + 5;   // R - 2  (body: '\' at col+5)
+	LC[3] = C + 5;   // R - 3  (body: '|' at col+5)
+	LC[4] = C;       // R - 4  (left arm: '\' at col+0)
+	LC[5] = C;       // R - 5  (left arm: '/' at col+0)
+	LC[6] = C + 6;   // R - 6  (head: '\' at col+6)
+	LC[7] = C + 6;   // R - 7  (head: '(' at col+6)
+	LC[8] = C + 6;   // R - 8  (head: '_' at col+6)
 
-
-    //Right arm
-
-    board[R-5][C+12] = '\\';
-    board[R-4][C+13] = '\\';
-    board[R-3][C+14] = '\\';
-
-
-    //Left leg
-    board[R][C+5] = '\\';
-    board[R][C+6] = '_';
-    board[R][C+7] = '\\';
-    board[R-1][C+5] = '/';
-    board[R-1][C+7] = '/';
-
-    //Right leg
-    board[R][C+9] = '|';
-    board[R][C+10] = '_';
-    board[R][C+11] = '|';
-    board[R-1][C+9] = '/';
-    board[R-1][C+11] = '/';
-
-    //Body
-    board[R-2][C+5] = '\\';
-    board[R-2][C+6] = '_';
-    board[R-2][C+7] = '_';
-    board[R-2][C+8] = '_';
-    board[R-2][C+9] = '_';
-    board[R-2][C+10] = '_';
-    board[R-2][C+11] = '/';
-    
-    board[R-3][C+5] = '|';
-    board[R-3][C+11] = '|';
-    board[R-4][C+5] = '|';
-    board[R-4][C+11] = '|';
-    board[R-5][C+5] = '|';
-    board[R-5][C+11] = '|';
-
-    board[R-5][C+6] ='-';
-    board[R-5][C+7] ='-';
-    board[R-5][C+8] ='v';
-    board[R-5][C+9] ='-';
-    board[R-5][C+10] ='-';
-
-    //Head
-    board[R - 7][C + 10] = '\\';
-    board[R - 6][C + 10] = '/';
-
-    board[R - 8][C + 6] = '_';
-    board[R - 8][C + 7] = '_';
-    board[R - 8][C + 8] = '_';
-    board[R - 8][C + 9] = '_';
-
-    board[R - 7][C + 9] = ')';
-    board[R - 7][C + 6] = '(';
-    board[R - 7][C + 7] = '.';
-    board[R - 7][C + 8] = '.';
-    board[R - 6][C + 6] = '\\';
-    board[R - 6][C + 7] = '-';
-    board[R - 6][C + 8] = '-';
-    board[R - 6][C + 9] = '-';
 }
 
 
 
 
-void DrawPlayerLeftFrame5(char board[100][1000], int R, int C, int& shootingR, int& shootingC) {
+void DrawPlayerLeftFrame5(char board[100][1000], int R, int C, int& shootingR, int& shootingC , int LC[9]) {
 
-    //Left arm
-    board[R-4][C] = '\\';
-    board[R-4][C+1] = '|';
-    board[R-4][C+2] = '-';
-    board[R-4][C+3] = '-';
-    board[R-4][C+4] = '-';
-    shootingR = R-4;
-    shootingC = C-1;
-    board[R-5][C] = '/';
-    board[R-5][C+1] = '|';
-    board[R-5][C+2] = '-';
-    board[R-5][C+3] = '-';
-    board[R-5][C+4] = '-';
-
-
-    //Right arm
-
-    board[R-5][C+12] = '\\';
-    board[R-4][C+13] = '\\';
-    board[R-3][C+13] = '/';
+	//Left arm
+	board[R - 4][C] = '\\';
+	board[R - 4][C + 1] = '|';
+	board[R - 4][C + 2] = '-';
+	board[R - 4][C + 3] = '-';
+	board[R - 4][C + 4] = '-';
+	shootingR = R - 4;
+	shootingC = C - 1;
+	board[R - 5][C] = '/';
+	board[R - 5][C + 1] = '|';
+	board[R - 5][C + 2] = '-';
+	board[R - 5][C + 3] = '-';
+	board[R - 5][C + 4] = '-';
 
 
-    //Left leg
-    board[R][C+7] = '/';
-    board[R][C+8] = '_';
-    board[R][C+9] = '/';
-    board[R-1][C+8] = '/';
-    board[R-1][C+10] = '/';
+	//Right arm
 
-    //Right leg
-    board[R-1][C+6] = '|';
-    board[R-1][C+7] = '_';
-    board[R-1][C+11] = '_';
-    board[R-1][C+12] = '|';
-    board[R-2][C+12] = '_';
+	board[R - 5][C + 12] = '\\';
+	board[R - 4][C + 13] = '\\';
+	board[R - 3][C + 13] = '/';
 
 
-    //Body
-    board[R-2][C+5] = '\\';
-    board[R-2][C+6] = '_';
-    board[R-2][C+7] = '_';
-    board[R-2][C+8] = '_';
-    board[R-2][C+9] = '_';
-    board[R-2][C+10] = '_';
-    board[R-2][C+11] = '/';
-    
-    board[R-3][C+5] = '|';
-    board[R-3][C+11] = '|';
-    board[R-4][C+5] = '|';
-    board[R-4][C+11] = '|';
-    board[R-5][C+5] = '|';
-    board[R-5][C+11] = '|';
+	//Left leg
+	board[R][C + 7] = '/';
+	board[R][C + 8] = '_';
+	board[R][C + 9] = '/';
+	board[R - 1][C + 8] = '/';
+	board[R - 1][C + 10] = '/';
 
-    board[R-5][C+6] ='-';
-    board[R-5][C+7] ='-';
-    board[R-5][C+8] ='v';
-    board[R-5][C+9] ='-';
-    board[R-5][C+10] ='-';
+	//Right leg
+	board[R - 1][C + 6] = '|';
+	board[R - 1][C + 7] = '_';
+	board[R - 1][C + 11] = '_';
+	board[R - 1][C + 12] = '|';
+	board[R - 2][C + 12] = '_';
 
-    //Head
-    board[R - 7][C + 10] = '\\';
-    board[R - 6][C + 10] = '/';
 
-    board[R - 8][C + 6] = '_';
-    board[R - 8][C + 7] = '_';
-    board[R - 8][C + 8] = '_';
-    board[R - 8][C + 9] = '_';
+	//Body
+	board[R - 2][C + 5] = '\\';
+	board[R - 2][C + 6] = '_';
+	board[R - 2][C + 7] = '_';
+	board[R - 2][C + 8] = '_';
+	board[R - 2][C + 9] = '_';
+	board[R - 2][C + 10] = '_';
+	board[R - 2][C + 11] = '/';
 
-    board[R - 7][C + 9] = ')';
-    board[R - 7][C + 6] = '(';
-    board[R - 7][C + 7] = '.';
-    board[R - 7][C + 8] = '.';
-    board[R - 6][C + 6] = '\\';
-    board[R - 6][C + 7] = '-';
-    board[R - 6][C + 8] = '-';
-    board[R - 6][C + 9] = '-';
+	board[R - 3][C + 5] = '|';
+	board[R - 3][C + 11] = '|';
+	board[R - 4][C + 5] = '|';
+	board[R - 4][C + 11] = '|';
+	board[R - 5][C + 5] = '|';
+	board[R - 5][C + 11] = '|';
+
+	board[R - 5][C + 6] = '-';
+	board[R - 5][C + 7] = '-';
+	board[R - 5][C + 8] = 'v';
+	board[R - 5][C + 9] = '-';
+	board[R - 5][C + 10] = '-';
+
+	//Head
+	board[R - 7][C + 10] = '\\';
+	board[R - 6][C + 10] = '/';
+
+	board[R - 8][C + 6] = '_';
+	board[R - 8][C + 7] = '_';
+	board[R - 8][C + 8] = '_';
+	board[R - 8][C + 9] = '_';
+
+	board[R - 7][C + 9] = ')';
+	board[R - 7][C + 6] = '(';
+	board[R - 7][C + 7] = '.';
+	board[R - 7][C + 8] = '.';
+	board[R - 6][C + 6] = '\\';
+	board[R - 6][C + 7] = '-';
+	board[R - 6][C + 8] = '-';
+	board[R - 6][C + 9] = '-';
+
+	LC[0] = C + 7;   // R      (left leg: '/' at col+7)
+	LC[1] = C + 6;   // R - 1  (right leg: '|' at col+6)
+	LC[2] = C + 5;   // R - 2  (body: '\' at col+5)
+	LC[3] = C + 5;   // R - 3  (body: '|' at col+5)
+	LC[4] = C;       // R - 4  (left arm: '\' at col+0)
+	LC[5] = C;       // R - 5  (left arm: '/' at col+0)
+	LC[6] = C + 6;   // R - 6  (head: '\' at col+6)
+	LC[7] = C + 6;   // R - 7  (head: '(' at col+6)
+	LC[8] = C + 6;   // R - 8  (head: '_' at col+6)
 }
 
 
@@ -1258,7 +1353,7 @@ void climbFrame(char board[100][1000], int row, int col) {
 	board[row - 8][col + 3] = '_';
 	board[row - 8][col + 3] = '_';
 	board[row - 8][col + 3] = '_';
-	
+
 
 
 
@@ -1287,13 +1382,68 @@ void climbFrame(char board[100][1000], int row, int col) {
 	board[row - 5][col + 8] = '-';
 }
 
+
+
+void drawElevator(char board[100][1000], int R, int C) {
+	board[R - 1][C] = char(186); board[R - 1][C + 17] = char(186);
+	board[R - 2][C] = char(186);  board[R - 2][C + 17] = char(186);
+	board[R - 3][C] = char(186); board[R - 3][C + 17] = char(186);
+	board[R - 4][C] = char(186); board[R - 4][C + 17] = char(186);
+	board[R - 5][C] = char(186); board[R - 5][C + 17] = char(186);
+	board[R - 6][C] = char(186); board[R - 6][C + 17] = char(186);
+	board[R - 7][C] = char(186); board[R - 7][C + 17] = char(186);
+	board[R - 8][C] = char(186); board[R - 8][C + 17] = char(186);
+	board[R - 9][C] = char(186); board[R - 9][C + 17] = char(186);
+
+	board[R][C] = char(200);
+
+	board[R - 10][C] = char(201);
+	board[R - 10][C + 1] = char(205);
+	board[R - 10][C + 2] = char(205);
+	board[R - 10][C + 3] = char(205);
+	board[R - 10][C + 4] = char(205);
+	board[R - 10][C + 5] = char(205);
+	board[R - 10][C + 6] = char(205);
+	board[R - 10][C + 7] = char(205);
+	board[R - 10][C + 8] = char(205);
+	board[R - 10][C + 9] = char(205);
+	board[R - 10][C + 10] = char(205);
+	board[R - 10][C + 11] = char(205);
+	board[R - 10][C + 12] = char(205);
+	board[R - 10][C + 13] = char(205);
+	board[R - 10][C + 14] = char(205);
+	board[R - 10][C + 15] = char(205);
+	board[R - 10][C + 16] = char(205);
+	board[R - 10][C + 17] = char(187);
+
+
+	board[R][C + 1] = char(205);
+	board[R][C + 2] = char(205);
+	board[R][C + 3] = char(205);
+	board[R][C + 4] = char(205);
+	board[R][C + 5] = char(205);
+	board[R][C + 6] = char(205);
+	board[R][C + 7] = char(205);
+	board[R][C + 8] = char(205);
+	board[R][C + 9] = char(205);
+	board[R][C + 10] = char(205);
+	board[R][C + 11] = char(205);
+	board[R][C + 12] = char(205);
+	board[R][C + 13] = char(205);
+	board[R][C + 14] = char(205);
+	board[R][C + 15] = char(205);
+	board[R][C + 16] = char(205);
+	board[R][C + 17] = char(188);
+
+}
+
 ///////////////////////////////
 
 void callObj(char board[100][1000]) {
 
 	drawEnemyBirdLeft(board, 82, 60); // Draw the enemy bird
 	drawEnemyBirdRight(board, 84, 10); // Draw the enemy bird
-
+	drawElevator(board, 98, 25);
 }
 
 ///////////////////////////////
@@ -1367,8 +1517,6 @@ void Clear_LoadMap(char board[100][1000], int dispR, int dispC) {
 }
 
 
-
-
 /////////////////////////////////////
 //Call dynamic objects
 
@@ -1376,13 +1524,16 @@ void Clear_LoadMap(char board[100][1000], int dispR, int dispC) {
 /////////////////////////////////////
 //Player Movement Functions
 
-void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero) {
+void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero, int LC[9]) {
 	int check = 1;
 	// Check every cell in the column to the right of the player
 	for (int i = posIHero; i >= posIHero - heightHero + 1; i--) {
-		if (board[i][posJHero + widthHero] != ' ') {
-			check = 0;
-			break;
+		int lc_index = posIHero - i;  // Convert to LC index (0=bottom)
+		if (lc_index >= 0 && lc_index < 9) { 
+			if (board[i][LC[lc_index] + 1] != ' ' && board[i][LC[lc_index] + 1] != char(186)) {
+				check = 0;
+				break;
+			}
 		}
 	}
 	// Only move if all checks passed AND we won't go out of bounds
@@ -1391,32 +1542,38 @@ void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHer
 	}
 }
 
-void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int heightHero) {
-	int check = 1;  // Start with check = 1 for consistency
-	//Check every cell in the column in front of the player to if its empty
-	for (int i = posIHero; i >= posIHero - heightHero + 1; i--) {
-		if (board[i][posJHero - 1] != ' ') {
-			check = 0;
-			break;
+void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int heightHero , int LC[9]) {
+		int check = 1;
+
+		for (int i = posIHero; i >= posIHero - heightHero + 1; i--) {
+			int lc_index = posIHero - i;  // Convert to LC index (0 to 8)
+			if (lc_index >= 0 && lc_index < 9) {  
+				if (board[i][LC[lc_index] - 1] != ' ' && board[i][LC[lc_index] - 1] != char(186)) {
+					check = 0;
+					break;
+				}
+			}
 		}
-	}
-	if (posJHero - 1 > 0 && check == 1) posJHero--;
+
+		if (check == 1 && posJHero - 1 >= 0) {
+			posJHero--;
+		}
 }
 
-void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int animation , int dispR , int dispC) {
+void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int animation, int dispR, int dispC) {
 	int check = 1;
 	for (int i = 0; i < 3; i++) {
 		if (pX - pHeight < 0) break;
 		for (int j = pY; j <= pY + (pWidth - 1) && j < 999; j++) {
-			if (board[pX - pHeight][j] != ' ') {
+			if (board[pX - pHeight][j] != ' ' && board[pX - pHeight][j] != char(186)) {
 				check = 0;
 				break;
 			}
 		}
 
-		if (pX - (pHeight - 1) - 1 >= 0 && board[pX - (pHeight - 1) - 1][pY] == ' ' && check == 1) {
+		if (pX - (pHeight - 1) - 1 >= 0 && (board[pX - (pHeight - 1) - 1][pY] == ' ' || board[pX - (pHeight - 1) - 1][pY] == char(186)) && check == 1) {
 			pX--;
-            scroll(board, pY,pX, Player.maxWidth, Player.maxHeight , dispR , dispC);
+			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 			clearMap(board, dispR, dispC);
 			callObj(board); // Call the function to draw the objects
 			addBorders(board, dispR, dispC);
@@ -1428,7 +1585,7 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 			}
 			system("cls");
 			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
-			Clear_LoadMap(board , dispR , dispC); // Clear the screen and load the map
+			Clear_LoadMap(board, dispR, dispC); // Clear the screen and load the map
 
 			isJumping = 1;
 		}
@@ -1436,29 +1593,29 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 
 	}
 }
-void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int& isFalling, int animation , int dispR , int dispC) {
+void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int& isFalling, int animation, int dispR, int dispC) {
 	int check = 1;
 	for (int j = pY; j <= pY + (pWidth - 1); j++) {
-		if (board[pX + 1][j] != ' ') {
+		if (board[pX + 1][j] != ' ' && board[pX + 1][j] != char(186)) {
 			check = 0;
 			break;
 		}
 	}
 
 	//Fall straight
-	for (; pX + 1 < 99 && board[pX + 1][pY] == ' ' && check; ) {
+	for (; pX + 1 < 99 && (board[pX + 1][pY] == ' ' || board[pX + 1][pY] == char(186)) && check; ) {
 		if (pX - pHeight < 0) break;
 		for (int j = pY; j <= pY + (pWidth - 1) && j < 1000; j++) {
-			if (board[pX - pHeight][j] != ' ') {
+			if (board[pX - pHeight][j] != ' ' && board[pX - pHeight][j] != char(186)) {
 				check = 0;
 				break;
 			}
 		}
 		pX++;
-		scroll(board, pY,pX, Player.maxWidth, Player.maxHeight , dispR , dispC);
-		clearMap(board , dispR , dispC);
+		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+		clearMap(board, dispR, dispC);
 		callObj(board); // Call the function to draw the objects
-		addBorders(board , dispR , dispC);
+		addBorders(board, dispR, dispC);
 		if (animation == 0) {
 			jumprightframe(board, pX, pY); // Draw the player jumping up
 		}
@@ -1467,206 +1624,208 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 		}
 		system("cls");
 		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
-		Clear_LoadMap(board , dispR , dispC); // Clear the screen and load the map
+		Clear_LoadMap(board, dispR, dispC); // Clear the screen and load the map
 		isFalling = 1;
 	}
 	isJumping = 0, isFalling = 0; // Reset jumping and falling states after landing
 }
 
-void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int& isFalling, int& isWalking, int dispR , int dispC) {
-    int check = 1;
+void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int& isFalling, int& isWalking, int dispR, int dispC) {
+	int check = 1;
 
-    // Check every cell in the column to the right of the player (pY + pWidth for right side)
-    for (int i = pX; i >= pX - pHeight + 1; i--) {
-        if (board[i][pY + pWidth] != ' ') {
-            check = 0;
-            break;
-        }
-    }
+	// Check every cell in the column to the right of the player (pY + pWidth for right side)
+	for (int i = pX; i >= pX - pHeight + 1; i--) {
+		if (board[i][pY + pWidth] != ' ' && board[i][pY + pWidth] != char(186) && board[i][pY + pWidth] != char(188) && board[i][pY + pWidth] != char(200)) {
+			check = 0;
+			break;
+		}
+	}
 
-    // Check the space the player occupies (height and width)
-    for (int j = pY; j <= pY + (pWidth - 1) && j < 1000; j++) {
-        if (board[pX - pHeight][j] != ' ') {
-            check = 0;
-            break;
-        }
-    }
+	// Check the space the player occupies (height and width)
+	for (int j = pY; j <= pY + (pWidth - 1) && j < 1000; j++) {
+		if (board[pX - pHeight][j] != ' ' && board[pX - pHeight][j] != char(186)) {
+			check = 0;
+			break;
+		}
+	}
 
-    // Jumping right
-    for (int a = 0; a < 4; a++) {
-        if (pX - (pHeight + 1) - 1 >= 0 && pY + pWidth < 999 && board[pX - (pHeight - 1) - 1][pY + 1] == ' ' && check == 1) {
-            // Check again before moving
-            for (int i = pX; i >= pX - pHeight + 1; i--) {
-                if (board[i][pY + pWidth] != ' ') {
-                    check = 0;
-                    break;
-                }
-            }
+	// Jumping right
+	for (int a = 0; a < 4; a++) {
+		if (pX - (pHeight + 1) - 1 >= 0 && pY + pWidth < 999 && (board[pX - (pHeight - 1) - 1][pY + 1] == ' ' || board[pX - (pHeight - 1) - 1][pY + 1] == char(186)) && check == 1) {
+			// Check again before moving
+			for (int i = pX; i >= pX - pHeight + 1; i--) {
+				if (board[i][pY + pWidth] != ' ' && board[i][pY + pWidth] != char(186)) {
+					check = 0;
+					break;
+				}
+			}
 
-            // If the player's X-coordinate goes off the top of the screen, stop
-            if (pX - pHeight < 0) break;
+			// If the player's X-coordinate goes off the top of the screen, stop
+			if (pX - pHeight < 0) break;
 
-            // Check the space the player occupies after the jump
-            for (int j = pY; j <= pY + (pWidth - 1) && j < 1000; j++) {
-                if (board[pX - pHeight][j] != ' ') {
-                    check = 0;
-                    break;
-                }
-            }
+			// Check the space the player occupies after the jump
+			for (int j = pY; j <= pY + (pWidth - 1) && j < 1000; j++) {
+				if (board[pX - pHeight][j] != ' ' && board[pX - pHeight][j] != char(186)) {
+					check = 0;
+					break;
+				}
+			}
 
-            if (check == 0) break;
+			if (check == 0) break;
 
-            pX--;
-            pY++;
+			pX--;
+			pY++;
 
-            scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
-            clearMap(board, dispR, dispC);
-            callObj(board); // Call the function to draw the objects
-            addBorders(board, dispR, dispC);
-            jumprightframe(board, pX, pY); // Draw the player jumping up
+			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+			clearMap(board, dispR, dispC);
+			callObj(board); // Call the function to draw the objects
+			addBorders(board, dispR, dispC);
+			jumprightframe(board, pX, pY); // Draw the player jumping up
 
-            system("cls");
-            dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
-            Clear_LoadMap(board, dispR, dispC); // Clear the screen and load the map
+			system("cls");
+			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
+			Clear_LoadMap(board, dispR, dispC); // Clear the screen and load the map
 
-            isJumping = 1;
-        } else {
-            break;
-        }
-    }
+			isJumping = 1;
+		}
+		else {
+			break;
+		}
+	}
 
-    check = 1;
-    for (int j = pY; j <= pY + (pWidth - 1); j++) {
-        if (board[pX + 1][j] != ' ') {
-            check = 0;
-            break;
-        }
-    }
+	check = 1;
+	for (int j = pY; j <= pY + (pWidth - 1); j++) {
+		if (board[pX + 1][j] != ' ' && board[pX + 1][j] != char(186)) {
+			check = 0;
+			break;
+		}
+	}
 
-    for (; pX + 1 < 99 && board[pX + 1][pY] == ' ' && pY + pWidth < 999;) {
-        int checkDiagonal = 1;
-        for (int j = pY; j <= pY + (pWidth - 1); j++) {
-            if (board[pX + 1][j] != ' ') {
-                checkDiagonal = 0;
-                break;
-            }
-        }
+	for (; pX + 1 < 99 && (board[pX + 1][pY] == ' ' || board[pX + 1][pY] == char(186)) && pY + pWidth < 999;) {
+		int checkDiagonal = 1;
+		for (int j = pY; j <= pY + (pWidth - 1); j++) {
+			if (board[pX + 1][j] != ' ' && board[pX + 1][j] != char(186)) {
+				checkDiagonal = 0;
+				break;
+			}
+		}
 
-        if (checkDiagonal && check) {
-            pX++;
-            pY += 2;  // Move right 2 steps instead of 1
-            scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
-            clearMap(board, dispR, dispC);
-            callObj(board);
-            addBorders(board, dispR, dispC);
-            jumprightframe(board, pX, pY);
-            system("cls");
-            dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
-            Clear_LoadMap(board, dispR, dispC);
-            isFalling = 1;
-        }
-    }
+		if (checkDiagonal && check) {
+			pX++;
+			pY += 2;  // Move right 2 steps instead of 1
+			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+			clearMap(board, dispR, dispC);
+			callObj(board);
+			addBorders(board, dispR, dispC);
+			jumprightframe(board, pX, pY);
+			system("cls");
+			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
+			Clear_LoadMap(board, dispR, dispC);
+			isFalling = 1;
+		}
+	}
 
-    isWalking = 0;
-    isJumping = 0;
-    isFalling = 0; // Reset jumping and falling states after landing
+	isWalking = 0;
+	isJumping = 0;
+	isFalling = 0; // Reset jumping and falling states after landing
 }
-void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int& isFalling, int& isWalking, int dispR , int dispC) {
-    int check = 1;
+void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int& isFalling, int& isWalking, int dispR, int dispC) {
+	int check = 1;
 
-    // Check the space the player occupies to the left
-    for (int j = pY; j <= pY + (pWidth - 1) && j < 1000; j++) {
-        if (board[pX - pHeight][j] != ' ') {
-            check = 0;
-            break;
-        }
-    }
+	// Check the space the player occupies to the left
+	for (int j = pY; j <= pY + (pWidth - 1) && j < 1000; j++) {
+		if (board[pX - pHeight][j] != ' ' && board[pX - pHeight][j] != char(186)) {
+			check = 0;
+			break;
+		}
+	}
 
-    // Check the left column before moving
-    for (int i = pX; i >= pX - pHeight + 1; i--) {
-        if (board[i][pY - 1] != ' ') {
-            check = 0;
-            break;
-        }
-    }
+	// Check the left column before moving
+	for (int i = pX; i >= pX - pHeight + 1; i--) {
+		if (board[i][pY - 1] != ' ' && board[i][pY - 1] != char(186)) {
+			check = 0;
+			break;
+		}
+	}
 
-    // Jumping left
-    for (int a = 0; a < 4; a++) {
-        if (pX - (pHeight + 1) - 1 >= 0 && pY - 1 > 0 && board[pX - (pHeight + 1) - 1][pY - 1] == ' ' && check == 1) {
-            for (int i = pX; i >= pX - pHeight + 1; i--) {
-                if (board[i][pY + pWidth] != ' ') {
-                    check = 0;
-                    break;
-                }
-            }
+	// Jumping left
+	for (int a = 0; a < 4; a++) {
+		if (pX - (pHeight + 1) - 1 >= 0 && pY - 1 > 0 && (board[pX - (pHeight + 1) - 1][pY - 1] == ' ' || board[pX - (pHeight + 1) - 1][pY - 1] == char(186)) && check == 1) {
+			for (int i = pX; i >= pX - pHeight + 1; i--) {
+				if (board[i][pY + pWidth] != ' ' && board[i][pY + pWidth] != char(186)) {
+					check = 0;
+					break;
+				}
+			}
 
-            // If the player's X-coordinate goes off the top of the screen, stop
-            if (pX - pHeight < 1) break;
+			// If the player's X-coordinate goes off the top of the screen, stop
+			if (pX - pHeight < 1) break;
 
-            // Check after jumping
-            for (int j = pY; j <= pY + (pWidth - 1) && j < 1000; j++) {
-                if (board[pX - pHeight][j] != ' ') {
-                    check = 0;
-                    break;
-                }
-            }
+			// Check after jumping
+			for (int j = pY; j <= pY + (pWidth - 1) && j < 1000; j++) {
+				if (board[pX - pHeight][j] != ' ' && board[pX - pHeight][j] != char(186)) {
+					check = 0;
+					break;
+				}
+			}
 
-            if (check == 0) break;
+			if (check == 0) break;
 
-            pX--;
-            pY -= 2;  // Move left 2 steps instead of 1
+			pX--;
+			pY -= 2;  // Move left 2 steps instead of 1
 
-            scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
-            clearMap(board, dispR, dispC);
-            callObj(board); // Call the function to draw the objects
-            addBorders(board, dispR, dispC);
-            jumpleftframe(board, pX, pY); // Draw the player jumping up
+			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+			clearMap(board, dispR, dispC);
+			callObj(board); // Call the function to draw the objects
+			addBorders(board, dispR, dispC);
+			jumpleftframe(board, pX, pY); // Draw the player jumping up
 
-            system("cls");
-            dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
-            Clear_LoadMap(board, dispR, dispC); // Clear the screen and load the map
+			system("cls");
+			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
+			Clear_LoadMap(board, dispR, dispC); // Clear the screen and load the map
 
-            isJumping = 1;
-        } else {
-            break;
-        }
-    }
+			isJumping = 1;
+		}
+		else {
+			break;
+		}
+	}
 
-    check = 1;
-    for (int j = pY; j <= pY + (pWidth - 1); j++) {
-        if (board[pX + 1][j] != ' ') {
-            check = 0;
-            break;
-        }
-    }
+	check = 1;
+	for (int j = pY; j <= pY + (pWidth - 1); j++) {
+		if (board[pX + 1][j] != ' ' && board[pX + 1][j] != char(186)) {
+			check = 0;
+			break;
+		}
+	}
 
-    for (; pX + 1 < 99 && board[pX + 1][pY] == ' ' && pY > 1;) {
-        int checkDiagonal = 1;
-        for (int j = pY; j <= pY + (pWidth - 1); j++) {
-            if (board[pX + 1][j] != ' ') {
-                checkDiagonal = 0;
-                break;
-            }
-        }
+	for (; pX + 1 < 99 && board[pX + 1][pY] == ' ' && pY > 1;) {
+		int checkDiagonal = 1;
+		for (int j = pY; j <= pY + (pWidth - 1); j++) {
+			if (board[pX + 1][j] != ' ' && board[pX + 1][j] != char(186)) {
+				checkDiagonal = 0;
+				break;
+			}
+		}
 
-        if (checkDiagonal && check) {
-            pX++;
-            pY--;  // Move left 2 steps instead of 1
-            scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
-            clearMap(board, dispR, dispC);
-            callObj(board);
-            addBorders(board, dispR, dispC);
-            jumpleftframe(board, pX, pY);
-            system("cls");
-            dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
-            Clear_LoadMap(board, dispR, dispC);
-            isFalling = 1;
-        }
-    }
+		if (checkDiagonal && check) {
+			pX++;
+			pY--;  // Move left 2 steps instead of 1
+			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+			clearMap(board, dispR, dispC);
+			callObj(board);
+			addBorders(board, dispR, dispC);
+			jumpleftframe(board, pX, pY);
+			system("cls");
+			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
+			Clear_LoadMap(board, dispR, dispC);
+			isFalling = 1;
+		}
+	}
 
-    isWalking = 0;
-    isJumping = 0;
-    isFalling = 0; // Reset jumping and falling states after landing
+	isWalking = 0;
+	isJumping = 0;
+	isFalling = 0; // Reset jumping and falling states after landing
 }
 
 
@@ -1697,10 +1856,62 @@ NEXT STEPS:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 int main() {
 	int width = 80, height = 24; // Lets keep the width and height stored as variables incase we want to change them later
 	char board[100][1000]; // Border for the game frame
-    int dispR= 95 , dispC = 3 ;
+	int dispR = 95, dispC = 3;
 	char choice;
 	for (;;) {
 		system("cls"); // Clear the screen
@@ -1734,6 +1945,7 @@ int main() {
 		initializePlayerValues(Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, Player.Health, Player.coins, Player.gun, Player.ammo, Player.maxAmmo, Player.shootR, Player.shootC); // Initialize the player values
 		initializeBoard(board); // Initialize the board
 
+		int lastCellCol[9];
 		char gun[] = "Pistol";
 
 
@@ -1745,118 +1957,118 @@ int main() {
 		//isFalling = 0  not falling , isFalling = 1 falling (player shouldnt be able move or jump if isFalling = 1)
 		//isShooting = 0 not shooting , isShooting = 1 shooting (player shouldnt be able to climb if isshooting = 1)
 		//isReloading = 0 not reloading , isReloading = 1 reloading (player shouldnt be able to jump or shoot if isReloading = 1)
-		int animation = 0 , frame =1 , ResetFrame =0;
-		scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight , dispR , dispC); // Call the function to scroll the map
-		clearMap(board , dispR , dispC); // Clear the map
+		int animation = 0, frame = 1, ResetFrame = 0;
+		scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC); // Call the function to scroll the map
+		clearMap(board, dispR, dispC); // Clear the map
 		callObj(board); // Call the function to draw the objects
-		addBorders(board , dispR , dispC); // Add borders to the map
-		drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC); // Draw the player
+		addBorders(board, dispR, dispC); // Add borders to the map
+		drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol); // Draw the player
 		system("cls");
 		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
 		Clear_LoadMap(board, dispR, dispC); // Clear the screen and load the map
-		FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation , dispR , dispC); // Call the function to draw the player and objects
+		FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC); // Call the function to draw the player and objects
 		int isWon = 0;
-		
+
 		for (; !isWon;) {
-			clearMap(board , dispR , dispC);
+			clearMap(board, dispR, dispC);
 			callObj(board); // Call the function to draw the objects
-			addBorders(board , dispR , dispC);
+			addBorders(board, dispR, dispC);
 			if (animation == 0) {
-				if(frame == 1) {
-					drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC);
+				if (frame == 1) {
+					drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
 				}
-				else if(frame == 2){
-					drawPlayerRightFrame2(board, Player.Row, Player.Col, Player.shootR, Player.shootC);
+				else if (frame == 2) {
+					drawPlayerRightFrame2(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
 				}
-				else if(frame == 3){
-					drawPlayerRightFrame3(board, Player.Row, Player.Col, Player.shootR, Player.shootC);
+				else if (frame == 3) {
+					drawPlayerRightFrame3(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
 				}
-				else if(frame == 4){
-					drawPlayerRightFrame4(board, Player.Row, Player.Col, Player.shootR, Player.shootC);
+				else if (frame == 4) {
+					drawPlayerRightFrame4(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
 				}
-				else if(frame == 5){
-					drawPlayerRightFrame5(board, Player.Row, Player.Col, Player.shootR, Player.shootC);
+				else if (frame == 5) {
+					drawPlayerRightFrame5(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
 				}
-				
+
 			}
 			else if (animation == 1) {
-				if(frame == 1) {
-					DrawPlayerLeftFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC);
-				}
-				else if(frame == 2){
-					DrawPlayerLeftFrame2(board, Player.Row, Player.Col, Player.shootR, Player.shootC);
-				}
-				else if(frame == 3){
-					DrawPlayerLeftFrame3(board, Player.Row, Player.Col, Player.shootR, Player.shootC);
-				}
-				else if(frame == 4){
-					DrawPlayerLeftFrame4(board, Player.Row, Player.Col, Player.shootR, Player.shootC);
-				}
-				else if(frame == 5){
-					DrawPlayerLeftFrame5(board, Player.Row, Player.Col, Player.shootR, Player.shootC);
+				if (frame == 1) {
+					DrawPlayerLeftFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}																					 
+				else if (frame == 2) {																 
+					DrawPlayerLeftFrame2(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}																					 
+				else if (frame == 3) {																 
+					DrawPlayerLeftFrame3(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}																					 
+				else if (frame == 4) {																 
+					DrawPlayerLeftFrame4(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}																					 
+				else if (frame == 5) {																 
+					DrawPlayerLeftFrame5(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
 				}
 			}
-			
-			
+
+
 			system("cls");
 			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
-			Clear_LoadMap(board ,dispR , dispC); // Clear the screen and load the map
-			FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation , dispR , dispC);
+			Clear_LoadMap(board, dispR, dispC); // Clear the screen and load the map
+			FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC);
 			if (_kbhit()) {
 				char key = _getch();
 				if ((key == 'a' || key == 'A') && isClimbing == 0 && isFalling == 0) {
-					if(isWalking == 2){
-						if(frame == 5) frame =1;
+					if (isWalking == 2) {
+						if (frame == 5) frame = 1;
 						else frame++;
 					}
 					else {
-						frame =1;
+						frame = 1;
 					}
-					moveLeft(board, Player.Col, Player.Row, Player.maxHeight );
-					scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight , dispR , dispC);
-                    animation = 1;
+					moveLeft(board, Player.Col, Player.Row, Player.maxHeight, lastCellCol);
+					scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+					animation = 1;
 					isWalking = 2;
-					FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation  , dispR , dispC);
+					FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC);
 				}
 				else if ((key == 'd' || key == 'D') && isClimbing == 0 && isFalling == 0) {
-					if(isWalking == 1){
-						if(frame == 5) frame =1;
+					if (isWalking == 1) {
+						if (frame == 5) frame = 1;
 						else frame++;
 					}
 					else {
-						frame =1;
+						frame = 1;
 					}
-					moveRight(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight);
-                    scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight , dispR , dispC);
+					moveRight(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, lastCellCol);
+					scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 					animation = 0;
-					FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation , dispR , dispC);
+					FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC);
 					isWalking = 1;
 				}
 				else if (key == 'w' || key == 'W') {
 					if (isJumping == 0 && isFalling == 0 && isReloading == 0) {
 						if (isWalking == 0) {
 							if (Player.Row - Player.maxHeight > 0) {
-								jumpStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, animation , dispR , dispC);
-								scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight , dispR , dispC);
-								FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation , dispR , dispC);
-								scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight , dispR , dispC);
+								jumpStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, animation, dispR, dispC);
+								scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+								FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC);
+								scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 
 							}
 
 						}
 						else if (isWalking == 1) {
-							jumpRight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, isWalking , dispR , dispC);
-							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight , dispR , dispC);
-							FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation , dispR , dispC);
-							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight , dispR , dispC);
+							jumpRight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, isWalking, dispR, dispC);
+							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+							FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC);
+							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 							isWalking = 0;
 						}
-						else if (isWalking == 2){
-							jumpLeft(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, isWalking , dispR , dispC);
-							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight , dispR , dispC);
-							FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation , dispR , dispC);
-							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight , dispR , dispC);
-							
+						else if (isWalking == 2) {
+							jumpLeft(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, isWalking, dispR, dispC);
+							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+							FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC);
+							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+
 							isWalking = 0;
 						}
 					}

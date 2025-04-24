@@ -3,5 +3,5 @@ using namespace std;
 int main(){
 
 
-cout << char(200);
+cout << char(186) << endl;
 }
