@@ -56,7 +56,7 @@ void checkEnemyHit(int row, int col, Enemy& enemy, int& checkhit) {
 }
 
 struct Laser {
-    void shootLaser(Enemy& enemy, int& killed) {
+    void shootLaser(Enemy& enemy, int& killed, char key, int& player_y, int& player_x) {
         int posr = -1, posc = -1;
         int checkhit = 0;
         for (int r = 0; r < 24; r++) {
@@ -92,6 +92,14 @@ struct Laser {
                 for (int r = 0; r < 24; r++) {
                     for (int c = 0; c < 80; c++) {
                         cout << board[r][c];
+                        if (_kbhit())
+                        {
+                            key = _getch();
+                            if (key == 'w' || key == 's' || key == 'a' || key == 'd') {
+                                moveplayer(key, player_y, player_x);  // Move player
+                                drawBoard(key, player_y, player_x);
+                            }
+                        }
                     }
                     cout << endl;
                 }
@@ -148,7 +156,7 @@ struct Ammo {
 };
 
 struct Gun {
-    void shootGun(Enemy& enemy, int& killed, char key,int &player_y, int&player_x) {
+    void shootGun(Enemy& enemy, int& killed, char key, int& player_y, int& player_x) {
         int posr = -1, posc = -1;
         int checkhit = 0;
         for (int r = 0; r < 24; r++) {
@@ -191,7 +199,7 @@ struct Gun {
                 for (int i = 0; i < 24; i++) {
                     for (int j = 0; j < 80; j++) {
                         cout << board[i][j];
-                        if (_kbhit)
+                        if (_kbhit())
                         {
                             key = _getch();
                             if (key == 'w' || key == 's' || key == 'a' || key == 'd') {
@@ -273,7 +281,7 @@ void drawBoard(char move_dir, int& player_y, int& player_x) {
 
     for (int r = 0; r < 24; r++) {
         for (int c = 0; c < 80; c++) {
-             cout << board[r][c];
+            cout << board[r][c];
         }
         cout << endl;
     }
@@ -282,7 +290,7 @@ void drawBoard(char move_dir, int& player_y, int& player_x) {
 
 void draw_player(int& player_y, int& player_x) {
     if (player_y >= 0 && player_y < 24 && player_x >= 0 && player_x < 80)
-        board[player_y][player_x] = char(254); 
+        board[player_y][player_x] = char(254);
 }
 
 
@@ -299,7 +307,7 @@ void moveplayer(char move_dir, int& player_y, int& player_x) {
     if (move_dir == 'd' && player_x < 80 - 1) player_x++;
 
     // Redraw player
-    draw_player(player_y,player_x);
+    draw_player(player_y, player_x);
 }
 
 
@@ -318,12 +326,12 @@ int main() {
     Enemy enemy;
     enemy.createEnemy(21, 40);
 
-    drawBoard(key,player_y,player_x);
+    drawBoard(key, player_y, player_x);
 
     Player player;
 
     while (true) {
-        drawBoard(key,player_y, player_x);
+        drawBoard(key, player_y, player_x);
         cout << "Enemy Health: " << enemy.health << endl;
         cout << "Ammo: " << player.ammo.count << endl;
         if (ct % 2 == 0)
@@ -342,7 +350,7 @@ int main() {
         if (ct % 2 == 0) {
             if (key == 'f') {
                 if (player.ammo.count > 0) {
-                    player.laser.shootLaser(enemy, killed);
+                    player.laser.shootLaser(enemy, killed, key, player_y, player_x);
                     player.ammo.use();
                 }
                 else {
@@ -354,7 +362,7 @@ int main() {
         else {
             if (key == 'f') {
                 if (player.ammo.count > 0) {
-                    player.gun.shootGun(enemy, killed,key,player_y,player_x);
+                    player.gun.shootGun(enemy, killed, key, player_y, player_x);
                     player.ammo.use();
                 }
                 else {
@@ -367,8 +375,8 @@ int main() {
 
 
         if (key == 'w' || key == 's' || key == 'a' || key == 'd') {
-            moveplayer(key,player_y,player_x);  // Move player
-            drawBoard(key,player_y, player_x);
+            moveplayer(key, player_y, player_x);  // Move player
+            drawBoard(key, player_y, player_x);
         }
 
         if (key == 'r') {
@@ -380,7 +388,7 @@ int main() {
             cout << "\nExiting game... Goodbye!" << endl;
             break;
         }
-    
+
         Sleep(50);  // Delay to control movement speed
     }
 }
