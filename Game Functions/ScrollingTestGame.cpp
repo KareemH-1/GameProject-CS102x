@@ -85,7 +85,7 @@ void displayCredits() {
 
 
 void initializePlayerValues(int& Row, int& Col, int& maxHeight, int& maxWidth, int& Health, int& coins, int& gun, int& ammo, int& maxAmmo, int& shootC, int& shootR) {
-	Row = 19;
+	Row = 95;
 	Col = 3;
 	maxHeight = 9;
 	maxWidth = 15;
@@ -1291,34 +1291,34 @@ void climbFrame(char board[100][1000], int row, int col) {
 
 void callObj(char board[100][1000]) {
 
-	drawEnemyBirdLeft(board, 5, 60); // Draw the enemy bird
-	drawEnemyBirdRight(board, 5, 10); // Draw the enemy bird
+	drawEnemyBirdLeft(board, 82, 60); // Draw the enemy bird
+	drawEnemyBirdRight(board, 84, 10); // Draw the enemy bird
 
 }
 
 ///////////////////////////////
 
-void scroll(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero , int & dispR , int & dispC) {
-    dispC = posJHero - 20;
-    if (dispC < 0) dispC = 0;
-    if (dispC > 1000 - 80) dispC = 1000 - 80;
-    
-    dispR = posIHero;
-    if (dispR < 24) dispR = 24;
-    if (dispR > 76) dispR = 76;
+void scroll(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero, int& dispR, int& dispC) {
+	dispC = posJHero - 20;
+	if (dispC < 0) dispC = 0;
+	if (dispC > 1000 - 80) dispC = 1000 - 80;
+
+	dispR = posIHero + 5;
+	if (dispR < 24) dispR = 23;
+	if (dispR > 76) dispR = 98;
 
 }
 
-void clearMap(char board[100][1000] , int dispR , int dispC) {
+void clearMap(char board[100][1000], int dispR, int dispC) {
 	int top = dispR - 23;
-    if (top < 0) top = 0;
+	if (top < 0) top = 0;
 	for (int i = top; i <= dispR; i++) {
 		for (int j = dispC + 1; j < dispC + 80 - 1; j++) {
 			board[i][j] = ' ';
 		}
 	}
-	
-    
+
+
 }
 void addBorders(char board[100][1000], int dispR, int dispC) {
 	int top = dispR - 23;
@@ -1345,10 +1345,10 @@ void addBorders(char board[100][1000], int dispR, int dispC) {
 	board[bottom + 1][dispC + 80 - 1] = char(188);
 }
 
-void Clear_LoadMap(char board[100][1000] , int dispR , int dispC) {
+void Clear_LoadMap(char board[100][1000], int dispR, int dispC) {
 	int top = dispR - 23;
 	int bottom = dispR;
-	
+
 	for (int i = top - 1; i <= bottom + 1; i++) { // includes borders
 		for (int j = dispC; j < dispC + 80; j++) {
 			if (i == top - 1 || i == bottom + 1) { // top or bottom border
@@ -1363,8 +1363,10 @@ void Clear_LoadMap(char board[100][1000] , int dispR , int dispC) {
 		}
 		cout << endl;
 	}
-	
+
 }
+
+
 
 
 /////////////////////////////////////
@@ -1698,7 +1700,7 @@ NEXT STEPS:
 int main() {
 	int width = 80, height = 24; // Lets keep the width and height stored as variables incase we want to change them later
 	char board[100][1000]; // Border for the game frame
-    int dispR= 19 , dispC = 3 ;
+    int dispR= 95 , dispC = 3 ;
 	char choice;
 	for (;;) {
 		system("cls"); // Clear the screen
