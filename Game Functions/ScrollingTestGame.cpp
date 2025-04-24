@@ -1496,6 +1496,13 @@ void drawElevator(char board[100][1000], int R, int C) {
 
 }
 
+void drawSpike(char board[100][1000] , int R , int C){
+	board[R][C]= '/';
+	board[R-1][C+1]= '/';
+	board[R][C+3]= '\\';
+	board[R-1][C+2]= '\\';
+}
+
 ///////////////////////////////
 
 void callObj(char board[100][1000]) {
