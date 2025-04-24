@@ -1,9 +1,14 @@
-#include <iostream>
-#include <conio.h>
+#include <iostream>   // For input/output operations
+#include <conio.h>    // For keyboard input functions (_kbhit() and _getch())
 #include <windows.h>  // For Sleep() function to pause the game
 using namespace std;
 
+
 char board[24][80];
+
+
+void moveplayer(char move_dir, int& player_y, int& player_x);
+void drawBoard(char move_dir, int& player_y, int& player_x);
 
 struct Enemy {
     int health = 100;
@@ -57,6 +62,7 @@ struct Laser {
         for (int r = 0; r < 24; r++) {
             for (int c = 0; c < 80; c++) {
                 if (board[r][c] == (char)254) {
+                    cout << posr << " " << posc << endl;
                     posr = r;
                     posc = c;
                 }
@@ -128,13 +134,21 @@ struct Ammo {
     }
 
     void reload(int amount) {
-        count += amount;
-        cout << "Ammo reloaded! Current ammo: " << count << endl;
+        if (count <= 5)
+        {
+            count += amount;
+            cout << "Ammo reloaded! Current ammo: " << count << endl;
+        }
+        else
+        {
+            cout << "You can't reload! ---Your max Ammo is 10" << endl;
+        }
+
     }
 };
 
 struct Gun {
-    void shootGun(Enemy& enemy, int& killed) {
+    void shootGun(Enemy& enemy, int& killed, char key,int &player_y, int&player_x) {
         int posr = -1, posc = -1;
         int checkhit = 0;
         for (int r = 0; r < 24; r++) {
@@ -177,6 +191,14 @@ struct Gun {
                 for (int i = 0; i < 24; i++) {
                     for (int j = 0; j < 80; j++) {
                         cout << board[i][j];
+                        if (_kbhit)
+                        {
+                            key = _getch();
+                            if (key == 'w' || key == 's' || key == 'a' || key == 'd') {
+                                moveplayer(key, player_y, player_x);  // Move player
+                                drawBoard(key, player_y, player_x);
+                            }
+                        }
                     }
                     cout << endl;
                 }
@@ -203,6 +225,26 @@ struct Player {
     Laser laser;
 };
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 void initializeBoard() {
     for (int i = 0; i < 24; i++) {
         for (int j = 0; j < 80; j++) {
@@ -226,33 +268,62 @@ void initializeBoard() {
     board[23][0] = '#';
 }
 
-void drawBoard() {
+void drawBoard(char move_dir, int& player_y, int& player_x) {
     system("cls");
+
     for (int r = 0; r < 24; r++) {
         for (int c = 0; c < 80; c++) {
-            cout << board[r][c];
+             cout << board[r][c];
         }
         cout << endl;
     }
 }
 
+
+void draw_player(int& player_y, int& player_x) {
+    if (player_y >= 0 && player_y < 24 && player_x >= 0 && player_x < 80)
+        board[player_y][player_x] = char(254); 
+}
+
+
+
+// Moves the player based on the input direction (W, A, S, D)
+void moveplayer(char move_dir, int& player_y, int& player_x) {
+    // Clear old player position
+    board[player_y][player_x] = ' ';
+
+    // Direction handling
+    if (move_dir == 'w' && player_y > 0) player_y--;
+    if (move_dir == 's' && player_y < 24 - 1) player_y++;
+    if (move_dir == 'a' && player_x > 0) player_x--;
+    if (move_dir == 'd' && player_x < 80 - 1) player_x++;
+
+    // Redraw player
+    draw_player(player_y,player_x);
+}
+
+
 int main() {
+    int player_y = 10, player_x = 10;
+    char key = ' ';
+    int ct = 0;
+    int killed = 0;
+
+
     initializeBoard();
+
+    draw_player(player_y, player_x);
+
 
     Enemy enemy;
     enemy.createEnemy(21, 40);
 
-    board[15][40] = (char)254; // the laser
-    drawBoard();
+    drawBoard(key,player_y,player_x);
 
     Player player;
 
-    char hit;
-    int ct = 0;
-    int killed = 0;
-    for (;;) {
-        drawBoard();
-
+    while (true) {
+        drawBoard(key,player_y, player_x);
         cout << "Enemy Health: " << enemy.health << endl;
         cout << "Ammo: " << player.ammo.count << endl;
         if (ct % 2 == 0)
@@ -260,14 +331,16 @@ int main() {
         else
             cout << "Gun mode" << endl;
         cout << "Controls: F (fire), T (toggle weapon), R (reload), Q (quit)" << endl;
+        key = _getch();  // Get the pressed key 
 
-        hit = _getch();  // Get the pressed key
-        if (hit == 't') {
+        if (key == 't') {
             ct++;
         }
 
+
+
         if (ct % 2 == 0) {
-            if (hit == 'f') {
+            if (key == 'f') {
                 if (player.ammo.count > 0) {
                     player.laser.shootLaser(enemy, killed);
                     player.ammo.use();
@@ -279,9 +352,9 @@ int main() {
             }
         }
         else {
-            if (hit == 'f') {
+            if (key == 'f') {
                 if (player.ammo.count > 0) {
-                    player.gun.shootGun(enemy, killed);
+                    player.gun.shootGun(enemy, killed,key,player_y,player_x);
                     player.ammo.use();
                 }
                 else {
@@ -291,16 +364,23 @@ int main() {
             }
         }
 
-        if (hit == 'r') {
+
+
+        if (key == 'w' || key == 's' || key == 'a' || key == 'd') {
+            moveplayer(key,player_y,player_x);  // Move player
+            drawBoard(key,player_y, player_x);
+        }
+
+        if (key == 'r') {
             player.ammo.reload(5);
             Sleep(1000);
         }
 
-        if (hit == 'q' || killed == 1) {
+        if (key == 'q' || killed == 1) {
             cout << "\nExiting game... Goodbye!" << endl;
             break;
         }
+    
+        Sleep(50);  // Delay to control movement speed
     }
-
-    return 0;
 }
