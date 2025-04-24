@@ -85,6 +85,30 @@ using namespace std;
         board[row - 9][col + 6] = '|';
 
     }
+   
+
+    void climp(char board[24][80], int& posJHero, int& posIHero, int widthHero, int heightHero, int col,int row) {
+        int check = 1;
+        // Check every cell in the column to the right of the player
+        for (int i = posIHero; i >= posIHero - heightHero + 1; i--) {
+            if (posJHero <=col + 4 && posJHero >= col) {
+                if(getch()=='w'){
+                    if ([posiHero + 1 <=row-1) {
+                        
+                        posihero--;
+                    }
+                }
+                
+            }
+        }
+    }   
+
+    
+
+
+
+
+}
 
 
 
