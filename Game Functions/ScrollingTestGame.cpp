@@ -25,8 +25,10 @@ char bold[] = "\033[1m";
 struct player {
 	int Row, Col; //Position
 	int maxHeight = 9, maxWidth = 15; //Max height and width
+	
 	int Health;
 	int coins; //Either coins or Level , until decided i will leave it as coins
+	
 	int shootR, shootC;
 	int gun; //Either 1 for gun (bullets) or 2 for Lazerbeam (lazer)
 	int ammo, maxAmmo; // (ammo/maxAmmo) , max ammo could be 24 for gun , (maxammo == 1) for lazerbeam
@@ -34,8 +36,11 @@ struct player {
 };
 struct Enemy {
 	int Row, Col; //Position
+	int isKillable; // 1 for killable , 0 for not killable
 	int maxHeight = 1, maxWidth = 1; //Max height and width
-	int Health;
+	int Health = 100;
+	int attackPower = 10;
+	
 };
 void showMainMenu(char& choice) {
 	cout << "==================================================" << endl;
@@ -1627,7 +1632,16 @@ void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int heightHer
 }
 
 void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int animation, int dispR, int dispC , int LC[9] , int LR[15]) {
-	jumprightframe(board, pX, pY , LC ,LR );
+	
+	//call animation frame to get LD
+	if (animation == 0) {
+		jumprightframe(board, pX, pY , LC , LR); 
+	}
+	else if (animation == 1) {
+		jumpleftframe(board, pX, pY , LC , LR); // Draw the player jumping up
+	}
+	
+	
 	int check = 1;
 
 
@@ -1702,7 +1716,7 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 
 void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int& isFalling, int& isWalking, int dispR, int dispC , int LC[9] , int LR[15]) {
 	int check = 1;
-
+	
 	// Check every cell in the column to the right of the player (pY + pWidth for right side)
 	for (int i = pX; i >= pX - pHeight + 1; i--) {
 		if (board[i][pY + pWidth] != ' ' && board[i][pY + pWidth] != char(186) && board[i][pY + pWidth] != char(188) && board[i][pY + pWidth] != char(200)) {
@@ -1712,7 +1726,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 	}
 
 	// Check the space the player occupies (height and width)
-	for (int j = pY; j <= pY + (pWidth - 1) && j < 1000; j++) {
+	for (int j = pY; j <= pY + (pWidth - 1) && j < 999; j++) {
 		if (board[pX - pHeight][j] != ' ' && board[pX - pHeight][j] != char(186)) {
 			check = 0;
 			break;
@@ -1922,59 +1936,6 @@ NEXT STEPS:
 22. change game frame size if needed
 
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
