@@ -1348,7 +1348,7 @@ void callObj(char board[100][1000]) {
 
 	drawEnemyBirdLeft(board, 82, 60); // Draw the enemy bird
 	drawEnemyBirdRight(board, 84, 10); // Draw the enemy bird
-	drawElevator(board, 97, 55);
+	drawElevator(board, 98, 25);
 }
 
 ///////////////////////////////
@@ -1433,7 +1433,7 @@ void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHer
 	int check = 1;
 	// Check every cell in the column to the right of the player
 	for (int i = posIHero; i >= posIHero - heightHero + 1; i--) {
-		if (board[i][posJHero + widthHero] != ' ' && board[i][posJHero + widthHero] != char(186)) {
+		if (board[i][posJHero + widthHero] != ' ' && board[i][posJHero + widthHero] != char(186) && board[i][posJHero + widthHero] != char(188) && board[i][posJHero + widthHero] != char(201) && board[i][posJHero + widthHero] != char(200)) {
 			check = 0;
 			break;
 		}
@@ -1531,7 +1531,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 
 	// Check every cell in the column to the right of the player (pY + pWidth for right side)
 	for (int i = pX; i >= pX - pHeight + 1; i--) {
-		if (board[i][pY + pWidth] != ' ' && board[i][pY + pWidth] != char(186)) {
+		if (board[i][pY + pWidth] != ' ' && board[i][pY + pWidth] != char(186) && board[i][pY+pWidth] != char(188) && board[i][pY + pWidth] != char(200)) {
 			check = 0;
 			break;
 		}
