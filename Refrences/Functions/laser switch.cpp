@@ -59,17 +59,23 @@ struct Laser {
     void shootLaser(Enemy& enemy, int& killed, char key, int& player_y, int& player_x) {
         int posr = -1, posc = -1;
         int checkhit = 0;
+        int dir = 0;
         for (int r = 0; r < 24; r++) {
             for (int c = 0; c < 80; c++) {
-                if (board[r][c] == (char)254) {
-                    cout << posr << " " << posc << endl;
+                if (board[r][c] == (char)201){
                     posr = r;
                     posc = c;
+                    dir = 1;
+                }
+                if (board[r][c] == (char)187) {
+                    posr = r;
+                    posc = c;
+                    dir = -1;
                 }
             }
         }
 
-        if (posr != -1 && posc != -1) {
+        if ((posr != -1 && posc != -1) && dir == 1) {
             int alreadyHit = 0;
             int h = 1;
             while (board[posr][posc + h] == ' ' && h < 20) {
@@ -78,7 +84,7 @@ struct Laser {
                 // Check for collision with the enemy
                 checkEnemyHit(posr, posc + h, enemy, checkhit);
                 if (!alreadyHit && (checkhit == 1)) {
-                    enemy.health -= 10;  // Laser deals 10 damage
+                    enemy.health -= 30;  // Laser deals 10 damage
                     cout << "Laser hit! Enemy health: " << enemy.health << endl;
                     if (enemy.health <= 0) {
                         cout << "You killed the duck :(" << endl;
@@ -125,6 +131,68 @@ struct Laser {
                 }
             }
         }
+
+
+        else if ((posr != -1 && posc != -1) && dir == -1) {
+            int alreadyHit = 0;
+            int h = 1;
+            while (board[posr][posc - h] == ' ' && h < 20)
+            {
+                board[posr][posc - h] = '=';
+
+                // Check for collision with the enemy
+                checkEnemyHit(posr, posc + h, enemy, checkhit);
+                if (!alreadyHit && (checkhit == 1)) {
+                    enemy.health -= 30;  // Laser deals 10 damage
+                    cout << "Laser hit! Enemy health: " << enemy.health << endl;
+                    if (enemy.health <= 0) {
+                        cout << "You killed the duck :(" << endl;
+                        killed = 1;
+                    }
+                    alreadyHit = true;
+                }
+
+                h++;
+                system("cls");
+                for (int r = 0; r < 24; r++) {
+                    for (int c = 0; c < 80; c++) {
+                        cout << board[r][c];
+                        if (_kbhit())
+                        {
+                            key = _getch();
+                            if (key == 'w' || key == 's' || key == 'a' || key == 'd') {
+                                moveplayer(key, player_y, player_x);  // Move player
+                                drawBoard(key, player_y, player_x);
+                            }
+                        }
+                    }
+                    cout << endl;
+                }
+            }
+
+            int k = h;
+            h = 1;
+
+            while (true)
+            {
+                if (board[posr][posc - h] == '=') {
+                    board[posr][posc - h] = ' ';
+                }
+                system("cls");
+                for (int r = 0; r < 24; r++) {
+                    for (int c = 0; c < 80; c++) {
+                        cout << board[r][c];
+                    }
+                    cout << endl;
+                }
+                h++;
+                if (h == k) {
+                    break;
+                }
+            }
+
+        }
+
     }
 };
 
@@ -159,17 +227,24 @@ struct Gun {
     void shootGun(Enemy& enemy, int& killed, char key, int& player_y, int& player_x) {
         int posr = -1, posc = -1;
         int checkhit = 0;
+        int dir = 0;
         for (int r = 0; r < 24; r++) {
             for (int c = 0; c < 80; c++) {
-                if (board[r][c] == (char)254) {
+                if (board[r][c] == (char)201) {
                     posr = r;
                     posc = c;
+                    dir = 1;
+                }
+                if (board[r][c] == (char)187) {
+                    posr = r;
+                    posc = c;
+                    dir = -1;
                 }
             }
         }
 
-        if (posr != -1 && posc != -1) {
-            int r = posr + 1;
+        if (posr != -1 && posc != -1 && dir == 1) {
+            int r = posr;
             int ct = 0;
             int h = 1;
             int hitRegistered = 0;
@@ -192,6 +267,7 @@ struct Gun {
                         killed = 1;
                     }
                     hitRegistered = true;
+                    board[r][c] = ' ';
                     break;  // Stop the bullet after hit
                 }
 
@@ -215,13 +291,68 @@ struct Gun {
                 if (board[r][c] == 'o') {
                     board[r][c] = ' ';
                 }
-                if (h == 1) r++;
-                else r--;
 
                 ct++;
-                if (ct == 11)
+                if (ct == 25)
                     break;
             }
+        }
+
+
+        else if ((posr != -1 && posc != -1) && dir == -1) {
+            int r = posr;
+            int ct = 0;
+            int h = 1;
+            int hitRegistered = 0;
+
+            for (int c = posc - 1; c > 0; c--) {
+                if (board[r][c] == ' ') {
+                    board[r][c] = 'o';
+                }
+                else {
+                    h = -1;
+                }
+
+                // Check for collision with the enemy
+                checkEnemyHit(r, c, enemy, checkhit);
+                if (!hitRegistered && (checkhit == 1)) {
+                    enemy.health -= 10;  // Gun deals 10 damage
+                    cout << "Bullet hit! Enemy health: " << enemy.health << endl;
+                    if (enemy.health <= 0) {
+                        cout << "You killed the duck :(" << endl;
+                        killed = 1;
+                    }
+                    hitRegistered = true;
+                    board[r][c] = ' ';
+                    break;  // Stop the bullet after hit
+                }
+
+                system("cls");
+                for (int i = 0; i < 24; i++) {
+                    for (int j = 0; j < 80; j++) {
+                        cout << board[i][j];
+                        if (_kbhit())
+                        {
+                            key = _getch();
+                            if (key == 'w' || key == 's' || key == 'a' || key == 'd') {
+                                moveplayer(key, player_y, player_x);  // Move player
+                                drawBoard(key, player_y, player_x);
+                            }
+                        }
+                    }
+                    cout << endl;
+                }
+
+                Sleep(50);
+                if (board[r][c] == 'o') {
+                    board[r][c] = ' ';
+                }
+
+                ct++;
+                if (ct == 25)
+                    break;
+            }
+
         }
     }
 };
@@ -288,12 +419,15 @@ void drawBoard(char move_dir, int& player_y, int& player_x) {
 }
 
 
-void draw_player(int& player_y, int& player_x) {
-    if (player_y >= 0 && player_y < 24 && player_x >= 0 && player_x < 80)
-        board[player_y][player_x] = char(254);
+void draw_player_right(int& player_y, int& player_x) {
+    if (player_y >= 0 && player_y < 23 && player_x >= 0 && player_x < 79)
+        board[player_y][player_x] = char(201);
 }
 
-
+void draw_player_left(int& player_y, int& player_x) {
+    if (player_y >= 0 && player_y < 23 && player_x >= 0 && player_x < 79)
+        board[player_y][player_x] = char(187);
+}
 
 // Moves the player based on the input direction (W, A, S, D)
 void moveplayer(char move_dir, int& player_y, int& player_x) {
@@ -301,13 +435,15 @@ void moveplayer(char move_dir, int& player_y, int& player_x) {
     board[player_y][player_x] = ' ';
 
     // Direction handling
-    if (move_dir == 'w' && player_y > 0) player_y--;
-    if (move_dir == 's' && player_y < 24 - 1) player_y++;
-    if (move_dir == 'a' && player_x > 0) player_x--;
-    if (move_dir == 'd' && player_x < 80 - 1) player_x++;
+    if (move_dir == 'w' && player_y > 1) player_y--;
+    if (move_dir == 's' && player_y < 22) player_y++;
+    if (move_dir == 'a' && player_x > 1) player_x--;
+    if (move_dir == 'd' && player_x < 78 ) player_x++;
 
     // Redraw player
-    draw_player(player_y, player_x);
+    if (move_dir == 'a' || move_dir == 'w' || move_dir == 's')  draw_player_left(player_y, player_x);;
+    if (move_dir == 'd' || move_dir == 'w' || move_dir == 's')  draw_player_right(player_y, player_x);
+ 
 }
 
 
@@ -320,7 +456,7 @@ int main() {
 
     initializeBoard();
 
-    draw_player(player_y, player_x);
+    draw_player_right(player_y, player_x);
 
 
     Enemy enemy;
