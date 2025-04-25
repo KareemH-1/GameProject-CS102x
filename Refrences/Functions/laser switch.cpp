@@ -47,8 +47,8 @@ void checkEnemyHit(int row, int col, Enemy& enemy, int& checkhit) {
     // Enemy bounding box
     int top = enemy.row - 3;
     int bottom = enemy.row;
-    int left = enemy.col + 7;
-    int right = enemy.col + 15;
+    int left = enemy.col + 6;
+    int right = enemy.col + 16;
 
     if (row >= top && row <= bottom && col >= left && col <= right) {
         checkhit = 1;
@@ -141,7 +141,7 @@ struct Laser {
                 board[posr][posc - h] = '=';
 
                 // Check for collision with the enemy
-                checkEnemyHit(posr, posc + h, enemy, checkhit);
+                checkEnemyHit(posr, posc - h, enemy, checkhit);
                 if (!alreadyHit && (checkhit == 1)) {
                     enemy.health -= 30;  // Laser deals 10 damage
                     cout << "Laser hit! Enemy health: " << enemy.health << endl;
