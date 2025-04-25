@@ -84,42 +84,56 @@ using namespace std;
         board[row - 8][col + 6] = '|';
         board[row - 9][col + 6] = '|';
 
+        void climp(char board[24][80], int& posJHero, int& posIHero, int widthHero, int heightHero, int col,int row) {
+            int check = 1;
+            // Check every cell in the column to the right of the player
+            for (int i = posIHero; i >= posIHero - heightHero + 1; i--) {
+                if (posJHero <=col + 4 && posJHero >= col) {
+                    if(getch()=='w'){
+                        if (posiHero + 1 <=row-1) {
+                            
+                            posihero--;
+                        }
+                    }
+                    
+                }
+            }
+        }
+        void climp(char board[24][80], int& posJHero, int& posIHero, int widthHero, int heightHero, int col,int row) {
+            int check = 1;
+            // Check every cell in the column to the right of the player
+            for (int i = posIHero; i >= posIHero - heightHero + 1; i--) {
+                if (posJHero <=col + 4 && posJHero >= col) {
+                    if(getch()=='w'){
+                        if (posiHero + 1 <=row-1) {
+                            
+                            posihero--;
+                        }
+                    }
+                    
+                }
+            }
+        }   
+        char board[24][80] = { ' ' };
+        int row = 10, col = 10;
+        drawladder(board, row, col);
+        for (int i = 0; i < 24; i++) {
+            for (int j = 0; j < 80; j++) {
+                cout << board[i][j];
+            }
+            cout << endl;
+        }
+    
     }
    
 
-    void climp(char board[24][80], int& posJHero, int& posIHero, int widthHero, int heightHero, int col,int row) {
-        int check = 1;
-        // Check every cell in the column to the right of the player
-        for (int i = posIHero; i >= posIHero - heightHero + 1; i--) {
-            if (posJHero <=col + 4 && posJHero >= col) {
-                if(getch()=='w'){
-                    if ([posiHero + 1 <=row-1) {
-                        
-                        posihero--;
-                    }
-                }
-                
-            }
-        }
-    }   
-
+    
     
 
 
 
 
-}
 
 
 
-void main() {
-    char board[24][80] = { ' ' };
-    int row = 10, col = 10;
-    drawladder(board, row, col);
-    for (int i = 0; i < 24; i++) {
-        for (int j = 0; j < 80; j++) {
-            cout << board[i][j];
-        }
-        cout << endl;
-    }
-}
+

@@ -1413,37 +1413,41 @@ void climbFrame(char board[100][1000], int row, int col) {
 	//head  
 
 	board[row - 8][col + 3] = '_';
-	board[row - 8][col + 3] = '_';
-	board[row - 8][col + 3] = '_';
-	board[row - 8][col + 3] = '_';
-	board[row - 8][col + 3] = '_';
-
-
-
-
-
+	board[row - 8][col + 4] = '_';
+	board[row - 8][col + 5] = '_';
+	board[row - 8][col + 6] = '_';
+	board[row - 8][col + 7] = '_';
+	board[row - 7][col + 3] = '(';
+	board[row - 7][col + 4] = '|';
+	board[row - 7][col + 5] = '|';
+	board[row - 7][col + 6] = '|';
+	board[row - 7][col + 7] = ')';
+	board[row - 6][col + 3] = '\\';
+	board[row - 6][col + 4] = '-';
+	board[row - 6][col + 5] = '-';
+	board[row - 6][col + 6] = '-';
+	board[row - 6][col + 7] = '/';
 
 
 	//body
 
-	board[row - 2][col + 3] = '\\';
-	board[row - 2][col + 4] = '_';
-	board[row - 2][col + 5] = '_';
-	board[row - 2][col + 6] = '_';
-	board[row - 2][col + 7] = '_';
-	board[row - 2][col + 8] = '_';
-	board[row - 2][col + 9] = '/';
-	board[row - 3][col + 9] = '|';
-	board[row - 4][col + 9] = '|';
-	board[row - 5][col + 9] = '|';
-	board[row - 3][col + 3] = '|';
-	board[row - 4][col + 3] = '|';
-	board[row - 5][col + 3] = '|';
-	board[row - 5][col + 4] = '-';
-	board[row - 5][col + 5] = '-';
-	board[row - 5][col + 6] = 'v';
-	board[row - 5][col + 7] = '-';
-	board[row - 5][col + 8] = '-';
+	board[row-5][col+2]='|';
+	board[row-4][col+2]='|';
+	board[row-3][col+2]='|';
+	board[row-2][col+2]='\\';
+	board[row-2][col+3]='_';
+	board[row-2][col+4]='_';
+	board[row-2][col+5]='_';
+	board[row-2][col+6]='_';
+	board[row-2][col+7]='_';
+	board[row-2][col+8]='/';
+
+
+
+
+
+
+
 }
 
 
