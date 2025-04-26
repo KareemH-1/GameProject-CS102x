@@ -100,7 +100,7 @@ void displayCredits() {
 
 void initializePlayerValues(int& Row, int& Col, int& maxHeight, int& maxWidth, int& Health, int& coins, int& gun, int& ammo, int& maxAmmo, int& shootC, int& shootR) {
 	Row = 95;
-	Col = 50;
+	Col = 3;
 	maxHeight = 9;
 	maxWidth = 15;
 	Health = 100;
@@ -1509,14 +1509,6 @@ void drawElevator(char board[100][1000], int R, int C) {
 	board[R][C + 16] = char(205);
 	board[R][C + 17] = char(188);
 
-
-	board[R - 7][C + 42] = '#';
-	board[R - 7][C + 43] = '#';
-	board[R - 7][C + 44] = '#';
-	board[R - 8][C + 42] = '#';
-	board[R - 8][C + 43] = '#';
-	board[R - 8][C + 44] = '#';
-
 }
 
 void drawSpike(char board[100][1000], int R, int C) {
@@ -1526,13 +1518,23 @@ void drawSpike(char board[100][1000], int R, int C) {
 	board[R - 1][C + 2] = '\\';
 }
 
+void drawTerrain(char board[100][1000] , int r , int c , int NumR , int NumC){
+	for(int i =0  ;i < NumR ; i++){
+		for(int j =0 ; j< NumC ; j++){
+			board[r][c] = '#';
+			c++;
+		}
+		r++;
+	}
+}
+
 ///////////////////////////////
 
 void callObj(char board[100][1000]) {
-
+	drawTerrain(board, 96, 20, 2, 7);
 	drawEnemyBirdLeft(board, 82, 60); // Draw the enemy bird
 	drawEnemyBirdRight(board, 84, 10); // Draw the enemy bird
-	drawElevator(board, 96, 25);
+	drawElevator(board, 96, 50);
 }
 
 ///////////////////////////////
