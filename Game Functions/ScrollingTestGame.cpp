@@ -1519,11 +1519,14 @@ void drawSpike(char board[100][1000], int R, int C) {
 }
 
 void drawTerrain(char board[100][1000] , int r , int c , int NumR , int NumC){
+	int tempCol;
+	tempCol = c;
 	for(int i =0  ;i < NumR ; i++){
 		for(int j =0 ; j< NumC ; j++){
-			board[r][c] = '#';
-			c++;
+			board[r][tempCol] = '#';
+			tempCol++;
 		}
+		tempCol=c;
 		r++;
 	}
 }
@@ -1627,8 +1630,24 @@ void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHer
 			}
 		}
 	}
+	int check2=1;
+	for (int i = posIHero-1; i >= posIHero - heightHero + 1; i--) {
+		int lc_index = posIHero - i;  // Convert to LC index (0 to 8)
+		if (lc_index >= 0 && lc_index < 9) {
+			if (board[i][LC[lc_index] + 1] != ' ' && board[i][LC[lc_index] + 1] != char(186)) {
+				check2 = 0;
+				break;
+			}
+		}
+	}
+
+	//Go up a row if its only 1 row diffrence in terrain
+	if(board[posIHero][LC[0]] != ' ' && board[posIHero][LC[0]] != char(186) && check2 && !check){
+		posIHero--;
+		posJHero++;
+	}
 	// Only move if all checks passed AND we won't go out of bounds
-	if (check == 1 && posJHero + widthHero + 1 < 999) {
+	else if (check == 1 && posJHero + widthHero + 1 < 999) {
 		posJHero++;
 	}
 }
@@ -1645,8 +1664,23 @@ void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int heightHer
 			}
 		}
 	}
+	//Go up a row if there is only 1 row diffrence
+		int check2 =1;
+		for (int i = posIHero-1; i >= posIHero - heightHero + 1; i--) {
+			int lc_index = posIHero - i;  // Convert to LC index (0 to 8)
+			if (lc_index >= 0 && lc_index < 9) {
+				if (board[i][LC[lc_index] - 1] != ' ' && board[i][LC[lc_index] - 1] != char(186)) {
+					check2 = 0;
+					break;
+				}
+			}
+		}
 
-	if (check == 1 && posJHero - 1 >= 0) {
+	if(board[posIHero][LC[0]] != ' ' && board[posIHero][LC[0]] != char(186) && check2 && !check){
+		posJHero--;
+		posIHero--;
+	}
+	else if (check == 1 && posJHero - 1 >= 0) {
 		posJHero--;
 	}
 }
