@@ -1532,7 +1532,7 @@ void callObj(char board[100][1000]) {
 
 	drawEnemyBirdLeft(board, 82, 60); // Draw the enemy bird
 	drawEnemyBirdRight(board, 84, 10); // Draw the enemy bird
-	drawElevator(board, 98, 25);
+	drawElevator(board, 96, 25);
 }
 
 ///////////////////////////////
@@ -1740,225 +1740,239 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 	}
 	isJumping = 0, isFalling = 0; // Reset jumping and falling states after landing
 }
-void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int& isFalling, int& isWalking, int dispR, int dispC , int LC[9] , int LR[15]) {
+
+void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
+		int& isJumping, player Player, char gun[], int& isFalling,
+		int& isWalking, int dispR, int dispC, int LC[9], int LR[15]) {
+	// Initial setup
+	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+	clearMap(board, dispR, dispC);
+	callObj(board);
+	addBorders(board, dispR, dispC);
+	jumprightframe(board, pX, pY, LC, LR);
+
+	// Jump right (diagonal up-right movement)
+	for (int a = 0; a < 4; a++) {
+	int canJump = 1; // 1 = can jump, 0 = cannot jump
+
+	// Check right side collision using LC (last column in each row)
+	for (int row = pX; row >= pX - pHeight + 1; row--) {
+	  int lc_index = pX - row;
+	  if (lc_index >= 0 && lc_index < 9) {
+		  if (board[row][LC[lc_index] + 1] != ' ' && 
+			  board[row][LC[lc_index] + 1] != char(186)) {
+			  canJump = 0;
+			  break;
+		  }
+	  }
+	}
+
+	// Check upward clearance using LR (highest row in each column)
+	for (int col = pY; col < pY + pWidth; col++) {
+	  int lr_index = col - pY;
+	  if (lr_index >= 0 && lr_index < 15) {
+		  if (LR[lr_index] - 1 < 0 ||  // Check bounds
+			  (board[LR[lr_index] - 1][col] != ' ' && 
+			   board[LR[lr_index] - 1][col] != char(186))) {
+			  canJump = 0;
+			  break;
+		  }
+	  }
+	}
+
+	if (canJump == 0) break;
+
+	// Move diagonally up-right
+	pX--;
+	pY++;
+
+	// Redraw everything
+	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+	clearMap(board, dispR, dispC);
+	callObj(board);
+	addBorders(board, dispR, dispC);
+	jumprightframe(board, pX, pY, LC, LR);
+
+	system("cls");
+	dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
+	Clear_LoadMap(board, dispR, dispC);
+	isJumping = 1;
+	}
+
+	// Falling logic
+	for(;;) {
+	int canFall = 0;
+
+	// Check if we can fall straight down
+	for (int col = pY; col < pY + pWidth; col++) {
+	  if (pX + 1 < 100 && (board[pX + 1][col] == ' ' || board[pX + 1][col] == char(186))) {
+		  canFall = 1;
+	  } else {
+		  canFall = 0;
+		  break;
+	  }
+	}
+
+	if (canFall == 0) break;
+
+	// Check if we can fall diagonally right
+	int canFallRight = 1;
+	if (pY + pWidth < 999) {
+	  for (int row = pX; row <= pX + 1; row++) {
+		  if (board[row][pY + pWidth] != ' ' && 
+			  board[row][pY + pWidth] != char(186)) {
+			  canFallRight = 0;
+			  break;
+		  }
+	  }
+	} else {
+	  canFallRight = 0;
+	}
+
+	if (canFallRight == 1) {
+	  pX++;
+	  pY++;
+	} else {
+	  pX++;
+	}
+
+	// Redraw everything
+	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+	clearMap(board, dispR, dispC);
+	callObj(board);
+	addBorders(board, dispR, dispC);
+	jumprightframe(board, pX, pY, LC, LR);
+
+	system("cls");
+	dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
+	Clear_LoadMap(board, dispR, dispC);
+	isFalling = 1;
+	}
+
+	isJumping = 0;
+	isFalling = 0;
+	isWalking = 0;
+}
+
+void jumpLeft( char board[100][1000], int& pX, int& pY, int  pHeight, int  pWidth,  int& isJumping, player Player, char gun[], int& isFalling, int& isWalking, int  dispR, int  dispC,int  LC[9],int  LR[15]) {
+
+
+    // draw initial frame so LC, LR get set for start position
     scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
     clearMap(board, dispR, dispC);
-    callObj(board); // Call the function to draw the objects
+    callObj(board);
     addBorders(board, dispR, dispC);
-    jumprightframe(board, pX, pY, LC, LR); // Draw the player jumping up
+    jumpleftframe(board, pX, pY, LC, LR);
 
-    int check = 1;
+    // 1) Diagonal up-left jump (4 steps)
+    for (int step = 0; step < 4; ++step) {
+        int canJump = 1;
 
-    // Check if there's space to jump to the right
-    for (int i = pX; i >= pX - pHeight + 1; i--) {
-        int lc_index = pX - i;  // Convert to LC index (0=bottom)
-        if (lc_index >= 0 && lc_index < 9) { 
-            if (board[i][LC[lc_index] + 1] != ' ' && board[i][LC[lc_index] + 1] != char(186)) {
-                check = 0;
+        // recompute LC/LR for current position
+        jumpleftframe(board, pX, pY, LC, LR);
+
+        // — check left-side clearance —
+        int rowMin = pX - pHeight + 1;
+        if (rowMin < 0) rowMin = 0;
+        for (int row = pX; row >= rowMin; --row) {
+            int idx = pX - row;
+            if (idx < 0 || idx >= pHeight) {
+                canJump = 0;
+                break;
+            }
+            int c = LC[idx] - 1;
+            if (c < 0 || c >= 999 || board[row][c] != ' ') {
+                canJump = 0;
                 break;
             }
         }
-    }
+        if (canJump == 0) break;
 
-    // Check if the player has space in front (for jump)
-    for (int j = pY; j <= pY + (pWidth - 1); j++) {
-        int LR_index = j - pY;  // Correctly calculate LR_index based on the position you're checking
-        if (LR_index >= 0 && LR_index < 15) {  // Ensure it's within bounds
-            int checkR = LR[LR_index] - 1; // Check the row index
-            if (board[checkR][j] != ' ' && board[checkR][j] != char(186)) {  // If there's a solid block, stop the jump
-                check = 0;
+        // — check above clearance —
+        int colMax = pY + pWidth;
+        if (colMax > 999) colMax = 999;
+        for (int col = pY; col < colMax; ++col) {
+            int idx = col - pY;
+            if (idx < 0 || idx >= pWidth) {
+                canJump = 0;
                 break;
             }
+            int r = LR[idx] - 1;
+            if (r < 0 || r >= 99 || board[r][col] != ' ') {
+                canJump = 0;
+                break;
+            }
+        }
+        if (canJump == 0) break;
+
+        // perform the move
+        pX--;
+        pY--;
+
+        // redraw at new position
+        scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+        clearMap(board, dispR, dispC);
+        callObj(board);
+        addBorders(board, dispR, dispC);
+        jumpleftframe(board, pX, pY, LC, LR);
+
+        system("cls");
+        dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
+        Clear_LoadMap(board, dispR, dispC);
+        isJumping = 1;
+    }
+
+    // 2) Falling phase
+    for (;;) {
+        int canFall = 1;
+
+        // straight down clearance?
+        for (int col = pY; col < pY + pWidth && col < 999; ++col) {
+            if (pX + 1 >= 99 || board[pX + 1][col] != ' ') {
+                canFall = 0;
+                break;
+            }
+        }
+        if (canFall == 0) break;
+
+        // diagonal-left clearance?
+        int fallLeft = 1;
+        if (pY - 1 < 0) {
+            fallLeft = 0;
         } else {
-            check = 0; // Exit loop if out-of-bounds
-            break;
-        }
-    }
-
-    // Jumping right logic
-    for (int a = 0; a < 4; a++) {
-        if (pX - (pHeight + 1) - 1 >= 0 && pY + pWidth < 999 && check == 1) {
-            check = 1; // Reset check
-
-            // Check before moving
-            for (int i = pX; i >= pX - pHeight + 1; i--) {
-                int lc_index = pX - i;
-                if (lc_index >= 0 && lc_index < 9) { 
-                    if (board[i][LC[lc_index] + 1] != ' ' && board[i][LC[lc_index] + 1] != char(186)) {
-                        check = 0;
-                        break;
-                    }
-                }
-            }
-
-            // Check front space after moving
-            for (int j = pY; j <= pY + (pWidth - 1); j++) {
-                if (board[pX + 1][j] != ' ' && board[pX + 1][j] != char(186)) {
-                    check = 0;
+            for (int row = pX; row <= pX + 1 && row < 99; ++row) {
+                if (board[row][pY - 1] != ' ') {
+                    fallLeft = 0;
                     break;
                 }
             }
-
-            if (check == 0) break;
-
-            pX--;  // Move right
-            pY++;  // Jump higher
-
-            scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
-            clearMap(board, dispR, dispC);
-            callObj(board);
-            addBorders(board, dispR, dispC);
-            jumprightframe(board, pX, pY, LC, LR);
-
-            system("cls");
-            dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
-            Clear_LoadMap(board, dispR, dispC);
-
-            isJumping = 1;  // Player is jumping
-        } else {
-            break;
-        }
-    }
-
-    // Falling logic
-    check = 1;
-    for (int j = pY; j <= pY + (pWidth - 1); j++) {
-        if (board[pX + 1][j] != ' ' && board[pX + 1][j] != char(186)) {
-            check = 0;
-            break;
-        }
-    }
-
-    // Continue falling
-    for (; pX + 1 < 99 && (board[pX + 1][pY] == ' ' || board[pX + 1][pY] == char(186)) && pY + pWidth < 999;) {
-        int checkDiagonal = 1;
-        for (int j = pY; j <= pY + (pWidth - 1); j++) {
-            if (board[pX + 1][j] != ' ' && board[pX + 1][j] != char(186)) {
-                checkDiagonal = 0;
-                break;
-            }
         }
 
-        if (checkDiagonal && check) {
+        // apply fall
+        if (fallLeft == 1) {
             pX++;
-            pY += 2;  // Move right by 2 steps
-
-            scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
-            clearMap(board, dispR, dispC);
-            callObj(board);
-            addBorders(board, dispR, dispC);
-            jumprightframe(board, pX, pY, LC, LR);
-
-            system("cls");
-            dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
-            Clear_LoadMap(board, dispR, dispC);
-            isFalling = 1;
+            pY--;
+        } else {
+            pX++;
         }
+
+        // redraw at new position
+        scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+        clearMap(board, dispR, dispC);
+        callObj(board);
+        addBorders(board, dispR, dispC);
+        jumpleftframe(board, pX, pY, LC, LR);
+
+        system("cls");
+        dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
+        Clear_LoadMap(board, dispR, dispC);
+        isFalling = 1;
     }
 
-    isWalking = 0;
+    // reset flags
     isJumping = 0;
     isFalling = 0;
-}
-void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int& isFalling, int& isWalking, int dispR, int dispC, int LC[9], int LR[15]) {
-    // Initial setup
-    scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
-    clearMap(board, dispR, dispC);
-    callObj(board); // Redraw objects
-    addBorders(board, dispR, dispC);
-    jumpleftframe(board, pX, pY, LC, LR); // Draw the player jumping up
-
-    int check = 1;  // Assume the space is clear initially
-
-    // Check if the player can move left (no collision with obstacles)
-    for (int i = pX; i >= pX - pHeight + 1; i--) {
-        int lc_index = pX - i;  // Convert to LC index (0 to 8)
-        if (lc_index >= 0 && lc_index < 9) {
-            // Check if the left side of the player is clear
-            if (board[i][LC[lc_index] - 1] != ' ' && board[i][LC[lc_index] - 1] != char(186)) {
-                check = 0;
-                break;
-            }
-        }
-    }
-
-    // Check the horizontal clearance above the player
-    for (int j = pY; j <= pY + (pWidth - 1) && j < 999; j++) {
-        int LR_index = j - pY;  // Correctly calculate LR_index based on the position you're checking
-        if (LR_index >= 0 && LR_index < 15) {
-            int checkR = LR[LR_index] - 1; // Get the row index from LR array
-            if (board[checkR][j] != ' ') {
-                check = 0;
-                break;
-            }
-        } else {
-            check = 0; // Exit loop if out-of-bounds
-            break;
-        }
-    }
-
-    // Jumping left: Loop until the player has jumped 4 times
-    for (int a = 0; a < 4; a++) {
-        if (pX - (pHeight + 1) - 1 >= 0 && pY - 1 > 0 && check == 1) {
-            // Move the player left and up (jumping)
-            pX--;
-            pY -= 2;  // Move left by 2 steps instead of 1
-
-            // Redraw and update screen after moving the player
-            scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
-            clearMap(board, dispR, dispC);
-            callObj(board); // Redraw objects
-            addBorders(board, dispR, dispC);
-            jumpleftframe(board, pX, pY, LC, LR); // Update jump animation
-
-            system("cls");
-            dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display status bar
-            Clear_LoadMap(board, dispR, dispC); // Clear the screen and load map
-
-            isJumping = 1; // Set the jumping state
-        } else {
-            break; // Exit if any conditions fail
-        }
-    }
-
-    // Check for landing or falling
-    check = 1;  // Reset check
-    for (int j = pY; j <= pY + (pWidth - 1); j++) {
-        if (board[pX + 1][j] != ' ' && board[pX + 1][j] != char(186)) {
-            check = 0;
-            break;
-        }
-    }
-
-    // Handle falling logic if the player can fall
-    for (; pX + 1 < 99 && board[pX + 1][pY] == ' ' && pY > 1;) {
-        int checkDiagonal = 1;
-        for (int j = pY; j <= pY + (pWidth - 1); j++) {
-            if (board[pX + 1][j] != ' ' && board[pX + 1][j] != char(186)) {
-                checkDiagonal = 0;
-                break;
-            }
-        }
-
-        if (checkDiagonal && check) {
-            pX++;
-            pY--;  // Move the player slightly down (falling effect)
-            scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
-            clearMap(board, dispR, dispC);
-            callObj(board);
-            addBorders(board, dispR, dispC);
-            jumpleftframe(board, pX, pY, LC, LR); // Update jump animation
-            system("cls");
-            dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
-            Clear_LoadMap(board, dispR, dispC);
-            isFalling = 1; // Set falling state
-        }
-    }
-
-    // Reset movement states after jump and fall
     isWalking = 0;
-    isJumping = 0;
-    isFalling = 0;
 }
 
 /*
