@@ -1518,15 +1518,15 @@ void drawSpike(char board[100][1000], int R, int C) {
 	board[R - 1][C + 2] = '\\';
 }
 
-void drawTerrain(char board[100][1000] , int r , int c , int NumR , int NumC){
+void drawTerrain(char board[100][1000], int r, int c, int NumR, int NumC) {
 	int tempCol;
 	tempCol = c;
-	for(int i =0  ;i < NumR ; i++){
-		for(int j =0 ; j< NumC ; j++){
+	for (int i = 0; i < NumR; i++) {
+		for (int j = 0; j < NumC; j++) {
 			board[r][tempCol] = '#';
 			tempCol++;
 		}
-		tempCol=c;
+		tempCol = c;
 		r++;
 	}
 }
@@ -1630,8 +1630,8 @@ void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHer
 			}
 		}
 	}
-	int check2=1;
-	for (int i = posIHero-1; i >= posIHero - heightHero + 1; i--) {
+	int check2 = 1;
+	for (int i = posIHero - 1; i >= posIHero - heightHero + 1; i--) {
 		int lc_index = posIHero - i;  // Convert to LC index (0 to 8)
 		if (lc_index >= 0 && lc_index < 9) {
 			if (board[i][LC[lc_index] + 1] != ' ' && board[i][LC[lc_index] + 1] != char(186)) {
@@ -1642,7 +1642,7 @@ void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHer
 	}
 
 	//Go up a row if its only 1 row diffrence in terrain
-	if(board[posIHero][LC[0]] != ' ' && board[posIHero][LC[0]] != char(186) && check2 && !check){
+	if (board[posIHero][LC[0]] != ' ' && board[posIHero][LC[0]] != char(186) && check2 && !check) {
 		posIHero--;
 		posJHero++;
 	}
@@ -1665,18 +1665,18 @@ void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int heightHer
 		}
 	}
 	//Go up a row if there is only 1 row diffrence
-		int check2 =1;
-		for (int i = posIHero-1; i >= posIHero - heightHero + 1; i--) {
-			int lc_index = posIHero - i;  // Convert to LC index (0 to 8)
-			if (lc_index >= 0 && lc_index < 9) {
-				if (board[i][LC[lc_index] - 1] != ' ' && board[i][LC[lc_index] - 1] != char(186)) {
-					check2 = 0;
-					break;
-				}
+	int check2 = 1;
+	for (int i = posIHero - 1; i >= posIHero - heightHero + 1; i--) {
+		int lc_index = posIHero - i;  // Convert to LC index (0 to 8)
+		if (lc_index >= 0 && lc_index < 9) {
+			if (board[i][LC[lc_index] - 1] != ' ' && board[i][LC[lc_index] - 1] != char(186)) {
+				check2 = 0;
+				break;
 			}
 		}
+	}
 
-	if(board[posIHero][LC[0]] != ' ' && board[posIHero][LC[0]] != char(186) && check2 && !check){
+	if (board[posIHero][LC[0]] != ' ' && board[posIHero][LC[0]] != char(186) && check2 && !check) {
 		posJHero--;
 		posIHero--;
 	}
@@ -1743,7 +1743,8 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 }
 void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int& isFalling, int animation, int dispR, int dispC, int LC[9], int LR[15]) {
 	int check = 1;
-	for (int j = pY; j <= pY + (pWidth - 1); j++) {
+	//pY + 3 : beginning first leg , pY+9 : end of 2nd leg
+	for (int j = pY+3; j <= pY +9; j++) {
 		if (board[pX + 1][j] != ' ' && board[pX + 1][j] != char(186)) {
 			check = 0;
 			break;
@@ -1753,12 +1754,7 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 	//Fall straight
 	for (; pX + 1 < 99 && (board[pX + 1][pY] == ' ' || board[pX + 1][pY] == char(186)) && check; ) {
 		if (pX - pHeight < 0) break;
-		for (int j = pY; j <= pY + (pWidth - 1) && j < 1000; j++) {
-			if (board[pX - pHeight][j] != ' ' && board[pX - pHeight][j] != char(186)) {
-				check = 0;
-				break;
-			}
-		}
+
 		pX++;
 		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 		clearMap(board, dispR, dispC);
@@ -1901,7 +1897,7 @@ void jumpLeft(
 	player Player, char gun[],
 	int& isFalling, int& isWalking,
 	int dispR, int dispC,
-	int LC[9], int LR[15]){
+	int LC[9], int LR[15]) {
 	int check = 1;
 
 	for (int j = pY; j <= pY + (pWidth - 1) && j < 80; j++) {
@@ -2129,32 +2125,36 @@ int main() {
 			if (_kbhit()) {
 				char key = _getch();
 				if ((key == 'a' || key == 'A') && isClimbing == 0 && isFalling == 0) {
-					if (isWalking == 2) {
-						if (frame == 5) frame = 1;
-						else frame++;
+					if (Player.Col >= 2) {
+						if (isWalking == 2) {
+							if (frame == 5) frame = 1;
+							else frame++;
+						}
+						else {
+							frame = 1;
+						}
+						moveLeft(board, Player.Col, Player.Row, Player.maxHeight, lastCellCol);
+						scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						animation = 1;
+						isWalking = 2;
+						FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow);
 					}
-					else {
-						frame = 1;
-					}
-					moveLeft(board, Player.Col, Player.Row, Player.maxHeight, lastCellCol);
-					scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
-					animation = 1;
-					isWalking = 2;
-					FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow);
 				}
 				else if ((key == 'd' || key == 'D') && isClimbing == 0 && isFalling == 0) {
-					if (isWalking == 1) {
-						if (frame == 5) frame = 1;
-						else frame++;
+					if (Player.Col + Player.maxWidth < 999) {
+						if (isWalking == 1) {
+							if (frame == 5) frame = 1;
+							else frame++;
+						}
+						else {
+							frame = 1;
+						}
+						moveRight(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, lastCellCol);
+						scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						animation = 0;
+						FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow);
+						isWalking = 1;
 					}
-					else {
-						frame = 1;
-					}
-					moveRight(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, lastCellCol);
-					scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
-					animation = 0;
-					FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow);
-					isWalking = 1;
 				}
 				else if (key == 'w' || key == 'W') {
 					if (isWalking == 0) {
