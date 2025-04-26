@@ -2,7 +2,7 @@
 /*
 MAKE LR from down , LC from down to check under the player for falling
 Implement the check for jumping , falling , jumping right , jumping left and thier falling
-Add spaces inside every frame in all playe movements 
+Add spaces inside every frame in all playe movements
 */
 
 
@@ -25,10 +25,10 @@ char bold[] = "\033[1m";
 struct player {
 	int Row, Col; //Position
 	int maxHeight = 9, maxWidth = 15; //Max height and width
-	
+
 	int Health;
 	int coins; //Either coins or Level , until decided i will leave it as coins
-	
+
 	int shootR, shootC;
 	int gun; //Either 1 for gun (bullets) or 2 for Lazerbeam (lazer)
 	int ammo, maxAmmo; // (ammo/maxAmmo) , max ammo could be 24 for gun , (maxammo == 1) for lazerbeam
@@ -40,7 +40,7 @@ struct Enemy {
 	int maxHeight = 1, maxWidth = 1; //Max height and width
 	int Health = 100;
 	int attackPower = 10;
-	
+
 };
 void showMainMenu(char& choice) {
 	cout << "==================================================" << endl;
@@ -707,7 +707,7 @@ void drawPlayerRightFrame5(char board[100][1000], int row, int col, int& shootR,
 
 
 // Walking Left Frames
-void DrawPlayerLeftFrame1(char board[100][1000], int row, int col, int& shootingR, int& shootingC , int LC[9]) {
+void DrawPlayerLeftFrame1(char board[100][1000], int row, int col, int& shootingR, int& shootingC, int LC[9]) {
 
 	//head
 	board[row - 7][col + 10] = '\\';
@@ -800,7 +800,7 @@ void DrawPlayerLeftFrame1(char board[100][1000], int row, int col, int& shooting
 }
 
 
-void DrawPlayerLeftFrame2(char board[100][1000], int R, int C, int& shootingR, int& shootingC , int LC[9]) {
+void DrawPlayerLeftFrame2(char board[100][1000], int R, int C, int& shootingR, int& shootingC, int LC[9]) {
 
 	//Left arm
 	board[R - 4][C] = '\\';
@@ -889,7 +889,7 @@ void DrawPlayerLeftFrame2(char board[100][1000], int R, int C, int& shootingR, i
 	LC[8] = C + 6;   // Correct (head '_')
 }
 
-void DrawPlayerLeftFrame3(char board[100][1000], int R, int C, int& shootingR, int& shootingC , int LC[9] ) {
+void DrawPlayerLeftFrame3(char board[100][1000], int R, int C, int& shootingR, int& shootingC, int LC[9]) {
 
 	//Left arm
 	board[R - 4][C] = '\\';
@@ -984,7 +984,7 @@ void DrawPlayerLeftFrame3(char board[100][1000], int R, int C, int& shootingR, i
 
 
 
-void DrawPlayerLeftFrame4(char board[100][1000], int R, int C, int& shootingR, int& shootingC , int LC[9]) {
+void DrawPlayerLeftFrame4(char board[100][1000], int R, int C, int& shootingR, int& shootingC, int LC[9]) {
 
 	//Left arm
 	board[R - 4][C] = '\\';
@@ -1077,7 +1077,7 @@ void DrawPlayerLeftFrame4(char board[100][1000], int R, int C, int& shootingR, i
 
 
 
-void DrawPlayerLeftFrame5(char board[100][1000], int R, int C, int& shootingR, int& shootingC , int LC[9]) {
+void DrawPlayerLeftFrame5(char board[100][1000], int R, int C, int& shootingR, int& shootingC, int LC[9]) {
 
 	//Left arm
 	board[R - 4][C] = '\\';
@@ -1171,7 +1171,7 @@ void DrawPlayerLeftFrame5(char board[100][1000], int R, int C, int& shootingR, i
 
 
 //Jump frames
-void jumprightframe(char board[100][1000], int row, int col , int LC[9], int LR[15]) {
+void jumprightframe(char board[100][1000], int row, int col, int LC[9], int LR[15]) {
 
 	//head
 
@@ -1267,7 +1267,7 @@ void jumprightframe(char board[100][1000], int row, int col , int LC[9], int LR[
 	LC[6] = col + 14;  // row-6
 	LC[7] = col + 13;  // row-7
 	LC[8] = col + 9;   // row-8
- 
+
 	LR[0] = row - 5;   // col+0
 	LR[1] = row - 5;   // col+1
 	LR[2] = row - 5;   // col+2
@@ -1287,7 +1287,7 @@ void jumprightframe(char board[100][1000], int row, int col , int LC[9], int LR[
 
 
 
-void jumpleftframe(char board[100][1000], int row, int col , int LC[9] , int LR[15]) {
+void jumpleftframe(char board[100][1000], int row, int col, int LC[9], int LR[15]) {
 
 
 	//head
@@ -1431,19 +1431,19 @@ void climbFrame1(char board[100][1000], int row, int col) {
 
 	//body
 
-	board[row-5][col+2]='|';
-	board[row-4][col+2]='|';
-	board[row-3][col+2]='|';
-	board[row-2][col+2]='\\';
-	board[row-2][col+3]='_';
-	board[row-2][col+4]='_';
-	board[row-2][col+5]='_';
-	board[row-2][col+6]='_';
-	board[row-2][col+7]='_';
-	board[row-2][col+8]='/';
-	board[row-3][col+8]='|';
-	board[row-4][col+8]='|';
-	board[row-5][col+8]='|';
+	board[row - 5][col + 2] = '|';
+	board[row - 4][col + 2] = '|';
+	board[row - 3][col + 2] = '|';
+	board[row - 2][col + 2] = '\\';
+	board[row - 2][col + 3] = '_';
+	board[row - 2][col + 4] = '_';
+	board[row - 2][col + 5] = '_';
+	board[row - 2][col + 6] = '_';
+	board[row - 2][col + 7] = '_';
+	board[row - 2][col + 8] = '/';
+	board[row - 3][col + 8] = '|';
+	board[row - 4][col + 8] = '|';
+	board[row - 5][col + 8] = '|';
 
 
 	//right
@@ -1510,20 +1510,20 @@ void drawElevator(char board[100][1000], int R, int C) {
 	board[R][C + 17] = char(188);
 
 
-	board[R-7][C+42] = '#';
-	board[R-7][C+43] = '#';
-	board[R-7][C+44] = '#';
-	board[R-8][C+42] = '#';
-	board[R-8][C+43] = '#';
-	board[R-8][C+44] = '#';
+	board[R - 7][C + 42] = '#';
+	board[R - 7][C + 43] = '#';
+	board[R - 7][C + 44] = '#';
+	board[R - 8][C + 42] = '#';
+	board[R - 8][C + 43] = '#';
+	board[R - 8][C + 44] = '#';
 
 }
 
-void drawSpike(char board[100][1000] , int R , int C){
-	board[R][C]= '/';
-	board[R-1][C+1]= '/';
-	board[R][C+3]= '\\';
-	board[R-1][C+2]= '\\';
+void drawSpike(char board[100][1000], int R, int C) {
+	board[R][C] = '/';
+	board[R - 1][C + 1] = '/';
+	board[R][C + 3] = '\\';
+	board[R - 1][C + 2] = '\\';
 }
 
 ///////////////////////////////
@@ -1618,7 +1618,7 @@ void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHer
 	// Check every cell in the column to the right of the player
 	for (int i = posIHero; i >= posIHero - heightHero + 1; i--) {
 		int lc_index = posIHero - i;  // Convert to LC index (0=bottom)
-		if (lc_index >= 0 && lc_index < 9) { 
+		if (lc_index >= 0 && lc_index < 9) {
 			if (board[i][LC[lc_index] + 1] != ' ' && board[i][LC[lc_index] + 1] != char(186)) {
 				check = 0;
 				break;
@@ -1631,42 +1631,42 @@ void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHer
 	}
 }
 
-void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int heightHero , int LC[9]) {
-		int check = 1;
+void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int heightHero, int LC[9]) {
+	int check = 1;
 
-		for (int i = posIHero; i >= posIHero - heightHero + 1; i--) {
-			int lc_index = posIHero - i;  // Convert to LC index (0 to 8)
-			if (lc_index >= 0 && lc_index < 9) {  
-				if (board[i][LC[lc_index] - 1] != ' ' && board[i][LC[lc_index] - 1] != char(186)) {
-					check = 0;
-					break;
-				}
+	for (int i = posIHero; i >= posIHero - heightHero + 1; i--) {
+		int lc_index = posIHero - i;  // Convert to LC index (0 to 8)
+		if (lc_index >= 0 && lc_index < 9) {
+			if (board[i][LC[lc_index] - 1] != ' ' && board[i][LC[lc_index] - 1] != char(186)) {
+				check = 0;
+				break;
 			}
 		}
+	}
 
-		if (check == 1 && posJHero - 1 >= 0) {
-			posJHero--;
-		}
+	if (check == 1 && posJHero - 1 >= 0) {
+		posJHero--;
+	}
 }
 
-void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int animation, int dispR, int dispC , int LC[9] , int LR[15]) {
-	
-		
+void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int animation, int dispR, int dispC, int LC[9], int LR[15]) {
+
+
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 	clearMap(board, dispR, dispC);
 	callObj(board); // Call the function to draw the objects
 	addBorders(board, dispR, dispC);
 	if (animation == 0) {
-		jumprightframe(board, pX, pY , LC , LR); // Draw the player jumping up
+		jumprightframe(board, pX, pY, LC, LR); // Draw the player jumping up
 	}
 	else if (animation == 1) {
-		jumpleftframe(board, pX, pY , LC , LR); // Draw the player jumping up
+		jumpleftframe(board, pX, pY, LC, LR); // Draw the player jumping up
 	}
-	
+
 	for (int i = 0; i < 4; i++) {
 		if (pX - pHeight < 0) break;
 		int check = 1;
-		
+
 		for (int j = pY; j <= pY + (pWidth - 1) && j < 999; j++) {
 			int LR_index = j - pY;  // Correctly calculate LR_index based on the position you're checking
 			if (LR_index >= 0 && LR_index < 15) {  // Ensure it's within bounds
@@ -1675,23 +1675,24 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 					check = 0;
 					break;
 				}
-			} else {
+			}
+			else {
 				check = 0; // Exit loop if out-of-bounds
 				break;
 			}
 		}
-		
-		if (pX - pHeight - 1 > 0  && check == 1) {
+
+		if (pX - pHeight - 1 > 0 && check == 1) {
 			pX--;
 			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 			clearMap(board, dispR, dispC);
 			callObj(board); // Call the function to draw the objects
 			addBorders(board, dispR, dispC);
 			if (animation == 0) {
-				jumprightframe(board, pX, pY , LC , LR); // Draw the player jumping up
+				jumprightframe(board, pX, pY, LC, LR); // Draw the player jumping up
 			}
 			else if (animation == 1) {
-				jumpleftframe(board, pX, pY , LC , LR); // Draw the player jumping up
+				jumpleftframe(board, pX, pY, LC, LR); // Draw the player jumping up
 			}
 			system("cls");
 			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
@@ -1704,7 +1705,7 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 	}
 	isJumping = 0;
 }
-void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int& isFalling, int animation, int dispR, int dispC , int LC[9] , int LR[15]) {
+void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int& isFalling, int animation, int dispR, int dispC, int LC[9], int LR[15]) {
 	int check = 1;
 	for (int j = pY; j <= pY + (pWidth - 1); j++) {
 		if (board[pX + 1][j] != ' ' && board[pX + 1][j] != char(186)) {
@@ -1728,10 +1729,10 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 		callObj(board); // Call the function to draw the objects
 		addBorders(board, dispR, dispC);
 		if (animation == 0) {
-			jumprightframe(board, pX, pY , LC ,LR); // Draw the player jumping up
+			jumprightframe(board, pX, pY, LC, LR); // Draw the player jumping up
 		}
 		else if (animation == 1) {
-			jumpleftframe(board, pX, pY , LC , LR); // Draw the player jumping up
+			jumpleftframe(board, pX, pY, LC, LR); // Draw the player jumping up
 		}
 		system("cls");
 		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
@@ -1742,8 +1743,8 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 }
 
 void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
-		int& isJumping, player Player, char gun[], int& isFalling,
-		int& isWalking, int dispR, int dispC, int LC[9], int LR[15]) {
+	int& isJumping, player Player, char gun[], int& isFalling,
+	int& isWalking, int dispR, int dispC, int LC[9], int LR[15]) {
 	// Initial setup
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 	clearMap(board, dispR, dispC);
@@ -1753,228 +1754,211 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 
 	// Jump right (diagonal up-right movement)
 	for (int a = 0; a < 4; a++) {
-	int canJump = 1; // 1 = can jump, 0 = cannot jump
+		int canJump = 1; // 1 = can jump, 0 = cannot jump
 
-	// Check right side collision using LC (last column in each row)
-	for (int row = pX; row >= pX - pHeight + 1; row--) {
-	  int lc_index = pX - row;
-	  if (lc_index >= 0 && lc_index < 9) {
-		  if (board[row][LC[lc_index] + 1] != ' ' && 
-			  board[row][LC[lc_index] + 1] != char(186)) {
-			  canJump = 0;
-			  break;
-		  }
-	  }
-	}
+		// Check right side collision using LC (last column in each row)
+		for (int row = pX; row >= pX - pHeight + 1; row--) {
+			int lc_index = pX - row;
+			if (lc_index >= 0 && lc_index < 9) {
+				if (board[row][LC[lc_index] + 1] != ' ' &&
+					board[row][LC[lc_index] + 1] != char(186)) {
+					canJump = 0;
+					break;
+				}
+			}
+		}
 
-	// Check upward clearance using LR (highest row in each column)
-	for (int col = pY; col < pY + pWidth; col++) {
-	  int lr_index = col - pY;
-	  if (lr_index >= 0 && lr_index < 15) {
-		  if (LR[lr_index] - 1 < 0 ||  // Check bounds
-			  (board[LR[lr_index] - 1][col] != ' ' && 
-			   board[LR[lr_index] - 1][col] != char(186))) {
-			  canJump = 0;
-			  break;
-		  }
-	  }
-	}
+		// Check upward clearance using LR (highest row in each column)
+		for (int col = pY; col < pY + pWidth; col++) {
+			int lr_index = col - pY;
+			if (lr_index >= 0 && lr_index < 15) {
+				if (LR[lr_index] - 1 < 0 ||  // Check bounds
+					(board[LR[lr_index] - 1][col] != ' ' &&
+						board[LR[lr_index] - 1][col] != char(186))) {
+					canJump = 0;
+					break;
+				}
+			}
+		}
 
-	if (canJump == 0) break;
+		if (canJump == 0) break;
 
-	// Move diagonally up-right
-	pX--;
-	pY++;
+		// Move diagonally up-right
+		pX--;
+		pY++;
 
-	// Redraw everything
-	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
-	clearMap(board, dispR, dispC);
-	callObj(board);
-	addBorders(board, dispR, dispC);
-	jumprightframe(board, pX, pY, LC, LR);
+		// Redraw everything
+		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+		clearMap(board, dispR, dispC);
+		callObj(board);
+		addBorders(board, dispR, dispC);
+		jumprightframe(board, pX, pY, LC, LR);
 
-	system("cls");
-	dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
-	Clear_LoadMap(board, dispR, dispC);
-	isJumping = 1;
+		system("cls");
+		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
+		Clear_LoadMap(board, dispR, dispC);
+		isJumping = 1;
 	}
 
 	// Falling logic
-	for(;;) {
-	int canFall = 0;
+	for (;;) {
+		int canFall = 0;
 
-	// Check if we can fall straight down
-	for (int col = pY; col < pY + pWidth; col++) {
-	  if (pX + 1 < 100 && (board[pX + 1][col] == ' ' || board[pX + 1][col] == char(186))) {
-		  canFall = 1;
-	  } else {
-		  canFall = 0;
-		  break;
-	  }
-	}
+		// Check if we can fall straight down
+		for (int col = pY; col < pY + pWidth; col++) {
+			if (pX + 1 < 100 && (board[pX + 1][col] == ' ' || board[pX + 1][col] == char(186))) {
+				canFall = 1;
+			}
+			else {
+				canFall = 0;
+				break;
+			}
+		}
 
-	if (canFall == 0) break;
+		if (canFall == 0) break;
 
-	// Check if we can fall diagonally right
-	int canFallRight = 1;
-	if (pY + pWidth < 999) {
-	  for (int row = pX; row <= pX + 1; row++) {
-		  if (board[row][pY + pWidth] != ' ' && 
-			  board[row][pY + pWidth] != char(186)) {
-			  canFallRight = 0;
-			  break;
-		  }
-	  }
-	} else {
-	  canFallRight = 0;
-	}
+		// Check if we can fall diagonally right
+		int canFallRight = 1;
+		if (pY + pWidth < 999) {
+			for (int row = pX; row <= pX + 1; row++) {
+				if (board[row][pY + pWidth] != ' ' &&
+					board[row][pY + pWidth] != char(186)) {
+					canFallRight = 0;
+					break;
+				}
+			}
+		}
+		else {
+			canFallRight = 0;
+		}
 
-	if (canFallRight == 1) {
-	  pX++;
-	  pY++;
-	} else {
-	  pX++;
-	}
+		if (canFallRight == 1) {
+			pX++;
+			pY++;
+		}
+		else {
+			pX++;
+		}
 
-	// Redraw everything
-	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
-	clearMap(board, dispR, dispC);
-	callObj(board);
-	addBorders(board, dispR, dispC);
-	jumprightframe(board, pX, pY, LC, LR);
+		// Redraw everything
+		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+		clearMap(board, dispR, dispC);
+		callObj(board);
+		addBorders(board, dispR, dispC);
+		jumprightframe(board, pX, pY, LC, LR);
 
-	system("cls");
-	dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
-	Clear_LoadMap(board, dispR, dispC);
-	isFalling = 1;
+		system("cls");
+		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
+		Clear_LoadMap(board, dispR, dispC);
+		isFalling = 1;
 	}
 
 	isJumping = 0;
 	isFalling = 0;
 	isWalking = 0;
 }
+void jumpLeft(
+	char board[100][1000],
+	int& pX, int& pY,
+	int pHeight, int pWidth,
+	int& isJumping,
+	player Player, char gun[],
+	int& isFalling, int& isWalking,
+	int dispR, int dispC,
+	int LC[9], int LR[15]){
+	int check = 1;
 
-void jumpLeft( char board[100][1000], int& pX, int& pY, int  pHeight, int  pWidth,  int& isJumping, player Player, char gun[], int& isFalling, int& isWalking, int  dispR, int  dispC,int  LC[9],int  LR[15]) {
+	for (int j = pY; j <= pY + (pWidth - 1) && j < 80; j++) {
+		if (board[pX - pHeight][j] != ' ') {
+			check = 0;
+			break;
+		}
+	}
+
+	for (int i = pX; i >= pX - pHeight + 1; i--) {
+		if (board[i][pY - 1] != ' ') {
+			check = 0;
+			break;
+		}
+	}
+
+	for (int a = 0; a < 3; a++) {
+		if (pX - (pHeight + 1) - 1 >= 0 && pY - 1 > 0 && board[pX - (pHeight + 1) - 1][pY - 1] == ' ' && check == 1) {
+			for (int i = pX; i >= pX - pHeight + 1; i--) {
+				if (board[i][pY + pWidth] != ' ') {
+					check = 0;
+					break;
+				}
+			}
 
 
-    // draw initial frame so LC, LR get set for start position
-    scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
-    clearMap(board, dispR, dispC);
-    callObj(board);
-    addBorders(board, dispR, dispC);
-    jumpleftframe(board, pX, pY, LC, LR);
+			if (pX - pHeight < 1) break;
 
-    // 1) Diagonal up-left jump (4 steps)
-    for (int step = 0; step < 4; ++step) {
-        int canJump = 1;
+			for (int j = pY; j <= pY + (pWidth - 1) && j < 80; j++) {
+				if (board[pX - pHeight][j] != ' ') {
+					check = 0;
+					break;
+				}
+			}
 
-        // recompute LC/LR for current position
-        jumpleftframe(board, pX, pY, LC, LR);
+			if (check == 0) break;
 
-        // — check left-side clearance —
-        int rowMin = pX - pHeight + 1;
-        if (rowMin < 0) rowMin = 0;
-        for (int row = pX; row >= rowMin; --row) {
-            int idx = pX - row;
-            if (idx < 0 || idx >= pHeight) {
-                canJump = 0;
-                break;
-            }
-            int c = LC[idx] - 1;
-            if (c < 0 || c >= 999 || board[row][c] != ' ') {
-                canJump = 0;
-                break;
-            }
-        }
-        if (canJump == 0) break;
+			pX--;
+			pY--;
+			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+			clearMap(board, dispR, dispC);
+			callObj(board);
+			addBorders(board, dispR, dispC);
+			jumpleftframe(board, pX, pY, LC, LR);
 
-        // — check above clearance —
-        int colMax = pY + pWidth;
-        if (colMax > 999) colMax = 999;
-        for (int col = pY; col < colMax; ++col) {
-            int idx = col - pY;
-            if (idx < 0 || idx >= pWidth) {
-                canJump = 0;
-                break;
-            }
-            int r = LR[idx] - 1;
-            if (r < 0 || r >= 99 || board[r][col] != ' ') {
-                canJump = 0;
-                break;
-            }
-        }
-        if (canJump == 0) break;
+			system("cls");
+			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
+			Clear_LoadMap(board, dispR, dispC);
+			isJumping = 1;
+		}
+		else {
+			break;
+		}
 
-        // perform the move
-        pX--;
-        pY--;
+	}
 
-        // redraw at new position
-        scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
-        clearMap(board, dispR, dispC);
-        callObj(board);
-        addBorders(board, dispR, dispC);
-        jumpleftframe(board, pX, pY, LC, LR);
+	check = 1;
+	for (int j = pY; j <= pY + (pWidth - 1); j++) {
+		if (board[pX + 1][j] != ' ') {
+			check = 0;
+			break;
+		}
+	}
 
-        system("cls");
-        dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
-        Clear_LoadMap(board, dispR, dispC);
-        isJumping = 1;
-    }
+	for (; pX + 1 < 23 && board[pX + 1][pY] == ' ' && pY > 1;) {
+		int checkDiagonal = 1;
+		for (int j = pY; j <= pY + (pWidth - 1); j++) {
+			if (board[pX + 1][j] != ' ') {
+				checkDiagonal = 0;
+				break;
+			}
+		}
 
-    // 2) Falling phase
-    for (;;) {
-        int canFall = 1;
 
-        // straight down clearance?
-        for (int col = pY; col < pY + pWidth && col < 999; ++col) {
-            if (pX + 1 >= 99 || board[pX + 1][col] != ' ') {
-                canFall = 0;
-                break;
-            }
-        }
-        if (canFall == 0) break;
+		if (checkDiagonal && check) {
+			pX++;
+			pY--;
+			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+			clearMap(board, dispR, dispC);
+			callObj(board);
+			addBorders(board, dispR, dispC);
+			jumpleftframe(board, pX, pY, LC, LR);
 
-        // diagonal-left clearance?
-        int fallLeft = 1;
-        if (pY - 1 < 0) {
-            fallLeft = 0;
-        } else {
-            for (int row = pX; row <= pX + 1 && row < 99; ++row) {
-                if (board[row][pY - 1] != ' ') {
-                    fallLeft = 0;
-                    break;
-                }
-            }
-        }
+			system("cls");
+			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
+			Clear_LoadMap(board, dispR, dispC);
+			isFalling = 1;
+		}
+	}
+	isWalking = 0;
+	isJumping = 0, isFalling = 0; // Reset jumping and falling states after landing
 
-        // apply fall
-        if (fallLeft == 1) {
-            pX++;
-            pY--;
-        } else {
-            pX++;
-        }
-
-        // redraw at new position
-        scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
-        clearMap(board, dispR, dispC);
-        callObj(board);
-        addBorders(board, dispR, dispC);
-        jumpleftframe(board, pX, pY, LC, LR);
-
-        system("cls");
-        dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
-        Clear_LoadMap(board, dispR, dispC);
-        isFalling = 1;
-    }
-
-    // reset flags
-    isJumping = 0;
-    isFalling = 0;
-    isWalking = 0;
 }
-
 /*
 NEXT STEPS:
 6. implement shooting (hitboxes)...pistol or lazer
@@ -2037,7 +2021,7 @@ int main() {
 		initializePlayerValues(Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, Player.Health, Player.coins, Player.gun, Player.ammo, Player.maxAmmo, Player.shootR, Player.shootC); // Initialize the player values
 		initializeBoard(board); // Initialize the board
 
-		int lastCellCol[9] , lastCellRow[15];
+		int lastCellCol[9], lastCellRow[15];
 		char gun[] = "Pistol";
 
 
@@ -2058,7 +2042,7 @@ int main() {
 		system("cls");
 		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
 		Clear_LoadMap(board, dispR, dispC); // Clear the screen and load the map
-		FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC , lastCellCol , lastCellRow); // Call the function to draw the player and objects
+		FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow); // Call the function to draw the player and objects
 		int isWon = 0;
 
 		for (; !isWon;) {
@@ -2086,17 +2070,17 @@ int main() {
 			else if (animation == 1) {
 				if (frame == 1) {
 					DrawPlayerLeftFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
-				}																					 
-				else if (frame == 2) {																 
+				}
+				else if (frame == 2) {
 					DrawPlayerLeftFrame2(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
-				}																					 
-				else if (frame == 3) {																 
+				}
+				else if (frame == 3) {
 					DrawPlayerLeftFrame3(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
-				}																					 
-				else if (frame == 4) {																 
+				}
+				else if (frame == 4) {
 					DrawPlayerLeftFrame4(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
-				}																					 
-				else if (frame == 5) {																 
+				}
+				else if (frame == 5) {
 					DrawPlayerLeftFrame5(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
 				}
 			}
@@ -2138,31 +2122,31 @@ int main() {
 				}
 				else if (key == 'w' || key == 'W') {
 					if (isWalking == 0) {
-							if (Player.Row - Player.maxHeight > 0) {
-								jumpStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, animation, dispR, dispC, lastCellCol, lastCellRow);
-								scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
-								FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow);
-								scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
-
-							}
-
-						}
-						else if (isWalking == 1) {
-							jumpRight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, isWalking, dispR, dispC, lastCellCol, lastCellRow);
-							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
-							FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow);
-							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
-							isWalking = 0;
-						}
-						else if (isWalking == 2) {
-							jumpLeft(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, isWalking, dispR, dispC, lastCellCol, lastCellRow);
+						if (Player.Row - Player.maxHeight > 0) {
+							jumpStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, animation, dispR, dispC, lastCellCol, lastCellRow);
 							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 							FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow);
 							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 
-							isWalking = 0;
 						}
-				
+
+					}
+					else if (isWalking == 1) {
+						jumpRight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, isWalking, dispR, dispC, lastCellCol, lastCellRow);
+						scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow);
+						scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						isWalking = 0;
+					}
+					else if (isWalking == 2) {
+						jumpLeft(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, isWalking, dispR, dispC, lastCellCol, lastCellRow);
+						scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow);
+						scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+
+						isWalking = 0;
+					}
+
 				}
 			}
 		}
@@ -2171,4 +2155,3 @@ int main() {
 
 }
 
- 
