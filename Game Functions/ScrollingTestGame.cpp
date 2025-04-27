@@ -798,12 +798,27 @@ void DrawPlayerLeftFrame1(char board[100][1000], int row, int col, int& shooting
 	board[row - 2][col + 7] = '_';
 	board[row - 2][col + 8] = '_';
 	board[row - 2][col + 11] = '/';
+
 	board[row - 3][col + 11] = '|';
 	board[row - 4][col + 11] = '|';
 	board[row - 5][col + 11] = '|';
+
+	board[row-3][col+6] = ' ';
+	board[row-3][col+7] = ' ';
+	board[row-3][col+8] = ' ';
+	board[row-3][col+9] = ' ';
+	board[row-3][col+10] = ' ';
+	
+	board[row-4][col+6] = ' ';
+	board[row-4][col+7] = ' ';
+	board[row-4][col+8] = ' ';
+	board[row-4][col+9] = ' ';
+	board[row-4][col+10] = ' ';
+
 	board[row - 3][col + 5] = '|';
 	board[row - 4][col + 5] = '|';
 	board[row - 5][col + 5] = '|';
+	
 	board[row - 5][col + 6] = '-';
 	board[row - 5][col + 7] = '-';
 	board[row - 5][col + 8] = 'v';
@@ -831,6 +846,7 @@ void DrawPlayerLeftFrame1(char board[100][1000], int row, int col, int& shooting
 	board[row][col + 9] = '|';
 	board[row][col + 10] = '_';
 	board[row][col + 11] = '|';
+	board[row - 1][col + 10] = ' ';
 	board[row - 1][col + 9] = '|';
 	board[row - 1][col + 11] = '|';
 
@@ -844,6 +860,7 @@ void DrawPlayerLeftFrame1(char board[100][1000], int row, int col, int& shooting
 	//left leg
 	board[row][col + 5] = '|';
 	board[row - 1][col + 5] = '|';
+	board[row - 1][col + 6] = ' ';
 	board[row][col + 6] = '_';
 	board[row][col + 7] = '|';
 	board[row - 1][col + 7] = '|';
@@ -888,6 +905,7 @@ void DrawPlayerLeftFrame2(char board[100][1000], int R, int C, int& shootingR, i
 	board[R][C + 4] = '/';
 	board[R][C + 5] = '_';
 	board[R][C + 6] = '/';
+	board[R-1][C + 6] = ' ';
 	board[R - 1][C + 5] = '/';
 	board[R - 1][C + 7] = '/';
 
@@ -896,6 +914,7 @@ void DrawPlayerLeftFrame2(char board[100][1000], int R, int C, int& shootingR, i
 	board[R][C + 11] = '_';
 	board[R][C + 12] = '\\';
 	board[R - 1][C + 9] = '|';
+	board[R-1][C+10] = ' ';
 	board[R - 1][C + 11] = '|';
 
 	//Body
@@ -906,6 +925,20 @@ void DrawPlayerLeftFrame2(char board[100][1000], int R, int C, int& shootingR, i
 	board[R - 2][C + 9] = '_';
 	board[R - 2][C + 10] = '_';
 	board[R - 2][C + 11] = '/';
+	
+	board[R-3][C+6] = ' ';
+	board[R-3][C+7] = ' ';
+	board[R-3][C+8] = ' ';
+	board[R-3][C+9] = ' ';
+	board[R-3][C+10] = ' ';
+	
+	board[R-4][C+6] = ' ';
+	board[R-4][C+7] = ' ';
+	board[R-4][C+8] = ' ';
+	board[R-4][C+9] = ' ';
+	board[R-4][C+10] = ' ';
+
+
 
 	board[R - 3][C + 5] = '|';
 	board[R - 3][C + 11] = '|';
@@ -977,6 +1010,7 @@ void DrawPlayerLeftFrame3(char board[100][1000], int R, int C, int& shootingR, i
 	board[R][C + 5] = '|';
 	board[R][C + 6] = '_';
 	board[R][C + 7] = '|';
+	board[R-1][C+6] = ' ';
 	board[R - 1][C + 5] = '/';
 	board[R - 1][C + 7] = '/';
 
@@ -999,6 +1033,7 @@ void DrawPlayerLeftFrame3(char board[100][1000], int R, int C, int& shootingR, i
 	board[R - 2][C + 10] = '_';
 	board[R - 2][C + 11] = '/';
 
+
 	board[R - 3][C + 5] = '|';
 	board[R - 3][C + 11] = '|';
 	board[R - 4][C + 5] = '|';
@@ -1011,6 +1046,19 @@ void DrawPlayerLeftFrame3(char board[100][1000], int R, int C, int& shootingR, i
 	board[R - 5][C + 8] = 'v';
 	board[R - 5][C + 9] = '-';
 	board[R - 5][C + 10] = '-';
+
+	board[R-3][C+6] = ' ';
+	board[R-3][C+7] = ' ';
+	board[R-3][C+8] = ' ';
+	board[R-3][C+9] = ' ';
+	board[R-3][C+10] = ' ';
+	
+	board[R-4][C+6] = ' ';
+	board[R-4][C+7] = ' ';
+	board[R-4][C+8] = ' ';
+	board[R-4][C+9] = ' ';
+	board[R-4][C+10] = ' ';
+
 
 	//Head
 	board[R - 7][C + 10] = '\\';
@@ -1072,6 +1120,7 @@ void DrawPlayerLeftFrame4(char board[100][1000], int R, int C, int& shootingR, i
 	board[R][C + 5] = '\\';
 	board[R][C + 6] = '_';
 	board[R][C + 7] = '\\';
+	board[R-1][C+6] = ' ';
 	board[R - 1][C + 5] = '/';
 	board[R - 1][C + 7] = '/';
 
@@ -1079,6 +1128,7 @@ void DrawPlayerLeftFrame4(char board[100][1000], int R, int C, int& shootingR, i
 	board[R][C + 9] = '|';
 	board[R][C + 10] = '_';
 	board[R][C + 11] = '|';
+	board[R-1][C+10] = ' ';
 	board[R - 1][C + 9] = '/';
 	board[R - 1][C + 11] = '/';
 
@@ -1103,6 +1153,19 @@ void DrawPlayerLeftFrame4(char board[100][1000], int R, int C, int& shootingR, i
 	board[R - 5][C + 8] = 'v';
 	board[R - 5][C + 9] = '-';
 	board[R - 5][C + 10] = '-';
+
+	board[R-3][C+6] = ' ';
+	board[R-3][C+7] = ' ';
+	board[R-3][C+8] = ' ';
+	board[R-3][C+9] = ' ';
+	board[R-3][C+10] = ' ';
+	
+	board[R-4][C+6] = ' ';
+	board[R-4][C+7] = ' ';
+	board[R-4][C+8] = ' ';
+	board[R-4][C+9] = ' ';
+	board[R-4][C+10] = ' ';
+
 
 	//Head
 	board[R - 7][C + 10] = '\\';
@@ -1165,6 +1228,7 @@ void DrawPlayerLeftFrame5(char board[100][1000], int R, int C, int& shootingR, i
 	board[R][C + 7] = '/';
 	board[R][C + 8] = '_';
 	board[R][C + 9] = '/';
+	board[R-1][C + 9] = ' ';
 	board[R - 1][C + 8] = '/';
 	board[R - 1][C + 10] = '/';
 
@@ -1197,6 +1261,19 @@ void DrawPlayerLeftFrame5(char board[100][1000], int R, int C, int& shootingR, i
 	board[R - 5][C + 8] = 'v';
 	board[R - 5][C + 9] = '-';
 	board[R - 5][C + 10] = '-';
+
+	board[R-3][C+6] = ' ';
+	board[R-3][C+7] = ' ';
+	board[R-3][C+8] = ' ';
+	board[R-3][C+9] = ' ';
+	board[R-3][C+10] = ' ';
+	
+	board[R-4][C+6] = ' ';
+	board[R-4][C+7] = ' ';
+	board[R-4][C+8] = ' ';
+	board[R-4][C+9] = ' ';
+	board[R-4][C+10] = ' ';
+
 
 	//Head
 	board[R - 7][C + 10] = '\\';
