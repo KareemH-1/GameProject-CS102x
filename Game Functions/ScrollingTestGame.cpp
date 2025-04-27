@@ -260,6 +260,7 @@ void drawPlayerRightFrame1(char board[100][1000], int row, int col, int& shootR,
 	//left leg
 	board[row][col + 3] = '|';
 	board[row - 1][col + 3] = '|';
+	board[row-1][col + 4] = ' ';
 	board[row][col + 4] = '_';
 	board[row][col + 5] = '|';
 	board[row - 1][col + 5] = '|';
@@ -268,6 +269,8 @@ void drawPlayerRightFrame1(char board[100][1000], int row, int col, int& shootR,
 	board[row][col + 7] = '|';
 	board[row][col + 8] = '_';
 	board[row][col + 9] = '|';
+
+	board[row-1][col + 8] = ' ';
 	board[row - 1][col + 7] = '|';
 	board[row - 1][col + 9] = '|';
 
@@ -295,16 +298,24 @@ void drawPlayerRightFrame1(char board[100][1000], int row, int col, int& shootR,
 	board[row - 2][col + 8] = '_';
 	board[row - 2][col + 9] = '/';
 
+	board[row - 3][col + 4] = ' ';
+	board[row - 3][col + 5] = ' ';
+	board[row - 3][col + 6] = ' ';
+	board[row - 3][col + 7] = ' ';
+	board[row - 3][col + 8] = ' ';
+
+	board[row - 4][col + 4] = ' ';
+	board[row - 4][col + 5] = ' ';
+	board[row - 4][col + 6] = ' ';
+	board[row - 4][col + 7] = ' ';
+	board[row - 4][col + 8] = ' ';
+
 	board[row - 3][col + 9] = '|';
-
 	board[row - 4][col + 9] = '|';
-
 	board[row - 5][col + 9] = '|';
 
 	board[row - 3][col + 3] = '|';
-
 	board[row - 4][col + 3] = '|';
-
 	board[row - 5][col + 3] = '|';
 
 	board[row - 5][col + 4] = '-';
@@ -360,11 +371,14 @@ void drawPlayerRightFrame2(char board[100][1000], int row, int col, int& shootR,
 	board[row][col + 2] = '/';
 	board[row][col + 3] = '_';
 	board[row][col + 4] = '/';
+	board[row - 1][col + 4] = ' ';
 	board[row - 1][col + 3] = '|';
 	board[row - 1][col + 5] = '|';
+
 	//right leg
 	board[row - 1][col + 7] = '\\';
 	board[row - 1][col + 9] = '\\';
+	board[row-1][col+8] = ' ';
 	board[row][col + 8] = '\\';
 	board[row][col + 9] = '_';
 	board[row][col + 10] = '\\';
@@ -406,6 +420,17 @@ void drawPlayerRightFrame2(char board[100][1000], int row, int col, int& shootR,
 	board[row - 5][col + 8] = '-';
 
 
+	board[row - 3][col + 4] = ' ';
+	board[row - 3][col + 5] = ' ';
+	board[row - 3][col + 6] = ' ';
+	board[row - 3][col + 7] = ' ';
+	board[row - 3][col + 8] = ' ';
+
+	board[row - 4][col + 4] = ' ';
+	board[row - 4][col + 5] = ' ';
+	board[row - 4][col + 6] = ' ';
+	board[row - 4][col + 7] = ' ';
+	board[row - 4][col + 8] = ' ';
 
 
 	//head
@@ -455,6 +480,7 @@ void drawPlayerRightFrame3(char board[100][1000], int row, int col, int& shootR,
 	board[row][col + 6] = '|';
 	board[row][col + 7] = '_';
 	board[row][col + 8] = '|';
+	board[row-1][col+7] = ' ';
 	board[row - 1][col + 6] = '\\';
 	board[row - 1][col + 8] = '\\';
 
@@ -494,7 +520,17 @@ void drawPlayerRightFrame3(char board[100][1000], int row, int col, int& shootR,
 	board[row - 5][col + 8] = '-';
 
 
+	board[row - 3][col + 4] = ' ';
+	board[row - 3][col + 5] = ' ';
+	board[row - 3][col + 6] = ' ';
+	board[row - 3][col + 7] = ' ';
+	board[row - 3][col + 8] = ' ';
 
+	board[row - 4][col + 4] = ' ';
+	board[row - 4][col + 5] = ' ';
+	board[row - 4][col + 6] = ' ';
+	board[row - 4][col + 7] = ' ';
+	board[row - 4][col + 8] = ' ';
 
 	//head
 
@@ -537,6 +573,7 @@ void drawPlayerRightFrame4(char board[100][1000], int row, int col, int& shootR,
 	board[row][col + 5] = '|';
 
 	board[row - 1][col + 3] = '\\';
+	board[row-1][col+4] = ' ';
 	board[row - 1][col + 5] = '\\';
 
 	//right leg
@@ -544,6 +581,7 @@ void drawPlayerRightFrame4(char board[100][1000], int row, int col, int& shootR,
 	board[row][col + 8] = '_';
 	board[row][col + 9] = '/';
 	board[row - 1][col + 7] = '\\';
+	board[row-1][col+8] = ' ';
 	board[row - 1][col + 9] = '\\';
 
 
@@ -582,6 +620,17 @@ void drawPlayerRightFrame4(char board[100][1000], int row, int col, int& shootR,
 	board[row - 5][col + 7] = '-';
 	board[row - 5][col + 8] = '-';
 
+	board[row - 3][col + 4] = ' ';
+	board[row - 3][col + 5] = ' ';
+	board[row - 3][col + 6] = ' ';
+	board[row - 3][col + 7] = ' ';
+	board[row - 3][col + 8] = ' ';
+
+	board[row - 4][col + 4] = ' ';
+	board[row - 4][col + 5] = ' ';
+	board[row - 4][col + 6] = ' ';
+	board[row - 4][col + 7] = ' ';
+	board[row - 4][col + 8] = ' ';
 
 
 
@@ -630,6 +679,7 @@ void drawPlayerRightFrame5(char board[100][1000], int row, int col, int& shootR,
 	//Right leg
 
 	board[row - 1][col + 4] = '\\';
+	board[row-1][col+5] = ' ';
 	board[row - 1][col + 6] = '\\';
 	board[row][col + 5] = '\\';
 	board[row][col + 6] = '_';
@@ -671,7 +721,17 @@ void drawPlayerRightFrame5(char board[100][1000], int row, int col, int& shootR,
 	board[row - 5][col + 8] = '-';
 
 
+	board[row - 3][col + 4] = ' ';
+	board[row - 3][col + 5] = ' ';
+	board[row - 3][col + 6] = ' ';
+	board[row - 3][col + 7] = ' ';
+	board[row - 3][col + 8] = ' ';
 
+	board[row - 4][col + 4] = ' ';
+	board[row - 4][col + 5] = ' ';
+	board[row - 4][col + 6] = ' ';
+	board[row - 4][col + 7] = ' ';
+	board[row - 4][col + 8] = ' ';
 
 	//head
 
