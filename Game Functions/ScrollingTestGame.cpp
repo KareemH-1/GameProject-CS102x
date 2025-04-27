@@ -1993,9 +1993,6 @@ void jumpLeft(
 }
 /*
 NEXT STEPS:
-6. implement shooting (hitboxes)...pistol or lazer
-8. implement reloading , for pistol and lazerbeam
-7. implement climbing ** (up and down) , add climbing frames
 8. implement enemies
 9. implement maps
 10. implement elevator
