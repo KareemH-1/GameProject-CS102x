@@ -128,25 +128,25 @@ void climp(char board[24][80], int& posJHero, int& posIHero, int widthHero, int 
     ladder ladders[4];
     
     // Check every cell in the column to the right of the player
-       
-    if (posJHero <=col + 11 && posJHero >= col) {
-        if (posIHero + 1 <=row-1 && posIHero - heightHero + 1 >= row - length) {
+    for(int i =0 ; i< 4 ; i++){
+        if (posJHero <= ladders[i].Col + 11 && posJHero >= ladders[i].Col) {
+            if (posIHero <= ladders[i].Row && posIHero - heightHero + 1 >= ladders[i].Row - length) {
             
-            if(getch()=='w') posIHero--;
-            else if (getch()=='s'){ 
-               //add an if condition that checks if nothing is under him but the ladder
-               posIHero++;
+                if(getch()=='w') posIHero--;
+                else if (getch()=='s'){ 
+                    posIHero++;
+                 }
+            
+                //add an if condition that checks if nothing is beside him but the ladder for both directions using LR and LC from movement functions
+                else if (getch() == 'a'){
+                    posJHero--;
+
+                }else if (getch() == 'd'){
+                    posJHero++;
+                }
             }
-            
-            //add an if condition that checks if nothing is beside him but the ladder for both directions
-            else if (getch() == 'a'){
-                 posJHero--;
-            
-            }else if (getch() == 'd'){
-                posJHero++;
-            }
-        }
-    }       
+        }       
+    }
     char board[24][80] = { ' ' };
     int row = 10, col = 10;
     drawladder(board, row, col);
