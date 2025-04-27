@@ -1,15 +1,5 @@
-//Reminder:
-/*
-MAKE LR from down , LC from down to check under the player for falling
-Implement the check for jumping , falling , jumping right , jumping left and thier falling
-Add spaces inside every frame in all playe movements
-*/
-
-
-
 #include <iostream>
 #include <conio.h>
-#include <windows.h>
 using namespace std;
 
 
@@ -44,10 +34,23 @@ struct Enemy {
 };
 
 struct ladder {
-	int Row, Col; //Position
-	int length;
+	int Row = NULL, Col = NULL; //Position
+	int length = NULL;
 };
 
+struct coin {
+	int Row, Col; //Position
+	int isCollected; // 1 for collected , 0 for not collected
+	int maxHeight = 1, maxWidth = 1; //Max height and width
+};
+
+struct elevator {
+	int Row, Col; //Position
+	int length;
+	int isMoving;
+	int maxWidth = 1;
+	int range;
+};
 
 void showMainMenu(char& choice) {
 	cout << "==================================================" << endl;
@@ -1523,18 +1526,159 @@ void climbFrame1(char board[100][1000], int row, int col) {
 	board[row - 3][col + 8] = '|';
 	board[row - 4][col + 8] = '|';
 	board[row - 5][col + 8] = '|';
+	board[row - 3][col + 3] = ' ';
+	board[row - 3][col + 4] = ' ';
+	board[row - 3][col + 5] = ' ';
+	board[row - 3][col + 6] = ' ';
+	board[row - 3][col + 7] = ' ';
+	board[row - 4][col + 7] = ' ';
+	board[row - 4][col + 6] = ' ';
+	board[row - 4][col + 5] = ' ';
+	board[row - 4][col + 4] = ' ';
+	board[row - 4][col + 3] = ' ';
+	board[row - 5][col + 3] = ' ';
+	board[row - 5][col + 4] = ' ';
+	board[row - 5][col + 5] = ' ';
+	board[row - 5][col + 6] = ' ';
+	board[row - 5][col + 7] = ' ';
 
 
-	//right
+	//right hand
+	board[row - 5][col + 9] = '|';
+	board[row - 5][col + 11] = '|';
+	board[row - 6][col + 9] = '|';
+	board[row - 6][col + 11] = '|';
+	board[row - 7][col + 10] = '_';
+	board[row - 7][col + 11] = '_';
+
+
+	//LEFT HAND
+
+	board[row - 5][col] = '|';
+	board[row - 6][col] = '|';
+	board[row - 7][col] = '|';
+	board[row - 8][col] = '_';
+	board[row - 5][col + 1] = '|';
+	board[row - 6][col + 1] = '|';
+	board[row - 7][col + 1] = '|';
+	board[row - 8][col + 1] = '_';
 
 
 
+	//left leg
+
+	board[row][col + 2] = '|';
+	board[row][col + 3] = '_';
+	board[row][col + 4] = '|';
+	board[row - 1][col + 2] = '|';
+	board[row - 1][col + 3] = ' ';
+	board[row - 1][col + 4] = '|';
+
+
+
+	//right leg
+
+	board[row - 1][col + 8] = '|';
+	board[row - 1][col + 6] = '|';
+	board[row - 1][col + 7] = '_';
 
 
 
 
 }
 
+
+
+void climbFrame2(char board[100][1000], int row, int col) {
+
+	//head  
+
+	board[row - 8][col + 3] = '_';
+	board[row - 8][col + 4] = '_';
+	board[row - 8][col + 5] = '_';
+	board[row - 8][col + 6] = '_';
+	board[row - 8][col + 7] = '_';
+	board[row - 7][col + 3] = '(';
+	board[row - 7][col + 4] = '|';
+	board[row - 7][col + 5] = '|';
+	board[row - 7][col + 6] = '|';
+	board[row - 7][col + 7] = ')';
+	board[row - 6][col + 3] = '\\';
+	board[row - 6][col + 4] = '-';
+	board[row - 6][col + 5] = '-';
+	board[row - 6][col + 6] = '-';
+	board[row - 6][col + 7] = '/';
+
+
+	//body
+
+	board[row - 5][col + 2] = '|';
+	board[row - 4][col + 2] = '|';
+	board[row - 3][col + 2] = '|';
+	board[row - 2][col + 2] = '\\';
+	board[row - 2][col + 3] = '_';
+	board[row - 2][col + 4] = '_';
+	board[row - 2][col + 5] = '_';
+	board[row - 2][col + 6] = '_';
+	board[row - 2][col + 7] = '_';
+	board[row - 2][col + 8] = '/';
+	board[row - 3][col + 8] = '|';
+	board[row - 4][col + 8] = '|';
+	board[row - 5][col + 8] = '|';
+	board[row - 3][col + 3] = ' ';
+	board[row - 3][col + 4] = ' ';
+	board[row - 3][col + 5] = ' ';
+	board[row - 3][col + 6] = ' ';
+	board[row - 3][col + 7] = ' ';
+	board[row - 4][col + 7] = ' ';
+	board[row - 4][col + 6] = ' ';
+	board[row - 4][col + 5] = ' ';
+	board[row - 4][col + 4] = ' ';
+	board[row - 4][col + 3] = ' ';
+
+
+	//left hand
+	board[row - 5][col] = '|';
+	board[row - 6][col] = '|';
+	board[row - 5][col + 1] = '|';
+	board[row - 6][col + 1] = '|';
+	board[row - 7][col] = '_';
+	board[row - 7][col + 1] = '_';
+
+
+	//right HAND
+
+	board[row - 5][col + 9] = '|';
+	board[row - 6][col + 9] = '|';
+	board[row - 7][col + 9] = '|';
+	board[row - 8][col + 9] = '_';
+	board[row - 5][col + 10] = '|';
+	board[row - 6][col + 10] = '|';
+	board[row - 7][col + 10] = '|';
+	board[row - 8][col + 10] = '_';
+
+
+
+	//right leg
+
+	board[row][col + 6] = '|';
+	board[row][col + 7] = '_';
+	board[row][col + 8] = '|';
+	board[row - 1][col + 6] = '|';
+	board[row - 1][col + 7] = ' ';
+	board[row - 1][col + 8] = '|';
+
+
+
+	//left leg
+
+	board[row - 1][col + 2] = '|';
+	board[row - 1][col + 4] = '|';
+	board[row - 1][col + 3] = '_';
+
+
+
+}
 
 
 
@@ -1748,7 +1892,7 @@ void drawTerrain(char board[100][1000], int r, int c, int NumR, int NumC) {
 
 
 
-void drawElevator(char board[100][1000], int R, int C) {
+void drawTeleporter(char board[100][1000], int R, int C) {
 	board[R - 1][C] = char(186); board[R - 1][C + 17] = char(186);
 	board[R - 2][C] = char(186);  board[R - 2][C + 17] = char(186);
 	board[R - 3][C] = char(186); board[R - 3][C + 17] = char(186);
@@ -1838,7 +1982,7 @@ void drawCoin(char board[100][1000], int R, int C) {
 
 }
 
-void drawLadder(char board[24][80], int row, int col, int length) {
+void drawLadder(char board[100][1000], int row, int col, int length) {
 
 	for (int i = 0; i < length; i++) {
 		board[row - i][col] = '|';
@@ -1868,10 +2012,10 @@ void callObj(char board[100][1000]) {
 	drawTerrain(board, 95, 30, 1, 10);
 	drawTerrain(board, 91, 15, 1, 10);
 	drawTerrain(board, 87, 5, 1, 10);
-
+	drawLadder(board, 98, 50, 25);
 }
 
-void callDynamicObj(char board[100][1000]) {
+void callDynamicObj(char board[100][1000], Enemy bird, Enemy devil, Enemy spike) {
 	drawEnemyBirdLeft(board, 82, 60); // Draw the enemy bird
 	drawEnemyBirdRight(board, 84, 10); // Draw the enemy bird
 
@@ -1955,7 +2099,7 @@ void Clear_LoadMap(char board[100][1000], int dispR, int dispC) {
 /////////////////////////////////////
 //Player Movement Functions
 
-void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero, int LC[9]) {
+void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero, int LC[9], ladder ladders[4]) {
 	int check = 1;
 	// Check every cell in the column to the right of the player
 	for (int i = posIHero; i >= posIHero - heightHero + 1; i--) {
@@ -1978,6 +2122,20 @@ void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHer
 		}
 	}
 
+	int isOnLadder = 0;
+	for (int i = 0; i < 4; i++) {
+		if (posJHero + widthHero >= ladders[i].Col - 1 && posJHero <= ladders[i].Col + ladders[i].length + widthHero) { // <- FIXED here
+			if (posIHero <= ladders[i].Row + 1 && posIHero - heightHero + 1 >= ladders[i].Row - ladders[i].length - 1) {
+				isOnLadder = 1;
+				break;
+			}
+		}
+	}
+
+
+	if (isOnLadder == 1) {
+		check = 1;
+	}
 	//Go up a row if its only 1 row diffrence in terrain
 	if (board[posIHero][LC[0]] != ' ' && board[posIHero][LC[0]] != char(186) && check2 && !check) {
 		posIHero--;
@@ -1989,11 +2147,11 @@ void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHer
 	}
 }
 
-void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int heightHero, int LC[9]) {
+void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero, int LC[9], ladder ladders[4]) {
 	int check = 1;
 
 	for (int i = posIHero; i >= posIHero - heightHero + 1; i--) {
-		int lc_index = posIHero - i;  // Convert to LC index (0 to 8)
+		int lc_index = posIHero - i;
 		if (lc_index >= 0 && lc_index < 9) {
 			if (board[i][LC[lc_index] - 1] != ' ' && board[i][LC[lc_index] - 1] != char(186)) {
 				check = 0;
@@ -2001,16 +2159,29 @@ void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int heightHer
 			}
 		}
 	}
-	//Go up a row if there is only 1 row diffrence
 	int check2 = 1;
 	for (int i = posIHero - 1; i >= posIHero - heightHero + 1; i--) {
-		int lc_index = posIHero - i;  // Convert to LC index (0 to 8)
+		int lc_index = posIHero - i;
 		if (lc_index >= 0 && lc_index < 9) {
 			if (board[i][LC[lc_index] - 1] != ' ' && board[i][LC[lc_index] - 1] != char(186)) {
 				check2 = 0;
 				break;
 			}
 		}
+	}
+
+	int isOnLadder = 0;
+	for (int i = 0; i < 4; i++) {
+		if (posJHero >= ladders[i].Col - widthHero && posJHero <= ladders[i].Col + ladders[i].length + widthHero) { // <- FIXED here
+			if (posIHero <= ladders[i].Row + 1 && posIHero - heightHero + 1 >= ladders[i].Row - ladders[i].length - 1) {
+				isOnLadder = 1;
+				break;
+			}
+		}
+	}
+
+	if (isOnLadder == 1) {
+		check = 1;
 	}
 
 	if (board[posIHero][LC[0]] != ' ' && board[posIHero][LC[0]] != char(186) && check2 && !check) {
@@ -2185,7 +2356,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		int canFall = 0;
 
 		// Check if we can fall straight down
-		for (int col = pY; col < pY + pWidth; col++) {
+		for (int col = pY + 3; col <= pY + 9; col++) {
 			if (pX + 1 < 100 && (board[pX + 1][col] == ' ' || board[pX + 1][col] == char(186))) {
 				canFall = 1;
 			}
@@ -2296,7 +2467,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 	}
 
 	int check = 1;
-	for (int j = pY; j <= pY + (pWidth - 1); j++) {
+	for (int j = pY + 3; j <= pY + 9; j++) {
 		if (board[pX + 1][j] != ' ') {
 			check = 0;
 			break;
@@ -2305,7 +2476,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 
 	for (; pX + 1 < 23 && board[pX + 1][pY] == ' ' && pY > 1;) {
 		int checkDiagonal = 1;
-		for (int j = pY; j <= pY + (pWidth - 1); j++) {
+		for (int j = pY + 3; j <= pY + 9; j++) {
 			if (board[pX + 1][j] != ' ') {
 				checkDiagonal = 0;
 				break;
@@ -2354,14 +2525,13 @@ NEXT STEPS:
 
 
 int main() {
-	int width = 80, height = 24; // Lets keep the width and height stored as variables incase we want to change them later
-	char board[100][1000]; // Border for the game frame
+	int width = 80, height = 24;
+	char board[100][1000];
 	int dispR = 95, dispC = 3;
-
 
 	char choice;
 	for (;;) {
-		system("cls"); // Clear the screen
+		system("cls");
 		showMainMenu(choice);
 		if (choice == '4') {
 			cout << "Exiting game..." << endl;
@@ -2371,60 +2541,54 @@ int main() {
 		else if (choice == '1') {
 			cout << "Starting Game..." << endl;
 			system("cls");
-			break; // Exit the loop to start the game
+			break;
 		}
 		else if (choice == '2') {
 			cout << "Instructions..." << endl;
 			system("cls");
-			displayInstructions(); // Call the function to display instructions
+			displayInstructions();
 		}
 		else if (choice == '3') {
 			cout << "Credits..." << endl;
 			system("cls");
-			displayCredits(); // Call the function to display credits
+			displayCredits();
 		}
-
 	}
 
 	if (choice == '1') {
 		system("cls");
 		player Player;
-		initializePlayerValues(Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, Player.Health, Player.coins, Player.gun, Player.ammo, Player.maxAmmo, Player.shootR, Player.shootC); // Initialize the player values
-		initializeBoard(board); // Initialize the board
+		initializePlayerValues(Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, Player.Health, Player.coins, Player.gun, Player.ammo, Player.maxAmmo, Player.shootR, Player.shootC);
+		initializeBoard(board);
 
 		int lastCellCol[9], lastCellRow[15];
 		char gun[] = "Pistol";
 
-
-		//Intialize the movement vaiables
 		int isWalking = 0, isJumping = 0, isFalling = 0, isShooting = 0, isReloading = 0;
-		//Iswalking =0 standing ,isWalking = 1 walkign right , isWalking = 2 walking left
-		//isJumping = 0 standing , isJumping = 1 jumping (player shouldnt be able to move if isJumping = 1)
-		//isClimbing = 0 standing , isClimbing = 1 climbing (player shouldnt be able to move left or right if isClimbing = 1)
-		//isFalling = 0  not falling , isFalling = 1 falling (player shouldnt be able move or jump if isFalling = 1)
-		//isShooting = 0 not shooting , isShooting = 1 shooting (player shouldnt be able to climb if isshooting = 1)
-		//isReloading = 0 not reloading , isReloading = 1 reloading (player shouldnt be able to jump or shoot if isReloading = 1)
 
 		Enemy devil;
 		intializeEnemy(devil, 97, 50, 1, 11, 13, 100, 12);
 
 		ladder ladders[4];
+		ladders[0].Row = 98;
+		ladders[0].Col = 50;
+		ladders[0].length = 25;
 
 		int animation = 0, frame = 1, ResetFrame = 0;
-		scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC); // Call the function to scroll the map
-		clearMap(board, dispR, dispC); // Clear the map
-		callObj(board); // Call the function to draw the objects
-		addBorders(board, dispR, dispC); // Add borders to the map
-		drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol); // Draw the player
+		scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+		clearMap(board, dispR, dispC);
+		callObj(board);
+		addBorders(board, dispR, dispC);
+		drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
 		system("cls");
-		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
-		Clear_LoadMap(board, dispR, dispC); // Clear the screen and load the map
-		FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow); // Call the function to draw the player and objects
+		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
+		Clear_LoadMap(board, dispR, dispC);
+		FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow);
 		int isWon = 0;
 
 		for (; !isWon;) {
 			clearMap(board, dispR, dispC);
-			callObj(board); // Call the function to draw the objects
+			callObj(board);
 			addBorders(board, dispR, dispC);
 			if (animation == 0) {
 				if (frame == 1) {
@@ -2442,7 +2606,6 @@ int main() {
 				else if (frame == 5) {
 					drawPlayerRightFrame5(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
 				}
-
 			}
 			else if (animation == 1) {
 				if (frame == 1) {
@@ -2461,76 +2624,82 @@ int main() {
 					DrawPlayerLeftFrame5(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
 				}
 			}
-
-
-			system("cls");
-			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
-			Clear_LoadMap(board, dispR, dispC); // Clear the screen and load the map
-			FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow);
-
-			int isOnLadder = 0;
-			for (int i = 0; i < 4; i++) {
-				if (Player.Col <= ladders[i].Col + 11 && Player.Col >= ladders[i].Col) {
-					if (Player.Row <= ladders[i].Row && Player.Row - Player.maxHeight + 1 >= ladders[i].Row - ladders[i].length) {
-						isOnLadder = 1;
-					}
-					else {
-						isOnLadder = 0;
-						break;
-					}
+			else if (animation == 2) {
+				if (frame == 1) {
+					climbFrame1(board, Player.Row, Player.Col);
 				}
-				else {
-					isOnLadder = 0;
-					break;
+				else if (frame == 2) {
+					climbFrame2(board, Player.Row, Player.Col);
 				}
-
 			}
 
+			system("cls");
+			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
+			Clear_LoadMap(board, dispR, dispC);
+
+			int isOnLadder = 0;
+			int currentLadder = -1;
 			if (_kbhit()) {
-				char key = _getch();
-				if (!isOnLadder) {
-					if ((key == 'a' || key == 'A') && isFalling == 0) {
-						if (Player.Col >= 2) {
-							if (isWalking == 2) {
-								if (frame == 5) frame = 1;
-								else frame++;
-							}
-							else {
-								frame = 1;
-							}
-							moveLeft(board, Player.Col, Player.Row, Player.maxHeight, lastCellCol);
-							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
-							animation = 1;
-							isWalking = 2;
-							FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow);
+
+				char key = _getch()
+					;
+				isOnLadder = 0;
+				int canGoDown = 0;
+
+				for (int i = 0; i < 4; i++) {
+					if (Player.Col >= ladders[i].Col-1 && Player.Col <= ladders[i].Col + 12) {
+						if(Player.Row >= ladders[i].Row - ladders[i].length && Player.Row <= ladders[i].Row) {
+							canGoDown = 1;
+						}
+						if (Player.Row >= ladders[i].Row - ladders[i].length +1 && Player.Row <= ladders[i].Row) {
+							isOnLadder = 1;
+							currentLadder = i;
+							break;
 						}
 					}
-					else if ((key == 'd' || key == 'D') && isFalling == 0) {
-						if (Player.Col + Player.maxWidth < 999) {
-							if (isWalking == 1) {
-								if (frame == 5) frame = 1;
-								else frame++;
-							}
-							else {
-								frame = 1;
-							}
-							moveRight(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, lastCellCol);
-							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
-							animation = 0;
-							FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow);
-							isWalking = 1;
+				}
+
+				if ((key == 'a' || key == 'A') && isFalling == 0) {
+					if (Player.Col >= 2) {
+						if (isWalking == 2) {
+							if (frame == 5) frame = 1;
+							else frame++;
 						}
+						else {
+							frame = 1;
+						}
+						moveLeft(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, lastCellCol, ladders);
+						scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						animation = 1;
+						isWalking = 2;
+						FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow);
 					}
-					else if (key == 'w' || key == 'W') {
+				}
+				else if ((key == 'd' || key == 'D') && isFalling == 0) {
+					if (Player.Col + Player.maxWidth < 999) {
+						if (isWalking == 1) {
+							if (frame == 5) frame = 1;
+							else frame++;
+						}
+						else {
+							frame = 1;
+						}
+						moveRight(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, lastCellCol, ladders);
+						scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						animation = 0;
+						FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow);
+						isWalking = 1;
+					}
+				}
+				else if (key == 'w' || key == 'W') {
+					if (isOnLadder == 0) {
 						if (isWalking == 0) {
 							if (Player.Row - Player.maxHeight > 0) {
 								jumpStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, animation, dispR, dispC, lastCellCol, lastCellRow);
 								scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 								FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow);
 								scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
-
 							}
-
 						}
 						else if (isWalking == 1) {
 							jumpRight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, isWalking, dispR, dispC, lastCellCol, lastCellRow);
@@ -2544,23 +2713,54 @@ int main() {
 							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 							FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow);
 							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
-
 							isWalking = 0;
 						}
-
 					}
 				}
-				else {
-					if((key == 'w' || key == 'W')) {
-					}
-					else if (key == 's' || key == 'S') {
+			
+				if (isOnLadder == 1) {
+					if ((key == 'w' || key == 'W')) {
+						if (Player.Row == ladders[currentLadder].Row - ladders[currentLadder].length + 1) {
+							animation = 0;
+						}
+						else {
+							if (isWalking == 3) {
+								if (frame == 2) frame = 1;
+								else frame++;
+							}
+							else {
+								frame = 1;
+							}
 
+
+							animation = 2;
+							isWalking = 3;
+						}
+						if (Player.Row - 1 > 1) {
+							Player.Row--;
+							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						}
+					}
+				}
+				if (canGoDown) {
+					if (key == 's' || key == 'S') {
+						if (isWalking == 3) {
+							if (frame == 2) frame = 1;
+							else frame++;
+						}
+						else {
+							frame = 1;
+						}
+						if (Player.Row <= 97) {
+							Player.Row++;
+							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						}
+					animation = 2;
+					isWalking = 3;
 					}
 				}
 			}
 		}
 	}
 	else return 0;
-
 }
-
