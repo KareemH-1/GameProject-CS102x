@@ -1794,6 +1794,43 @@ void drawElevator(char board[100][1000], int R, int C) {
 
 }
 
+void drawCoin(char board[100][1000], int R, int C) {
+	board[R][C+1] = '\\';
+	board[R][C+2] = '_';	
+	board[R][C+3] = '_';	
+	board[R][C+4] = '_';	
+	board[R][C+5] = '_';	
+	board[R][C+6] = '_';
+	board[R][C+7] = '/';
+
+	board[R-1][C] = '|';
+	board[R-1][C+1] = ' ';
+	board[R-1][C+2] = ' ';
+	board[R-1][C+3] = ' ';
+	board[R-1][C+4] = '$';
+	board[R-1][C+5] = ' ';
+	board[R-1][C+6] = ' ';
+	board[R-1][C+7] = ' ';
+	board[R-1][C+8] = '|';
+
+	board[R-2][C+1] = '/';
+	board[R-2][C+2] = ' ';
+	board[R-2][C+3] = ' ';
+	board[R-2][C+4] = ' ';
+	board[R-2][C+5] = ' ';
+	board[R-2][C+6] = ' ';
+	board[R-2][C+7] = '\\';
+	
+	board[R-3][C+2] = '_';
+	board[R-3][C+3] = '_';
+	board[R-3][C+4] = '_';
+	board[R-3][C+5] = '_';
+	board[R-3][C+6] = '_';
+	
+
+
+}
+
 /////////////// CALL OBJECTS ////////////////
 
 void callObj(char board[100][1000]) {
