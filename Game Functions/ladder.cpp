@@ -3,6 +3,11 @@
 using namespace std;
 
 
+struct ladder {
+    int Row, Col; //Position
+    int length;
+};
+
 void drawLadderDependingOnLength(char board[24][80], int row, int col , int length) {
 
     for (int i = 0; i < length; i++) {
@@ -110,8 +115,18 @@ void drawladder(char board[24][80], int row, int col) {
         board[row - 9][col + 6] = '|';
 }
 
+
+void placeLadder(ladder& L , int row , int col , int length) {
+    L.Row = row;
+    L.Col = col;
+    L.length = length;
+    //drawLadderDependingOnLength(board, row, col, length);
+}
             
 void climp(char board[24][80], int& posJHero, int& posIHero, int widthHero, int heightHero, int col,int row , int length) {
+    
+    ladder ladders[4];
+    
     // Check every cell in the column to the right of the player
        
     if (posJHero <=col + 11 && posJHero >= col) {
