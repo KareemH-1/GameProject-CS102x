@@ -185,71 +185,6 @@ void dispBoard(char board[100][1000]) {
 
 
 
-void drawEnemyBirdLeft(char board[100][1000], int row, int col) {
-	//base
-	board[row][col + 2] = '`';
-	board[row][col + 3] = '-';
-	board[row][col + 4] = '-';
-	board[row][col + 5] = '-';
-	board[row][col + 6] = '-';
-	board[row][col + 7] = '\'';
-
-	//right
-	board[row - 1][col + 7] = '_';
-	board[row - 1][col + 6] = '.';
-	board[row - 1][col + 8] = '>';
-
-	//top
-	board[row - 2][col + 7] = '_';
-	board[row - 2][col + 6] = '_';
-	board[row - 2][col + 5] = '_';
-	board[row - 2][col + 4] = ')';
-	board[row - 3][col + 3] = '_';
-	board[row - 3][col + 2] = '_';
-
-	//left
-	board[row - 2][col + 2] = 'o';
-	board[row - 2][col + 1] = '(';
-	board[row - 1][col + 1] = '(';
-	board[row - 2][col] = '<';
-}
-
-void drawEnemyBirdRight(char board[100][1000], int row, int col) {
-	//base
-	board[row][col + 1] = '\'';
-	board[row][col + 2] = '-';
-	board[row][col + 3] = '-';
-	board[row][col + 4] = '-';
-	board[row][col + 5] = '-';
-	board[row][col + 6] = '`';
-
-	//Right
-	board[row - 1][col + 7] = ')';
-	board[row - 2][col + 7] = ')';
-	board[row - 2][col + 8] = '>';
-	board[row - 2][col + 6] = 'o';
-
-	//top
-
-	board[row - 3][col + 6] = '_';
-	board[row - 3][col + 5] = '_';
-	board[row - 2][col + 4] = '(';
-	board[row - 2][col + 3] = '_';
-	board[row - 2][col + 2] = '_';
-	board[row - 2][col + 1] = '_';
-
-	//Left
-	board[row - 1][col] = '<';
-	board[row - 1][col + 1] = '_';
-	board[row - 1][col + 2] = '.';
-}
-
-
-
-
-
-
-
 
 void drawPlayerRightFrame1(char board[100][1000], int row, int col, int& shootR, int shootC, int LC[9]) {
 	//left arm
@@ -1595,6 +1530,217 @@ void climbFrame1(char board[100][1000], int row, int col) {
 
 
 
+
+/////// ENEMIES ////////
+
+void intializeEnemy(Enemy & e ,int row , int col ,int  iskillable ,int maxH , int maxW , int health , int power){
+	e.Row = row;
+	e.Col = col;
+	e.maxHeight = maxH;
+	e.maxWidth = maxW;
+	e.isKillable = iskillable;
+	e.attackPower = power;
+	e.Health = health;
+}
+
+
+void drawSpike(char board[100][1000], int R, int C) {
+	board[R][C] = '/';
+	board[R - 1][C + 1] = '/';
+	board[R][C + 3] = '\\';
+	board[R - 1][C + 2] = '\\';
+}
+
+
+void drawDevil(char board[100][1000] ,  Enemy devil) {
+	int row = devil.Row , col = devil.Col;
+	
+	//legs
+	board[row][col+2] = '#';
+	board[row][col+6] = '#';
+	board[row][col+7] = '`';
+
+	//staff
+	board[row][col+10] = '|';
+	board[row-1][col+10] = '|';
+	board[row-2][col+10] = '|';
+	board[row-3][col+10] = '|';
+	board[row-4][col+10] = '|';
+	board[row-7][col+10] = '|';
+	board[row-8][col+10] = '|';
+	board[row-9][col+10] = '|';
+	
+	board[row-9][col+8] = 'v';
+	board[row-10][col+10] = 'v';
+	board[row-9][col+12] = 'v';
+	
+	board[row-8][col+8] = '\\';
+	board[row-8][col+12] = '/';
+
+	board[row-8][col+11] = '_';
+	board[row-8][col+9] = '_';
+
+	//Body
+	board[row-1][col] = ')';
+	board[row-1][col+1] = '_';
+	board[row-1][col+2] = '/';
+	board[row-1][col+3] = '/';
+	board[row-1][col+4] = '`';
+	board[row-1][col+5] = '_';
+	board[row-1][col+6] = '_';
+	board[row-1][col+7] = '>';
+	board[row-1][col+8] = '>';
+
+	board[row-2][col]='/';
+	board[row-2][col+1]=' ';
+	board[row-2][col+2]=' ';
+	board[row-2][col+3]=')';
+	board[row-2][col+4]='^';
+	board[row-2][col+5]='/';
+	board[row-2][col+6]='\\';
+
+	board[row-2][col+7]='^';
+	board[row-2][col+8]='(';
+
+	board[row-3][col+1] = '/';
+	board[row-3][col+2] = ' ';
+	board[row-3][col+3] = '/';
+	board[row-3][col+4] = '^';
+	board[row-3][col+5] = ' ';
+	board[row-3][col+6] = '^';
+	board[row-3][col+7] = ' ';
+	board[row-3][col+8] = '\\';
+	
+	board[row-4][col+2] = '/';
+	board[row-4][col+3] = ')';
+	board[row-4][col+4] = ')';
+	board[row-4][col+5] = ')';
+	board[row-4][col+6] = '-';
+	board[row-4][col+7] = '(';
+
+	board[row-5][col+2] = '\\';
+	board[row-5][col+3] = ' ';
+	board[row-5][col+4] = '(';
+	board[row-5][col+5] = ' ';
+	board[row-5][col+6] = ' ';
+	board[row-5][col+7] = '|';
+	board[row-5][col+8] = '\\';
+	board[row-5][col+9] = '_';
+	board[row-5][col+10] = '/';
+
+	board[row-6][col+2] = '\\';
+	board[row-6][col+3] = ' ';
+	board[row-6][col+4] = ' ';
+	board[row-6][col+5] = '\\';
+	board[row-6][col+6] = '/';
+	board[row-6][col+7] = '`';
+	board[row-6][col+8] = '\\';
+	board[row-6][col+9] = '<';
+	board[row-6][col+10] = '`';
+	board[row-6][col+11] = ')';
+
+	//head
+
+	board[row-7][col+3] = '_';
+	board[row-7][col+4] = '\\';
+	board[row-7][col+5] = '_';
+	board[row-7][col+6] = '/';
+
+	board[row-8][col+4] = '/';
+	board[row-8][col+5] = '\\';
+	board[row-8][col+6] = '/';
+	board[row-8][col+7] = '\\';
+
+	board[row-9][col+4] = '(';
+	board[row-9][col+5] = '_';
+	board[row-9][col+6] = '_';
+	board[row-9][col+7] = ')';
+}
+
+
+
+void drawEnemyBirdLeft(char board[100][1000], int row, int col) {
+	//base
+	board[row][col + 2] = '`';
+	board[row][col + 3] = '-';
+	board[row][col + 4] = '-';
+	board[row][col + 5] = '-';
+	board[row][col + 6] = '-';
+	board[row][col + 7] = '\'';
+
+	//right
+	board[row - 1][col + 7] = '_';
+	board[row - 1][col + 6] = '.';
+	board[row - 1][col + 8] = '>';
+
+	//top
+	board[row - 2][col + 7] = '_';
+	board[row - 2][col + 6] = '_';
+	board[row - 2][col + 5] = '_';
+	board[row - 2][col + 4] = ')';
+	board[row - 3][col + 3] = '_';
+	board[row - 3][col + 2] = '_';
+
+	//left
+	board[row - 2][col + 2] = 'o';
+	board[row - 2][col + 1] = '(';
+	board[row - 1][col + 1] = '(';
+	board[row - 2][col] = '<';
+}
+
+void drawEnemyBirdRight(char board[100][1000], int row, int col) {
+	//base
+	board[row][col + 1] = '\'';
+	board[row][col + 2] = '-';
+	board[row][col + 3] = '-';
+	board[row][col + 4] = '-';
+	board[row][col + 5] = '-';
+	board[row][col + 6] = '`';
+
+	//Right
+	board[row - 1][col + 7] = ')';
+	board[row - 2][col + 7] = ')';
+	board[row - 2][col + 8] = '>';
+	board[row - 2][col + 6] = 'o';
+
+	//top
+
+	board[row - 3][col + 6] = '_';
+	board[row - 3][col + 5] = '_';
+	board[row - 2][col + 4] = '(';
+	board[row - 2][col + 3] = '_';
+	board[row - 2][col + 2] = '_';
+	board[row - 2][col + 1] = '_';
+
+	//Left
+	board[row - 1][col] = '<';
+	board[row - 1][col + 1] = '_';
+	board[row - 1][col + 2] = '.';
+}
+
+
+
+
+
+
+//////////// MAP /////////////
+
+void drawTerrain(char board[100][1000], int r, int c, int NumR, int NumC) {
+	int tempCol;
+	tempCol = c;
+	for (int i = 0; i < NumR; i++) {
+		for (int j = 0; j < NumC; j++) {
+			board[r][tempCol] = '#';
+			tempCol++;
+		}
+		tempCol = c;
+		r++;
+	}
+}
+
+
+
+
 void drawElevator(char board[100][1000], int R, int C) {
 	board[R - 1][C] = char(186); board[R - 1][C + 17] = char(186);
 	board[R - 2][C] = char(186);  board[R - 2][C + 17] = char(186);
@@ -1648,27 +1794,7 @@ void drawElevator(char board[100][1000], int R, int C) {
 
 }
 
-void drawSpike(char board[100][1000], int R, int C) {
-	board[R][C] = '/';
-	board[R - 1][C + 1] = '/';
-	board[R][C + 3] = '\\';
-	board[R - 1][C + 2] = '\\';
-}
-
-void drawTerrain(char board[100][1000], int r, int c, int NumR, int NumC) {
-	int tempCol;
-	tempCol = c;
-	for (int i = 0; i < NumR; i++) {
-		for (int j = 0; j < NumC; j++) {
-			board[r][tempCol] = '#';
-			tempCol++;
-		}
-		tempCol = c;
-		r++;
-	}
-}
-
-///////////////////////////////
+/////////////// CALL OBJECTS ////////////////
 
 void callObj(char board[100][1000]) {
 	drawTerrain(board, 95, 30, 1, 10);
@@ -2159,11 +2285,12 @@ NEXT STEPS:
 */
 
 
-
 int main() {
 	int width = 80, height = 24; // Lets keep the width and height stored as variables incase we want to change them later
 	char board[100][1000]; // Border for the game frame
 	int dispR = 95, dispC = 3;
+
+	
 	char choice;
 	for (;;) {
 		system("cls"); // Clear the screen
@@ -2199,8 +2326,8 @@ int main() {
 
 		int lastCellCol[9], lastCellRow[15];
 		char gun[] = "Pistol";
-
-
+		
+		
 		//Intialize the movement vaiables
 		int isWalking = 0, isJumping = 0, isFalling = 0, isClimbing = 0, isShooting = 0, isReloading = 0;
 		//Iswalking =0 standing ,isWalking = 1 walkign right , isWalking = 2 walking left
@@ -2209,6 +2336,11 @@ int main() {
 		//isFalling = 0  not falling , isFalling = 1 falling (player shouldnt be able move or jump if isFalling = 1)
 		//isShooting = 0 not shooting , isShooting = 1 shooting (player shouldnt be able to climb if isshooting = 1)
 		//isReloading = 0 not reloading , isReloading = 1 reloading (player shouldnt be able to jump or shoot if isReloading = 1)
+		
+		Enemy devil;
+		intializeEnemy(devil , 97 , 50 , 1 , 11 , 13 , 100 , 12);
+		
+		
 		int animation = 0, frame = 1, ResetFrame = 0;
 		scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC); // Call the function to scroll the map
 		clearMap(board, dispR, dispC); // Clear the map
