@@ -8,7 +8,7 @@ struct ladder {
     int length;
 };
 
-void drawLadderDependingOnLength(char board[24][80], int row, int col , int length) {
+void drawLadder(char board[24][80], int row, int col , int length) {
 
     for (int i = 0; i < length; i++) {
         board[row - i][col] = '|';
@@ -31,91 +31,6 @@ void drawLadderDependingOnLength(char board[24][80], int row, int col , int leng
 
 }   
 
-void drawladder(char board[24][80], int row, int col) {
-        //retard ladder under construction still
-
-        board[row - 1][col] = '|';
-        board[row - 2][col] = '|';
-        board[row - 3][col] = '|';
-        board[row - 4][col] = '|';
-        board[row - 5][col] = '|';
-        board[row - 6][col] = '|';
-        board[row - 7][col] = '|';
-        board[row - 8][col] = '|';
-        board[row - 9][col] = '|';
-
-        board[row - 1][col + 1] = '|';
-        board[row - 2][col + 1] = '|';
-        board[row - 3][col + 1] = '|';
-        board[row - 4][col + 1] = '|';
-        board[row - 5][col + 1] = '|';
-        board[row - 6][col + 1] = '|';
-        board[row - 7][col + 1] = '|';
-        board[row - 8][col + 1] = '|';
-        board[row - 9][col + 1] = '|';
-
-        board[row - 1][col + 2] = '-';
-        board[row - 1][col + 3] = '-';
-        board[row - 1][col + 4] = '-';
-
-        board[row - 2][col + 2] = '-';
-        board[row - 2][col + 3] = '-';
-        board[row - 2][col + 4] = '-';
-
-
-        board[row - 3][col + 2] = '-';
-        board[row - 3][col + 3] = '-';
-        board[row - 3][col + 4] = '-';
-
-        board[row - 4][col + 2] = '-';
-        board[row - 4][col + 3] = '-';
-        board[row - 4][col + 4] = '-';
-
-        board[row - 5][col + 2] = '-';
-        board[row - 5][col + 3] = '-';
-        board[row - 5][col + 4] = '-';
-
-
-        board[row - 6][col + 2] = '-';
-        board[row - 6][col + 3] = '-';
-        board[row - 6][col + 4] = '-';
-
-        board[row - 7][col + 2] = '-';
-        board[row - 7][col + 3] = '-';
-        board[row - 7][col + 4] = '-';
-
-
-        board[row - 8][col + 2] = '-';
-        board[row - 8][col + 3] = '-';
-        board[row - 8][col + 4] = '-';
-
-        board[row - 9][col + 2] = '-';
-        board[row - 9][col + 3] = '-';
-        board[row - 9][col + 4] = '-';
-
-
-        board[row - 1][col + 5] = '|';
-        board[row - 2][col + 5] = '|';
-        board[row - 3][col + 5] = '|';
-        board[row - 4][col + 5] = '|';
-        board[row - 5][col + 5] = '|';
-        board[row - 6][col + 5] = '|';
-        board[row - 7][col + 5] = '|';
-        board[row - 8][col + 5] = '|';
-        board[row - 9][col + 5] = '|';
-
-        board[row - 1][col + 6] = '|';
-        board[row - 2][col + 6] = '|';
-        board[row - 3][col + 6] = '|';
-        board[row - 4][col + 6] = '|';
-        board[row - 5][col + 6] = '|';
-        board[row - 6][col + 6] = '|';
-        board[row - 7][col + 6] = '|';
-        board[row - 8][col + 6] = '|';
-        board[row - 9][col + 6] = '|';
-}
-
-
 void placeLadder(ladder& L , int row , int col , int length) {
     L.Row = row;
     L.Col = col;
@@ -133,29 +48,13 @@ void climp(char board[24][80], int& posJHero, int& posIHero, int widthHero, int 
             if (posIHero <= ladders[i].Row && posIHero - heightHero + 1 >= ladders[i].Row - length) {
             
                 if(getch()=='w') posIHero--;
+               
                 else if (getch()=='s'){ 
                     posIHero++;
                  }
             
-                //add an if condition that checks if nothing is beside him but the ladder for both directions using LR and LC from movement functions
-                else if (getch() == 'a'){
-                    posJHero--;
-
-                }else if (getch() == 'd'){
-                    posJHero++;
-                }
             }
         }       
-    }
-    char board[24][80] = { ' ' };
-    int row = 10, col = 10;
-    drawladder(board, row, col);
-  
-    for (int i = 0; i < 24; i++) {
-        for (int j = 0; j < 80; j++) {
-            cout << board[i][j];
-        }
-        cout << endl;
     }
 
 }
