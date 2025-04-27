@@ -100,7 +100,7 @@ void displayCredits() {
 
 void initializePlayerValues(int& Row, int& Col, int& maxHeight, int& maxWidth, int& Health, int& coins, int& gun, int& ammo, int& maxAmmo, int& shootC, int& shootR) {
 	Row = 95;
-	Col = 3;
+	Col = 40;
 	maxHeight = 9;
 	maxWidth = 15;
 	Health = 100;
@@ -1671,10 +1671,16 @@ void drawTerrain(char board[100][1000], int r, int c, int NumR, int NumC) {
 ///////////////////////////////
 
 void callObj(char board[100][1000]) {
-	drawTerrain(board, 96, 20, 2, 7);
+	drawTerrain(board, 95, 30, 1, 10);
+	drawTerrain(board, 91, 15, 1, 10);
+	drawTerrain(board, 87, 5, 1, 10);
+
+}
+
+void callDynamicObj(char board[100][1000]) {
 	drawEnemyBirdLeft(board, 82, 60); // Draw the enemy bird
 	drawEnemyBirdRight(board, 84, 10); // Draw the enemy bird
-	drawElevator(board, 96, 50);
+
 }
 
 ///////////////////////////////
@@ -1684,9 +1690,9 @@ void scroll(char board[100][1000], int& posJHero, int& posIHero, int widthHero, 
 	if (dispC < 0) dispC = 0;
 	if (dispC > 1000 - 80) dispC = 1000 - 80;
 
-	dispR = posIHero + 5;
+	dispR = posIHero + 2;
 	if (dispR < 24) dispR = 23;
-	if (dispR > 76) dispR = 98;
+	if (dispR > 86) dispR = 98;
 
 }
 
