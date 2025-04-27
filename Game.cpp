@@ -162,7 +162,7 @@ void dispBar(int health, int coins, int ammo, int maxAmmo, char gun[]) {
 	cout << char(187);
 	cout << endl;
 	cout << reset;
-	cout << blue << char(186) << reset << "           HEALTH " << green << bold << health << "%" << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << gun << reset << "  |  AMMO " << yellow << bold << ammo << " / " << maxAmmo << reset << blue << "                " << char(186) << reset << endl;
+	cout << blue << char(186) << reset << "          HEALTH " << red << bold << char(177)  << char(177)  << char(177)  << char(177)  << char(177)   << char(177)  << char(177)  << char(177)  << char(177)  << char(177) << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << gun << reset << "  |  AMMO " << yellow << bold << ammo << " / " << maxAmmo << reset << blue << "           " << char(186) << reset << endl;
 }
 
 void dispBoard(char board[100][1000]) {
