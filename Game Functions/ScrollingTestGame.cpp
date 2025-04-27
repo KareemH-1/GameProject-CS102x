@@ -1377,7 +1377,7 @@ void jumpleftframe(char board[100][1000], int row, int col, int LC[9], int LR[15
 	board[row - 1][col + 6] = '\\';
 	board[row - 1][col + 5] = '_';
 
-	LC[0] = col + 4;   // row (left leg: '\\' at col+4)
+	LC[0] = col + 8;   // row (left leg: '\\' at col+8)
 	LC[1] = col + 4;   // row-1 (left leg: '\\' at col+4)
 	LC[2] = col + 4;   // row-2 (body: '\\' at col+4)
 	LC[3] = col + 4;   // row-3 (body: '|' at col+4)
@@ -1391,17 +1391,17 @@ void jumpleftframe(char board[100][1000], int row, int col, int LC[9], int LR[15
 	LR[1] = row - 7;   // col+1 (left arm '_')
 	LR[2] = row - 6;   // col+2 (left arm '|')
 	LR[3] = row - 6;   // col+3 (left arm '_')
-	LR[4] = row - 5;   // col+4 (body '|')
+	LR[4] = row - 8;   // col+4 (body '|')
 	LR[5] = row - 8;   // col+5 (head '_')
 	LR[6] = row - 8;   // col+6 (head '_')
 	LR[7] = row - 8;   // col+7 (head '_')
 	LR[8] = row - 8;   // col+8 (head '_')
 	LR[9] = row - 8;   // col+9 (head '_')
-	LR[10] = row - 5;  // col+10 (body '|')
+	LR[10] = row - 8;  // col+10 (body '|')
 	LR[11] = row - 6;  // col+11 (right arm '_')
 	LR[12] = row - 6;  // col+12 (right arm '_')
 	LR[13] = row - 6;  // col+13 (right arm '_')
-	LR[14] = row - 5;  // col+14 (right arm '|')
+	LR[14] = row - 8;  // col+14 (right arm '|')
 
 }
 
@@ -1825,7 +1825,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		}
 
 		if (canJump == 0) break;
-
+		if(pY+pWidth >= 998) break;
 		// Move diagonally up-right
 		pX--;
 		pY++;
@@ -1909,7 +1909,7 @@ void jumpLeft( char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 	jumpleftframe(board, pX, pY, LC, LR);
 
 	
-	for (int a = 0; a < 3; a++) {
+	for (int a = 0; a < 5; a++) {
 
 		int check =1;
 		for (int j = pY; j <= pY + (pWidth - 1) && j < 999; j++) {
@@ -1939,7 +1939,7 @@ void jumpLeft( char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 	}
 
 			if (pX - pHeight < 1) break;
-
+			if(pY -1 <1) break;
 
 			if (check == 0) break;
 
