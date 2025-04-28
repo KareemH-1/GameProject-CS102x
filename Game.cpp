@@ -1950,7 +1950,7 @@ void drawTeleporter(char board[100][1000], int R, int C) {
 }
 
 void drawCoin(char board[100][1000], int R, int C, int  isCollectable) {
-	if (isCollectable) {
+	if (isCollectable == 0) {
 		board[R][C + 1] = '\\';
 		board[R][C + 2] = '_';
 		board[R][C + 3] = '_';
@@ -2018,7 +2018,7 @@ void callObj(char board[100][1000] , coin coins[5]) {
 	drawTerrain(board, 91, 15, 1, 10);
 	drawTerrain(board, 87, 5, 1, 10);
 	drawLadder(board, 98, 50, 25);
-	drawCoin(board, 97, 50, coins[0].isCollected);
+	drawCoin(board, coins[0].Row, coins[0].Col, coins[0].isCollected);
 }
 
 void callDynamicObj(char board[100][1000], Enemy bird, Enemy devil, Enemy spike) {
@@ -2634,7 +2634,7 @@ int main() {
 		ladders[0].length = 25;
 
 		coin coins[5];
-		intializeCoin(board, coins[0], 97, 70);
+		intializeCoin(board, coins[0], 97, 75);
 
 		int animation = 0, frame = 1, ResetFrame = 0;
 		scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
