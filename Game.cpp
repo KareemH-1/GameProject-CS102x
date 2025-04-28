@@ -2062,10 +2062,10 @@ void callObj(char board[100][1000], coin coins[5]) {
 	
 }
 
-void callDynamicObj(char board[100][1000], Enemy bird, Enemy devil, Enemy spike) {
+void callDynamicObj(char board[100][1000], Enemy bird, Enemy devil, Enemy spike , elevator elevators[2]) {
 	drawEnemyBirdLeft(board, 82, 60); // Draw the enemy bird
 	drawEnemyBirdRight(board, 84, 10); // Draw the enemy bird
-	drawAndMoveElevatorV(board, 90, 20, 90, 95, 20, 30, 1); // Draw the elevator
+	drawAndMoveElevatorV(board , elevators[0].Row , elevators[0].Col , elevators[0].min , elevators[0].max , elevators[0].whichD );
 }
 
 ///////////////////////////////
@@ -2686,6 +2686,12 @@ int main() {
 
 		coin coins[5];
 		intializeCoin(board, coins[0], 97, 70);
+
+
+		elevator elevators[2];
+		
+		elevators[0].Row = 97, elevators[0].Col = 90 , elevators[0].min = 97 , elevators[0].max = 85, elevators[0].whichD = 1;
+
 
 		int animation = 0, frame = 1, ResetFrame = 0;
 		scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
