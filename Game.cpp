@@ -39,9 +39,9 @@ struct ladder {
 };
 
 struct coin {
-	int Row, Col; //Position
-	int isCollected; // 1 for collected , 0 for not collected
-	int maxHeight = 1, maxWidth = 1; //Max height and width
+	int Row = NULL, Col = NULL; //Position
+	int isCollected = 0; // 1 for collected , 0 for not collected
+	int maxHeight = 4, maxWidth = 8; //Max height and width
 };
 
 struct elevator {
@@ -52,6 +52,10 @@ struct elevator {
 	int range;
 };
 
+void intializeCoin(char board[100][1000], coin& e, int row, int col) {
+	e.Row = row;
+	e.Col = col;
+}
 void showMainMenu(char& choice) {
 	cout << "==================================================" << endl;
 	cout << "||                                              ||" << endl;
@@ -162,7 +166,7 @@ void dispBar(int health, int coins, int ammo, int maxAmmo, char gun[]) {
 	cout << char(187);
 	cout << endl;
 	cout << reset;
-	cout << blue << char(186) << reset << "          HEALTH " << red << bold << char(177)  << char(177)  << char(177)  << char(177)  << char(177)   << char(177)  << char(177)  << char(177)  << char(177)  << char(177) << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << gun << reset << "  |  AMMO " << yellow << bold << ammo << " / " << maxAmmo << reset << blue << "           " << char(186) << reset << endl;
+	cout << blue << char(186) << reset << "          HEALTH " << red << bold << char(177) << char(177) << char(177) << char(177) << char(177) << char(177) << char(177) << char(177) << char(177) << char(177) << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << gun << reset << "  |  AMMO " << yellow << bold << ammo << " / " << maxAmmo << reset << blue << "           " << char(186) << reset << endl;
 }
 
 void dispBoard(char board[100][1000]) {
@@ -1945,40 +1949,41 @@ void drawTeleporter(char board[100][1000], int R, int C) {
 
 }
 
-void drawCoin(char board[100][1000], int R, int C) {
-	board[R][C + 1] = '\\';
-	board[R][C + 2] = '_';
-	board[R][C + 3] = '_';
-	board[R][C + 4] = '_';
-	board[R][C + 5] = '_';
-	board[R][C + 6] = '_';
-	board[R][C + 7] = '/';
+void drawCoin(char board[100][1000], int R, int C, int  isCollectable) {
+	if (isCollectable) {
+		board[R][C + 1] = '\\';
+		board[R][C + 2] = '_';
+		board[R][C + 3] = '_';
+		board[R][C + 4] = '_';
+		board[R][C + 5] = '_';
+		board[R][C + 6] = '_';
+		board[R][C + 7] = '/';
 
-	board[R - 1][C] = '|';
-	board[R - 1][C + 1] = ' ';
-	board[R - 1][C + 2] = ' ';
-	board[R - 1][C + 3] = ' ';
-	board[R - 1][C + 4] = '$';
-	board[R - 1][C + 5] = ' ';
-	board[R - 1][C + 6] = ' ';
-	board[R - 1][C + 7] = ' ';
-	board[R - 1][C + 8] = '|';
+		board[R - 1][C] = '|';
+		board[R - 1][C + 1] = ' ';
+		board[R - 1][C + 2] = ' ';
+		board[R - 1][C + 3] = ' ';
+		board[R - 1][C + 4] = '$';
+		board[R - 1][C + 5] = ' ';
+		board[R - 1][C + 6] = ' ';
+		board[R - 1][C + 7] = ' ';
+		board[R - 1][C + 8] = '|';
 
-	board[R - 2][C + 1] = '/';
-	board[R - 2][C + 2] = ' ';
-	board[R - 2][C + 3] = ' ';
-	board[R - 2][C + 4] = ' ';
-	board[R - 2][C + 5] = ' ';
-	board[R - 2][C + 6] = ' ';
-	board[R - 2][C + 7] = '\\';
+		board[R - 2][C + 1] = '/';
+		board[R - 2][C + 2] = ' ';
+		board[R - 2][C + 3] = ' ';
+		board[R - 2][C + 4] = ' ';
+		board[R - 2][C + 5] = ' ';
+		board[R - 2][C + 6] = ' ';
+		board[R - 2][C + 7] = '\\';
 
-	board[R - 3][C + 2] = '_';
-	board[R - 3][C + 3] = '_';
-	board[R - 3][C + 4] = '_';
-	board[R - 3][C + 5] = '_';
-	board[R - 3][C + 6] = '_';
+		board[R - 3][C + 2] = '_';
+		board[R - 3][C + 3] = '_';
+		board[R - 3][C + 4] = '_';
+		board[R - 3][C + 5] = '_';
+		board[R - 3][C + 6] = '_';
 
-
+	}
 
 }
 
@@ -2097,9 +2102,42 @@ void Clear_LoadMap(char board[100][1000], int dispR, int dispC) {
 
 
 /////////////////////////////////////
+void checkCoinTouch(char board[100][1000], int pX, int pY, int pWidth, int pHeight, coin coins[5], int& numCoinsP) {
+
+	int check = 0;
+	for (int a = 0; a < 5; a++) {
+		for (int i = pX; i > pX - pHeight + 1; i--) {
+			if (board[i][pY - 1] == coins[i].Col + coins[i].maxHeight) check = 1;
+			if (board[i][pY + pWidth] == coins[i].Col - 1) check = 1;
+		}
+
+
+		for (int i = pY; i < pY - pWidth - 1; i++) {
+			if (board[pX + 1][i] == coins[i].Col + coins[i].maxHeight) check = 1;
+			if (board[pX + pHeight][i] == coins[i].Col + coins[i].maxHeight) check = 1;
+
+		}
+
+		if (check) {
+			coins[a].isCollected = 0;
+			numCoinsP += 25;
+			break;
+		}
+	}
+
+}
+
+
+
+
+
+
+
+
+///////////////////////////////////////
 //Player Movement Functions
 
-void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero, int LC[9], ladder ladders[4]) {
+void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero, int LC[9], ladder ladders[4], coin coins[5], int& numCoinsP) {
 	int check = 1;
 	// Check every cell in the column to the right of the player
 	for (int i = posIHero; i >= posIHero - heightHero + 1; i--) {
@@ -2145,9 +2183,13 @@ void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHer
 	else if (check == 1 && posJHero + widthHero + 1 < 999) {
 		posJHero++;
 	}
+
+	checkCoinTouch(board, posIHero, posJHero, widthHero, heightHero, coins, numCoinsP);
+
+
 }
 
-void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero, int LC[9], ladder ladders[4]) {
+void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero, int LC[9], ladder ladders[4] , coin coins[5], int& numCoinsP) {
 	int check = 1;
 
 	for (int i = posIHero; i >= posIHero - heightHero + 1; i--) {
@@ -2191,9 +2233,14 @@ void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int widthHero
 	else if (check == 1 && posJHero - 1 >= 0) {
 		posJHero--;
 	}
+
+
+	checkCoinTouch(board, posIHero, posJHero, widthHero, heightHero, coins, numCoinsP);
+
+
 }
 
-void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int animation, int dispR, int dispC, int LC[9], int LR[15]) {
+void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP) {
 
 
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
@@ -2228,6 +2275,8 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 
 		if (pX - pHeight - 1 > 0 && check == 1) {
 			pX--;
+
+			checkCoinTouch(board, pX, pX, pWidth,pHeight, coins, numCoinsP);
 			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 			clearMap(board, dispR, dispC);
 			callObj(board); // Call the function to draw the objects
@@ -2251,7 +2300,7 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 }
 
 
-void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int& isFalling, int animation, int dispR, int dispC, int LC[9], int LR[15]) {
+void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int& isFalling, int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP) {
 	for (; pX + 1 < 99; ) {
 		if (pX - pHeight < 0) break;
 
@@ -2269,6 +2318,7 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 		}
 
 		pX++;
+		checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
 		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 		clearMap(board, dispR, dispC);
 		callObj(board);
@@ -2295,7 +2345,7 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 
 void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 	int& isJumping, player Player, char gun[], int& isFalling,
-	int& isWalking, int dispR, int dispC, int LC[9], int LR[15]) {
+	int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP ) {
 	// Initial setup
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 	clearMap(board, dispR, dispC);
@@ -2338,6 +2388,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		pX--;
 		pY++;
 
+		checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
 		// Redraw everything
 		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 		clearMap(board, dispR, dispC);
@@ -2391,6 +2442,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 			pX++;
 		}
 
+		checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
 		// Redraw everything
 		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 		clearMap(board, dispR, dispC);
@@ -2408,7 +2460,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 	isFalling = 0;
 	isWalking = 0;
 }
-void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int& isFalling, int& isWalking, int dispR, int dispC, int LC[9], int LR[15]) {
+void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int& isFalling, int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP) {
 
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 	clearMap(board, dispR, dispC);
@@ -2451,8 +2503,11 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 
 		if (check == 0) break;
 
+
 		pX--;
 		pY--;
+
+		checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
 		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 		clearMap(board, dispR, dispC);
 		callObj(board);
@@ -2487,6 +2542,9 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 		if (checkDiagonal && check) {
 			pX++;
 			pY--;
+			
+
+			checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
 			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 			clearMap(board, dispR, dispC);
 			callObj(board);
@@ -2574,6 +2632,9 @@ int main() {
 		ladders[0].Col = 50;
 		ladders[0].length = 25;
 
+		coin coins[5];
+		intializeCoin(board, coins[0], 97, 70);
+
 		int animation = 0, frame = 1, ResetFrame = 0;
 		scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 		clearMap(board, dispR, dispC);
@@ -2583,7 +2644,7 @@ int main() {
 		system("cls");
 		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
 		Clear_LoadMap(board, dispR, dispC);
-		FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow);
+		FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow , coins, Player.coins);
 		int isWon = 0;
 
 		for (; !isWon;) {
@@ -2641,17 +2702,16 @@ int main() {
 			int currentLadder = -1;
 			if (_kbhit()) {
 
-				char key = _getch()
-					;
+				char key = _getch();
 				isOnLadder = 0;
 				int canGoDown = 0;
 
 				for (int i = 0; i < 4; i++) {
-					if (Player.Col >= ladders[i].Col-1 && Player.Col <= ladders[i].Col + 12) {
-						if(Player.Row >= ladders[i].Row - ladders[i].length && Player.Row <= ladders[i].Row) {
+					if (Player.Col >= ladders[i].Col - 1 && Player.Col <= ladders[i].Col + 12) {
+						if (Player.Row >= ladders[i].Row - ladders[i].length && Player.Row <= ladders[i].Row) {
 							canGoDown = 1;
 						}
-						if (Player.Row >= ladders[i].Row - ladders[i].length +1 && Player.Row <= ladders[i].Row) {
+						if (Player.Row >= ladders[i].Row - ladders[i].length + 1 && Player.Row <= ladders[i].Row) {
 							isOnLadder = 1;
 							currentLadder = i;
 							break;
@@ -2668,11 +2728,11 @@ int main() {
 						else {
 							frame = 1;
 						}
-						moveLeft(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, lastCellCol, ladders);
+						moveLeft(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, lastCellCol, ladders, coins , Player.coins);
 						scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 						animation = 1;
 						isWalking = 2;
-						FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow);
+						FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins);
 					}
 				}
 				else if ((key == 'd' || key == 'D') && isFalling == 0) {
@@ -2684,10 +2744,10 @@ int main() {
 						else {
 							frame = 1;
 						}
-						moveRight(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, lastCellCol, ladders);
+						moveRight(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, lastCellCol, ladders, coins, Player.coins);
 						scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 						animation = 0;
-						FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow);
+						FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins);
 						isWalking = 1;
 					}
 				}
@@ -2695,29 +2755,29 @@ int main() {
 					if (isOnLadder == 0) {
 						if (isWalking == 0) {
 							if (Player.Row - Player.maxHeight > 0) {
-								jumpStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, animation, dispR, dispC, lastCellCol, lastCellRow);
+								jumpStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins);
 								scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
-								FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow);
+								FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins);
 								scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 							}
 						}
 						else if (isWalking == 1) {
-							jumpRight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, isWalking, dispR, dispC, lastCellCol, lastCellRow);
+							jumpRight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, isWalking, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins);
 							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
-							FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow);
+							FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins);
 							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 							isWalking = 0;
 						}
 						else if (isWalking == 2) {
-							jumpLeft(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, isWalking, dispR, dispC, lastCellCol, lastCellRow);
+							jumpLeft(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, isWalking, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins);
 							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
-							FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow);
+							FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins);
 							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 							isWalking = 0;
 						}
 					}
 				}
-			
+
 				if (isOnLadder == 1) {
 					if ((key == 'w' || key == 'W')) {
 						if (Player.Row == ladders[currentLadder].Row - ladders[currentLadder].length + 1) {
@@ -2755,8 +2815,8 @@ int main() {
 							Player.Row++;
 							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 						}
-					animation = 2;
-					isWalking = 3;
+						animation = 2;
+						isWalking = 3;
 					}
 				}
 			}
