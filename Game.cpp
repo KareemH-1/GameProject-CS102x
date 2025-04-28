@@ -2013,11 +2013,12 @@ void drawLadder(char board[100][1000], int row, int col, int length) {
 
 /////////////// CALL OBJECTS ////////////////
 
-void callObj(char board[100][1000]) {
+void callObj(char board[100][1000] , coin coins[5]) {
 	drawTerrain(board, 95, 30, 1, 10);
 	drawTerrain(board, 91, 15, 1, 10);
 	drawTerrain(board, 87, 5, 1, 10);
 	drawLadder(board, 98, 50, 25);
+	drawCoin(board, 97, 50, coins[0].isCollected);
 }
 
 void callDynamicObj(char board[100][1000], Enemy bird, Enemy devil, Enemy spike) {
@@ -2245,7 +2246,7 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 	clearMap(board, dispR, dispC);
-	callObj(board); // Call the function to draw the objects
+	callObj(board , coins); // Call the function to draw the objects
 	addBorders(board, dispR, dispC);
 	if (animation == 0) {
 		jumprightframe(board, pX, pY, LC, LR); // Draw the player jumping up
@@ -2279,7 +2280,7 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 			checkCoinTouch(board, pX, pX, pWidth,pHeight, coins, numCoinsP);
 			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 			clearMap(board, dispR, dispC);
-			callObj(board); // Call the function to draw the objects
+			callObj(board, coins); // Call the function to draw the objects
 			addBorders(board, dispR, dispC);
 			if (animation == 0) {
 				jumprightframe(board, pX, pY, LC, LR); // Draw the player jumping up
@@ -2321,7 +2322,7 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 		checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
 		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 		clearMap(board, dispR, dispC);
-		callObj(board);
+		callObj(board, coins);
 		addBorders(board, dispR, dispC);
 
 		if (animation == 0) {
@@ -2349,7 +2350,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 	// Initial setup
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 	clearMap(board, dispR, dispC);
-	callObj(board);
+	callObj(board, coins);
 	addBorders(board, dispR, dispC);
 	jumprightframe(board, pX, pY, LC, LR);
 
@@ -2392,7 +2393,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		// Redraw everything
 		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 		clearMap(board, dispR, dispC);
-		callObj(board);
+		callObj(board, coins);
 		addBorders(board, dispR, dispC);
 		jumprightframe(board, pX, pY, LC, LR);
 
@@ -2446,7 +2447,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		// Redraw everything
 		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 		clearMap(board, dispR, dispC);
-		callObj(board);
+		callObj(board, coins);
 		addBorders(board, dispR, dispC);
 		jumprightframe(board, pX, pY, LC, LR);
 
@@ -2464,7 +2465,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 	clearMap(board, dispR, dispC);
-	callObj(board);
+	callObj(board, coins);
 	addBorders(board, dispR, dispC);
 	jumpleftframe(board, pX, pY, LC, LR);
 
@@ -2510,7 +2511,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 		checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
 		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 		clearMap(board, dispR, dispC);
-		callObj(board);
+		callObj(board, coins);
 		addBorders(board, dispR, dispC);
 		jumpleftframe(board, pX, pY, LC, LR);
 
@@ -2547,7 +2548,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 			checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
 			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 			clearMap(board, dispR, dispC);
-			callObj(board);
+			callObj(board, coins);
 			addBorders(board, dispR, dispC);
 			jumpleftframe(board, pX, pY, LC, LR);
 
@@ -2638,18 +2639,18 @@ int main() {
 		int animation = 0, frame = 1, ResetFrame = 0;
 		scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 		clearMap(board, dispR, dispC);
-		callObj(board);
+		callObj(board, coins);
 		addBorders(board, dispR, dispC);
 		drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
 		system("cls");
 		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
 		Clear_LoadMap(board, dispR, dispC);
-		FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow , coins, Player.coins);
+		FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow , coins , Player.coins);
 		int isWon = 0;
 
 		for (; !isWon;) {
 			clearMap(board, dispR, dispC);
-			callObj(board);
+			callObj(board, coins);
 			addBorders(board, dispR, dispC);
 			if (animation == 0) {
 				if (frame == 1) {
