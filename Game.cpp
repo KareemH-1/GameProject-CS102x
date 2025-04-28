@@ -46,10 +46,9 @@ struct coin {
 
 struct elevator {
 	int Row, Col; //Position
-	int length;
-	int isMoving;
-	int maxWidth = 1;
-	int range;
+	int length = 11;
+	int whichD = 1; // 1 Vertical , 0 for horizonatal
+	int max , min;
 };
 
 void intializeCoin(char board[100][1000], coin& e, int row, int col) {
@@ -2011,7 +2010,48 @@ void drawLadder(char board[100][1000], int row, int col, int length) {
 }
 
 
+
 /////////////// CALL OBJECTS ////////////////
+
+void moveElevatorVertically(int& row, int startRow, int endRow, int& direction) {
+	if (row == endRow) direction = 2;
+	else if (row == startRow) direction = 1;
+
+	if (direction == 1) row--;
+	else row++;
+}
+
+void moveElevatorHorizontally(int& col, int startCol, int endCol, int& direction) {
+	if (col == endCol) direction = 2;
+	else if (col == startCol) direction = 1;
+
+	if (direction == 1) col++;
+	else col--;
+}
+void drawElevator(char board[100][1000], int row, int col) {
+	board[row][col] = '_';
+	board[row][col + 1] = '_';
+	board[row][col + 2] = '_';
+	board[row][col + 4] = '_';
+	board[row][col + 5] = '_';
+	board[row][col + 6] = '_';
+	board[row][col + 7] = '_';
+	board[row][col + 8] = '_';
+	board[row][col + 9] = '_';
+	board[row][col + 10] = '_';
+}
+
+void drawAndMoveElevatorV(char board[100][1000], int& row , int col, int startRow, int endRow , int& direction) {
+	
+	drawElevator(board, row, col);
+	moveElevatorVertically(row, startRow, endRow, direction);
+}
+
+void drawAndMoveElevatorH(char board[100][1000], int row, int &col, int startCol, int endCol, int& direction) {
+
+	drawElevator(board, row, col);
+	moveElevatorVertically(row, startCol, endCol, direction);
+}
 
 void callObj(char board[100][1000], coin coins[5]) {
 	drawTerrain(board, 95, 30, 1, 10);
@@ -2019,12 +2059,13 @@ void callObj(char board[100][1000], coin coins[5]) {
 	drawTerrain(board, 87, 5, 1, 10);
 	drawLadder(board, 98, 50, 25);
 	drawCoin(board, coins[0].Row, coins[0].Col, coins[0].isCollected);
+	
 }
 
 void callDynamicObj(char board[100][1000], Enemy bird, Enemy devil, Enemy spike) {
 	drawEnemyBirdLeft(board, 82, 60); // Draw the enemy bird
 	drawEnemyBirdRight(board, 84, 10); // Draw the enemy bird
-
+	drawAndMoveElevatorV(board, 90, 20, 90, 95, 20, 30, 1); // Draw the elevator
 }
 
 ///////////////////////////////
@@ -2117,8 +2158,8 @@ void checkCoinTouch(char board[100][1000], int pX, int pY, int pWidth, int pHeig
 		int playerLeft = pY;
 		int playerRight = pY + pWidth - 1;
 
-		int overlapX = 0 ;
-		int overlapY = 0 ;
+		int overlapX = 0;
+		int overlapY = 0;
 
 
 		if (playerLeft <= coinRight && playerRight >= coinLeft) {
