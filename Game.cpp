@@ -2030,7 +2030,7 @@ void callDynamicObj(char board[100][1000], Enemy bird, Enemy devil, Enemy spike)
 ///////////////////////////////
 
 void scroll(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero, int& dispR, int& dispC) {
-	dispC = posJHero - 20;
+	dispC = posJHero - 30;
 	if (dispC < 0) dispC = 0;
 	if (dispC > 1000 - 80) dispC = 1000 - 80;
 
@@ -2644,7 +2644,7 @@ int main() {
 		ladders[0].length = 25;
 
 		coin coins[5];
-		intializeCoin(board, coins[0], 97, 75);
+		intializeCoin(board, coins[0], 97, 70);
 
 		int animation = 0, frame = 1, ResetFrame = 0;
 		scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
