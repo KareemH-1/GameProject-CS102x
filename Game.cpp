@@ -2013,7 +2013,7 @@ void drawLadder(char board[100][1000], int row, int col, int length) {
 
 /////////////// CALL OBJECTS ////////////////
 
-void callObj(char board[100][1000] , coin coins[5]) {
+void callObj(char board[100][1000], coin coins[5]) {
 	drawTerrain(board, 95, 30, 1, 10);
 	drawTerrain(board, 91, 15, 1, 10);
 	drawTerrain(board, 87, 5, 1, 10);
@@ -2104,29 +2104,39 @@ void Clear_LoadMap(char board[100][1000], int dispR, int dispC) {
 
 /////////////////////////////////////
 void checkCoinTouch(char board[100][1000], int pX, int pY, int pWidth, int pHeight, coin coins[5], int& numCoinsP) {
-
-	int check = 0;
 	for (int a = 0; a < 5; a++) {
-		for (int i = pX; i > pX - pHeight + 1; i--) {
-			if (board[i][pY - 1] == coins[i].Col + coins[i].maxHeight) check = 1;
-			if (board[i][pY + pWidth] == coins[i].Col - 1) check = 1;
+		if (coins[a].isCollected) continue; // Skip if already collected
+
+		int coinTop = coins[a].Row - coins[a].maxHeight + 1;
+		int coinBottom = coins[a].Row;
+		int coinLeft = coins[a].Col;
+		int coinRight = coins[a].Col + coins[a].maxWidth - 1;
+
+		int playerTop = pX - pHeight + 1;
+		int playerBottom = pX;
+		int playerLeft = pY;
+		int playerRight = pY + pWidth - 1;
+
+		int overlapX = 0 ;
+		int overlapY = 0 ;
+
+
+		if (playerLeft <= coinRight && playerRight >= coinLeft) {
+			overlapX = 1;
 		}
 
-
-		for (int i = pY; i < pY - pWidth - 1; i++) {
-			if (board[pX + 1][i] == coins[i].Col + coins[i].maxHeight) check = 1;
-			if (board[pX + pHeight][i] == coins[i].Col + coins[i].maxHeight) check = 1;
-
+		if (playerTop <= coinBottom && playerBottom >= coinTop) {
+			overlapY = 1;
 		}
 
-		if (check) {
-			coins[a].isCollected = 0;
+		if (overlapX && overlapY) {
+			coins[a].isCollected = 1;
 			numCoinsP += 25;
 			break;
 		}
 	}
-
 }
+
 
 
 
@@ -2163,7 +2173,7 @@ void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHer
 
 	int isOnLadder = 0;
 	for (int i = 0; i < 4; i++) {
-		if (posJHero + widthHero >= ladders[i].Col - 1 && posJHero <= ladders[i].Col + ladders[i].length + widthHero) { // <- FIXED here
+		if (posJHero + widthHero >= ladders[i].Col - 1 && posJHero <= ladders[i].Col + ladders[i].length) { // <- FIXED here
 			if (posIHero <= ladders[i].Row + 1 && posIHero - heightHero + 1 >= ladders[i].Row - ladders[i].length - 1) {
 				isOnLadder = 1;
 				break;
@@ -2190,7 +2200,7 @@ void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHer
 
 }
 
-void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero, int LC[9], ladder ladders[4] , coin coins[5], int& numCoinsP) {
+void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero, int LC[9], ladder ladders[4], coin coins[5], int& numCoinsP) {
 	int check = 1;
 
 	for (int i = posIHero; i >= posIHero - heightHero + 1; i--) {
@@ -2246,7 +2256,7 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 	clearMap(board, dispR, dispC);
-	callObj(board , coins); // Call the function to draw the objects
+	callObj(board, coins); // Call the function to draw the objects
 	addBorders(board, dispR, dispC);
 	if (animation == 0) {
 		jumprightframe(board, pX, pY, LC, LR); // Draw the player jumping up
@@ -2277,7 +2287,7 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 		if (pX - pHeight - 1 > 0 && check == 1) {
 			pX--;
 
-			checkCoinTouch(board, pX, pX, pWidth,pHeight, coins, numCoinsP);
+			checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
 			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 			clearMap(board, dispR, dispC);
 			callObj(board, coins); // Call the function to draw the objects
@@ -2346,7 +2356,7 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 
 void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 	int& isJumping, player Player, char gun[], int& isFalling,
-	int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP ) {
+	int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP) {
 	// Initial setup
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 	clearMap(board, dispR, dispC);
@@ -2543,7 +2553,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 		if (checkDiagonal && check) {
 			pX++;
 			pY--;
-			
+
 
 			checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
 			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
@@ -2645,7 +2655,7 @@ int main() {
 		system("cls");
 		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
 		Clear_LoadMap(board, dispR, dispC);
-		FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow , coins , Player.coins);
+		FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins);
 		int isWon = 0;
 
 		for (; !isWon;) {
@@ -2729,7 +2739,7 @@ int main() {
 						else {
 							frame = 1;
 						}
-						moveLeft(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, lastCellCol, ladders, coins , Player.coins);
+						moveLeft(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, lastCellCol, ladders, coins, Player.coins);
 						scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 						animation = 1;
 						isWalking = 2;
