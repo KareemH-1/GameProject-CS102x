@@ -2049,64 +2049,64 @@ void drawCoin(char board[100][1000], int R, int C) {
 
 
 void drawCoin(char board[100][1000], int R, int C, int  isCollectable) {
-	if (isCollectable == 0) {
-		board[R][C + 1] = '\\';
-		board[R][C + 2] = '_';
-		board[R][C + 3] = '_';
-		board[R][C + 4] = '_';
-		board[R][C + 5] = '_';
-		board[R][C + 6] = '_';
-		board[R][C + 7] = '/';
+    if (isCollectable == 0) {
+        board[R][C + 1] = '\\';
+        board[R][C + 2] = '_';
+        board[R][C + 3] = '_';
+        board[R][C + 4] = '_';
+        board[R][C + 5] = '_';
+        board[R][C + 6] = '_';
+        board[R][C + 7] = '/';
 
-		board[R - 1][C] = '|';
-		board[R - 1][C + 1] = ' ';
-		board[R - 1][C + 2] = ' ';
-		board[R - 1][C + 3] = ' ';
-		board[R - 1][C + 4] = '$';
-		board[R - 1][C + 5] = ' ';
-		board[R - 1][C + 6] = ' ';
-		board[R - 1][C + 7] = ' ';
-		board[R - 1][C + 8] = '|';
+        board[R - 1][C] = '|';
+        board[R - 1][C + 1] = ' ';
+        board[R - 1][C + 2] = ' ';
+        board[R - 1][C + 3] = ' ';
+        board[R - 1][C + 4] = '$';
+        board[R - 1][C + 5] = ' ';
+        board[R - 1][C + 6] = ' ';
+        board[R - 1][C + 7] = ' ';
+        board[R - 1][C + 8] = '|';
 
-		board[R - 2][C + 1] = '/';
-		board[R - 2][C + 2] = ' ';
-		board[R - 2][C + 3] = ' ';
-		board[R - 2][C + 4] = ' ';
-		board[R - 2][C + 5] = ' ';
-		board[R - 2][C + 6] = ' ';
-		board[R - 2][C + 7] = '\\';
+        board[R - 2][C + 1] = '/';
+        board[R - 2][C + 2] = ' ';
+        board[R - 2][C + 3] = ' ';
+        board[R - 2][C + 4] = ' ';
+        board[R - 2][C + 5] = ' ';
+        board[R - 2][C + 6] = ' ';
+        board[R - 2][C + 7] = '\\';
 
-		board[R - 3][C + 2] = '_';
-		board[R - 3][C + 3] = '_';
-		board[R - 3][C + 4] = '_';
-		board[R - 3][C + 5] = '_';
-		board[R - 3][C + 6] = '_';
+        board[R - 3][C + 2] = '_';
+        board[R - 3][C + 3] = '_';
+        board[R - 3][C + 4] = '_';
+        board[R - 3][C + 5] = '_';
+        board[R - 3][C + 6] = '_';
 
-	}
+    }
 
 }
 
 
 void drawLadder(char board[100][1000], int row, int col, int length) {
 
-	for (int i = 0; i < length; i++) {
-		board[row - i][col] = '|';
-		board[row - i][col + 1] = '|';
+    for (int i = 0; i < length; i++) {
+        board[row - i][col] = '|';
+        board[row - i][col + 1] = '|';
 
-		board[row - i][col + 2] = '-';
-		board[row - i][col + 3] = '-';
-		board[row - i][col + 4] = '-';
-		board[row - i][col + 5] = '-';
-		board[row - i][col + 6] = '-';
-		board[row - i][col + 7] = '-';
-		board[row - i][col + 8] = '-';
-		board[row - i][col + 9] = '-';
-		board[row - i][col + 10] = '-';
-		board[row - i][col + 11] = '-';
+        board[row - i][col + 2] = '-';
+        board[row - i][col + 3] = '-';
+        board[row - i][col + 4] = '-';
+        board[row - i][col + 5] = '-';
+        board[row - i][col + 6] = '-';
+        board[row - i][col + 7] = '-';
+        board[row - i][col + 8] = '-';
+        board[row - i][col + 9] = '-';
+        board[row - i][col + 10] = '-';
+        board[row - i][col + 11] = '-';
 
-		board[row - i][col + 12] = '|';
-		board[row - i][col + 13] = '|';
-	}
+        board[row - i][col + 12] = '|';
+        board[row - i][col + 13] = '|';
+    }
 
 }
 
@@ -2114,89 +2114,88 @@ void drawLadder(char board[100][1000], int row, int col, int length) {
 /////////////// CALL OBJECTS ////////////////
 
 void callObj(char board[100][1000], coin coins[5]) {
-	drawTerrain(board, 95, 30, 1, 10);
-	drawTerrain(board, 91, 15, 1, 10);
-	drawTerrain(board, 87, 5, 1, 10);
-	drawLadder(board, 98, 50, 25);
-	drawCoin(board, coins[0].Row, coins[0].Col, coins[0].isCollected);
+    drawTerrain(board, 95, 30, 1, 10);
+    drawTerrain(board, 91, 15, 1, 10);
+    drawTerrain(board, 87, 5, 1, 10);
+    drawLadder(board, 98, 80, 25);
+    drawCoin(board, coins[0].Row, coins[0].Col, coins[0].isCollected);
 }
 
 void callDynamicObj(char board[100][1000], Enemy bird, Enemy devil, Enemy spike) {
-	drawEnemyBirdLeft(board, 82, 60); // Draw the enemy bird
-	drawEnemyBirdRight(board, 84, 10); // Draw the enemy bird
+    drawEnemyBirdLeft(board, 82, 60); // Draw the enemy bird
+    drawEnemyBirdRight(board, 84, 10); // Draw the enemy bird
 
 }
 
 ///////////////////////////////
 
 void scroll(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero, int& dispR, int& dispC) {
-	dispC = posJHero - 20;
-	if (dispC < 0) dispC = 0;
-	if (dispC > 1000 - 80) dispC = 1000 - 80;
+    dispC = posJHero - 20;
+    if (dispC < 0) dispC = 0;
+    if (dispC > 1000 - 120) dispC = 1000 - 120;
 
-	dispR = posIHero + 2;
-	if (dispR < 24) dispR = 23;
-	if (dispR > 86) dispR = 98;
+    dispR = posIHero + 2;
+    if (dispR < 24) dispR = 23;
+    if (dispR > 86) dispR = 98;
 
 }
 
 void clearMap(char board[100][1000], int dispR, int dispC) {
-	int top = dispR - 23;
-	if (top < 0) top = 0;
-	for (int i = top; i <= dispR; i++) {
-		for (int j = dispC + 1; j < dispC + 80 - 1; j++) {
-			board[i][j] = ' ';
-		}
-	}
+    int top = dispR - 23;
+    if (top < 0) top = 0;
+    for (int i = top; i <= dispR; i++) {
+        for (int j = dispC + 1; j < dispC + 120 - 1; j++) {
+            board[i][j] = ' ';
+        }
+    }
 
 
 }
 void addBorders(char board[100][1000], int dispR, int dispC) {
-	int top = dispR - 23;
-	int bottom = dispR;
+    int top = dispR - 23;
+    int bottom = dispR;
 
-	// Top border
-	board[top - 1][dispC] = char(201);
-	for (int j = dispC + 1; j < dispC + 80 - 1; j++) {
-		board[top - 1][j] = char(205);
-	}
-	board[top - 1][dispC + 80 - 1] = char(187);
+    // Top border
+    board[top - 1][dispC] = char(201);
+    for (int j = dispC + 1; j < dispC + 120 - 1; j++) {
+        board[top - 1][j] = char(205);
+    }
+    board[top - 1][dispC + 120 - 1] = char(187);
 
-	// Side borders
-	for (int i = top; i <= bottom; i++) {
-		board[i][dispC] = char(186);
-		board[i][dispC + 80 - 1] = char(186);
-	}
+    // Side borders
+    for (int i = top; i <= bottom; i++) {
+        board[i][dispC] = char(186);
+        board[i][dispC + 120 - 1] = char(186);
+    }
 
-	// Bottom border
-	board[bottom + 1][dispC] = char(200);
-	for (int j = dispC + 1; j < dispC + 80 - 1; j++) {
-		board[bottom + 1][j] = char(205);
-	}
-	board[bottom + 1][dispC + 80 - 1] = char(188);
+    // Bottom border
+    board[bottom + 1][dispC] = char(200);
+    for (int j = dispC + 1; j < dispC + 120 - 1; j++) {
+        board[bottom + 1][j] = char(205);
+    }
+    board[bottom + 1][dispC + 120 - 1] = char(188);
 }
 
 void Clear_LoadMap(char board[100][1000], int dispR, int dispC) {
-	int top = dispR - 23;
-	int bottom = dispR;
+    int top = dispR - 23;
+    int bottom = dispR;
 
-	for (int i = top - 1; i <= bottom + 1; i++) { // includes borders
-		for (int j = dispC; j < dispC + 80; j++) {
-			if (i == top - 1 || i == bottom + 1) { // top or bottom border
-				cout << blue << board[i][j] << reset;
-			}
-			else if (j == dispC || j == dispC + 80 - 1) { // side borders
-				cout << blue << board[i][j] << reset;
-			}
-			else {
-				cout << board[i][j];
-			}
-		}
-		cout << endl;
-	}
+    for (int i = top - 1; i <= bottom + 1; i++) { // includes borders
+        for (int j = dispC; j < dispC + 120; j++) {
+            if (i == top - 1 || i == bottom + 1) { // top or bottom border
+                cout << blue << board[i][j] << reset;
+            }
+            else if (j == dispC || j == dispC + 120 - 1) { // side borders
+                cout << blue << board[i][j] << reset;
+            }
+            else {
+                cout << board[i][j];
+            }
+        }
+        cout << endl;
+    }
 
 }
-
 
 /////////////////////////////////////
 //Call dynamic objects
@@ -2744,7 +2743,7 @@ int main() {
 		ladders[0].length = 25;
 
 		coin coins[5];
-		intializeCoin(board, coins[0], 97, 75);
+		intializeCoin(board, coins[0], 97, 70);
 
 		int animation = 0, frame = 1, ResetFrame = 0;
 		scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
