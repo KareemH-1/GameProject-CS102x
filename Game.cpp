@@ -2032,6 +2032,7 @@ void drawElevator(char board[100][1000], int row, int col) {
 	board[row][col] = '_';
 	board[row][col + 1] = '_';
 	board[row][col + 2] = '_';
+	board[row][col + 3] = '_';
 	board[row][col + 4] = '_';
 	board[row][col + 5] = '_';
 	board[row][col + 6] = '_';
@@ -2678,6 +2679,14 @@ int main() {
 
 		Enemy devil;
 		intializeEnemy(devil, 97, 50, 1, 11, 13, 100, 12);
+
+
+		Enemy spike; // make it array instead
+		intializeEnemy(spike , 97 , 105 , 0 , 2 , 4 , 0 , 100);
+		
+		Enemy bird;
+		intializeEnemy(bird , 89 , 4 , 1 , 25 , 3 , 3, 3); // random nuummbers ( not yet properly intialized) 
+
 
 		ladder ladders[4];
 		ladders[0].Row = 98;
