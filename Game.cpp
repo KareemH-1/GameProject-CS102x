@@ -1892,7 +1892,13 @@ void drawTerrain(char board[100][1000], int r, int c, int NumR, int NumC) {
 	}
 }
 
+void drawWall (char board[100][1000] , int r , int c , int length ){
 
+	for(int i =0 ; i< length ; i++){
+		board[r][c] = '#';
+		r++;
+	}
+}
 
 
 void drawTeleporter(char board[100][1000], int R, int C) {
