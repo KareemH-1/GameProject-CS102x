@@ -38,3 +38,24 @@ void drawAndMoveElevatorH(char board[100][1000], int row, int &col, int startCol
 	drawElevator(board, row, col);
 	moveElevatorVertically(row, startCol, endCol, direction);
 }
+
+void moveplayervertically(int& row, int startRow, int endRow, int& direction) {
+	if (row == endRow) direction = 2;
+	else if (row == startRow+1) direction = 1;
+
+	if (direction == 1) row--;
+	else row++;
+}
+
+
+void moveplayerhorizontally(int& col, int startCol, int endCol, int& direction) {
+	if (col == endCol) direction = 2;
+	else if (col == startCol) direction = 1;
+
+	if (direction == 1) col++;
+	else col--;
+}
+
+void playerElevate (char board[100][1000], &pX, &pY,int row, int &col,int& direction){
+
+}
