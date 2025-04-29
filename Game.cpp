@@ -2834,6 +2834,12 @@ int main() {
 					climbFrame2(board, Player.Row, Player.Col);
 				}
 			}
+			else if (animation == -1) {
+				drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+			}
+			else if (animation == -2) {
+				DrawPlayerLeftFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+			}
 
 			system("cls");
 			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
@@ -2961,8 +2967,13 @@ int main() {
 					}
 				}
 
-				ElevatePlayer(Player.Row, Player.Col, elevator, 2);
 			}
+			else {
+				if (animation == 0) animation = -1;
+				else if (animation == 1) animation = -2;
+			}
+
+			ElevatePlayer(Player.Row, Player.Col, elevator, 2);
 
 		}
 	}
