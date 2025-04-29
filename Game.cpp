@@ -44,17 +44,32 @@ struct coin {
 	int maxHeight = 4, maxWidth = 8; //Max height and width
 };
 
-struct elevator {
-	int Row, Col; //Position
+struct Elevator {
+	int row, col; //Position
+	int startRow , endRow;
+	int startCol , endCol;
 	int length = 11;
 	int whichD = 1; // 1 Vertical , 0 for horizonatal
-	int max , min;
+	int direction =1 ; // if vertical : 1 for up , 2 for down ..... if horizonatal 1 for right , 2 for left
 };
 
 void intializeCoin(char board[100][1000], coin& e, int row, int col) {
 	e.Row = row;
 	e.Col = col;
 }
+
+void intializeElevator(char board[100][1000] , Elevator elevator[], int i , int row , int col  , int startR , int endR , int startC , int endC , int whichD , int direction){
+	elevator[i].row = row;
+	elevator[i].col = col;
+	elevator[i].startRow = startR;
+	elevator[i].endRow = endR;
+	elevator[i].startCol = startC;
+	elevator[i].endCol = endC;
+	elevator[i].whichD = whichD;
+	elevator[i].direction = direction;
+}
+
+
 void showMainMenu(char& choice) {
 	cout << "==================================================" << endl;
 	cout << "||                                              ||" << endl;
@@ -2019,6 +2034,8 @@ void drawLadder(char board[100][1000], int row, int col, int length) {
 
 /////////////// CALL OBJECTS ////////////////
 
+
+
 void moveElevatorVertically(int& row, int startRow, int endRow, int& direction) {
 	if (row == endRow) direction = 2;
 	else if (row == startRow) direction = 1;
@@ -2038,7 +2055,6 @@ void drawElevator(char board[100][1000], int row, int col) {
 	board[row][col] = '_';
 	board[row][col + 1] = '_';
 	board[row][col + 2] = '_';
-	board[row][col + 3] = '_';
 	board[row][col + 4] = '_';
 	board[row][col + 5] = '_';
 	board[row][col + 6] = '_';
@@ -2048,17 +2064,37 @@ void drawElevator(char board[100][1000], int row, int col) {
 	board[row][col + 10] = '_';
 }
 
-void drawAndMoveElevatorV(char board[100][1000], int& row , int col, int startRow, int endRow , int& direction) {
+void drawAndMoveElevatorV(char board[100][1000], Elevator elevator[] , int i ) {
+		drawElevator(board, elevator[i].row, elevator[i].col);
+		moveElevatorVertically(elevator[i].row, elevator[i].startRow, elevator[i].endRow, elevator[i].direction);
+
+}
+void drawAndMoveElevatorH(char board[100][1000], Elevator elevator[] , int i) {
+		drawElevator(board, elevator[i].row, elevator[i].col);
+		moveElevatorHorizontally(elevator[i].col, elevator[i].startCol, elevator[i].endCol, elevator[i].direction);
+}
+
+void ElevatePlayer(int &pX , int & pY , Elevator elevator[] , int nElevators) {
 	
-	drawElevator(board, row, col);
-	moveElevatorVertically(row, startRow, endRow, direction);
+	for(int i =0 ; i< nElevators ; i++){
+		int check =0 , subcheck =0;
+
+		if(pX == elevator[i].row-1)subcheck = 1;
+		if(pY+9 >= elevator[i].col && pY+3 <= elevator[i].col+ 10 && subcheck) check =1; 
+	
+		if(check){
+			if(elevator[i].whichD == 1){
+				if(elevator[i].direction ==1) pX--;
+				else if(elevator[i].direction == 2) pX++;
+			}
+			else {
+				if(elevator[i].direction ==1) pY++;
+				else if(elevator[i].direction == 2) pY--;
+			}
+		}
+	}
 }
 
-void drawAndMoveElevatorH(char board[100][1000], int row, int &col, int startCol, int endCol, int& direction) {
-
-	drawElevator(board, row, col);
-	moveElevatorVertically(row, startCol, endCol, direction);
-}
 
 void callObj(char board[100][1000], coin coins[5]) {
 	drawTerrain(board, 95, 30, 1, 10);
@@ -2066,13 +2102,13 @@ void callObj(char board[100][1000], coin coins[5]) {
 	drawTerrain(board, 87, 5, 1, 10);
 	drawLadder(board, 98, 50, 25);
 	drawCoin(board, coins[0].Row, coins[0].Col, coins[0].isCollected);
-	
 }
 
-void callDynamicObj(char board[100][1000], Enemy bird, Enemy devil, Enemy spike , elevator elevators[2]) {
+void callDynamicObj(char board[100][1000], Enemy bird, Enemy devil, Enemy spike , Elevator elevator[]) {
 	drawEnemyBirdLeft(board, 82, 60); // Draw the enemy bird
 	drawEnemyBirdRight(board, 84, 10); // Draw the enemy bird
-	drawAndMoveElevatorV(board , elevators[0].Row , elevators[0].Col , elevators[0].min , elevators[0].max , elevators[0].whichD );
+	drawAndMoveElevatorV(board , elevator , 0 );
+	drawAndMoveElevatorH(board , elevator , 1 );
 }
 
 ///////////////////////////////
@@ -2703,9 +2739,13 @@ int main() {
 		intializeCoin(board, coins[0], 97, 70);
 
 
-		elevator elevators[2];
+		Elevator elevator[2];
+
+		intializeElevator(board , elevator , 0 , 97 , 110 , 97  , 80 , 110 , 110 , 1 , 1); // Vertical 
+
+		intializeElevator(board , elevator , 1 , 95 , 120 , 95  , 95 , 120 , 130 , 2 , 1); //horizonatal
+
 		
-		elevators[0].Row = 97, elevators[0].Col = 90 , elevators[0].min = 97 , elevators[0].max = 85, elevators[0].whichD = 1;
 
 
 		int animation = 0, frame = 1, ResetFrame = 0;
@@ -2892,7 +2932,10 @@ int main() {
 						isWalking = 3;
 					}
 				}
+				
+				ElevatePlayer(Player.Row , Player.Col , elevator, 2);
 			}
+
 		}
 	}
 	else return 0;
