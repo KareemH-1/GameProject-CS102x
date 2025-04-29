@@ -1,4 +1,9 @@
 
+
+struct Elevator{
+	int startRow , startCol, row, col , endRow, endCol , direction , HorV; 
+};
+
 void moveElevatorVertically(int& row, int startRow, int endRow, int& direction) {
 	if (row == endRow) direction = 2;
 	else if (row == startRow) direction = 1;
@@ -27,35 +32,46 @@ void drawElevator(char board[100][1000], int row, int col) {
 	board[row][col + 10] = '_';
 }
 
-void drawAndMoveElevatorV(char board[100][1000], int& row , int col, int startRow, int endRow , int& direction) {
+void drawAndMoveElevatorV(char board[100][1000], Elevator elevator[] , int nElevators) {
+		for(int i =0 ; i <nElevators ; i+++){
+		drawElevator(board, elevator[i].row, elevator[i].col);
+		moveElevatorVertically(elevator[i].row, elevator[i].startRow, elevator[i].endRow, elevator[i].direction);
+	}
+}
+void drawAndMoveElevatorH(char board[100][1000], Elevator elevator[] , int nElevators) {
+		for(int i =0 ; i <nElevators ; i+++){
+		drawElevator(board, elevator[i].row, elevator[i].col);
+		moveElevatorHorizontally(elevator[i].col, elevator[i].startCol, elevator[i].endCol, elevator[i].direction);
+	}
+}
+
+void movePlayerVertically(int &pX , int & pY , Elevator elevator[] , int nElevators) {
 	
-	drawElevator(board, row, col);
-	moveElevatorVertically(row, startRow, endRow, direction);
-}
+	for(int i =0 ; i< nElevators ; i++){
+		int check =0 , subcheck =0;
 
-void drawAndMoveElevatorH(char board[100][1000], int row, int &col, int startCol, int endCol, int& direction) {
-
-	drawElevator(board, row, col);
-	moveElevatorVertically(row, startCol, endCol, direction);
-}
-
-void moveplayervertically(int& row, int startRow, int endRow, int& direction) {
-	if (row == endRow) direction = 2;
-	else if (row == startRow+1) direction = 1;
-
-	if (direction == 1) row--;
-	else row++;
+		if(pX == elevator[i].row-1)subcheck = 1;
+		if(pY+9 >= elevator[i].col && pY+3 <= elevator[i].col+ 10 && subcheck) check =1; 
+	
+		if(check){
+			if(elevator[i].direction ==1) pX--;
+			else if(elevator[i].direction == 2) pX++;
+		}
+	}
 }
 
 
-void moveplayerhorizontally(int& col, int startCol, int endCol, int& direction) {
-	if (col == endCol) direction = 2;
-	else if (col == startCol) direction = 1;
-
-	if (direction == 1) col++;
-	else col--;
-}
-
-void playerElevate (char board[100][1000], &pX, &pY,int row, int &col,int& direction){
-
+void movePlayerHorizontally(int& pX, int& pY,Elevator elevator[] , int nElevators) {
+	
+	for(int i =0 ; i< nElevators ; i++){
+			int check =0 , subcheck =0;
+		
+			if(pX == elevator[i].row-1)subcheck = 1;
+			if(pY+9 >= elevator[i].col && pY+3 <= elevator[i].col+ 10 && subcheck) check =1; 
+		
+			if(check){
+			if(elevator[i].direction ==1) pY++;
+			else if(elevator[i].direction == 2) pY--;
+		}
+	}
 }
