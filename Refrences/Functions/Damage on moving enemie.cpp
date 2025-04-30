@@ -1,15 +1,19 @@
-#include <iostream>   // For input/output operations
-#include <conio.h>    // For keyboard input functions (_kbhit() and _getch())
-#include <windows.h>  // For Sleep() function to pause the game
+#include <iostream>
+#include <conio.h>
+#include <windows.h>
 using namespace std;
 
 
+//ANSI CODE COLORS
+char green[] = "\033[32m";
+char blue[] = "\033[34m";
+char red[] = "\033[31m";
+char yellow[] = "\033[33m";
+char cyan[] = "\033[36m";
+char reset[] = "\033[0m";
+char bold[] = "\033[1m";
 
-char board[100][1000]; // Global board array for the game
-
-void moveplayer(char move_dir, int& player_y, int& player_x);
-void drawBoard(char move_dir, int& player_y, int& player_x);
-
+char board[100][1000]; // Board size
 
 struct Enemy {
 	int health = 100;
@@ -21,475 +25,32 @@ struct Enemy {
 	void createEnemy(int row, int col) {
 		this->row = row;
 		this->col = col;
-		for (int r = 0; r < 24; r++) {
-			for (int c = 0; c < 80; c++) {
-				board[r][c] = ' ';
-			}
-		}
-
-		board[row - 8][col + 30] = '\\';
-		board[row - 8][col + 31] = '_';
-		board[row - 8][col + 32] = '_';
-		board[row - 8][col + 33] = '/';
-		board[row - 7][col + 29] = '/';
-		board[row - 7][col + 30] = '(';
-		board[row - 7][col + 31] = 'o';
-		board[row - 7][col + 32] = ')';
-		board[row - 7][col + 34] = '\\';
-		board[row - 6][col + 29] = '\\';
-		board[row - 6][col + 31] = '-';
-		board[row - 6][col + 32] = '-';
-		board[row - 6][col + 34] = '/';
-		board[row - 5][col + 15] = '_';
-		board[row - 5][col + 17] = '_';
-		board[row - 5][col + 18] = '_';
-		board[row - 5][col + 19] = '_';
-		board[row - 5][col + 20] = '_';
-		board[row - 5][col + 21] = '_';
-		board[row - 5][col + 22] = '_';
-		board[row - 5][col + 23] = '|';
-		board[row - 5][col + 24] = '\\';
-		board[row - 5][col + 25] = '_';
-		board[row - 5][col + 26] = '_';
-		board[row - 5][col + 27] = '(';
-		board[row - 5][col + 28] = '-';
-		board[row - 5][col + 29] = '-';
-		board[row - 5][col + 30] = '=';
-		board[row - 5][col + 31] = '=';
-		board[row - 5][col + 32] = '=';
-		board[row - 5][col + 33] = '=';
-		board[row - 5][col + 34] = '-';
-		board[row - 5][col + 35] = '-';
-		board[row - 5][col + 36] = ')';
-		board[row - 4][col + 15] = '\\';
-		board[row - 4][col + 16] = '_';
-		board[row - 4][col + 17] = '_';
-		board[row - 4][col + 18] = '_';
-		board[row - 4][col + 19] = '_';
-		board[row - 4][col + 20] = '_';
-		board[row - 4][col + 21] = '_';
-		board[row - 4][col + 22] = '_';
-		board[row - 4][col + 23] = '_';
-		board[row - 4][col + 24] = '_';
-		board[row - 4][col + 25] = '\\';
-		board[row - 4][col + 26] = '=';
-		board[row - 4][col + 27] = '=';
-		board[row - 4][col + 28] = '=';
-		board[row - 4][col + 29] = '=';
-		board[row - 4][col + 30] = '=';
-		board[row - 4][col + 31] = '=';
-		board[row - 4][col + 32] = '/';
-		board[row - 4][col + 33] = '\\';
-		board[row - 4][col + 35] = '\\';
-		board[row - 4][col + 36] = '[';
-		board[row - 4][col + 37] = '[';
-		board[row - 4][col + 38] = '/';
-		board[row - 3][col + 27] = '/';
-		board[row - 3][col + 30] = '\\';
-		board[row - 3][col + 33] = '\\';
-		board[row - 3][col + 34] = '_';
-		board[row - 3][col + 35] = '-';
-		board[row - 3][col + 36] = '/';
-		board[row - 2][col + 29] = '|';
-		board[row - 2][col + 30] = '=';
-		board[row - 2][col + 31] = '=';
-		board[row - 2][col + 32] = '=';
-		board[row - 2][col + 33] = '=';
-		board[row - 2][col + 34] = '|';
-		board[row - 1][col + 28] = '(';
-		board[row - 1][col + 31] = '/';
-		board[row - 1][col + 32] = '\\';
-		board[row - 1][col + 35] = ')';
-		board[row - 0][col + 28] = '_';
-		board[row - 0][col + 29] = '|';
-		board[row - 0][col + 30] = '|';
-		board[row - 0][col + 33] = '|';
-		board[row - 0][col + 34] = '|';
-		board[row - 0][col + 35] = '_';
-
-		for (int r = 0; r < 24; r++) {
-			for (int c = 0; c < 80; c++) {
-				cout << board[r][c];
-			}
-			cout << endl;
-		}
-		system("cls");
-
-		for (int r = 0; r < 24; r++) {
-			for (int c = 0; c < 80; c++) {
-				board[r][c] = ' ';
-			}
-		}
-		board[row - 8][col + 30] = '\\';
-		board[row - 8][col + 31] = '_';
-		board[row - 8][col + 32] = '_';
-		board[row - 8][col + 33] = '/';
-		board[row - 7][col + 29] = '/';
-		board[row - 7][col + 30] = '(';
-		board[row - 7][col + 31] = 'o';
-		board[row - 7][col + 32] = ')';
-		board[row - 7][col + 34] = '\\';
-		board[row - 6][col + 29] = '\\';
-		board[row - 6][col + 31] = '-';
-		board[row - 6][col + 32] = '-';
-		board[row - 6][col + 34] = '/';
-		board[row - 5][col + 18] = '_';
-		board[row - 5][col + 20] = '_';
-		board[row - 5][col + 21] = '_';
-		board[row - 5][col + 22] = '_';
-		board[row - 5][col + 23] = '_';
-		board[row - 5][col + 24] = '_';
-		board[row - 5][col + 25] = '_';
-		board[row - 5][col + 26] = '|';
-		board[row - 5][col + 27] = '\\';
-		board[row - 5][col + 28] = '_';
-		board[row - 5][col + 29] = '_';
-		board[row - 5][col + 30] = '(';
-		board[row - 5][col + 31] = '-';
-		board[row - 5][col + 32] = '-';
-		board[row - 5][col + 33] = '=';
-		board[row - 5][col + 34] = '=';
-		board[row - 5][col + 35] = '=';
-		board[row - 5][col + 36] = '=';
-		board[row - 5][col + 37] = '-';
-		board[row - 5][col + 38] = '-';
-		board[row - 5][col + 39] = ')';
-		board[row - 4][col + 17] = '\\';
-		board[row - 4][col + 18] = '_';
-		board[row - 4][col + 19] = '_';
-		board[row - 4][col + 20] = '_';
-		board[row - 4][col + 21] = '_';
-		board[row - 4][col + 22] = '_';
-		board[row - 4][col + 23] = '_';
-		board[row - 4][col + 24] = '_';
-		board[row - 4][col + 25] = '_';
-		board[row - 4][col + 26] = '_';
-		board[row - 4][col + 27] = '\\';
-		board[row - 4][col + 28] = '=';
-		board[row - 4][col + 29] = '=';
-		board[row - 4][col + 30] = '=';
-		board[row - 4][col + 31] = '=';
-		board[row - 4][col + 32] = '=';
-		board[row - 4][col + 33] = '=';
-		board[row - 4][col + 34] = '/';
-		board[row - 4][col + 35] = '\\';
-		board[row - 4][col + 37] = '\\';
-		board[row - 4][col + 38] = '[';
-		board[row - 4][col + 39] = '[';
-		board[row - 4][col + 40] = '/';
-		board[row - 3][col + 27] = '/';
-		board[row - 3][col + 30] = '\\';
-		board[row - 3][col + 33] = '\\';
-		board[row - 3][col + 34] = '_';
-		board[row - 3][col + 35] = '-';
-		board[row - 3][col + 36] = '/';
-		board[row - 2][col + 29] = '|';
-		board[row - 2][col + 30] = '=';
-		board[row - 2][col + 31] = '=';
-		board[row - 2][col + 32] = '=';
-		board[row - 2][col + 33] = '=';
-		board[row - 2][col + 34] = '|';
-		board[row - 1][col + 28] = '(';
-		board[row - 1][col + 31] = '/';
-		board[row - 1][col + 32] = '\\';
-		board[row - 1][col + 35] = ')';
-		board[row - 0][col + 28] = '_';
-		board[row - 0][col + 29] = '|';
-		board[row - 0][col + 30] = '|';
-		board[row - 0][col + 33] = '|';
-		board[row - 0][col + 34] = '|';
-		board[row - 0][col + 35] = '_';
-		for (int r = 0; r < 24; r++) {
-			for (int c = 0; c < 80; c++) {
-
-				cout << board[r][c];
-			}
-			cout << endl;
-		}
-
-		system("cls");
-
-		for (int r = 0; r < 24; r++) {
-			for (int c = 0; c < 80; c++) {
-				board[r][c] = ' ';
-			}
-		}
-
-		board[row - 8][col + 30] = '\\';
-		board[row - 8][col + 31] = '_';
-		board[row - 8][col + 32] = '_';
-		board[row - 8][col + 33] = '/';
-		board[row - 7][col + 29] = '/';
-		board[row - 7][col + 30] = '(';
-		board[row - 7][col + 31] = 'o';
-		board[row - 7][col + 32] = ')';
-		board[row - 7][col + 34] = '\\';
-		board[row - 6][col + 29] = '\\';
-		board[row - 6][col + 31] = '-';
-		board[row - 6][col + 32] = '-';
-		board[row - 6][col + 34] = '/';
-		board[row - 5][col + 19] = '_';
-		board[row - 5][col + 21] = '_';
-		board[row - 5][col + 22] = '_';
-		board[row - 5][col + 23] = '_';
-		board[row - 5][col + 24] = '_';
-		board[row - 5][col + 25] = '_';
-		board[row - 5][col + 26] = '_';
-		board[row - 5][col + 27] = '|';
-		board[row - 5][col + 28] = '\\';
-		board[row - 5][col + 29] = '_';
-		board[row - 5][col + 30] = '_';
-		board[row - 5][col + 31] = '(';
-		board[row - 5][col + 32] = '-';
-		board[row - 5][col + 33] = '-';
-		board[row - 5][col + 34] = '=';
-		board[row - 5][col + 35] = '=';
-		board[row - 5][col + 36] = '=';
-		board[row - 5][col + 37] = '=';
-		board[row - 5][col + 38] = '-';
-		board[row - 5][col + 39] = '-';
-		board[row - 5][col + 40] = ')';
-		board[row - 4][col + 18] = '\\';
-		board[row - 4][col + 19] = '_';
-		board[row - 4][col + 20] = '_';
-		board[row - 4][col + 21] = '_';
-		board[row - 4][col + 22] = '_';
-		board[row - 4][col + 23] = '_';
-		board[row - 4][col + 24] = '_';
-		board[row - 4][col + 25] = '_';
-		board[row - 4][col + 26] = '_';
-		board[row - 4][col + 27] = '_';
-		board[row - 4][col + 28] = '\\';
-		board[row - 4][col + 29] = '=';
-		board[row - 4][col + 30] = '=';
-		board[row - 4][col + 31] = '=';
-		board[row - 4][col + 32] = '=';
-		board[row - 4][col + 33] = '=';
-		board[row - 4][col + 34] = '=';
-		board[row - 4][col + 35] = '/';
-		board[row - 4][col + 36] = '\\';
-		board[row - 4][col + 38] = '\\';
-		board[row - 4][col + 39] = '[';
-		board[row - 4][col + 40] = '[';
-		board[row - 4][col + 41] = '/';
-		board[row - 3][col + 27] = '/';
-		board[row - 3][col + 30] = '\\';
-		board[row - 3][col + 33] = '\\';
-		board[row - 3][col + 34] = '_';
-		board[row - 3][col + 35] = '-';
-		board[row - 3][col + 36] = '/';
-		board[row - 2][col + 29] = '|';
-		board[row - 2][col + 30] = '=';
-		board[row - 2][col + 31] = '=';
-		board[row - 2][col + 32] = '=';
-		board[row - 2][col + 33] = '=';
-		board[row - 2][col + 34] = '|';
-		board[row - 1][col + 28] = '(';
-		board[row - 1][col + 31] = '/';
-		board[row - 1][col + 32] = '\\';
-		board[row - 1][col + 35] = ')';
-		board[row - 0][col + 28] = '_';
-		board[row - 0][col + 29] = '|';
-		board[row - 0][col + 30] = '|';
-		board[row - 0][col + 33] = '|';
-		board[row - 0][col + 34] = '|';
-		board[row - 0][col + 35] = '_';
-		for (int r = 0; r < 24; r++) {
-			for (int c = 0; c < 80; c++) {
-				cout << board[r][c];
-			}
-			cout << endl;
-		}
-		system("cls");
-
-		for (int r = 0; r < 24; r++) {
-			for (int c = 0; c < 80; c++) {
-				board[r][c] = ' ';
-			}
-		}
-
-
-		board[row - 8][col + 30] = '\\';
-		board[row - 8][col + 31] = '_';
-		board[row - 8][col + 32] = '_';
-		board[row - 8][col + 33] = '/';
-		board[row - 7][col + 29] = '/';
-		board[row - 7][col + 30] = '(';
-		board[row - 7][col + 31] = 'o';
-		board[row - 7][col + 32] = ')';
-		board[row - 7][col + 34] = '\\';
-		board[row - 6][col + 29] = '\\';
-		board[row - 6][col + 31] = '-';
-		board[row - 6][col + 32] = '-';
-		board[row - 6][col + 34] = '/';
-		board[row - 5][col + 18] = '_';
-		board[row - 5][col + 20] = '_';
-		board[row - 5][col + 21] = '_';
-		board[row - 5][col + 22] = '_';
-		board[row - 5][col + 23] = '_';
-		board[row - 5][col + 24] = '_';
-		board[row - 5][col + 25] = '_';
-		board[row - 5][col + 26] = '|';
-		board[row - 5][col + 27] = '\\';
-		board[row - 5][col + 28] = '_';
-		board[row - 5][col + 29] = '_';
-		board[row - 5][col + 30] = '(';
-		board[row - 5][col + 31] = '-';
-		board[row - 5][col + 32] = '-';
-		board[row - 5][col + 33] = '=';
-		board[row - 5][col + 34] = '=';
-		board[row - 5][col + 35] = '=';
-		board[row - 5][col + 36] = '=';
-		board[row - 5][col + 37] = '-';
-		board[row - 5][col + 38] = '-';
-		board[row - 5][col + 39] = ')';
-		board[row - 4][col + 17] = '\\';
-		board[row - 4][col + 18] = '_';
-		board[row - 4][col + 19] = '_';
-		board[row - 4][col + 20] = '_';
-		board[row - 4][col + 21] = '_';
-		board[row - 4][col + 22] = '_';
-		board[row - 4][col + 23] = '_';
-		board[row - 4][col + 24] = '_';
-		board[row - 4][col + 25] = '_';
-		board[row - 4][col + 26] = '_';
-		board[row - 4][col + 27] = '\\';
-		board[row - 4][col + 28] = '=';
-		board[row - 4][col + 29] = '=';
-		board[row - 4][col + 30] = '=';
-		board[row - 4][col + 31] = '=';
-		board[row - 4][col + 32] = '=';
-		board[row - 4][col + 33] = '=';
-		board[row - 4][col + 34] = '/';
-		board[row - 4][col + 35] = '\\';
-		board[row - 4][col + 37] = '\\';
-		board[row - 4][col + 38] = '[';
-		board[row - 4][col + 39] = '[';
-		board[row - 4][col + 40] = '/';
-		board[row - 3][col + 27] = '/';
-		board[row - 3][col + 30] = '\\';
-		board[row - 3][col + 33] = '\\';
-		board[row - 3][col + 34] = '_';
-		board[row - 3][col + 35] = '-';
-		board[row - 3][col + 36] = '/';
-		board[row - 2][col + 29] = '|';
-		board[row - 2][col + 30] = '=';
-		board[row - 2][col + 31] = '=';
-		board[row - 2][col + 32] = '=';
-		board[row - 2][col + 33] = '=';
-		board[row - 2][col + 34] = '|';
-		board[row - 1][col + 28] = '(';
-		board[row - 1][col + 31] = '/';
-		board[row - 1][col + 32] = '\\';
-		board[row - 1][col + 35] = ')';
-		board[row - 0][col + 28] = '_';
-		board[row - 0][col + 29] = '|';
-		board[row - 0][col + 30] = '|';
-		board[row - 0][col + 33] = '|';
-		board[row - 0][col + 34] = '|';
-		board[row - 0][col + 35] = '_';
-
-
-
-
-		for (int r = 0; r < 24; r++) {
-			for (int c = 0; c < 80; c++) {
-				cout << board[r][c];
-			}
-			cout << endl;
-		}
-		system("cls");
-
-		for (int r = 0; r < 24; r++) {
-			for (int c = 0; c < 80; c++) {
-				board[r][c] = ' ';
-			}
-		}
-		board[row - 8][col + 30] = '\\';
-		board[row - 8][col + 31] = '_';
-		board[row - 8][col + 32] = '_';
-		board[row - 8][col + 33] = '/';
-		board[row - 7][col + 29] = '/';
-		board[row - 7][col + 30] = '(';
-		board[row - 7][col + 31] = 'o';
-		board[row - 7][col + 32] = ')';
-		board[row - 7][col + 34] = '\\';
-		board[row - 6][col + 29] = '\\';
-		board[row - 6][col + 31] = '-';
-		board[row - 6][col + 32] = '-';
-		board[row - 6][col + 34] = '/';
-		board[row - 5][col + 15] = '_';
-		board[row - 5][col + 17] = '_';
-		board[row - 5][col + 18] = '_';
-		board[row - 5][col + 19] = '_';
-		board[row - 5][col + 20] = '_';
-		board[row - 5][col + 21] = '_';
-		board[row - 5][col + 22] = '_';
-		board[row - 5][col + 23] = '|';
-		board[row - 5][col + 24] = '\\';
-		board[row - 5][col + 25] = '_';
-		board[row - 5][col + 26] = '_';
-		board[row - 5][col + 27] = '(';
-		board[row - 5][col + 28] = '-';
-		board[row - 5][col + 29] = '-';
-		board[row - 5][col + 30] = '=';
-		board[row - 5][col + 31] = '=';
-		board[row - 5][col + 32] = '=';
-		board[row - 5][col + 33] = '=';
-		board[row - 5][col + 34] = '-';
-		board[row - 5][col + 35] = '-';
-		board[row - 5][col + 36] = ')';
-		board[row - 4][col + 15] = '\\';
-		board[row - 4][col + 16] = '_';
-		board[row - 4][col + 17] = '_';
-		board[row - 4][col + 18] = '_';
-		board[row - 4][col + 19] = '_';
-		board[row - 4][col + 20] = '_';
-		board[row - 4][col + 21] = '_';
-		board[row - 4][col + 22] = '_';
-		board[row - 4][col + 23] = '_';
-		board[row - 4][col + 24] = '_';
-		board[row - 4][col + 25] = '\\';
-		board[row - 4][col + 26] = '=';
-		board[row - 4][col + 27] = '=';
-		board[row - 4][col + 28] = '=';
-		board[row - 4][col + 29] = '=';
-		board[row - 4][col + 30] = '=';
-		board[row - 4][col + 31] = '=';
-		board[row - 4][col + 32] = '/';
-		board[row - 4][col + 33] = '\\';
-		board[row - 4][col + 35] = '\\';
-		board[row - 4][col + 36] = '[';
-		board[row - 4][col + 37] = '[';
-		board[row - 4][col + 38] = '/';
-		board[row - 3][col + 27] = '/';
-		board[row - 3][col + 30] = '\\';
-		board[row - 3][col + 33] = '\\';
-		board[row - 3][col + 34] = '_';
-		board[row - 3][col + 35] = '-';
-		board[row - 3][col + 36] = '/';
-		board[row - 2][col + 29] = '|';
-		board[row - 2][col + 30] = '=';
-		board[row - 2][col + 31] = '=';
-		board[row - 2][col + 32] = '=';
-		board[row - 2][col + 33] = '=';
-		board[row - 2][col + 34] = '|';
-		board[row - 1][col + 28] = '(';
-		board[row - 1][col + 31] = '/';
-		board[row - 1][col + 32] = '\\';
-		board[row - 1][col + 35] = ')';
-		board[row - 0][col + 28] = '_';
-		board[row - 0][col + 29] = '|';
-		board[row - 0][col + 30] = '|';
-		board[row - 0][col + 33] = '|';
-		board[row - 0][col + 34] = '|';
-		board[row - 0][col + 35] = '_';
+		board[row - 3][col + 10] = '_';
+		board[row - 3][col + 11] = '_';
+		board[row - 2][col + 7] = '<';
+		board[row - 2][col + 8] = '(';
+		board[row - 2][col + 9] = 'o';
+		board[row - 2][col + 11] = ')';
+		board[row - 2][col + 12] = '_';
+		board[row - 2][col + 13] = '_';
+		board[row - 2][col + 14] = '_';
+		board[row - 1][col + 8] = '(';
+		board[row - 1][col + 13] = '.';
+		board[row - 1][col + 14] = '_';
+		board[row - 1][col + 15] = '>';
+		board[row - 0][col + 9] = '`';
+		board[row - 0][col + 10] = '-';
+		board[row - 0][col + 11] = '-';
+		board[row - 0][col + 12] = '-';
+		board[row - 0][col + 13] = '-';
+		board[row - 0][col + 14] = '\'';
 	}
-
 };
 
 void checkEnemyHit(int row, int col, Enemy& enemy, int& checkhit) {
 	checkhit = 0;
+
+
 	// Enemy bounding box
 	int top = enemy.row - 3;
 	int bottom = enemy.row;
@@ -501,6 +62,7 @@ void checkEnemyHit(int row, int col, Enemy& enemy, int& checkhit) {
 	}
 }
 
+
 struct Laser {
 	void shootLaser(Enemy& enemy, int& killed, char key, int& player_y, int& player_x) {
 		int posr = -1, posc = -1;
@@ -508,12 +70,12 @@ struct Laser {
 		int dir = 0;
 		for (int r = 0; r < 24; r++) {
 			for (int c = 0; c < 80; c++) {
-				if (board[r][c] == (char)201) {
+				if (board[r][c] == '\\' && board[r + 1][c] == '/') {
 					posr = r;
 					posc = c;
 					dir = 1;
 				}
-				if (board[r][c] == (char)187) {
+				if (board[r][c] == '/' && board[r + 1][c] == '\\') {
 					posr = r;
 					posc = c;
 					dir = -1;
@@ -662,12 +224,12 @@ struct Gun {
 		int dir = 0;
 		for (int r = 0; r < 24; r++) {
 			for (int c = 0; c < 80; c++) {
-				if (board[r][c] == (char)201) {
+				if (board[r][c] == '\\' && board[r + 1][c] == '/') {
 					posr = r;
 					posc = c;
 					dir = 1;
 				}
-				if (board[r][c] == (char)187) {
+				if (board[r][c] == '/' && board[r + 1][c] == '\\') {
 					posr = r;
 					posc = c;
 					dir = -1;
@@ -777,36 +339,200 @@ struct Gun {
 
 
 struct player {
-	int Health = 100;
 	Ammo ammo;
 	Gun gun;
 	Laser laser;
 	int Row, Col; //Position
 	int maxHeight = 9, maxWidth = 15; //Max height and width
 
+	int health = 100;
 	int coins; //Either coins or Level , until decided i will leave it as coins
-
+	int maxAmmo;
 	int shootR, shootC;
-	int Reload[2] = { 1 , 3 }; //coolDown[0] for gun , coolDown[1] for lazerbeam
 };
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+struct ladder {
+	int Row = NULL, Col = NULL; //Position
+	int length = NULL;
+};
+
+struct coin {
+	int Row = NULL, Col = NULL; //Position
+	int isCollected = 0; // 1 for collected , 0 for not collected
+	int maxHeight = 4, maxWidth = 8; //Max height and width
+};
+
+struct Elevator {
+	int row, col; //Position
+	int startRow, endRow;
+	int startCol, endCol;
+	int length = 11;
+	int whichD = 1; // 1 Vertical , 0 for horizonatal
+	int direction = 1; // if vertical : 1 for up , 2 for down ..... if horizonatal 1 for right , 2 for left
+};
+
+void intializeCoin(char board[100][1000], coin& e, int row, int col) {
+	e.Row = row;
+	e.Col = col;
+}
+
+void intializeElevator(char board[100][1000], Elevator elevator[], int i, int row, int col, int startR, int endR, int startC, int endC, int whichD, int direction) {
+	elevator[i].row = row;
+	elevator[i].col = col;
+	elevator[i].startRow = startR;
+	elevator[i].endRow = endR;
+	elevator[i].startCol = startC;
+	elevator[i].endCol = endC;
+	elevator[i].whichD = whichD;
+	elevator[i].direction = direction;
+}
+
+
+
+
+
+void showMainMenu(char& choice) {
+	cout << "==================================================" << endl;
+	cout << "||                                              ||" << endl;
+	cout << "||                                              ||" << endl;
+	cout << "||           C S 1 0 2 x  P r o j e c t         ||" << endl;
+	cout << "||                                              ||" << endl;
+	cout << "||                1. Start Game                 ||" << endl;
+	cout << "||                2. Instructions               ||" << endl;
+	cout << "||                3. Credits                    ||" << endl;
+	cout << "||                4. Exit                       ||" << endl;
+	cout << "||                                              ||" << endl;
+	cout << "==================================================" << endl;
+	cout << "Please select an option: ";
+	cin >> choice;
+}
+
+void displayInstructions() {
+	cout << "==================================================" << endl;
+	cout << "||              I N S T R U C T I O N S         ||" << endl;
+	cout << "==================================================" << endl;
+	cout << "||  Controls:                                   ||" << endl;
+	cout << "||                                              ||" << endl;
+	cout << "||  W  - Jump / Climb Up                        ||" << endl;
+	cout << "||  A  - Move Left                              ||" << endl;
+	cout << "||  D  - Move Right                             ||" << endl;
+	cout << "||  S  - Climb Down                             ||" << endl;
+	cout << "||  R  - Reload                                 ||" << endl;
+	cout << "||  Q  - Switch Weapons                         ||" << endl;
+	cout << "||  J  - Shoot                                  ||" << endl;
+	cout << "==================================================" << endl;
+	cout << "||  Press any key to return to main menu...     ||" << endl;
+	cout << "==================================================" << endl;
+
+	char Key;
+	cin >> Key;
+}
+
+
+void displayCredits() {
+	cout << "==================================================" << endl;
+	cout << "||                C R E D I T S                 ||" << endl;
+	cout << "==================================================" << endl;
+	cout << "||  Game developed by:                          ||" << endl;
+	cout << "||                                              ||" << endl;
+	cout << "||  1. Kareem Ahmed Taha    - 254915            ||" << endl;
+	cout << "||  2. Mazen Mahmoud Gamal  - 254720            ||" << endl;
+	cout << "||  3. Ahmed Emad Mohammed  - 251147            ||" << endl;
+	cout << "==================================================" << endl;
+	cout << "||  Press any key to return to main menu...     ||" << endl;
+	cout << "==================================================" << endl;
+
+	char Key;
+	cin >> Key;
+}
+
+
+void initializePlayerValues(int& Row, int& Col, int& maxHeight, int& maxWidth, int& Health, int& coins, int& ammo, int& maxAmmo, int& shootC, int& shootR) {
+	Row = 95;
+	Col = 40;
+	maxHeight = 9;
+	maxWidth = 15;
+	Health = 100;
+	coins = 0;
+	ammo = 24; //Full ammo on start
+	maxAmmo = 24; //max ammo
+	shootR = 19 - 4;
+	shootC = 3 + 15;
+}
+
+
+
+void initializeBoard(char border[100][1000]) {
+	// Initialize all cells to be empty
+	for (int i = 0; i < 100; i++) {
+		for (int j = 0; j < 1000; j++) {
+			border[i][j] = ' ';
+		}
+	}
+
+	// Top border 
+	border[0][0] = char(201);
+	for (int j = 1; j < 1000 - 1; j++) {
+		border[0][j] = char(205);
+	}
+	border[0][999] = char(187);
+
+	// Middle section with side borders
+	for (int i = 1; i < 100 - 1; i++) {
+		border[i][0] = char(186);
+		border[i][999] = char(186);
+	}
+
+	// Bottom border
+	border[23][0] = char(200);
+	for (int j = 1; j < 1000 - 1; j++) {
+		border[23][j] = char(205);
+	}
+	border[23][999] = char(188);
+}
+void dispBar(int health, int coins, int ammo, int maxAmmo, char gun[]) {
+	cout << blue;
+	//upper border
+	cout << char(201);
+	for (int i = 1; i < 79; i++) {
+		cout << char(205);
+	}
+	cout << char(187);
+	cout << endl;
+	cout << reset;
+	cout << blue << char(186) << reset << "          HEALTH " << red << bold << char(177) << char(177) << char(177) << char(177) << char(177) << char(177) << char(177) << char(177) << char(177) << char(177) << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << gun << reset << "  |  AMMO " << yellow << bold << ammo << " / " << maxAmmo << reset << blue << "           " << char(186) << reset << endl;
+}
+
+void dispBoard(char board[100][1000]) {
+
+
+	cout << blue; // Blue color for the board	
+
+	for (int i = 0; i < 80; i++) {
+		cout << board[0][i];
+	}
+	cout << endl;
+	//i =1 to ignore first border and i<23 to ignore last border
+	for (int i = 1; i < 23; i++) {
+		cout << board[i][0]; //Left border
+		cout << reset; //reset the blue color , as we dont want the whole board to be blue
+		for (int j = 1; j < 79; j++) {
+			cout << board[i][j];
+		}
+		cout << blue; //Blue color for the right board
+		cout << board[i][79]; //Right border
+		cout << endl;
+	}
+	for (int i = 0; i < 80; i++) {
+		cout << board[23][i];
+	}
+	cout << endl;
+	cout << reset;
+
+}
+
+
 
 
 void drawPlayerRightFrame1(char board[100][1000], int row, int col, int& shootR, int shootC, int LC[9]) {
@@ -1316,14 +1042,16 @@ void drawPlayerRightFrame5(char board[100][1000], int row, int col, int& shootR,
 	LC[7] = col + 8;  // row - 7 (eyes: ')' at col+8)
 	LC[8] = col + 7;  // row - 8 (top head: '_' at col+7)
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}
+/////////////////////////////////////////////
 
-}void DrawPlayerLeftFrame1(char board[100][1000], int row, int col, int& shootingR, int& shootingC, int LC[9]) {
+
+
+
+
+
+// Walking Left Frames
+void DrawPlayerLeftFrame1(char board[100][1000], int row, int col, int& shootingR, int& shootingC, int LC[9]) {
 
 	//head
 	board[row - 7][col + 10] = '\\';
@@ -1860,38 +1588,796 @@ void DrawPlayerLeftFrame5(char board[100][1000], int R, int C, int& shootingR, i
 	LC[8] = C + 6;   // R - 8  (head: '_' at col+6)
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void Clear_LoadMap(char board[100][1000], int dispR, int dispC) {
-	int top = dispR - 23;
-	int bottom = dispR;
 
-	for (int i = top - 1; i <= bottom + 1; i++) { // includes borders
-		for (int j = dispC; j < dispC + 80; j++) {
 
-			cout << board[i][j];
 
+//Jump frames
+void jumprightframe(char board[100][1000], int row, int col, int LC[9], int LR[15]) {
+
+	//head
+
+	board[row - 6][col + 5] = '\\';
+	board[row - 6][col + 9] = '/';
+	board[row - 6][col + 6] = '_';
+	board[row - 6][col + 7] = '_';
+	board[row - 6][col + 8] = '_';
+	board[row - 8][col + 6] = '_';
+	board[row - 8][col + 7] = '_';
+	board[row - 8][col + 8] = '_';
+	board[row - 8][col + 9] = '_';
+	board[row - 7][col + 5] = '/';
+	board[row - 7][col + 6] = '(';
+	board[row - 7][col + 7] = '.';
+	board[row - 7][col + 8] = '.';
+	board[row - 7][col + 9] = ')';
+
+
+	//body
+
+	board[row - 2][col + 4] = '\\';
+	board[row - 2][col + 5] = '_';
+	board[row - 2][col + 6] = '_';
+	board[row - 2][col + 7] = '_';
+	board[row - 2][col + 8] = '_';
+	board[row - 2][col + 9] = '_';
+	board[row - 2][col + 10] = '/';
+	board[row - 3][col + 10] = '|';
+	board[row - 4][col + 10] = '|';
+	board[row - 5][col + 10] = '|';
+	board[row - 3][col + 4] = '|';
+	board[row - 4][col + 4] = '|';
+	board[row - 5][col + 4] = '|';
+	board[row - 5][col + 6] = '-';
+	board[row - 5][col + 5] = '-';
+	board[row - 5][col + 7] = 'v';
+	board[row - 5][col + 8] = '-';
+	board[row - 5][col + 9] = '-';
+
+
+
+
+	//left arm
+
+	board[row - 5][col] = '_';
+	board[row - 5][col + 1] = '_';
+	board[row - 5][col + 2] = '_';
+	board[row - 5][col + 3] = '_';
+	board[row - 4][col] = '|';
+	board[row - 3][col] = '|';
+	board[row - 3][col + 2] = '|';
+	board[row - 3][col + 1] = '_';
+	board[row - 4][col + 3] = '_';
+
+
+
+
+	//right arm
+	board[row - 5][col + 11] = '_';
+	board[row - 5][col + 12] = '_';
+	board[row - 5][col + 13] = '_';
+	board[row - 5][col + 14] = '|';
+	board[row - 6][col + 14] = '|';
+	board[row - 6][col + 11] = '_';
+	board[row - 6][col + 12] = '|';
+	board[row - 7][col + 13] = '_';
+
+
+
+
+	//left leg
+	board[row][col + 4] = '|';
+	board[row - 1][col + 4] = '|';
+	board[row][col + 5] = '_';
+	board[row][col + 6] = '|';
+	board[row - 1][col + 6] = '|';
+
+
+
+	//right leg
+	board[row - 1][col + 10] = '/';
+	board[row - 1][col + 8] = '/';
+	board[row - 1][col + 9] = '_';
+
+
+	LC[0] = col + 6;   // row-6  
+	LC[1] = col + 10;  // row-1   
+	LC[2] = col + 10;  // row-2
+	LC[3] = col + 10;  // row-3
+	LC[4] = col + 10;  // row-4
+	LC[5] = col + 14;  // row-5
+	LC[6] = col + 14;  // row-6
+	LC[7] = col + 13;  // row-7
+	LC[8] = col + 9;   // row-8
+
+	LR[0] = row - 5;   // col+0
+	LR[1] = row - 5;   // col+1
+	LR[2] = row - 5;   // col+2
+	LR[3] = row - 5;   // col+3
+	LR[4] = row - 5;   // col+4
+	LR[5] = row - 7;   // col+5
+	LR[6] = row - 8;   // col+6
+	LR[7] = row - 8;   // col+7
+	LR[8] = row - 8;   // col+8
+	LR[9] = row - 8;   // col+9
+	LR[10] = row - 5;  // col+10  
+	LR[11] = row - 6;  // col+11 
+	LR[12] = row - 6;  // col+12   
+	LR[13] = row - 7;  // col+13  
+	LR[14] = row - 6;  // col+14  
+}
+
+
+
+void jumpleftframe(char board[100][1000], int row, int col, int LC[9], int LR[15]) {
+
+
+	//head
+
+	board[row - 6][col + 5] = '\\';
+	board[row - 6][col + 9] = '/';
+	board[row - 6][col + 6] = '_';
+	board[row - 6][col + 7] = '_';
+	board[row - 6][col + 8] = '_';
+	board[row - 8][col + 6] = '_';
+	board[row - 8][col + 7] = '_';
+	board[row - 8][col + 8] = '_';
+	board[row - 8][col + 5] = '_';
+	board[row - 7][col + 9] = '\\';
+	board[row - 7][col + 5] = '(';
+	board[row - 7][col + 7] = '.';
+	board[row - 7][col + 6] = '.';
+	board[row - 7][col + 8] = ')';
+	board[row - 7][col + 9] = '\\';
+
+
+	//body
+
+	board[row - 2][col + 4] = '\\';
+	board[row - 2][col + 5] = '_';
+	board[row - 2][col + 6] = '_';
+	board[row - 2][col + 7] = '_';
+	board[row - 2][col + 8] = '_';
+	board[row - 2][col + 9] = '_';
+	board[row - 2][col + 10] = '/';
+	board[row - 3][col + 10] = '|';
+	board[row - 4][col + 10] = '|';
+	board[row - 5][col + 10] = '|';
+	board[row - 3][col + 4] = '|';
+	board[row - 4][col + 4] = '|';
+	board[row - 5][col + 4] = '|';
+	board[row - 5][col + 6] = '-';
+	board[row - 5][col + 5] = '-';
+	board[row - 5][col + 7] = 'v';
+	board[row - 5][col + 8] = '-';
+	board[row - 5][col + 9] = '-';
+
+
+
+
+	//right arm
+
+	board[row - 6][col + 11] = '_';
+	board[row - 6][col + 12] = '_';
+	board[row - 6][col + 13] = '_';
+	board[row - 6][col + 14] = '_';
+	board[row - 5][col + 11] = '_';
+	board[row - 4][col + 13] = '_';
+	board[row - 5][col + 14] = '|';
+	board[row - 4][col + 14] = '|';
+	board[row - 4][col + 12] = '|';
+	board[row - 4][col + 13] = '_';
+
+
+
+
+
+	//left arm
+	board[row - 5][col + 1] = '_';
+	board[row - 5][col + 2] = '_';
+	board[row - 5][col + 3] = '_';
+	board[row - 6][col] = '|';
+	board[row - 5][col] = '|';
+	board[row - 7][col + 1] = '_';
+	board[row - 6][col + 2] = '|';
+	board[row - 6][col + 3] = '_';
+
+
+
+
+	//right leg
+	board[row][col + 8] = '|';
+	board[row - 1][col + 8] = '|';
+	board[row][col + 9] = '_';
+	board[row][col + 10] = '|';
+	board[row - 1][col + 10] = '|';
+
+
+
+	//left leg
+	board[row - 1][col + 4] = '\\';
+	board[row - 1][col + 6] = '\\';
+	board[row - 1][col + 5] = '_';
+
+	LC[0] = col + 8;   // row (left leg: '\\' at col+8)
+	LC[1] = col + 4;   // row-1 (left leg: '\\' at col+4)
+	LC[2] = col + 4;   // row-2 (body: '\\' at col+4)
+	LC[3] = col + 4;   // row-3 (body: '|' at col+4)
+	LC[4] = col + 4;   // row-4 (body: '|' at col+4)
+	LC[5] = col;       // row-5 (left arm: '|' at col+0)
+	LC[6] = col;       // row-6 (left arm: '|' at col+0)
+	LC[7] = col + 1;   // row-7 (left arm: '_' at col+1)
+	LC[8] = col + 5;   // row-8 (head: '_' at col+5)
+
+	LR[0] = row - 6;   // col+0 (left arm '|')
+	LR[1] = row - 7;   // col+1 (left arm '_')
+	LR[2] = row - 6;   // col+2 (left arm '|')
+	LR[3] = row - 6;   // col+3 (left arm '_')
+	LR[4] = row - 8;   // col+4 (body '|')
+	LR[5] = row - 8;   // col+5 (head '_')
+	LR[6] = row - 8;   // col+6 (head '_')
+	LR[7] = row - 8;   // col+7 (head '_')
+	LR[8] = row - 8;   // col+8 (head '_')
+	LR[9] = row - 8;   // col+9 (head '_')
+	LR[10] = row - 8;  // col+10 (body '|')
+	LR[11] = row - 6;  // col+11 (right arm '_')
+	LR[12] = row - 6;  // col+12 (right arm '_')
+	LR[13] = row - 6;  // col+13 (right arm '_')
+	LR[14] = row - 8;  // col+14 (right arm '|')
+
+}
+
+/////////////////////////////
+
+// Climb frames
+void climbFrame1(char board[100][1000], int row, int col) {
+
+	//head  
+
+	board[row - 8][col + 3] = '_';
+	board[row - 8][col + 4] = '_';
+	board[row - 8][col + 5] = '_';
+	board[row - 8][col + 6] = '_';
+	board[row - 8][col + 7] = '_';
+	board[row - 7][col + 3] = '(';
+	board[row - 7][col + 4] = '|';
+	board[row - 7][col + 5] = '|';
+	board[row - 7][col + 6] = '|';
+	board[row - 7][col + 7] = ')';
+	board[row - 6][col + 3] = '\\';
+	board[row - 6][col + 4] = '-';
+	board[row - 6][col + 5] = '-';
+	board[row - 6][col + 6] = '-';
+	board[row - 6][col + 7] = '/';
+
+
+	//body
+
+	board[row - 5][col + 2] = '|';
+	board[row - 4][col + 2] = '|';
+	board[row - 3][col + 2] = '|';
+	board[row - 2][col + 2] = '\\';
+	board[row - 2][col + 3] = '_';
+	board[row - 2][col + 4] = '_';
+	board[row - 2][col + 5] = '_';
+	board[row - 2][col + 6] = '_';
+	board[row - 2][col + 7] = '_';
+	board[row - 2][col + 8] = '/';
+	board[row - 3][col + 8] = '|';
+	board[row - 4][col + 8] = '|';
+	board[row - 5][col + 8] = '|';
+	board[row - 3][col + 3] = ' ';
+	board[row - 3][col + 4] = ' ';
+	board[row - 3][col + 5] = ' ';
+	board[row - 3][col + 6] = ' ';
+	board[row - 3][col + 7] = ' ';
+	board[row - 4][col + 7] = ' ';
+	board[row - 4][col + 6] = ' ';
+	board[row - 4][col + 5] = ' ';
+	board[row - 4][col + 4] = ' ';
+	board[row - 4][col + 3] = ' ';
+	board[row - 5][col + 3] = ' ';
+	board[row - 5][col + 4] = ' ';
+	board[row - 5][col + 5] = ' ';
+	board[row - 5][col + 6] = ' ';
+	board[row - 5][col + 7] = ' ';
+
+
+	//right hand
+	board[row - 5][col + 9] = '|';
+	board[row - 5][col + 11] = '|';
+	board[row - 6][col + 9] = '|';
+	board[row - 6][col + 11] = '|';
+	board[row - 7][col + 10] = '_';
+	board[row - 7][col + 11] = '_';
+
+
+	//LEFT HAND
+
+	board[row - 5][col] = '|';
+	board[row - 6][col] = '|';
+	board[row - 7][col] = '|';
+	board[row - 8][col] = '_';
+	board[row - 5][col + 1] = '|';
+	board[row - 6][col + 1] = '|';
+	board[row - 7][col + 1] = '|';
+	board[row - 8][col + 1] = '_';
+
+
+
+	//left leg
+
+	board[row][col + 2] = '|';
+	board[row][col + 3] = '_';
+	board[row][col + 4] = '|';
+	board[row - 1][col + 2] = '|';
+	board[row - 1][col + 3] = ' ';
+	board[row - 1][col + 4] = '|';
+
+
+
+	//right leg
+
+	board[row - 1][col + 8] = '|';
+	board[row - 1][col + 6] = '|';
+	board[row - 1][col + 7] = '_';
+
+
+
+
+}
+
+
+
+void climbFrame2(char board[100][1000], int row, int col) {
+
+	//head  
+
+	board[row - 8][col + 3] = '_';
+	board[row - 8][col + 4] = '_';
+	board[row - 8][col + 5] = '_';
+	board[row - 8][col + 6] = '_';
+	board[row - 8][col + 7] = '_';
+	board[row - 7][col + 3] = '(';
+	board[row - 7][col + 4] = '|';
+	board[row - 7][col + 5] = '|';
+	board[row - 7][col + 6] = '|';
+	board[row - 7][col + 7] = ')';
+	board[row - 6][col + 3] = '\\';
+	board[row - 6][col + 4] = '-';
+	board[row - 6][col + 5] = '-';
+	board[row - 6][col + 6] = '-';
+	board[row - 6][col + 7] = '/';
+
+
+	//body
+
+	board[row - 5][col + 2] = '|';
+	board[row - 4][col + 2] = '|';
+	board[row - 3][col + 2] = '|';
+	board[row - 2][col + 2] = '\\';
+	board[row - 2][col + 3] = '_';
+	board[row - 2][col + 4] = '_';
+	board[row - 2][col + 5] = '_';
+	board[row - 2][col + 6] = '_';
+	board[row - 2][col + 7] = '_';
+	board[row - 2][col + 8] = '/';
+	board[row - 3][col + 8] = '|';
+	board[row - 4][col + 8] = '|';
+	board[row - 5][col + 8] = '|';
+	board[row - 3][col + 3] = ' ';
+	board[row - 3][col + 4] = ' ';
+	board[row - 3][col + 5] = ' ';
+	board[row - 3][col + 6] = ' ';
+	board[row - 3][col + 7] = ' ';
+	board[row - 4][col + 7] = ' ';
+	board[row - 4][col + 6] = ' ';
+	board[row - 4][col + 5] = ' ';
+	board[row - 4][col + 4] = ' ';
+	board[row - 4][col + 3] = ' ';
+
+
+	//left hand
+	board[row - 5][col] = '|';
+	board[row - 6][col] = '|';
+	board[row - 5][col + 1] = '|';
+	board[row - 6][col + 1] = '|';
+	board[row - 7][col] = '_';
+	board[row - 7][col + 1] = '_';
+
+
+	//right HAND
+
+	board[row - 5][col + 9] = '|';
+	board[row - 6][col + 9] = '|';
+	board[row - 7][col + 9] = '|';
+	board[row - 8][col + 9] = '_';
+	board[row - 5][col + 10] = '|';
+	board[row - 6][col + 10] = '|';
+	board[row - 7][col + 10] = '|';
+	board[row - 8][col + 10] = '_';
+
+
+
+	//right leg
+
+	board[row][col + 6] = '|';
+	board[row][col + 7] = '_';
+	board[row][col + 8] = '|';
+	board[row - 1][col + 6] = '|';
+	board[row - 1][col + 7] = ' ';
+	board[row - 1][col + 8] = '|';
+
+
+
+	//left leg
+
+	board[row - 1][col + 2] = '|';
+	board[row - 1][col + 4] = '|';
+	board[row - 1][col + 3] = '_';
+
+
+
+}
+
+
+
+/////// ENEMIES ////////
+
+
+
+void drawSpike(char board[100][1000], int R, int C) {
+	board[R][C] = '/';
+	board[R - 1][C + 1] = '/';
+	board[R][C + 3] = '\\';
+	board[R - 1][C + 2] = '\\';
+}
+
+
+
+
+void drawEnemyBirdLeft(char board[100][1000], int row, int col) {
+	//base
+	board[row][col + 2] = '`';
+	board[row][col + 3] = '-';
+	board[row][col + 4] = '-';
+	board[row][col + 5] = '-';
+	board[row][col + 6] = '-';
+	board[row][col + 7] = '\'';
+
+	//right
+	board[row - 1][col + 7] = '_';
+	board[row - 1][col + 6] = '.';
+	board[row - 1][col + 8] = '>';
+
+	//top
+	board[row - 2][col + 7] = '_';
+	board[row - 2][col + 6] = '_';
+	board[row - 2][col + 5] = '_';
+	board[row - 2][col + 4] = ')';
+	board[row - 3][col + 3] = '_';
+	board[row - 3][col + 2] = '_';
+
+	//left
+	board[row - 2][col + 2] = 'o';
+	board[row - 2][col + 1] = '(';
+	board[row - 1][col + 1] = '(';
+	board[row - 2][col] = '<';
+}
+
+void drawEnemyBirdRight(char board[100][1000], int row, int col) {
+	//base
+	board[row][col + 1] = '\'';
+	board[row][col + 2] = '-';
+	board[row][col + 3] = '-';
+	board[row][col + 4] = '-';
+	board[row][col + 5] = '-';
+	board[row][col + 6] = '`';
+
+	//Right
+	board[row - 1][col + 7] = ')';
+	board[row - 2][col + 7] = ')';
+	board[row - 2][col + 8] = '>';
+	board[row - 2][col + 6] = 'o';
+
+	//top
+
+	board[row - 3][col + 6] = '_';
+	board[row - 3][col + 5] = '_';
+	board[row - 2][col + 4] = '(';
+	board[row - 2][col + 3] = '_';
+	board[row - 2][col + 2] = '_';
+	board[row - 2][col + 1] = '_';
+
+	//Left
+	board[row - 1][col] = '<';
+	board[row - 1][col + 1] = '_';
+	board[row - 1][col + 2] = '.';
+}
+
+
+
+
+
+
+//////////// MAP /////////////
+
+void drawTerrain(char board[100][1000], int r, int c, int NumR, int NumC) {
+	int tempCol;
+	tempCol = c;
+	for (int i = 0; i < NumR; i++) {
+		for (int j = 0; j < NumC; j++) {
+			board[r][tempCol] = '#';
+			tempCol++;
 		}
-		cout << endl;
+		tempCol = c;
+		r++;
+	}
+}
+
+void drawWall(char board[100][1000], int r, int c, int length) {
+
+	for (int i = 0; i < length; i++) {
+		board[r][c] = '#';
+		r++;
+	}
+}
+
+
+void drawTeleporter(char board[100][1000], int R, int C) {
+	board[R - 1][C] = char(186); board[R - 1][C + 17] = char(186);
+	board[R - 2][C] = char(186);  board[R - 2][C + 17] = char(186);
+	board[R - 3][C] = char(186); board[R - 3][C + 17] = char(186);
+	board[R - 4][C] = char(186); board[R - 4][C + 17] = char(186);
+	board[R - 5][C] = char(186); board[R - 5][C + 17] = char(186);
+	board[R - 6][C] = char(186); board[R - 6][C + 17] = char(186);
+	board[R - 7][C] = char(186); board[R - 7][C + 17] = char(186);
+	board[R - 8][C] = char(186); board[R - 8][C + 17] = char(186);
+	board[R - 9][C] = char(186); board[R - 9][C + 17] = char(186);
+
+	board[R][C] = char(200);
+
+	board[R - 10][C] = char(201);
+	board[R - 10][C + 1] = char(205);
+	board[R - 10][C + 2] = char(205);
+	board[R - 10][C + 3] = char(205);
+	board[R - 10][C + 4] = char(205);
+	board[R - 10][C + 5] = char(205);
+	board[R - 10][C + 6] = char(205);
+	board[R - 10][C + 7] = char(205);
+	board[R - 10][C + 8] = char(205);
+	board[R - 10][C + 9] = char(205);
+	board[R - 10][C + 10] = char(205);
+	board[R - 10][C + 11] = char(205);
+	board[R - 10][C + 12] = char(205);
+	board[R - 10][C + 13] = char(205);
+	board[R - 10][C + 14] = char(205);
+	board[R - 10][C + 15] = char(205);
+	board[R - 10][C + 16] = char(205);
+	board[R - 10][C + 17] = char(187);
+
+
+	board[R][C + 1] = char(205);
+	board[R][C + 2] = char(205);
+	board[R][C + 3] = char(205);
+	board[R][C + 4] = char(205);
+	board[R][C + 5] = char(205);
+	board[R][C + 6] = char(205);
+	board[R][C + 7] = char(205);
+	board[R][C + 8] = char(205);
+	board[R][C + 9] = char(205);
+	board[R][C + 10] = char(205);
+	board[R][C + 11] = char(205);
+	board[R][C + 12] = char(205);
+	board[R][C + 13] = char(205);
+	board[R][C + 14] = char(205);
+	board[R][C + 15] = char(205);
+	board[R][C + 16] = char(205);
+	board[R][C + 17] = char(188);
+
+}
+
+void drawCoin(char board[100][1000], int R, int C, int  isCollectable) {
+	if (isCollectable == 0) {
+		board[R][C + 1] = '\\';
+		board[R][C + 2] = '_';
+		board[R][C + 3] = '_';
+		board[R][C + 4] = '_';
+		board[R][C + 5] = '_';
+		board[R][C + 6] = '_';
+		board[R][C + 7] = '/';
+
+		board[R - 1][C] = '|';
+		board[R - 1][C + 1] = ' ';
+		board[R - 1][C + 2] = ' ';
+		board[R - 1][C + 3] = ' ';
+		board[R - 1][C + 4] = '$';
+		board[R - 1][C + 5] = ' ';
+		board[R - 1][C + 6] = ' ';
+		board[R - 1][C + 7] = ' ';
+		board[R - 1][C + 8] = '|';
+
+		board[R - 2][C + 1] = '/';
+		board[R - 2][C + 2] = ' ';
+		board[R - 2][C + 3] = ' ';
+		board[R - 2][C + 4] = ' ';
+		board[R - 2][C + 5] = ' ';
+		board[R - 2][C + 6] = ' ';
+		board[R - 2][C + 7] = '\\';
+
+		board[R - 3][C + 2] = '_';
+		board[R - 3][C + 3] = '_';
+		board[R - 3][C + 4] = '_';
+		board[R - 3][C + 5] = '_';
+		board[R - 3][C + 6] = '_';
+
 	}
 
 }
+
+void drawLadder(char board[100][1000], int row, int col, int length) {
+
+	for (int i = 0; i < length; i++) {
+		board[row - i][col] = '|';
+		board[row - i][col + 1] = '|';
+
+		board[row - i][col + 2] = '-';
+		board[row - i][col + 3] = '-';
+		board[row - i][col + 4] = '-';
+		board[row - i][col + 5] = '-';
+		board[row - i][col + 6] = '-';
+		board[row - i][col + 7] = '-';
+		board[row - i][col + 8] = '-';
+		board[row - i][col + 9] = '-';
+		board[row - i][col + 10] = '-';
+		board[row - i][col + 11] = '-';
+
+		board[row - i][col + 12] = '|';
+		board[row - i][col + 13] = '|';
+	}
+
+}
+
+
+
+/////////////////////////////////////////////
+/////////////////////////////////////////////
+//////////////// HIT BOX ////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////// CALL OBJECTS /////////////////
+//////////////////////////////////////////////
+//////////////////////////////////////////////
+
+
+
+void moveElevatorVertically(int& row, int startRow, int endRow, int& direction) {
+	if (row == endRow) direction = 2;
+	else if (row == startRow) direction = 1;
+
+	if (direction == 1) row--;
+	else row++;
+}
+
+void moveElevatorHorizontally(int& col, int startCol, int endCol, int& direction) {
+	if (col == endCol) direction = 2;
+	else if (col == startCol) direction = 1;
+
+	if (direction == 1) col++;
+	else col--;
+}
+void drawElevator(char board[100][1000], int row, int col) {
+	board[row][col] = '_';
+	board[row][col + 1] = '_';
+	board[row][col + 2] = '_';
+	board[row][col + 3] = '_';
+	board[row][col + 4] = '_';
+	board[row][col + 5] = '_';
+	board[row][col + 6] = '_';
+	board[row][col + 7] = '_';
+	board[row][col + 8] = '_';
+	board[row][col + 9] = '_';
+}
+
+void drawAndMoveElevatorV(char board[100][1000], Elevator elevator[], int i) {
+	drawElevator(board, elevator[i].row, elevator[i].col);
+	moveElevatorVertically(elevator[i].row, elevator[i].startRow, elevator[i].endRow, elevator[i].direction);
+
+}
+void drawAndMoveElevatorH(char board[100][1000], Elevator elevator[], int i) {
+	drawElevator(board, elevator[i].row, elevator[i].col);
+	moveElevatorHorizontally(elevator[i].col, elevator[i].startCol, elevator[i].endCol, elevator[i].direction);
+}
+
+void ElevatePlayer(int& pX, int& pY, Elevator elevator[], int nElevators) {
+	for (int i = 0; i < nElevators; i++) {
+		// Vertical Elevator
+		if (elevator[i].whichD == 0) {
+			int elTop = elevator[i].row;
+			int elLeft = elevator[i].col;
+			int elRight = elevator[i].col + elevator[i].length - 1;
+
+			// Same horizontal range logic
+			if ((pX + 1) == elTop && pY + 14 - 1 >= elLeft && pY <= elRight) {
+				if (elevator[i].direction == 1) { // Up
+					pX--;
+				}
+				else if (elevator[i].direction == 2) { // Down
+					pX++;
+				}
+			}
+		}
+		// Horizontal Elevator
+		if (elevator[i].whichD == 1) {
+			int elTop = elevator[i].row;
+			int elLeft = elevator[i].col;
+			int elRight = elevator[i].col + elevator[i].length - 1;
+
+			// Check if player's feet are on elevator
+			if ((pX + 1) == elTop && pY + 14 - 1 >= elLeft && pY <= elRight) {
+				if (elevator[i].direction == 1) { // Right
+					pY++;
+				}
+				else if (elevator[i].direction == 2) { // Left
+					pY--;
+				}
+			}
+		}
+
+	}
+
+}
+
+
+void callObj(char board[100][1000], coin coins[5]) {
+	drawTerrain(board, 95, 30, 1, 10);
+	drawTerrain(board, 91, 15, 1, 10);
+	drawTerrain(board, 87, 5, 1, 10);
+	drawLadder(board, 98, 50, 25);
+	drawCoin(board, coins[0].Row, coins[0].Col, coins[0].isCollected);
+}
+
+void callDynamicObj(char board[100][1000], Elevator elevator[]) {
+	drawAndMoveElevatorV(board, elevator, 0);
+	drawAndMoveElevatorH(board, elevator, 1);
+}
+
+///////////////////////////////
+
+void scroll(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero, int& dispR, int& dispC) {
+	dispC = posJHero - 30;
+	if (dispC < 0) dispC = 0;
+	if (dispC > 1000 - 80) dispC = 1000 - 80;
+
+	dispR = posIHero + 2;
+	if (dispR < 24) dispR = 23;
+	if (dispR > 86) dispR = 98;
+
+}
+
 void clearMap(char board[100][1000], int dispR, int dispC) {
 	int top = dispR - 23;
 	if (top < 0) top = 0;
@@ -1903,8 +2389,104 @@ void clearMap(char board[100][1000], int dispR, int dispC) {
 
 
 }
+void addBorders(char board[100][1000], int dispR, int dispC) {
+	int top = dispR - 23;
+	int bottom = dispR;
 
-void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero, int LC[9], int& numCoinsP) {
+	// Top border
+	board[top - 1][dispC] = char(201);
+	for (int j = dispC + 1; j < dispC + 80 - 1; j++) {
+		board[top - 1][j] = char(205);
+	}
+	board[top - 1][dispC + 80 - 1] = char(187);
+
+	// Side borders
+	for (int i = top; i <= bottom; i++) {
+		board[i][dispC] = char(186);
+		board[i][dispC + 80 - 1] = char(186);
+	}
+
+	// Bottom border
+	board[bottom + 1][dispC] = char(200);
+	for (int j = dispC + 1; j < dispC + 80 - 1; j++) {
+		board[bottom + 1][j] = char(205);
+	}
+	board[bottom + 1][dispC + 80 - 1] = char(188);
+}
+
+void Clear_LoadMap(char board[100][1000], int dispR, int dispC) {
+	int top = dispR - 23;
+	int bottom = dispR;
+
+	for (int i = top - 1; i <= bottom + 1; i++) { // includes borders
+		for (int j = dispC; j < dispC + 80; j++) {
+			if (i == top - 1 || i == bottom + 1) { // top or bottom border
+				cout << blue << board[i][j] << reset;
+			}
+			else if (j == dispC || j == dispC + 80 - 1) { // side borders
+				cout << blue << board[i][j] << reset;
+			}
+			else {
+				cout << board[i][j];
+			}
+		}
+		cout << endl;
+	}
+
+}
+
+
+/////////////////////////////////////
+//Call dynamic objects
+
+
+/////////////////////////////////////
+void checkCoinTouch(char board[100][1000], int pX, int pY, int pWidth, int pHeight, coin coins[5], int& numCoinsP) {
+	for (int a = 0; a < 5; a++) {
+		if (coins[a].isCollected) continue; // Skip if already collected
+
+		int coinTop = coins[a].Row - coins[a].maxHeight + 1;
+		int coinBottom = coins[a].Row;
+		int coinLeft = coins[a].Col;
+		int coinRight = coins[a].Col + coins[a].maxWidth - 1;
+
+		int playerTop = pX - pHeight + 1;
+		int playerBottom = pX;
+		int playerLeft = pY;
+		int playerRight = pY + pWidth - 1;
+
+		int overlapX = 0;
+		int overlapY = 0;
+
+
+		if (playerLeft <= coinRight && playerRight >= coinLeft) {
+			overlapX = 1;
+		}
+
+		if (playerTop <= coinBottom && playerBottom >= coinTop) {
+			overlapY = 1;
+		}
+
+		if (overlapX && overlapY) {
+			coins[a].isCollected = 1;
+			numCoinsP += 25;
+			break;
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+///////////////////////////////////////
+//Player Movement Functions
+
+void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero, int LC[9], ladder ladders[4], coin coins[5], int& numCoinsP) {
 	int check = 1;
 	// Check every cell in the column to the right of the player
 	for (int i = posIHero; i >= posIHero - heightHero + 1; i--) {
@@ -1927,8 +2509,20 @@ void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHer
 		}
 	}
 
+	int isOnLadder = 0;
+	for (int i = 0; i < 4; i++) {
+		if (posJHero + widthHero >= ladders[i].Col - 1 && posJHero <= ladders[i].Col + ladders[i].length) { // <- FIXED here
+			if (posIHero <= ladders[i].Row + 1 && posIHero - heightHero + 1 >= ladders[i].Row - ladders[i].length - 1) {
+				isOnLadder = 1;
+				break;
+			}
+		}
+	}
 
 
+	if (isOnLadder == 1) {
+		check = 1;
+	}
 	//Go up a row if its only 1 row diffrence in terrain
 	if (board[posIHero][LC[0]] != ' ' && board[posIHero][LC[0]] != char(186) && check2 && !check) {
 		posIHero--;
@@ -1938,9 +2532,13 @@ void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHer
 	else if (check == 1 && posJHero + widthHero + 1 < 999) {
 		posJHero++;
 	}
+
+	checkCoinTouch(board, posIHero, posJHero, widthHero, heightHero, coins, numCoinsP);
+
+
 }
 
-void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero, int LC[9], int& numCoinsP) {
+void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero, int LC[9], ladder ladders[4], coin coins[5], int& numCoinsP) {
 	int check = 1;
 
 	for (int i = posIHero; i >= posIHero - heightHero + 1; i--) {
@@ -1962,6 +2560,21 @@ void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int widthHero
 			}
 		}
 	}
+
+	int isOnLadder = 0;
+	for (int i = 0; i < 4; i++) {
+		if (posJHero >= ladders[i].Col - widthHero && posJHero <= ladders[i].Col + ladders[i].length + widthHero) { // <- FIXED here
+			if (posIHero <= ladders[i].Row + 1 && posIHero - heightHero + 1 >= ladders[i].Row - ladders[i].length - 1) {
+				isOnLadder = 1;
+				break;
+			}
+		}
+	}
+
+	if (isOnLadder == 1) {
+		check = 1;
+	}
+
 	if (board[posIHero][LC[0]] != ' ' && board[posIHero][LC[0]] != char(186) && check2 && !check) {
 		posJHero--;
 		posIHero--;
@@ -1969,258 +2582,672 @@ void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int widthHero
 	else if (check == 1 && posJHero - 1 >= 0) {
 		posJHero--;
 	}
+
+
+	checkCoinTouch(board, posIHero, posJHero, widthHero, heightHero, coins, numCoinsP);
+
+
 }
 
-void initializeBoard() {
-	for (int i = 0; i < 24; i++) {
-		for (int j = 0; j < 80; j++) {
-			board[i][j] = ' ';
+void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[]) {
+
+
+	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+	clearMap(board, dispR, dispC);
+	callObj(board, coins); // Call the function to draw the objects
+	addBorders(board, dispR, dispC);
+	if (animation == 0 || animation == -1) {
+		jumprightframe(board, pX, pY, LC, LR); // Draw the player jumping up
+	}
+	else if (animation == 1 || animation == -2) {
+		jumpleftframe(board, pX, pY, LC, LR); // Draw the player jumping up
+	}
+
+	for (int i = 0; i < 4; i++) {
+		if (pX - pHeight < 0) break;
+		int check = 1;
+
+		for (int j = pY; j <= pY + (pWidth - 1) && j < 999; j++) {
+			int LR_index = j - pY;  // Correctly calculate LR_index based on the position you're checking
+			if (LR_index >= 0 && LR_index < 15) {  // Ensure it's within bounds
+				int checkR = LR[LR_index] - 1; // Check the row index
+				if (board[checkR][j] != ' ') {  // If there's a solid block, stop the jump
+					check = 0;
+					break;
+				}
+			}
+			else {
+				check = 0; // Exit loop if out-of-bounds
+				break;
+			}
 		}
-	}
 
-	// Create the borders
-	for (int j = 0; j < 80; j++) {
-		board[0][j] = '-';
-		board[23][j] = '-';
-	}
-	for (int i = 0; i < 24; i++) {
-		board[i][0] = '|';
-		board[i][79] = '|';
-	}
+		if (pX - pHeight - 1 > 0 && check == 1) {
+			pX--;
 
-	board[0][0] = '#';
-	board[0][79] = '#';
-	board[23][79] = '#';
-	board[23][0] = '#';
-}
+			checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
+			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+			clearMap(board, dispR, dispC);
+			callObj(board, coins); // Call the function to draw the objects
+			callDynamicObj(board, elevator);
+			addBorders(board, dispR, dispC);
 
-void drawBoard(char move_dir, int& player_y, int& player_x) {
-	system("cls");
+			if (animation == 0 || animation == -1) {
+				jumprightframe(board, pX, pY, LC, LR); // Draw the player jumping up
+			}
+			else if (animation == 1 || animation == -2) {
+				jumpleftframe(board, pX, pY, LC, LR); // Draw the player jumping up
+			}
+			system("cls");
+			dispBar(Player.health, Player.coins, Player.ammo.count, Player.maxAmmo, gun); // Display the bar first
+			Clear_LoadMap(board, dispR, dispC); // Clear the screen and load the map
 
-	for (int r = 0; r < 24; r++) {
-		for (int c = 0; c < 80; c++) {
-			cout << board[r][c];
+			isJumping = 1;
 		}
-		cout << endl;
+		else break;
+
 	}
+	isJumping = 0;
 }
 
 
-void draw_player_right(int& player_y, int& player_x) {
-	if (player_y >= 0 && player_y < 23 && player_x >= 0 && player_x < 79)
-		board[player_y][player_x] = char(201);
-}
+void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int& isFalling, int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[]) {
+	for (; pX + 1 < 99; ) {
+		if (pX - pHeight < 0) break;
 
-void draw_player_left(int& player_y, int& player_x) {
-	if (player_y >= 0 && player_y < 23 && player_x >= 0 && player_x < 79)
-		board[player_y][player_x] = char(187);
-}
+		int check = 1; // Reset every fall attempt
 
-// Moves the player based on the input direction (W, A, S, D)
-void moveplayer(char move_dir, int& player_y, int& player_x) {
-	// Clear old player position
-	board[player_y][player_x] = ' ';
+		for (int j = pY + 3; j <= pY + 9; j++) {
+			if (board[pX + 1][j] != ' ' && board[pX + 1][j] != char(186)) {
+				check = 0;
+				break;
+			}
+		}
 
-	// Direction handling
-	if (move_dir == 'w' && player_y > 1) player_y--;
-	if (move_dir == 's' && player_y < 22) player_y++;
-	if (move_dir == 'a' && player_x > 1) player_x--;
-	if (move_dir == 'd' && player_x < 78) player_x++;
+		if (check == 0) {
+			break; // Landed on something, stop falling
+		}
 
-	// Redraw player
-	if (move_dir == 'a' || move_dir == 'w' || move_dir == 's')  draw_player_left(player_y, player_x);;
-	if (move_dir == 'd' || move_dir == 'w' || move_dir == 's')  draw_player_right(player_y, player_x);
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-int main() {
-	int player_y = 10, player_x = 10;
-	char key = ' ';
-
-	int ct = 0;
-	int killed = 0;
-	int lastCellCol[9], lastCellRow[15];
-	int isWalking = 0, isJumping = 0, isFalling = 0, isShooting = 0, isReloading = 0;
-	player Player;
-	initializeBoard();
-
-	drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
-
-
-
-	Enemy enemy;
-	enemy.createEnemy(21, 40);
-
-	drawBoard(key, player_y, player_x);
-	int dispR = 95, dispC = 3;
-	system("cls");
-
-	int animation = 0, frame = 1, ResetFrame = 0;
-	while (true) {
+		pX++;
+		checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
+		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 		clearMap(board, dispR, dispC);
-		cout << "Enemy Health: " << enemy.health << endl;
-		cout << "Ammo: " << Player.ammo.count << endl;
-		if (ct % 2 == 0)
-			cout << "Laser mode" << endl;
-		else
-			cout << "Gun mode" << endl;
-		cout << "Controls: F (fire), T (toggle weapon), R (reload), Q (quit)" << endl;
-		key = _getch();  // Get the pressed key 
+		callObj(board, coins);
+		callDynamicObj(board, elevator);
+		addBorders(board, dispR, dispC);
 
-		if (key == 't') {
-			ct++;
+		if (animation == 0 || animation == -1) {
+			jumprightframe(board, pX, pY, LC, LR);
 		}
-
-		if (animation == 0) {
-			if (frame == 1) {
-				drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
-			}
-			else if (frame == 2) {
-				drawPlayerRightFrame2(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
-			}
-			else if (frame == 3) {
-				drawPlayerRightFrame3(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
-			}
-			else if (frame == 4) {
-				drawPlayerRightFrame4(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
-			}
-			else if (frame == 5) {
-				drawPlayerRightFrame5(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
-			}
-		}
-		else if (animation == 1) {
-			if (frame == 1) {
-				DrawPlayerLeftFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
-			}
-			else if (frame == 2) {
-				DrawPlayerLeftFrame2(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
-			}
-			else if (frame == 3) {
-				DrawPlayerLeftFrame3(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
-			}
-			else if (frame == 4) {
-				DrawPlayerLeftFrame4(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
-			}
-			else if (frame == 5) {
-				DrawPlayerLeftFrame5(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
-			}
-		}
-		else if (animation == -1) {
-			drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
-		}
-		else if (animation == -2) {
-			DrawPlayerLeftFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+		else if (animation == 1 || animation == -2) {
+			jumpleftframe(board, pX, pY, LC, LR);
 		}
 
 		system("cls");
+		dispBar(Player.health, Player.coins, Player.ammo.count, Player.maxAmmo, gun);
 		Clear_LoadMap(board, dispR, dispC);
 
+		isFalling = 1;
+	}
+
+	isJumping = 0;
+	isFalling = 0;
+}
 
 
+void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
+	int& isJumping, player Player, char gun[], int& isFalling,
+	int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[]) {
+	// Initial setup
+	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+	clearMap(board, dispR, dispC);
+	callObj(board, coins);
+	callDynamicObj(board, elevator);
+	addBorders(board, dispR, dispC);
+	jumprightframe(board, pX, pY, LC, LR);
 
-		if (ct % 2 == 0) {
-			if (key == 'f') {
-				if (Player.ammo.count > 0) {
-					Player.laser.shootLaser(enemy, killed, key, player_y, player_x);
-					Player.ammo.use();
+	// Jump right (diagonal up-right movement)
+	for (int a = 0; a < 5; a++) {
+		int canJump = 1; // 1 = can jump, 0 = cannot jump
+
+		// Check right side collision using LC (last column in each row)
+		for (int row = pX; row >= pX - pHeight + 1; row--) {
+			int lc_index = pX - row;
+			if (lc_index >= 0 && lc_index < 9) {
+				if (board[row][LC[lc_index] + 1] != ' ' &&
+					board[row][LC[lc_index] + 1] != char(186)) {
+					canJump = 0;
+					break;
 				}
-				else {
-					cout << "Out of ammo!" << endl;
-					Sleep(1000);
+			}
+		}
+
+		// Check upward clearance using LR (highest row in each column)
+		for (int col = pY; col < pY + pWidth; col++) {
+			int lr_index = col - pY;
+			if (lr_index >= 0 && lr_index < 15) {
+				if (LR[lr_index] - 1 < 0 ||  // Check bounds
+					(board[LR[lr_index] - 1][col] != ' ' &&
+						board[LR[lr_index] - 1][col] != char(186))) {
+					canJump = 0;
+					break;
+				}
+			}
+		}
+
+		if (canJump == 0) break;
+		if (pY + pWidth >= 998) break;
+		// Move diagonally up-right
+		pX--;
+		pY++;
+
+		checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
+		// Redraw everything
+		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+		clearMap(board, dispR, dispC);
+		callObj(board, coins);
+		callDynamicObj(board, elevator);
+		addBorders(board, dispR, dispC);
+		jumprightframe(board, pX, pY, LC, LR);
+
+		system("cls");
+		dispBar(Player.health, Player.coins, Player.ammo.count, Player.maxAmmo, gun);
+		Clear_LoadMap(board, dispR, dispC);
+		isJumping = 1;
+	}
+
+	// Falling logic
+	for (;;) {
+		int canFall = 0;
+
+		// Check if we can fall straight down
+		for (int col = pY + 3; col <= pY + 9; col++) {
+			if (pX + 1 < 100 && (board[pX + 1][col] == ' ' || board[pX + 1][col] == char(186))) {
+				canFall = 1;
+			}
+			else {
+				canFall = 0;
+				break;
+			}
+		}
+
+		if (canFall == 0) break;
+
+		// Check if we can fall diagonally right
+		int canFallRight = 1;
+		if (pY + pWidth < 999) {
+			for (int row = pX; row <= pX + 1; row++) {
+				if (board[row][pY + pWidth] != ' ' &&
+					board[row][pY + pWidth] != char(186)) {
+					canFallRight = 0;
+					break;
 				}
 			}
 		}
 		else {
-			if (key == 'f') {
-				if (Player.ammo.count > 0) {
-					Player.gun.shootGun(enemy, killed, key, player_y, player_x);
-					Player.ammo.use();
-				}
-				else {
-					cout << "Out of ammo!" << endl;
-					Sleep(1000);
-				}
-			}
+			canFallRight = 0;
 		}
 
+		if (canFallRight == 1) {
+			pX++;
+			pY++;
+		}
+		else {
+			pX++;
+		}
 
-		if (_kbhit()) {
-			char key = _getch();
+		checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
+		// Redraw everything
+		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+		clearMap(board, dispR, dispC);
+		callObj(board, coins);
 
-			if ((key == 'a' || key == 'A') && isFalling == 0) {
-				if (Player.Col >= 2) {
-					if (isWalking == 2) {
-						if (frame == 5) frame = 1;
-						else frame++;
-					}
-					else {
-						frame = 1;
-					}
-					moveLeft(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, lastCellCol, Player.coins);
-					animation = 1;
-					isWalking = 2;
+		callDynamicObj(board, elevator);
+		addBorders(board, dispR, dispC);
+		jumprightframe(board, pX, pY, LC, LR);
+
+		system("cls");
+		dispBar(Player.health, Player.coins, Player.ammo.count, Player.maxAmmo, gun);
+		Clear_LoadMap(board, dispR, dispC);
+		isFalling = 1;
+	}
+
+	isJumping = 0;
+	isFalling = 0;
+	isWalking = 0;
+}
+void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int& isFalling, int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[]) {
+
+	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+	clearMap(board, dispR, dispC);
+	callObj(board, coins);
+	callDynamicObj(board, elevator);
+
+	addBorders(board, dispR, dispC);
+	jumpleftframe(board, pX, pY, LC, LR);
+
+
+	for (int a = 0; a < 5; a++) {
+
+		int check = 1;
+		for (int j = pY; j <= pY + (pWidth - 1) && j < 999; j++) {
+			int LR_index = j - pY;  // Correctly calculate LR_index based on the position you're checking
+			if (LR_index >= 0 && LR_index < 15) {  // Ensure it's within bounds
+				int checkR = LR[LR_index] - 1; // Check the row index
+				if (board[checkR][j] != ' ') {  // If there's a solid block, stop the jump
+					check = 0;
+					break;
 				}
 			}
-			else if ((key == 'd' || key == 'D') && isFalling == 0) {
-				if (Player.Col + Player.maxWidth < 999) {
-					if (isWalking == 1) {
-						if (frame == 5) frame = 1;
-						else frame++;
-					}
-					else {
-						frame = 1;
-					}
-					moveRight(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, lastCellCol, Player.coins);
-					animation = 0;
-					isWalking = 1;
-				}
-			}
-
-
-			if (key == 'r') {
-				Player.ammo.reload(5);
-				Sleep(1000);
-			}
-
-			if (key == 'q' || killed == 1) {
-				cout << "\nExiting game... Goodbye!" << endl;
+			else {
+				check = 0; // Exit loop if out-of-bounds
 				break;
 			}
 
-			Sleep(50);  // Delay to control movement speed
+		}
+
+		for (int i = pX; i >= pX - pHeight + 1; i--) {
+			int lc_index = pX - i;  // Convert to LC index (0 to 8)
+			if (lc_index >= 0 && lc_index < 9) {
+				if (board[i][LC[lc_index] - 1] != ' ' && board[i][LC[lc_index] - 1] != char(186)) {
+					check = 0;
+					break;
+				}
+			}
+		}
+
+		if (pX - pHeight < 1) break;
+		if (pY - 1 < 1) break;
+
+		if (check == 0) break;
+
+
+		pX--;
+		pY--;
+
+		checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
+		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+		clearMap(board, dispR, dispC);
+		callObj(board, coins);
+		callDynamicObj(board, elevator); addBorders(board, dispR, dispC);
+		jumpleftframe(board, pX, pY, LC, LR);
+
+		system("cls");
+		dispBar(Player.health, Player.coins, Player.ammo.count, Player.maxAmmo, gun);
+		Clear_LoadMap(board, dispR, dispC);
+		isJumping = 1;
+
+	}
+
+	int check = 1;
+	for (int j = pY + 3; j <= pY + 9; j++) {
+		if (board[pX + 1][j] != ' ') {
+			check = 0;
+			break;
 		}
 	}
+
+	for (; pX + 1 < 23 && board[pX + 1][pY] == ' ' && pY > 1;) {
+		int checkDiagonal = 1;
+		for (int j = pY + 3; j <= pY + 9; j++) {
+			if (board[pX + 1][j] != ' ') {
+				checkDiagonal = 0;
+				break;
+			}
+		}
+
+
+		if (checkDiagonal && check) {
+			pX++;
+			pY--;
+
+
+			checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
+			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+			clearMap(board, dispR, dispC);
+			callObj(board, coins);
+			callDynamicObj(board, elevator);
+			addBorders(board, dispR, dispC);
+			jumpleftframe(board, pX, pY, LC, LR);
+
+			system("cls");
+			dispBar(Player.health, Player.coins, Player.ammo.count, Player.maxAmmo, gun);
+			Clear_LoadMap(board, dispR, dispC);
+			isFalling = 1;
+		}
+	}
+	isWalking = 0;
+	isJumping = 0, isFalling = 0; // Reset jumping and falling states after landing
+
+}
+/*
+NEXT STEPS:
+8. implement enemies
+9. implement maps
+10. implement elevator
+11.add reloading , climbing , elevator animations and implement them
+12. implement shooting animation
+13. add coins and health pickups
+14. add level up system (level up = increase max health)
+15. add player hitbox
+16. add boss Level
+17. add boss hitbox
+18. add boss health bar
+19. add boss attack animation
+20. add boss attack hitbox
+21. change game bar if needed
+22. change game frame size if needed
+
+*/
+
+
+int main() {
+	int width = 80, height = 24;
+	char board[100][1000];
+	int dispR = 95, dispC = 3;
+
+	char choice;
+	for (;;) {
+		system("cls");
+		showMainMenu(choice);
+		if (choice == '4') {
+			cout << "Exiting game..." << endl;
+			system("cls");
+			break;
+		}
+		else if (choice == '1') {
+			cout << "Starting Game..." << endl;
+			system("cls");
+			break;
+		}
+		else if (choice == '2') {
+			cout << "Instructions..." << endl;
+			system("cls");
+			displayInstructions();
+		}
+		else if (choice == '3') {
+			cout << "Credits..." << endl;
+			system("cls");
+			displayCredits();
+		}
+	}
+
+	if (choice == '1') {
+		system("cls");
+		player Player;
+		initializePlayerValues(Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, Player.health, Player.coins, Player.ammo.count, Player.maxAmmo, Player.shootR, Player.shootC);
+		initializeBoard(board);
+
+		int lastCellCol[9], lastCellRow[15];
+		char gun[] = "Pistol";
+
+		int isWalking = 0, isJumping = 0, isFalling = 0, isShooting = 0, isReloading = 0;
+
+
+		ladder ladders[4];
+		ladders[0].Row = 98;
+		ladders[0].Col = 50;
+		ladders[0].length = 25;
+
+		coin coins[5];
+		intializeCoin(board, coins[0], 97, 70);
+
+
+		Elevator elevator[2];
+
+		intializeElevator(board, elevator, 0, 97, 110, 97, 70, 110, 110, 0, 1); // Vertical 
+
+		intializeElevator(board, elevator, 1, 95, 130, 95, 95, 130, 150, 1, 1); //horizonatal
+
+
+		Enemy enemy;
+
+		int animation = 0, frame = 1, ResetFrame = 0;
+		scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+		clearMap(board, dispR, dispC);
+		callObj(board, coins);
+		callDynamicObj(board, elevator);
+		addBorders(board, dispR, dispC);
+		drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+		system("cls");
+		dispBar(Player.health, Player.coins, Player.ammo.count, Player.maxAmmo, gun);
+		Clear_LoadMap(board, dispR, dispC);
+		FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator);
+		int isWon = 0;
+
+		int player_y = 10, player_x = 10;
+		char key = ' ';
+		int ct = 0;
+		int killed = 0;
+		for (; !isWon;) {
+			FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator);
+			clearMap(board, dispR, dispC);
+			callObj(board, coins);
+			callDynamicObj(board, elevator);
+			addBorders(board, dispR, dispC);
+			if (animation == 0) {
+				if (frame == 1) {
+					drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 2) {
+					drawPlayerRightFrame2(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 3) {
+					drawPlayerRightFrame3(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 4) {
+					drawPlayerRightFrame4(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 5) {
+					drawPlayerRightFrame5(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+			}
+			else if (animation == 1) {
+				if (frame == 1) {
+					DrawPlayerLeftFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 2) {
+					DrawPlayerLeftFrame2(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 3) {
+					DrawPlayerLeftFrame3(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 4) {
+					DrawPlayerLeftFrame4(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 5) {
+					DrawPlayerLeftFrame5(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+			}
+			else if (animation == 2) {
+				if (frame == 1) {
+					climbFrame1(board, Player.Row, Player.Col);
+				}
+				else if (frame == 2) {
+					climbFrame2(board, Player.Row, Player.Col);
+				}
+			}
+			else if (animation == -1) {
+				drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+			}
+			else if (animation == -2) {
+				DrawPlayerLeftFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+			}
+
+			system("cls");
+			dispBar(Player.health, Player.coins, Player.ammo.count, Player.maxAmmo, gun);
+			Clear_LoadMap(board, dispR, dispC);
+
+			cout << "Enemy Health: " << enemy.health << endl;
+			cout << "Ammo: " << Player.ammo.count << endl;
+			if (ct % 2 == 0)
+				cout << "Laser mode" << endl;
+			else
+				cout << "Gun mode" << endl;
+			cout << "Controls: F (fire), T (toggle weapon), R (reload), Q (quit)" << endl;
+
+
+			int isOnLadder = 0;
+			int currentLadder = -1;
+
+			if (_kbhit()) {
+
+				char key = _getch();
+				isOnLadder = 0;
+				int canGoDown = 0;
+
+				if (key == 't') {
+					ct++;
+				}
+
+				if (ct % 2 == 0) {
+					if (key == 'f') {
+						if (Player.ammo.count > 0) {
+							Player.laser.shootLaser(enemy, killed, key, player_y, player_x);
+							Player.ammo.use();
+						}
+						else {
+							cout << "Out of ammo!" << endl;
+							Sleep(1000);
+						}
+					}
+				}
+				else {
+					if (key == 'f') {
+						if (Player.ammo.count > 0) {
+							Player.gun.shootGun(enemy, killed, key, player_y, player_x);
+							Player.ammo.use();
+						}
+						else {
+							cout << "Out of ammo!" << endl;
+							Sleep(1000);
+						}
+					}
+				}
+
+				for (int i = 0; i < 4; i++) {
+					if (Player.Col >= ladders[i].Col - 1 && Player.Col <= ladders[i].Col + 12) {
+						if (Player.Row >= ladders[i].Row - ladders[i].length && Player.Row <= ladders[i].Row) {
+							canGoDown = 1;
+						}
+						if (Player.Row >= ladders[i].Row - ladders[i].length + 1 && Player.Row <= ladders[i].Row) {
+							isOnLadder = 1;
+							currentLadder = i;
+							break;
+						}
+					}
+				}
+
+				if ((key == 'a' || key == 'A') && isFalling == 0) {
+					if (Player.Col >= 2) {
+						if (isWalking == 2) {
+							if (frame == 5) frame = 1;
+							else frame++;
+						}
+						else {
+							frame = 1;
+						}
+						moveLeft(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, lastCellCol, ladders, coins, Player.coins);
+						scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						animation = 1;
+						isWalking = 2;
+						FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator);
+					}
+				}
+				else if ((key == 'd' || key == 'D') && isFalling == 0) {
+					if (Player.Col + Player.maxWidth < 999) {
+						if (isWalking == 1) {
+							if (frame == 5) frame = 1;
+							else frame++;
+						}
+						else {
+							frame = 1;
+						}
+						moveRight(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, lastCellCol, ladders, coins, Player.coins);
+						scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						animation = 0;
+						FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator);
+						isWalking = 1;
+					}
+				}
+				else if (key == 'w' || key == 'W') {
+					if (isOnLadder == 0) {
+						if (isWalking == 0) {
+							if (Player.Row - Player.maxHeight > 0) {
+								jumpStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator);
+								scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+								FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator);
+								scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+							}
+						}
+						else if (isWalking == 1) {
+							jumpRight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, isWalking, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator);
+							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+							FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator);
+							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+							isWalking = 0;
+						}
+						else if (isWalking == 2) {
+							jumpLeft(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, isWalking, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator);
+							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+							FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator);
+							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+							isWalking = 0;
+						}
+					}
+				}
+
+				if (isOnLadder == 1) {
+					if ((key == 'w' || key == 'W')) {
+						if (Player.Row == ladders[currentLadder].Row - ladders[currentLadder].length + 1) {
+							animation = 0;
+						}
+						else {
+							if (isWalking == 3) {
+								if (frame == 2) frame = 1;
+								else frame++;
+							}
+							else {
+								frame = 1;
+							}
+
+
+							animation = 2;
+							isWalking = 3;
+						}
+						if (Player.Row - 1 > 1) {
+							Player.Row--;
+							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						}
+					}
+				}
+				if (canGoDown) {
+					if (key == 's' || key == 'S') {
+						if (isWalking == 3) {
+							if (frame == 2) frame = 1;
+							else frame++;
+						}
+						else {
+							frame = 1;
+						}
+						if (Player.Row <= 97) {
+							Player.Row++;
+							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						}
+						animation = 2;
+						isWalking = 3;
+					}
+				}
+
+			}
+			else {
+				if (animation == 0) animation = -1;
+				else if (animation == 1) animation = -2;
+			}
+
+			ElevatePlayer(Player.Row, Player.Col, elevator, 2);
+
+		}
+	}
+	else return 0;
 }

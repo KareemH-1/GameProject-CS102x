@@ -443,7 +443,6 @@ void moveplayer(char move_dir, int& player_y, int& player_x) {
     // Redraw player
     if (move_dir == 'a' || move_dir == 'w' || move_dir == 's')  draw_player_left(player_y, player_x);;
     if (move_dir == 'd' || move_dir == 'w' || move_dir == 's')  draw_player_right(player_y, player_x);
- 
 }
 
 
