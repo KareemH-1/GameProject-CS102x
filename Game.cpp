@@ -2038,7 +2038,83 @@ void drawLadder(char board[100][1000], int row, int col, int length) {
 
 
 
-/////////////// CALL OBJECTS ////////////////
+/////////////////////////////////////////////
+/////////////////////////////////////////////
+//////////////// HIT BOX ////////////////////
+
+
+void EnemyPlayerCollision(Enemy iskill[] , int numberIsKill, Enemy unkill[] ,int numberUnKill , player P){
+	
+	/*
+			e[i].Row = row;
+	for(int a =0 ; name[a] != '\0' ; a++){
+		e[i].enemy[a] = name[a];
+	}
+	e[i].Col = col;
+	e[i].maxHeight = maxH;
+	e[i].maxWidth = maxW;
+	e[i].isKillable = iskillable;
+	e[i].attackPower = power;
+	e[i].Health = health;
+	*/
+	
+	//Player height = 9-1 = 8
+	//Player width = 15-1 = 14
+
+
+
+	/*
+	
+	
+	*/
+	for(int i =0 ; i< numberIsKill  ; i++ ){
+
+		int enemyTop = iskill[i].Row-maxHeight+1;
+		int enemyBottom = iskill[i].Row;
+		int enemyLeft = iskill[i].Col;
+		int enemyRight = iskill[i].Col+maxWidth-1;
+
+		int  pTop = P.Row - 8;
+		int  pBottom = P.Row;
+		int pLeft = P.Col;
+		int pRight = P.Col+14
+		
+		if (pRight >= enemyLeft-1 && pLeft <= enemyRight+1 && pBottom >= enemyTop-1 && pTop <= enemyBottom+1) {
+			
+		}
+	}
+	
+	
+
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////// CALL OBJECTS /////////////////
+//////////////////////////////////////////////
+//////////////////////////////////////////////
 
 
 
@@ -2787,6 +2863,36 @@ int main() {
 		intializeEnemy(enemyKill ,8 ,"devil\0" ,50 , 30 , 1 , 10 , 12 , 100 , 20 );
 		
 		intializeEnemy(enemyKill ,9, "Reaper\0" ,50 , 30 , 1 , 10 , 12 , 250 , 30 );
+		
+		
+		
+		Enemy enemyUnKill[17];
+		intializeEnemy(enemyKill ,0, "Crystal1\0" ,97 , 200 , 0 , 10 , 12 , 250 , 30 );
+		intializeEnemy(enemyKill ,1, "Crystal2\0" ,97 , 215 , 0 , 10 , 12 , 250 , 30 );
+		intializeEnemy(enemyKill ,2, "Crystal3\0" ,97 , 230 , 0 , 10 , 12 , 250 , 30 );
+		intializeEnemy(enemyKill ,3, "Crystal4\0" ,97 , 245 , 0 , 10 , 12 , 250 , 30 );
+		intializeEnemy(enemyKill ,4, "Crystal5\0" ,97 , 260 , 0 , 10 , 12 , 250 , 30 );
+
+		intializeEnemy(enemyKill ,5, "Snail\0" ,75 , 230 , 0 , 10 , 12 , 250 , 30 );
+
+		intializeEnemy(enemyKill ,6, "Spike1\0" ,75 , 230 , 0 , 10 , 12 , 250 , 30 );
+		intializeEnemy(enemyKill ,7, "Spike2\0" ,75 , 230 , 0 , 10 , 12 , 250 , 30 );
+		intializeEnemy(enemyKill ,8, "Spike3\0" ,75 , 230 , 0 , 10 , 12 , 250 , 30 );
+		intializeEnemy(enemyKill ,9, "Spike4\0" ,75 , 230 , 0 , 10 , 12 , 250 , 30 );
+		intializeEnemy(enemyKill ,10, "Spike5\0" ,75 , 230 , 0 , 10 , 12 , 250 , 30 );
+		intializeEnemy(enemyKill ,11, "Spike6\0" ,75 , 230 , 0 , 10 , 12 , 250 , 30 );
+		intializeEnemy(enemyKill ,12, "Spike7\0" ,75 , 230 , 0 , 10 , 12 , 250 , 30 );
+		intializeEnemy(enemyKill ,13, "Spike8\0" ,75 , 230 , 0 , 10 , 12 , 250 , 30 );
+		intializeEnemy(enemyKill ,14, "Spike9\0" ,75 , 230 , 0 , 10 , 12 , 250 , 30 );
+		
+		intializeEnemy(enemyKill ,15, "Spike10\0" ,75 , 830 , 0 , 10 , 12 , 250 , 30 );
+		intializeEnemy(enemyKill ,16, "Spike11\0" ,75 , 831 , 0 , 10 , 12 , 250 , 30 );
+
+
+
+
+
+
 		
 		int animation = 0, frame = 1, ResetFrame = 0;
 		scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
