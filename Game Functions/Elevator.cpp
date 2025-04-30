@@ -42,6 +42,39 @@ void ElevatePlayer(int &pX, int &pY, Elevator elevator[], int nElevators) {
 	for(int i = 0; i < nElevators; i++) {
 		int check = 0;
 
+<<<<<<< HEAD
+	drawElevator(board, row, col);
+	moveElevatorVertically(row, startCol, endCol, direction);
+}
+
+void moveplayervertically(char board[100][1000],int  &pX, int &pY ,int& col,int& row, int startRow, int endRow, int& direction) {
+	if (pX==row-1 && pY>=col && pY<= col+10) {
+		if(direction==1){
+			pX--;
+		}
+		if(direction==2){
+			pX++;
+		}
+	};
+}
+
+
+void moveplayerhorizontally(char board[100][1000],int &pX, int &pY, int row,int& col, int startCol, int endCol, int& direction) {
+	if (pX==row-1 && pY>=col && pY<= col+10) {
+		if(direction==1){
+			pY--;
+		}
+		if(direction==2){
+			pY++;
+		}
+	};
+	
+
+	
+}
+
+void playerElevate (char board[100][1000], &pX, &pY,int row, int &col,int& direction){
+=======
 		// Check if player is standing just above the elevator row
 		if(pX == elevator[i].row - 1) {
 			// Check if player's width overlaps the elevator platform
@@ -49,6 +82,7 @@ void ElevatePlayer(int &pX, int &pY, Elevator elevator[], int nElevators) {
 				check = 1;
 			}
 		}
+>>>>>>> 3b7149521f9e075843a2accadd56622d52094627
 
 		// If player is on the elevator, move them accordingly
 		if(check) {
