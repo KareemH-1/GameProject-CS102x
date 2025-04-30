@@ -2097,10 +2097,25 @@ void EnemyPlayerCollision(Enemy iskill[], int numberIsKill, Enemy unkill[], int 
 
 
 
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 
 
+void scroll(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero, int& dispR, int& dispC) {
+	dispC = posJHero - 30;
+	if (dispC < 0) dispC = 0;
+	if (dispC > 1000 - 80) dispC = 1000 - 80;
 
+	dispR = posIHero + 2;
+	if (dispR < 24) dispR = 23;
+	if (dispR > 86) dispR = 98;
+
+}
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 
 /////////////// CALL OBJECTS /////////////////
@@ -2156,7 +2171,7 @@ void ElevatePlayer(char board[100][1000], int& dispR, int &dispC, int& pX, int& 
 			int elRight = elevator[i].col + elevator[i].length - 1;
 
 			// Same horizontal range logic
-			if ((pX + 1) == elTop && pY + 14 - 1 >= elLeft && pY <= elRight) {
+			if ( ( (pX + 1) || pX || (pX-1) )== elTop && pY + 14 - 1 >= elLeft && pY <= elRight) {
 				if (elevator[i].direction == 1) { // Up
 					pX--;
 					scroll(board, pY, pX, 9, 15, dispR, dispC);
@@ -2207,16 +2222,7 @@ void callDynamicObj(char board[100][1000], Elevator elevator[]) {
 
 ///////////////////////////////
 
-void scroll(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero, int& dispR, int& dispC) {
-	dispC = posJHero - 30;
-	if (dispC < 0) dispC = 0;
-	if (dispC > 1000 - 80) dispC = 1000 - 80;
 
-	dispR = posIHero + 2;
-	if (dispR < 24) dispR = 23;
-	if (dispR > 86) dispR = 98;
-
-}
 
 void clearMap(char board[100][1000], int dispR, int dispC) {
 	int top = dispR - 23;
