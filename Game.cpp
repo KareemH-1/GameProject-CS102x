@@ -25,6 +25,7 @@ struct player {
 	int Reload[2] = { 1 , 3 }; //coolDown[0] for gun , coolDown[1] for lazerbeam
 };
 struct Enemy {
+	char enemy[15];
 	int Row, Col; //Position
 	int isKillable; // 1 for killable , 0 for not killable
 	int maxHeight = 1, maxWidth = 1; //Max height and width
@@ -67,6 +68,20 @@ void intializeElevator(char board[100][1000], Elevator elevator[], int i, int ro
 	elevator[i].endCol = endC;
 	elevator[i].whichD = whichD;
 	elevator[i].direction = direction;
+}
+
+
+void intializeEnemy(Enemy e[], int i ,char name[]  ,int row, int col, int  iskillable, int maxH, int maxW, int health, int power) {
+	e[i].Row = row;
+	for(int a =0 ; name[a] != '\0' ; a++){
+		e[i].enemy[a] = name[a];
+	}
+	e[i].Col = col;
+	e[i].maxHeight = maxH;
+	e[i].maxWidth = maxW;
+	e[i].isKillable = iskillable;
+	e[i].attackPower = power;
+	e[i].Health = health;
 }
 
 
@@ -1702,15 +1717,6 @@ void climbFrame2(char board[100][1000], int row, int col) {
 
 /////// ENEMIES ////////
 
-void intializeEnemy(Enemy& e, int row, int col, int  iskillable, int maxH, int maxW, int health, int power) {
-	e.Row = row;
-	e.Col = col;
-	e.maxHeight = maxH;
-	e.maxWidth = maxW;
-	e.isKillable = iskillable;
-	e.attackPower = power;
-	e.Health = health;
-}
 
 
 void drawSpike(char board[100][1000], int R, int C) {
@@ -2744,16 +2750,6 @@ int main() {
 
 		int isWalking = 0, isJumping = 0, isFalling = 0, isShooting = 0, isReloading = 0;
 
-		Enemy devil;
-		intializeEnemy(devil, 97, 50, 1, 11, 13, 100, 12);
-
-
-		Enemy spike; // make it array instead
-		intializeEnemy(spike, 97, 105, 0, 2, 4, 0, 100);
-
-		Enemy bird;
-		intializeEnemy(bird, 89, 4, 1, 25, 3, 3, 3); // random nuummbers ( not yet properly intialized) 
-
 
 		ladder ladders[4];
 		ladders[0].Row = 98;
@@ -2771,8 +2767,27 @@ int main() {
 		intializeElevator(board, elevator, 1, 95, 130, 95, 95, 130, 150, 2, 1); //horizonatal
 
 
+		Enemy enemyKill [9];
+		intializeEnemy(enemyKill ,0 , "Devil\0",50 , 30 , 1 , 10 , 12 , 100 , 15 );
 
-
+		intializeEnemy(enemyKill ,1, "Reaper\0" ,50 , 30 , 1 , 10 , 12 , 250 , 30 );
+		
+		intializeEnemy(enemyKill ,2, "blob\0" ,97 , 720 , 1 , 10 , 12 , 100 , 15 );
+		
+		intializeEnemy(enemyKill ,3, "Skeleton\0" ,50 , 30 , 1 , 10 , 12 , 100 ,15 );
+		
+		intializeEnemy(enemyKill ,4 , "bird\0",10 , 800, 1 , 10 , 12 , 100 ,15 );
+		
+		intializeEnemy(enemyKill ,5, "Alien\0" ,50 , 30 , 1 , 10 , 12 , 100 , 20 );
+		
+		intializeEnemy(enemyKill ,6 , "Boss\0",50 , 30 , 1 , 10 , 12 , 500 , 30 );
+		
+		intializeEnemy(enemyKill ,7 ,"Alien\0",50 , 30 , 1 , 10 , 12 , 100 , 20 );
+		
+		intializeEnemy(enemyKill ,8 ,"devil\0" ,50 , 30 , 1 , 10 , 12 , 100 , 20 );
+		
+		intializeEnemy(enemyKill ,9, "Reaper\0" ,50 , 30 , 1 , 10 , 12 , 250 , 30 );
+		
 		int animation = 0, frame = 1, ResetFrame = 0;
 		scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 		clearMap(board, dispR, dispC);
