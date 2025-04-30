@@ -186,7 +186,7 @@ void dispBar(int health, int coins, int ammo, int maxAmmo, char gun[]) {
 void dispBoard(char board[100][1000]) {
 
 
-	cout << blue; // Blue color for the board
+	cout << blue; // Blue color for the board	
 
 	for (int i = 0; i < 80; i++) {
 		cout << board[0][i];
