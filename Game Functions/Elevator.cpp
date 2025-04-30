@@ -1,4 +1,5 @@
 
+
 void moveElevatorVertically(int& row, int startRow, int endRow, int& direction) {
 	if (row == endRow) direction = 2;
 	else if (row == startRow) direction = 1;
@@ -18,23 +19,30 @@ void drawElevator(char board[100][1000], int row, int col) {
 	board[row][col] = '_';
 	board[row][col + 1] = '_';
 	board[row][col + 2] = '_';
+	board[row][col + 3] = '_';
 	board[row][col + 4] = '_';
 	board[row][col + 5] = '_';
 	board[row][col + 6] = '_';
 	board[row][col + 7] = '_';
 	board[row][col + 8] = '_';
 	board[row][col + 9] = '_';
-	board[row][col + 10] = '_';
 }
 
-void drawAndMoveElevatorV(char board[100][1000], int& row , int col, int startRow, int endRow , int& direction) {
-	
-	drawElevator(board, row, col);
-	moveElevatorVertically(row, startRow, endRow, direction);
+void drawAndMoveElevatorV(char board[100][1000], Elevator elevator[] , int i ) {
+		drawElevator(board, elevator[i].row, elevator[i].col);
+		moveElevatorVertically(elevator[i].row, elevator[i].startRow, elevator[i].endRow, elevator[i].direction);
+
+}
+void drawAndMoveElevatorH(char board[100][1000], Elevator elevator[] , int i) {
+		drawElevator(board, elevator[i].row, elevator[i].col);
+		moveElevatorHorizontally(elevator[i].col, elevator[i].startCol, elevator[i].endCol, elevator[i].direction);
 }
 
-void drawAndMoveElevatorH(char board[100][1000], int row, int &col, int startCol, int endCol, int& direction) {
+void ElevatePlayer(int &pX, int &pY, Elevator elevator[], int nElevators) {
+	for(int i = 0; i < nElevators; i++) {
+		int check = 0;
 
+<<<<<<< HEAD
 	drawElevator(board, row, col);
 	moveElevatorVertically(row, startCol, endCol, direction);
 }
@@ -66,5 +74,32 @@ void moveplayerhorizontally(char board[100][1000],int &pX, int &pY, int row,int&
 }
 
 void playerElevate (char board[100][1000], &pX, &pY,int row, int &col,int& direction){
+=======
+		// Check if player is standing just above the elevator row
+		if(pX == elevator[i].row - 1) {
+			// Check if player's width overlaps the elevator platform
+			if(pY + 3 <= elevator[i].col + 10 && pY + 9 >= elevator[i].col) {
+				check = 1;
+			}
+		}
+>>>>>>> 3b7149521f9e075843a2accadd56622d52094627
 
+		// If player is on the elevator, move them accordingly
+		if(check) {
+			
+			if(elevator[i].whichD == 1) { // vertical
+				
+				if(elevator[i].direction == 1) pX--;    // move up
+				
+				else if(elevator[i].direction == 2) pX++; // move down
+			} 
+			else { // horizontal
+				
+				if(elevator[i].direction == 1) pY++;    // move right
+				
+				else if(elevator[i].direction == 2) pY--; // move left
+			}
+			
+		}
+	}
 }
