@@ -70,7 +70,7 @@ void intializeElevator(char board[100][1000], Elevator elevator[], int i, int ro
 }
 
 
-void intializeEnemy(Enemy e[], int i  ,int row, int col, int  iskillable, int maxH, int maxW, int health, int power) {
+void intializeEnemy(Enemy e[], int i, int row, int col, int  iskillable, int maxH, int maxW, int health, int power) {
 	e[i].Row = row;
 
 	e[i].Col = col;
@@ -104,7 +104,7 @@ void displayInstructions() {
 	cout << "==================================================" << endl;
 	cout << "||  Controls:                                   ||" << endl;
 	cout << "||                                              ||" << endl;
-	cout << "||  W  - Jump / Climb Up                        ||" << endl;
+	cout << "||  W/Space  - Jump / Climb Up                  ||" << endl;
 	cout << "||  A  - Move Left                              ||" << endl;
 	cout << "||  D  - Move Right                             ||" << endl;
 	cout << "||  S  - Climb Down                             ||" << endl;
@@ -2040,44 +2040,44 @@ void drawLadder(char board[100][1000], int row, int col, int length) {
 //////////////// HIT BOX ////////////////////
 
 
-void EnemyPlayerCollision(Enemy iskill[] , int numberIsKill, Enemy unkill[] ,int numberUnKill , player P){
-	
-	for(int i =0 ; i< numberIsKill  ; i++ ){
+void EnemyPlayerCollision(Enemy iskill[], int numberIsKill, Enemy unkill[], int numberUnKill, player P) {
 
-		int enemyTop = iskill[i].Row- iskill[i].maxHeight+1;
+	for (int i = 0; i < numberIsKill; i++) {
+
+		int enemyTop = iskill[i].Row - iskill[i].maxHeight + 1;
 		int enemyBottom = iskill[i].Row;
 		int enemyLeft = iskill[i].Col;
-		int enemyRight = iskill[i].Col+iskill[i].maxWidth-1;
+		int enemyRight = iskill[i].Col + iskill[i].maxWidth - 1;
 
 		int  pTop = P.Row - 8;
 		int  pBottom = P.Row;
 		int pLeft = P.Col;
-		int pRight = P.Col+14;
-		
-		if (pRight >= enemyLeft-1 && pLeft <= enemyRight+1 && pBottom >= enemyTop-1 && pTop <= enemyBottom+1) {
+		int pRight = P.Col + 14;
+
+		if (pRight >= enemyLeft - 1 && pLeft <= enemyRight + 1 && pBottom >= enemyTop - 1 && pTop <= enemyBottom + 1) {
 			P.Health -= iskill[i].attackPower;
 		}
 	}
-	for(int i =0 ; i< numberUnKill  ; i++ ){
+	for (int i = 0; i < numberUnKill; i++) {
 
-		int enemyTop = unkill[i].Row- unkill[i].maxHeight+1;
+		int enemyTop = unkill[i].Row - unkill[i].maxHeight + 1;
 		int enemyBottom = unkill[i].Row;
 		int enemyLeft = unkill[i].Col;
-		int enemyRight = unkill[i].Col+unkill[i].maxWidth-1;
+		int enemyRight = unkill[i].Col + unkill[i].maxWidth - 1;
 
 		int  pTop = P.Row - 8;
 		int  pBottom = P.Row;
 		int pLeft = P.Col;
-		int pRight = P.Col+14;
-		
-		if (pRight >= enemyLeft-1 && pLeft <= enemyRight+1 && pBottom >= enemyTop-1 && pTop <= enemyBottom+1) {
+		int pRight = P.Col + 14;
+
+		if (pRight >= enemyLeft - 1 && pLeft <= enemyRight + 1 && pBottom >= enemyTop - 1 && pTop <= enemyBottom + 1) {
 			P.Health -= unkill[i].attackPower;
 		}
 	}
-	
-	
 
-	
+
+
+
 }
 
 
@@ -2147,21 +2147,24 @@ void drawAndMoveElevatorH(char board[100][1000], Elevator elevator[], int i) {
 	moveElevatorHorizontally(elevator[i].col, elevator[i].startCol, elevator[i].endCol, elevator[i].direction);
 }
 
-void ElevatePlayer(int& pX, int& pY, Elevator elevator[], int nElevators) {
+void ElevatePlayer(char board[100][1000], int& dispR, int &dispC, int& pX, int& pY, Elevator elevator[], int nElevators) {
 	for (int i = 0; i < nElevators; i++) {
 		// Vertical Elevator
 		if (elevator[i].whichD == 0) {
 			int elTop = elevator[i].row;
 			int elLeft = elevator[i].col;
 			int elRight = elevator[i].col + elevator[i].length - 1;
-	
+
 			// Same horizontal range logic
-			if ((pX + 1)== elTop && pY + 14 - 1 >= elLeft && pY <= elRight) {
+			if ((pX + 1) == elTop && pY + 14 - 1 >= elLeft && pY <= elRight) {
 				if (elevator[i].direction == 1) { // Up
 					pX--;
+					scroll(board, pY, pX, 9, 15, dispR, dispC);
 				}
 				else if (elevator[i].direction == 2) { // Down
 					pX++;
+					scroll(board, pY, pX, 9, 15, dispR, dispC);
+
 				}
 			}
 		}
@@ -2172,12 +2175,14 @@ void ElevatePlayer(int& pX, int& pY, Elevator elevator[], int nElevators) {
 			int elRight = elevator[i].col + elevator[i].length - 1;
 
 			// Check if player's feet are on elevator
-			if ((pX + 1 ) == elTop && pY + 14 - 1 >= elLeft && pY <= elRight) {
+			if ((pX + 1) == elTop && pY + 14 - 1 >= elLeft && pY <= elRight) {
 				if (elevator[i].direction == 1) { // Right
 					pY++;
+					scroll(board, pY, pX, 9, 15, dispR, dispC);
 				}
 				else if (elevator[i].direction == 2) { // Left
 					pY--;
+					scroll(board, pY, pX, 9, 15, dispR, dispC);
 				}
 			}
 		}
@@ -2461,13 +2466,13 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 			pX--;
 
 			checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
-			ElevatePlayer(Player.Row, Player.Col, elevator, 2);
+			ElevatePlayer(board ,dispR, dispC ,Player.Row, Player.Col, elevator, 2);
 			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 			clearMap(board, dispR, dispC);
 			callObj(board, coins); // Call the function to draw the objects
 			callDynamicObj(board, elevator);
 			addBorders(board, dispR, dispC);
-	
+
 			if (animation == 0 || animation == -1) {
 				jumprightframe(board, pX, pY, LC, LR); // Draw the player jumping up
 			}
@@ -2487,7 +2492,7 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 }
 
 
-void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player &Player, char gun[], int& isFalling, int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[]) {
+void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player& Player, char gun[], int& isFalling, int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[]) {
 	for (; pX + 1 < 99; ) {
 		if (pX - pHeight < 0) break;
 
@@ -2506,7 +2511,7 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 
 		pX++;
 		checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
-		ElevatePlayer(Player.Row, Player.Col, elevator, 2);
+		ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
 		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 		clearMap(board, dispR, dispC);
 		callObj(board, coins);
@@ -2527,14 +2532,14 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 		isFalling = 1;
 	}
 	checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
-	ElevatePlayer(Player.Row, Player.Col, elevator, 2);
+	ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
 	isJumping = 0;
 	isFalling = 0;
 }
 
 
 void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
-	int& isJumping, player & Player, char gun[], int& isFalling,
+	int& isJumping, player& Player, char gun[], int& isFalling,
 	int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[]) {
 	// Initial setup
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
@@ -2582,7 +2587,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
 		// Redraw everything
 		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
-		ElevatePlayer(Player.Row, Player.Col, elevator, 2);
+		ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
 		clearMap(board, dispR, dispC);
 		callObj(board, coins);
 		callDynamicObj(board, elevator);
@@ -2636,7 +2641,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		}
 
 		checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
-		ElevatePlayer(Player.Row, Player.Col, elevator, 2);
+		ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
 
 		// Redraw everything
 		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
@@ -2653,7 +2658,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		isFalling = 1;
 	}
 	checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
-	ElevatePlayer(Player.Row, Player.Col, elevator, 2);
+	ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
 	isJumping = 0;
 	isFalling = 0;
 	isWalking = 0;
@@ -2708,11 +2713,11 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 		pY--;
 
 		checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
-		ElevatePlayer(Player.Row, Player.Col, elevator, 2);
+		ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
 		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 		clearMap(board, dispR, dispC);
 		callObj(board, coins);
-		callDynamicObj(board, elevator); 
+		callDynamicObj(board, elevator);
 		addBorders(board, dispR, dispC);
 		jumpleftframe(board, pX, pY, LC, LR);
 
@@ -2747,7 +2752,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 
 
 			checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
-			ElevatePlayer(Player.Row, Player.Col, elevator, 2);
+			ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
 			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 			clearMap(board, dispR, dispC);
 			callObj(board, coins);
@@ -2762,7 +2767,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 		}
 	}
 	checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
-	ElevatePlayer(Player.Row, Player.Col, elevator, 2);
+	ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
 	isWalking = 0;
 	isJumping = 0, isFalling = 0; // Reset jumping and falling states after landing
 
@@ -2847,57 +2852,57 @@ int main() {
 		intializeElevator(board, elevator, 1, 95, 130, 95, 95, 130, 150, 1, 1); //horizonatal
 
 
-		Enemy enemyKill [9];
-		intializeEnemy(enemyKill ,0 ,50 , 30 , 1 , 10 , 12 , 100 , 15 ); //Devil
+		Enemy enemyKill[9];
+		intializeEnemy(enemyKill, 0, 50, 30, 1, 10, 12, 100, 15); //Devil
 
-		intializeEnemy(enemyKill ,1 ,50 , 30 , 1 , 10 , 12 , 250 , 30 ); //Reaper
-		
-		intializeEnemy(enemyKill ,2 ,97 , 720 , 1 , 10 , 12 , 100 , 15 ); //Blob
-		
-		intializeEnemy(enemyKill ,3 ,50 , 30 , 1 , 10 , 12 , 100 ,15 ); //Skeleton
-		
-		intializeEnemy(enemyKill ,4 ,10 , 800, 1 , 10 , 12 , 100 ,15 );// Bird
-		
-		intializeEnemy(enemyKill ,5 ,50 , 30 , 1 , 10 , 12 , 100 , 20 );//Alien
-		
-		intializeEnemy(enemyKill ,6 ,50 , 30 , 1 , 10 , 12 , 500 , 30 );//Boss
-		
-		intializeEnemy(enemyKill ,7 ,50 , 30 , 1 , 10 , 12 , 100 , 20 );//Devil boss minion
-		
-		intializeEnemy(enemyKill ,8 ,50 , 30 , 1 , 10 , 12 , 100 , 20 );//Alien boss minion
-		
-		intializeEnemy(enemyKill ,9,50 , 30 , 1 , 10 , 12 , 250 , 30 );//Reaper boss minion
-		
-		
-		
+		intializeEnemy(enemyKill, 1, 50, 30, 1, 10, 12, 250, 30); //Reaper
+
+		intializeEnemy(enemyKill, 2, 97, 720, 1, 10, 12, 100, 15); //Blob
+
+		intializeEnemy(enemyKill, 3, 50, 30, 1, 10, 12, 100, 15); //Skeleton
+
+		intializeEnemy(enemyKill, 4, 10, 800, 1, 10, 12, 100, 15);// Bird
+
+		intializeEnemy(enemyKill, 5, 50, 30, 1, 10, 12, 100, 20);//Alien
+
+		intializeEnemy(enemyKill, 6, 50, 30, 1, 10, 12, 500, 30);//Boss
+
+		intializeEnemy(enemyKill, 7, 50, 30, 1, 10, 12, 100, 20);//Devil boss minion
+
+		intializeEnemy(enemyKill, 8, 50, 30, 1, 10, 12, 100, 20);//Alien boss minion
+
+		intializeEnemy(enemyKill, 9, 50, 30, 1, 10, 12, 250, 30);//Reaper boss minion
+
+
+
 		Enemy enemyUnKill[17];
-		intializeEnemy(enemyKill ,0 ,97 , 200 , 0 , 10 , 12 , 250 , 30 );//Crystal 1
-		intializeEnemy(enemyKill ,1 ,97 , 215 , 0 , 10 , 12 , 250 , 30 );//Crystal 2
-		intializeEnemy(enemyKill ,2 ,97 , 230 , 0 , 10 , 12 , 250 , 30 );//Crystal 3
-		intializeEnemy(enemyKill ,3 ,97 , 245 , 0 , 10 , 12 , 250 , 30 );//Crystal 4
-		intializeEnemy(enemyKill ,4 ,97 , 260 , 0 , 10 , 12 , 250 , 30 );//Crystal 5
+		intializeEnemy(enemyKill, 0, 97, 200, 0, 10, 12, 250, 30);//Crystal 1
+		intializeEnemy(enemyKill, 1, 97, 215, 0, 10, 12, 250, 30);//Crystal 2
+		intializeEnemy(enemyKill, 2, 97, 230, 0, 10, 12, 250, 30);//Crystal 3
+		intializeEnemy(enemyKill, 3, 97, 245, 0, 10, 12, 250, 30);//Crystal 4
+		intializeEnemy(enemyKill, 4, 97, 260, 0, 10, 12, 250, 30);//Crystal 5
 
-		intializeEnemy(enemyKill ,5,75 , 230 , 0 , 10 , 12 , 250 , 30 );//snail 1
+		intializeEnemy(enemyKill, 5, 75, 230, 0, 10, 12, 250, 30);//snail 1
 
-		intializeEnemy(enemyKill ,6,75 , 230 , 0 , 10 , 12 , 250 , 30 ); //Spike 1
-		intializeEnemy(enemyKill ,7,75 , 230 , 0 , 10 , 12 , 250 , 30 ); //Spike 2 
-		intializeEnemy(enemyKill ,8 ,75 , 230 , 0 , 10 , 12 , 250 , 30 ); //Spike 3
-		intializeEnemy(enemyKill ,9 ,75 , 230 , 0 , 10 , 12 , 250 , 30 ); //Spike 4
-		intializeEnemy(enemyKill ,10, 75 , 230 , 0 , 10 , 12 , 250 , 30 ); //Spike 5
-		intializeEnemy(enemyKill ,11, 75 , 230 , 0 , 10 , 12 , 250 , 30 ); //Spike 6 
-		intializeEnemy(enemyKill ,12, 75 , 230 , 0 , 10 , 12 , 250 , 30 ); //Spike 7 
-		intializeEnemy(enemyKill ,13, 75 , 230 , 0 , 10 , 12 , 250 , 30 ); //Spike 8
-		intializeEnemy(enemyKill ,14, 75 , 230 , 0 , 10 , 12 , 250 , 30 ); //Spike 9
+		intializeEnemy(enemyKill, 6, 75, 230, 0, 10, 12, 250, 30); //Spike 1
+		intializeEnemy(enemyKill, 7, 75, 230, 0, 10, 12, 250, 30); //Spike 2 
+		intializeEnemy(enemyKill, 8, 75, 230, 0, 10, 12, 250, 30); //Spike 3
+		intializeEnemy(enemyKill, 9, 75, 230, 0, 10, 12, 250, 30); //Spike 4
+		intializeEnemy(enemyKill, 10, 75, 230, 0, 10, 12, 250, 30); //Spike 5
+		intializeEnemy(enemyKill, 11, 75, 230, 0, 10, 12, 250, 30); //Spike 6 
+		intializeEnemy(enemyKill, 12, 75, 230, 0, 10, 12, 250, 30); //Spike 7 
+		intializeEnemy(enemyKill, 13, 75, 230, 0, 10, 12, 250, 30); //Spike 8
+		intializeEnemy(enemyKill, 14, 75, 230, 0, 10, 12, 250, 30); //Spike 9
 
-		intializeEnemy(enemyKill ,15, 75 , 830 , 0 , 10 , 12 , 250 , 30 ); //2nd place Spike 10
-		intializeEnemy(enemyKill ,16,75 , 831 , 0 , 10 , 12 , 250 , 30 ); //2nd place Spike 11
-
-
+		intializeEnemy(enemyKill, 15, 75, 830, 0, 10, 12, 250, 30); //2nd place Spike 10
+		intializeEnemy(enemyKill, 16, 75, 831, 0, 10, 12, 250, 30); //2nd place Spike 11
 
 
 
 
-		
+
+
+
 		int animation = 0, frame = 1, ResetFrame = 0;
 		scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 		clearMap(board, dispR, dispC);
@@ -3023,7 +3028,7 @@ int main() {
 						isWalking = 1;
 					}
 				}
-				else if (key == 'w' || key == 'W') {
+				else if (key == 'w' || key == 'W' || key == ' ') {
 					if (isOnLadder == 0) {
 						if (isWalking == 0) {
 							if (Player.Row - Player.maxHeight > 0) {
@@ -3051,7 +3056,7 @@ int main() {
 				}
 
 				if (isOnLadder == 1) {
-					if ((key == 'w' || key == 'W')) {
+					if ((key == 'w' || key == 'W' || key == ' ')) {
 						if (Player.Row == ladders[currentLadder].Row - ladders[currentLadder].length + 1) {
 							animation = 0;
 						}
@@ -3098,8 +3103,7 @@ int main() {
 				else if (animation == 1) animation = -2;
 			}
 
-			ElevatePlayer(Player.Row, Player.Col, elevator, 2);
-
+			ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
 		}
 	}
 	else return 0;
