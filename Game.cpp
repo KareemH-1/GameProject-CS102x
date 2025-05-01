@@ -1806,7 +1806,6 @@ int chanceMove() {
 
 void drawDevil(char board[100][1000], Enemy devil) {
 	int row = devil.Row, col = devil.Col;
-
 	//legs
 	board[row][col + 2] = '#';
 	board[row][col + 6] = '#';
@@ -1978,7 +1977,7 @@ int collisionCheckFireballPlayer(int ballR, int ballC, player Player) {
 
 
 
-void controlFireBall(char board[100][1000], int& row, int& col, int r, int  endR, int endC, player& Player) {
+void controlFireBall(char board[100][1000], int& row, int& col, int r, int & endR, int &endC, player& Player) {
 
 	if (row != NULL && col != NULL && !collisionCheckFireballPlayer(row, col, Player)) {
 
@@ -2949,7 +2948,7 @@ int main() {
 		intializeElevator(board, elevator, 1, 95, 130, 95, 95, 130, 150, 1, 1); //horizonatal
 
 		Enemy enemyKill[9];
-		intializeEnemy(enemyKill, 0, 50, 12, 1, 11, 13, 100, 10); //Devil
+		intializeEnemy(enemyKill, 0, 49, 12, 1, 11, 13, 100, 10); //Devil
 
 		intializeEnemy(enemyKill, 1, 50, 30, 1, 10, 12, 250, 30); //Reaper
 
@@ -2972,26 +2971,26 @@ int main() {
 
 
 		Enemy enemyUnKill[17];
-		intializeEnemy(enemyKill, 0, 97, 200, 0, 10, 12, 250, 30);//Crystal 1
-		intializeEnemy(enemyKill, 1, 97, 215, 0, 10, 12, 250, 30);//Crystal 2
-		intializeEnemy(enemyKill, 2, 97, 230, 0, 10, 12, 250, 30);//Crystal 3
-		intializeEnemy(enemyKill, 3, 97, 245, 0, 10, 12, 250, 30);//Crystal 4
-		intializeEnemy(enemyKill, 4, 97, 260, 0, 10, 12, 250, 30);//Crystal 5
+		intializeEnemy(enemyUnKill, 0, 97, 200, 0, 10, 12, 250, 30);//Crystal 1
+		intializeEnemy(enemyUnKill, 1, 97, 215, 0, 10, 12, 250, 30);//Crystal 2
+		intializeEnemy(enemyUnKill, 2, 97, 230, 0, 10, 12, 250, 30);//Crystal 3
+		intializeEnemy(enemyUnKill, 3, 97, 245, 0, 10, 12, 250, 30);//Crystal 4
+		intializeEnemy(enemyUnKill, 4, 97, 260, 0, 10, 12, 250, 30);//Crystal 5
 
-		intializeEnemy(enemyKill, 5, 75, 230, 0, 10, 12, 250, 30);//snail 1
+		intializeEnemy(enemyUnKill, 5, 75, 230, 0, 10, 12, 250, 30);//snail 1
 
-		intializeEnemy(enemyKill, 6, 75, 230, 0, 10, 12, 250, 30); //Spike 1
-		intializeEnemy(enemyKill, 7, 75, 230, 0, 10, 12, 250, 30); //Spike 2 
-		intializeEnemy(enemyKill, 8, 75, 230, 0, 10, 12, 250, 30); //Spike 3
-		intializeEnemy(enemyKill, 9, 75, 230, 0, 10, 12, 250, 30); //Spike 4
-		intializeEnemy(enemyKill, 10, 75, 230, 0, 10, 12, 250, 30); //Spike 5
-		intializeEnemy(enemyKill, 11, 75, 230, 0, 10, 12, 250, 30); //Spike 6 
-		intializeEnemy(enemyKill, 12, 75, 230, 0, 10, 12, 250, 30); //Spike 7 
-		intializeEnemy(enemyKill, 13, 75, 230, 0, 10, 12, 250, 30); //Spike 8
-		intializeEnemy(enemyKill, 14, 75, 230, 0, 10, 12, 250, 30); //Spike 9
+		intializeEnemy(enemyUnKill, 6, 75, 230, 0, 10, 12, 250, 30); //Spike 1
+		intializeEnemy(enemyUnKill, 7, 75, 230, 0, 10, 12, 250, 30); //Spike 2 
+		intializeEnemy(enemyUnKill, 8, 75, 230, 0, 10, 12, 250, 30); //Spike 3
+		intializeEnemy(enemyUnKill, 9, 75, 230, 0, 10, 12, 250, 30); //Spike 4
+		intializeEnemy(enemyUnKill, 10, 75, 230, 0, 10, 12, 250, 30); //Spike 5
+		intializeEnemy(enemyUnKill, 11, 75, 230, 0, 10, 12, 250, 30); //Spike 6 
+		intializeEnemy(enemyUnKill, 12, 75, 230, 0, 10, 12, 250, 30); //Spike 7 
+		intializeEnemy(enemyUnKill, 13, 75, 230, 0, 10, 12, 250, 30); //Spike 8
+		intializeEnemy(enemyUnKill, 14, 75, 230, 0, 10, 12, 250, 30); //Spike 9
 
-		intializeEnemy(enemyKill, 15, 75, 830, 0, 10, 12, 250, 30); //2nd place Spike 10
-		intializeEnemy(enemyKill, 16, 75, 831, 0, 10, 12, 250, 30); //2nd place Spike 11
+		intializeEnemy(enemyUnKill, 15, 75, 830, 0, 10, 12, 250, 30); //2nd place Spike 10
+		intializeEnemy(enemyUnKill, 16, 75, 831, 0, 10, 12, 250, 30); //2nd place Spike 11
 
 
 
