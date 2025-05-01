@@ -2296,11 +2296,16 @@ void ElevatePlayer( char board[100][1000] , int & dispR , int & dispC , int& pX,
 
 
 void callObj(char board[100][1000], coin coins[5] , Enemy isKill[]) {
+	//The part for the devil
 	drawTerrain(board, 95, 30, 1, 10);
 	drawTerrain(board, 91, 15, 1, 10);
 	drawTerrain(board, 87, 5, 1, 10);
+	drawLadder(board, 88, 5, 37);
+	drawTerrain(board, 50, 5, 1, 60);
 	drawLadder(board, 98, 50, 25);
 	drawDevil(board , isKill[0]);
+	drawCoin(board , coins[1].Row ,coins[1].Col , coins[1].isCollected);
+
 	drawCoin(board, coins[0].Row, coins[0].Col, coins[0].isCollected);
 }
 
@@ -2922,6 +2927,7 @@ int main() {
 
 		coin coins[5];
 		intializeCoin(board, coins[0], 97, 70);
+		intializeCoin(board, coins[1], 50, 55);
 
 
 		Elevator elevator[2];
@@ -2930,9 +2936,8 @@ int main() {
 
 		intializeElevator(board, elevator, 1, 95, 130, 95, 95, 130, 150, 1, 1); //horizonatal
 
-
 		Enemy enemyKill[9];
-		intializeEnemy(enemyKill, 0, 50, 30, 1, 11 , 13, 100, 10); //Devil
+		intializeEnemy(enemyKill, 0, 50, 40, 1, 11 , 13, 100, 10); //Devil
 
 		intializeEnemy(enemyKill, 1, 50, 30, 1, 10, 12, 250, 30); //Reaper
 
