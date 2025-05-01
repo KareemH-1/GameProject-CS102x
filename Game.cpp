@@ -140,7 +140,7 @@ void displayCredits() {
 
 void initializePlayerValues(int& Row, int& Col, int& maxHeight, int& maxWidth, int& Health, int& coins, int& gun, int& ammo, int& maxAmmo, int& shootC, int& shootR) {
 	Row = 95;
-	Col = 40;
+	Col = 70;
 	maxHeight = 9;
 	maxWidth = 15;
 	Health = 100;
@@ -1789,162 +1789,162 @@ void drawEnemyBirdRight(char board[100][1000], int row, int col) {
 /////////////////////////////////////////////////
 ////////////////////////////////////////////////
 
-int chanceShoot(){
+int chanceShoot() {
 	int chance = rand() % 3 + 1;
-	
-	if(chance == 1) return 1;
-	else return 0; 
+
+	if (chance == 1) return 1;
+	else return 0;
 }
 
-int chanceMove(){
+int chanceMove() {
 	int chance = rand() % 2 + 1;
-	
-	if(chance == 1) return 1;
-	else return 2; 
+
+	if (chance == 1) return 1;
+	else return 2;
 }
 
 
 void drawDevil(char board[100][1000], Enemy devil) {
-int row = devil.Row, col = devil.Col;
+	int row = devil.Row, col = devil.Col;
 
-//legs
-board[row][col + 2] = '#';
-board[row][col + 6] = '#';
-board[row][col + 7] = '`';
+	//legs
+	board[row][col + 2] = '#';
+	board[row][col + 6] = '#';
+	board[row][col + 7] = '`';
 
-//staff
-board[row][col + 10] = '|';
-board[row - 1][col + 10] = '|';
-board[row - 2][col + 10] = '|';
-board[row - 3][col + 10] = '|';
-board[row - 4][col + 10] = '|';
-board[row - 7][col + 10] = '|';
-board[row - 8][col + 10] = '|';
-board[row - 9][col + 10] = '|';
+	//staff
+	board[row][col + 10] = '|';
+	board[row - 1][col + 10] = '|';
+	board[row - 2][col + 10] = '|';
+	board[row - 3][col + 10] = '|';
+	board[row - 4][col + 10] = '|';
+	board[row - 7][col + 10] = '|';
+	board[row - 8][col + 10] = '|';
+	board[row - 9][col + 10] = '|';
 
-board[row - 9][col + 8] = 'v';
-board[row - 10][col + 10] = 'v';
-board[row - 9][col + 12] = 'v';
+	board[row - 9][col + 8] = 'v';
+	board[row - 10][col + 10] = 'v';
+	board[row - 9][col + 12] = 'v';
 
-board[row - 8][col + 8] = '\\';
-board[row - 8][col + 12] = '/';
+	board[row - 8][col + 8] = '\\';
+	board[row - 8][col + 12] = '/';
 
-board[row - 8][col + 11] = '_';
-board[row - 8][col + 9] = '_';
+	board[row - 8][col + 11] = '_';
+	board[row - 8][col + 9] = '_';
 
-//Body
-board[row - 1][col] = ')';
-board[row - 1][col + 1] = '_';
-board[row - 1][col + 2] = '/';
-board[row - 1][col + 3] = '/';
-board[row - 1][col + 4] = '`';
-board[row - 1][col + 5] = '_';
-board[row - 1][col + 6] = '_';
-board[row - 1][col + 7] = '>';
-board[row - 1][col + 8] = '>';
+	//Body
+	board[row - 1][col] = ')';
+	board[row - 1][col + 1] = '_';
+	board[row - 1][col + 2] = '/';
+	board[row - 1][col + 3] = '/';
+	board[row - 1][col + 4] = '`';
+	board[row - 1][col + 5] = '_';
+	board[row - 1][col + 6] = '_';
+	board[row - 1][col + 7] = '>';
+	board[row - 1][col + 8] = '>';
 
-board[row - 2][col] = '/';
-board[row - 2][col + 1] = ' ';
-board[row - 2][col + 2] = ' ';
-board[row - 2][col + 3] = ')';
-board[row - 2][col + 4] = '^';
-board[row - 2][col + 5] = '/';
-board[row - 2][col + 6] = '\\';
+	board[row - 2][col] = '/';
+	board[row - 2][col + 1] = ' ';
+	board[row - 2][col + 2] = ' ';
+	board[row - 2][col + 3] = ')';
+	board[row - 2][col + 4] = '^';
+	board[row - 2][col + 5] = '/';
+	board[row - 2][col + 6] = '\\';
 
-board[row - 2][col + 7] = '^';
-board[row - 2][col + 8] = '(';
+	board[row - 2][col + 7] = '^';
+	board[row - 2][col + 8] = '(';
 
-board[row - 3][col + 1] = '/';
-board[row - 3][col + 2] = ' ';
-board[row - 3][col + 3] = '/';
-board[row - 3][col + 4] = '^';
-board[row - 3][col + 5] = ' ';
-board[row - 3][col + 6] = '^';
-board[row - 3][col + 7] = ' ';
-board[row - 3][col + 8] = '\\';
+	board[row - 3][col + 1] = '/';
+	board[row - 3][col + 2] = ' ';
+	board[row - 3][col + 3] = '/';
+	board[row - 3][col + 4] = '^';
+	board[row - 3][col + 5] = ' ';
+	board[row - 3][col + 6] = '^';
+	board[row - 3][col + 7] = ' ';
+	board[row - 3][col + 8] = '\\';
 
-board[row - 4][col + 2] = '/';
-board[row - 4][col + 3] = ')';
-board[row - 4][col + 4] = ')';
-board[row - 4][col + 5] = ')';
-board[row - 4][col + 6] = '-';
-board[row - 4][col + 7] = '(';
+	board[row - 4][col + 2] = '/';
+	board[row - 4][col + 3] = ')';
+	board[row - 4][col + 4] = ')';
+	board[row - 4][col + 5] = ')';
+	board[row - 4][col + 6] = '-';
+	board[row - 4][col + 7] = '(';
 
-board[row - 5][col + 2] = '\\';
-board[row - 5][col + 3] = ' ';
-board[row - 5][col + 4] = '(';
-board[row - 5][col + 5] = ' ';
-board[row - 5][col + 6] = ' ';
-board[row - 5][col + 7] = '|';
-board[row - 5][col + 8] = '\\';
-board[row - 5][col + 9] = '_';
-board[row - 5][col + 10] = '/';
+	board[row - 5][col + 2] = '\\';
+	board[row - 5][col + 3] = ' ';
+	board[row - 5][col + 4] = '(';
+	board[row - 5][col + 5] = ' ';
+	board[row - 5][col + 6] = ' ';
+	board[row - 5][col + 7] = '|';
+	board[row - 5][col + 8] = '\\';
+	board[row - 5][col + 9] = '_';
+	board[row - 5][col + 10] = '/';
 
-board[row - 6][col + 2] = '\\';
-board[row - 6][col + 3] = ' ';
-board[row - 6][col + 4] = ' ';
-board[row - 6][col + 5] = '\\';
-board[row - 6][col + 6] = '/';
-board[row - 6][col + 7] = '`';
-board[row - 6][col + 8] = '\\';
-board[row - 6][col + 9] = '<';
-board[row - 6][col + 10] = '`';
-board[row - 6][col + 11] = ')';
+	board[row - 6][col + 2] = '\\';
+	board[row - 6][col + 3] = ' ';
+	board[row - 6][col + 4] = ' ';
+	board[row - 6][col + 5] = '\\';
+	board[row - 6][col + 6] = '/';
+	board[row - 6][col + 7] = '`';
+	board[row - 6][col + 8] = '\\';
+	board[row - 6][col + 9] = '<';
+	board[row - 6][col + 10] = '`';
+	board[row - 6][col + 11] = ')';
 
-//head
+	//head
 
-board[row - 7][col + 3] = '_';
-board[row - 7][col + 4] = '\\';
-board[row - 7][col + 5] = '_';
-board[row - 7][col + 6] = '/';
+	board[row - 7][col + 3] = '_';
+	board[row - 7][col + 4] = '\\';
+	board[row - 7][col + 5] = '_';
+	board[row - 7][col + 6] = '/';
 
-board[row - 8][col + 4] = '/';
-board[row - 8][col + 5] = '\\';
-board[row - 8][col + 6] = '/';
-board[row - 8][col + 7] = '\\';
+	board[row - 8][col + 4] = '/';
+	board[row - 8][col + 5] = '\\';
+	board[row - 8][col + 6] = '/';
+	board[row - 8][col + 7] = '\\';
 
-board[row - 9][col + 4] = '(';
-board[row - 9][col + 5] = '_';
-board[row - 9][col + 6] = '_';
-board[row - 9][col + 7] = ')';
+	board[row - 9][col + 4] = '(';
+	board[row - 9][col + 5] = '_';
+	board[row - 9][col + 6] = '_';
+	board[row - 9][col + 7] = ')';
 }
 
-void SpawnFireBall(Enemy devil , int& row,int& col , int & r , int & endR , int & endC){
+void SpawnFireBall(Enemy devil, int& row, int& col, int& r, int& endR, int& endC) {
 	int chance = chanceShoot();
-	
-	if(chanceShoot() && row ==NULL && col == NULL){                                
+
+	if (chanceShoot() && row == NULL && col == NULL) {
 		r = chanceMove();
 
-		if(r == 1){
+		if (r == 1) {
 			row = devil.Row - 10;
 			col = devil.Col + devil.maxWidth;
 		}
-		else if(r == 2){
+		else if (r == 2) {
 			row = devil.Row - 3;
 			col = devil.Col + devil.maxWidth;
 		}
 
-	
-	if(r == 1){ //Diagonal shoot
-		endR = row + 10;
-		endC = col + 10;
+
+		if (r == 1) { //Diagonal shoot
+			endR = row + 10;
+			endC = col + 10;
+		}
+
+		else if (r == 2) {  //Horizontal shoot
+			endR = row;
+			endC = col + 20;
+		}
 	}
 
-	else if(r == 2){  //Horizontal shoot
-		endR = row;
-		endC = col+ 20;
+	else {
+		row = NULL;
+		col = NULL;
 	}
-}
-
-else {
-	row = NULL;
-	col = NULL;
-}
 }
 
 //asci 
-void drawMoveFireBallDiagonal(char board[100][1000],int& row, int& col , int  endR , int endC){
-	if(row <= endR && col<=endC){
+void drawMoveFireBallDiagonal(char board[100][1000], int& row, int& col, int  endR, int endC) {
+	if (row <= endR && col <= endC) {
 		board[row][col] = char(232);
 		row++;
 		col++;
@@ -1955,8 +1955,8 @@ void drawMoveFireBallDiagonal(char board[100][1000],int& row, int& col , int  en
 	}
 }
 
-void drawMoveFireBallHorizontal(char board[100][1000],int& row, int& col , int endC){
-	if(col<=endC){
+void drawMoveFireBallHorizontal(char board[100][1000], int& row, int& col, int endC) {
+	if (col <= endC) {
 		board[row][col] = char(232);
 		col++;
 	}
@@ -1966,30 +1966,32 @@ void drawMoveFireBallHorizontal(char board[100][1000],int& row, int& col , int e
 	}
 }
 
-
-void controlFireBall(char board[100][1000],int& row, int& col , int r , int  endR , int endC , player& Player){
-
-	if (row !=NULL && col != NULL && !collisionCheckFireballPlayer(row , col ,Player )){
-
-		if(r == 1 && board[row+1][col+1]==' ') drawMoveFireBallDiagonal(board , row , col ,endR , endC);
-		else if(r ==2 && board[row][col+1] == ' ') drawMoveFireBallHorizontal(board , row , col , endC);
-	}
-	else if(collisionCheckFireballPlayer(row , col , Player)){
-		row = NULL;
-		col = NULL;
-		Player.Health -=10; // player gets damaged if the fireball hits him
-	}
-}
-
-int collisionCheckFireballPlayer(int ballR , int ballC , player Player){
+int collisionCheckFireballPlayer(int ballR, int ballC, player Player) {
 	int playerBottom = Player.Row;
 	int playerRight = Player.Col + 14;
 	int playerTop = Player.Row - 8;
 	int playerLeft = Player.Col;
 
-	if (ballR >= playerTop-1 && ballR <= playerBottom+1 && ballC >= playerLeft-1 && ballC <= playerRight+1) return 1;
+	if (ballR >= playerTop - 1 && ballR <= playerBottom + 1 && ballC >= playerLeft - 1 && ballC <= playerRight + 1) return 1;
 
 }
+
+
+
+void controlFireBall(char board[100][1000], int& row, int& col, int r, int  endR, int endC, player& Player) {
+
+	if (row != NULL && col != NULL && !collisionCheckFireballPlayer(row, col, Player)) {
+
+		if (r == 1 && board[row + 1][col + 1] == ' ') drawMoveFireBallDiagonal(board, row, col, endR, endC);
+		else if (r == 2 && board[row][col + 1] == ' ') drawMoveFireBallHorizontal(board, row, col, endC);
+	}
+	else if (collisionCheckFireballPlayer(row, col, Player)) {
+		row = NULL;
+		col = NULL;
+		Player.Health -= 10; // player gets damaged if the fireball hits him
+	}
+}
+
 
 
 
@@ -2250,7 +2252,7 @@ void drawAndMoveElevatorH(char board[100][1000], Elevator elevator[], int i) {
 }
 
 
-void ElevatePlayer( char board[100][1000] , int & dispR , int & dispC , int& pX, int& pY, Elevator elevator[], int nElevators) {
+void ElevatePlayer(char board[100][1000], int& dispR, int& dispC, int& pX, int& pY, Elevator elevator[], int nElevators) {
 	for (int i = 0; i < nElevators; i++) {
 		// Vertical Elevator
 		if (elevator[i].whichD == 0) {
@@ -2262,12 +2264,12 @@ void ElevatePlayer( char board[100][1000] , int & dispR , int & dispC , int& pX,
 			if ((pX + 1) == elTop && pY + 14 - 1 >= elLeft && pY <= elRight) {
 				if (elevator[i].direction == 1) { // Up
 					pX--;
-					scroll(board , pY , pX , 15 , 8 , dispR , dispC);
+					scroll(board, pY, pX, 15, 8, dispR, dispC);
 				}
-				
+
 				else if (elevator[i].direction == 2) { // Down
 					pX++;
-					scroll(board , pY , pX , 15 , 8 , dispR , dispC);
+					scroll(board, pY, pX, 15, 8, dispR, dispC);
 				}
 			}
 		}
@@ -2276,16 +2278,16 @@ void ElevatePlayer( char board[100][1000] , int & dispR , int & dispC , int& pX,
 			int elTop = elevator[i].row;
 			int elLeft = elevator[i].col;
 			int elRight = elevator[i].col + elevator[i].length - 1;
-			
+
 			// Check if player's feet are on elevator
 			if ((pX + 1) == elTop && pY + 14 - 1 >= elLeft && pY <= elRight) {
 				if (elevator[i].direction == 1) { // Right
 					pY++;
-					scroll(board , pY , pX , 15 , 8 , dispR , dispC);
+					scroll(board, pY, pX, 15, 8, dispR, dispC);
 				}
 				else if (elevator[i].direction == 2) { // Left
 					pY--;
-					scroll(board , pY , pX , 15 , 8 , dispR , dispC);
+					scroll(board, pY, pX, 15, 8, dispR, dispC);
 				}
 			}
 		}
@@ -2295,21 +2297,26 @@ void ElevatePlayer( char board[100][1000] , int & dispR , int & dispC , int& pX,
 }
 
 
-void callObj(char board[100][1000], coin coins[5] , Enemy isKill[]) {
-	//The part for the devil
-	drawTerrain(board, 95, 30, 1, 10);
-	drawTerrain(board, 91, 15, 1, 10);
-	drawTerrain(board, 87, 5, 1, 10);
-	drawLadder(board, 88, 5, 37);
-	drawTerrain(board, 50, 5, 1, 60);
-	drawLadder(board, 98, 50, 25);
-	drawDevil(board , isKill[0]);
-	drawCoin(board , coins[1].Row ,coins[1].Col , coins[1].isCollected);
 
+void callObj(char board[100][1000], coin coins[5], Enemy isKill[]) {
+	//The part for the devil
+	drawTerrain(board, 95, 61, 1, 11);
+	drawTerrain(board, 92, 46, 1, 11);
+	drawTerrain(board, 88, 20, 1, 20);
+
+	drawLadder(board, 87, 20, 15);
+
+	drawTerrain(board, 71, 31, 1, 30);
+
+	drawLadder(board, 70, 50, 20);
+	drawTerrain(board, 50, 1, 1, 50);
+
+	drawDevil(board, isKill[0]);
 	drawCoin(board, coins[0].Row, coins[0].Col, coins[0].isCollected);
 }
 
-void callDynamicObj(char board[100][1000], Elevator elevator[] ) {
+
+void callDynamicObj(char board[100][1000], Elevator elevator[]) {
 	drawAndMoveElevatorV(board, elevator, 0);
 	drawAndMoveElevatorH(board, elevator, 1);
 
@@ -2529,12 +2536,12 @@ void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int widthHero
 
 }
 
-void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[] , Enemy enemyKill[]) {
+void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[]) {
 
 
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 	clearMap(board, dispR, dispC);
-	callObj(board, coins , enemyKill); // Call the function to draw the objects
+	callObj(board, coins, enemyKill); // Call the function to draw the objects
 	addBorders(board, dispR, dispC);
 	if (animation == 0 || animation == -1) {
 		jumprightframe(board, pX, pY, LC, LR); // Draw the player jumping up
@@ -2569,7 +2576,7 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 			ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
 			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 			clearMap(board, dispR, dispC);
-			callObj(board, coins , enemyKill);
+			callObj(board, coins, enemyKill);
 			callDynamicObj(board, elevator);
 			addBorders(board, dispR, dispC);
 
@@ -2592,7 +2599,7 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 }
 
 
-void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int& isFalling, int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[] , Enemy enemyKill[]) {
+void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int& isFalling, int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[]) {
 	for (; pX + 1 < 99; ) {
 		if (pX - pHeight < 0) break;
 
@@ -2614,7 +2621,7 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 		ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
 		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 		clearMap(board, dispR, dispC);
-		callObj(board, coins , enemyKill);
+		callObj(board, coins, enemyKill);
 		callDynamicObj(board, elevator);
 		addBorders(board, dispR, dispC);
 
@@ -2640,12 +2647,12 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 
 void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 	int& isJumping, player Player, char gun[], int& isFalling,
-	int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[] , Enemy enemyKill[]) {
+	int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[]) {
 	// Initial setup
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 	clearMap(board, dispR, dispC);
 
-	callObj(board, coins , enemyKill);
+	callObj(board, coins, enemyKill);
 	callDynamicObj(board, elevator);
 	addBorders(board, dispR, dispC);
 	jumprightframe(board, pX, pY, LC, LR);
@@ -2691,7 +2698,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
 		clearMap(board, dispR, dispC);
 
-		callObj(board, coins , enemyKill);
+		callObj(board, coins, enemyKill);
 		callDynamicObj(board, elevator);
 		addBorders(board, dispR, dispC);
 		jumprightframe(board, pX, pY, LC, LR);
@@ -2749,7 +2756,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 		clearMap(board, dispR, dispC);
 
-		callObj(board, coins , enemyKill);
+		callObj(board, coins, enemyKill);
 
 		callDynamicObj(board, elevator);
 		addBorders(board, dispR, dispC);
@@ -2766,12 +2773,12 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 	isFalling = 0;
 	isWalking = 0;
 }
-void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int& isFalling, int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[] , Enemy enemyKill[]) {
+void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, char gun[], int& isFalling, int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[]) {
 
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 	clearMap(board, dispR, dispC);
 
-	callObj(board, coins , enemyKill);
+	callObj(board, coins, enemyKill);
 	callDynamicObj(board, elevator);
 
 	addBorders(board, dispR, dispC);
@@ -2820,7 +2827,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 		ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
 		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 		clearMap(board, dispR, dispC);
-		callObj(board, coins , enemyKill);
+		callObj(board, coins, enemyKill);
 		callDynamicObj(board, elevator);
 		addBorders(board, dispR, dispC);
 		jumpleftframe(board, pX, pY, LC, LR);
@@ -2859,7 +2866,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 			ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
 			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 			clearMap(board, dispR, dispC);
-			callObj(board, coins , enemyKill);
+			callObj(board, coins, enemyKill);
 			callDynamicObj(board, elevator);
 			addBorders(board, dispR, dispC);
 			jumpleftframe(board, pX, pY, LC, LR);
@@ -2921,13 +2928,18 @@ int main() {
 
 
 		ladder ladders[4];
-		ladders[0].Row = 98;
-		ladders[0].Col = 50;
-		ladders[0].length = 25;
+		ladders[0].Row = 87;
+		ladders[0].Col = 20;
+		ladders[0].length = 15;
+
+
+		ladders[1].Row = 70;
+		ladders[1].Col = 50;
+		ladders[1].length = 20;
+
 
 		coin coins[5];
-		intializeCoin(board, coins[0], 97, 70);
-		intializeCoin(board, coins[1], 50, 55);
+		intializeCoin(board, coins[0], 49, 2);
 
 
 		Elevator elevator[2];
@@ -2937,7 +2949,7 @@ int main() {
 		intializeElevator(board, elevator, 1, 95, 130, 95, 95, 130, 150, 1, 1); //horizonatal
 
 		Enemy enemyKill[9];
-		intializeEnemy(enemyKill, 0, 50, 40, 1, 11 , 13, 100, 10); //Devil
+		intializeEnemy(enemyKill, 0, 50, 12, 1, 11, 13, 100, 10); //Devil
 
 		intializeEnemy(enemyKill, 1, 50, 30, 1, 10, 12, 250, 30); //Reaper
 
@@ -2984,26 +2996,26 @@ int main() {
 
 
 
-		int DFireBallR = NULL , DFireBallC = NULL , chance = -1 , endR = -1 , endC = -1; //intializeValues for devil shooting
+		int DFireBallR = NULL, DFireBallC = NULL, chance = -1, endR = -1, endC = -1; //intializeValues for devil shooting
 
 
 		int animation = 0, frame = 1, ResetFrame = 0;
 		scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 		clearMap(board, dispR, dispC);
-		callObj(board, coins , enemyKill);
+		callObj(board, coins, enemyKill);
 		callDynamicObj(board, elevator);
 		addBorders(board, dispR, dispC);
 		drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
 		system("cls");
 		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun);
 		Clear_LoadMap(board, dispR, dispC);
-		FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator , enemyKill);
+		FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill);
 		int isWon = 0;
 
 		for (; !isWon;) {
-			FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator , enemyKill);
+			FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill);
 			clearMap(board, dispR, dispC);
-			callObj(board, coins , enemyKill);
+			callObj(board, coins, enemyKill);
 			callDynamicObj(board, elevator);
 			addBorders(board, dispR, dispC);
 			if (animation == 0) {
@@ -3188,10 +3200,10 @@ int main() {
 			}
 
 			ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
-			
+
 			//Devil's shooting mechanism
-			SpawnFireBall(enemyKill[0] , DFireBallR , DFireBallC , chance , endR , endC );
-			controlFireBall(board , DFireBallR , DFireBallC , chance , endR , endC , Player);
+			SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
+			controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
 		}
 	}
 	else return 0;
