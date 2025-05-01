@@ -168,7 +168,7 @@ void drawDevil(char board[100][1000], Enemy devil) {
 
         else if(r == 2){  //Horizontal shoot
             endR = row;
-            endC = col+ 20
+            endC = col+ 20;
         }
     }
 
