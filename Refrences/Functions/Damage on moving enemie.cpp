@@ -14,7 +14,7 @@ char reset[] = "\033[0m";
 char bold[] = "\033[1m";
 
 char board[100][1000]; // Board size
-char dispBoard(board);
+char dispBoard(board[100][1000]);
 
 struct Enemy {
 	int health = 100;
@@ -22,302 +22,19 @@ struct Enemy {
 	int col = 30;
 	int width = 15;  // From col+7 to col+15 = 9 width
 	int height = 4;   // From row-3 to row = 4 height
-
-	void createEnemy(int row, int col) {
-		this->row = row;
-		this->col = col;
-		board[row - 3][col + 10] = '_';
-		board[row - 3][col + 11] = '_';
-		board[row - 2][col + 7] = '<';
-		board[row - 2][col + 8] = '(';
-		board[row - 2][col + 9] = 'o';
-		board[row - 2][col + 11] = ')';
-		board[row - 2][col + 12] = '_';
-		board[row - 2][col + 13] = '_';
-		board[row - 2][col + 14] = '_';
-		board[row - 1][col + 8] = '(';
-		board[row - 1][col + 13] = '.';
-		board[row - 1][col + 14] = '_';
-		board[row - 1][col + 15] = '>';
-		board[row - 0][col + 9] = '`';
-		board[row - 0][col + 10] = '-';
-		board[row - 0][col + 11] = '-';
-		board[row - 0][col + 12] = '-';
-		board[row - 0][col + 13] = '-';
-		board[row - 0][col + 14] = '\'';
-	}
 };
-
-void checkEnemyHit(int row, int col, Enemy& enemy, int& checkhit) {
-	checkhit = 0;
-
-
-	// Enemy bounding box
-	int top = enemy.row - 3;
-	int bottom = enemy.row;
-	int left = enemy.col + 6;
-	int right = enemy.col + 16;
-
-	if (row >= top && row <= bottom && col >= left && col <= right) {
-		checkhit = 1;
-	}
-}
-
-
-struct Laser {
-	void shootLaser(Enemy& enemy, int& killed, char key, int& player_y, int& player_x, int& animation, int& shootR, int& shootC) {
-		int posr = shootR;
-		int posc = shootC;
-		int checkhit = 0;
-		int dir = 0;
-		if (animation == 0 || animation == -1) {
-			dir = 1;
-		}
-		else if (animation == 1 || animation == -2) {
-			dir = -1;
-		}
-
-		
-		if ((posr != -1 && posc != -1) && dir == 1) {
-			int alreadyHit = 0;
-			int h = 1;
-			while (board[posr][posc + h] == ' ' && h < 20) {
-				board[posr][posc + h] = '=';
-
-				// Check for collision with the enemy
-				checkEnemyHit(posr, posc + h, enemy, checkhit);
-				if (!alreadyHit && (checkhit == 1)) {
-					enemy.health -= 30;  // Laser deals 10 damage
-					cout << "Laser hit! Enemy health: " << enemy.health << endl;
-					if (enemy.health <= 0) {
-						cout << "You killed the duck :(" << endl;
-						killed = 1;
-					}
-					alreadyHit = true;
-				}
-
-				h++;
-				system("cls");
-				dispBoard(board);
-			}
-
-			// Reset laser position
-			int k = h;
-			h = 1;
-			while (true) {
-				if (board[posr][posc + h] == '=') {
-					board[posr][posc + h] = ' ';
-				}
-				system("cls");
-				dispBoard(board);
-
-				h++;
-				if (h == k) {
-					break;
-				}
-			}
-		}
-
-
-		else if ((posr != -1 && posc != -1) && dir == -1) {
-			int alreadyHit = 0;
-			int h = 1;
-			while (board[posr][posc - h] == ' ' && h < 20)
-			{
-				board[posr][posc - h] = '=';
-
-				// Check for collision with the enemy
-				checkEnemyHit(posr, posc - h, enemy, checkhit);
-				if (!alreadyHit && (checkhit == 1)) {
-					enemy.health -= 30;  // Laser deals 10 damage
-					cout << "Laser hit! Enemy health: " << enemy.health << endl;
-					if (enemy.health <= 0) {
-						cout << "You killed the duck :(" << endl;
-						killed = 1;
-					}
-					alreadyHit = true;
-				}
-
-				h++;
-				system("cls");
-				dispBoard(board);
-
-			}
-
-			int k = h;
-			h = 1;
-
-			while (true)
-			{
-				if (board[posr][posc - h] == '=') {
-					board[posr][posc - h] = ' ';
-				}
-				system("cls");
-				dispBoard(board);
-
-				h++;
-				if (h == k) {
-					break;
-				}
-			}
-
-		}
-
-	}
-};
-
-struct Ammo {
-	int count = 10;
-
-	void use() {
-		if (count > 0) {
-			count--;
-			cout << "Ammo used. Remaining: " << count << endl;
-		}
-		else {
-			cout << "Ammo is out!" << endl;
-		}
-	}
-
-	void reload(int amount) {
-		if (count <= 5)
-		{
-			count += amount;
-			cout << "Ammo reloaded! Current ammo: " << count << endl;
-		}
-		else
-		{
-			cout << "You can't reload! ---Your max Ammo is 10" << endl;
-		}
-
-	}
-};
-
-struct Gun {
-	void shootGun(Enemy& enemy, int& killed, char key, int& player_y, int& player_x, int& animation) {
-		int posr = -1, posc = -1;
-		int checkhit = 0;
-		int dir = 0;
-		if (animation == 0 || animation == -1) {
-			dir = 1;
-		}
-		else if (animation == 1 || animation == -2) {
-			dir = -1;
-		}
-
-
-		if (posr != -1 && posc != -1 && dir == 1) {
-			int r = posr;
-			int ct = 0;
-			int h = 1;
-			int hitRegistered = 0;
-
-			for (int c = posc + 1; c < 80; c++) {
-				if (board[r][c] == ' ') {
-					board[r][c] = 'o';
-				}
-				else {
-					h = -1;
-				}
-
-				// Check for collision with the enemy
-				checkEnemyHit(r, c, enemy, checkhit);
-				if (!hitRegistered && (checkhit == 1)) {
-					enemy.health -= 10;  // Gun deals 10 damage
-					cout << "Bullet hit! Enemy health: " << enemy.health << endl;
-					if (enemy.health <= 0) {
-						cout << "You killed the duck :(" << endl;
-						killed = 1;
-					}
-					hitRegistered = true;
-					board[r][c] = ' ';
-					break;  // Stop the bullet after hit
-				}
-
-				system("cls");
-				for (int i = 0; i < 24; i++) {
-					for (int j = 0; j < 80; j++) {
-						cout << board[i][j];
-
-					}
-					cout << endl;
-				}
-
-				Sleep(50);
-				if (board[r][c] == 'o') {
-					board[r][c] = ' ';
-				}
-
-				ct++;
-				if (ct == 25)
-					break;
-			}
-		}
-
-
-		else if ((posr != -1 && posc != -1) && dir == -1) {
-			int r = posr;
-			int ct = 0;
-			int h = 1;
-			int hitRegistered = 0;
-
-			for (int c = posc - 1; c > 0; c--) {
-				if (board[r][c] == ' ') {
-					board[r][c] = 'o';
-				}
-				else {
-					h = -1;
-				}
-
-				// Check for collision with the enemy
-				checkEnemyHit(r, c, enemy, checkhit);
-				if (!hitRegistered && (checkhit == 1)) {
-					enemy.health -= 10;  // Gun deals 10 damage
-					cout << "Bullet hit! Enemy health: " << enemy.health << endl;
-					if (enemy.health <= 0) {
-						cout << "You killed the duck :(" << endl;
-						killed = 1;
-					}
-					hitRegistered = true;
-					board[r][c] = ' ';
-					break;  // Stop the bullet after hit
-				}
-
-				system("cls");
-				for (int i = 0; i < 24; i++) {
-					for (int j = 0; j < 80; j++) {
-						cout << board[i][j];
-
-					}
-					cout << endl;
-				}
-
-				Sleep(50);
-				if (board[r][c] == 'o') {
-					board[r][c] = ' ';
-				}
-
-				ct++;
-				if (ct == 25)
-					break;
-			}
-
-		}
-	}
-};
-
 
 struct player {
-	Ammo ammo;
-	Gun gun;
-	Laser laser;
 	int Row, Col; //Position
 	int maxHeight = 9, maxWidth = 15; //Max height and width
 
-	int health = 100;
+	int Health;
 	int coins; //Either coins or Level , until decided i will leave it as coins
-	int maxAmmo;
+
 	int shootR, shootC;
+	int gun; //Either 1 for gun (bullets) or 2 for Lazerbeam (lazer)
+	int ammo, maxAmmo; // (ammo/maxAmmo) , max ammo could be 24 for gun , (maxammo == 1) for lazerbeam
+	int Reload[2] = { 1 , 3 }; //coolDown[0] for gun , coolDown[1] for lazerbeam
 };
 
 
@@ -2450,6 +2167,267 @@ void checkCoinTouch(char board[100][1000], int pX, int pY, int pWidth, int pHeig
 
 
 
+
+////////////////////////////////////////
+
+
+void checkEnemyHit(int row, int col, Enemy& enemy, int& checkhit) {
+	checkhit = 0;
+
+
+	// Enemy bounding box
+	int top = enemy.row - 3;
+	int bottom = enemy.row;
+	int left = enemy.col + 6;
+	int right = enemy.col + 16;
+
+	if (row >= top && row <= bottom && col >= left && col <= right) {
+		checkhit = 1;
+	}
+}
+
+
+
+	void shootLaser(Enemy& enemy, int& killed, char key, int& player_y, int& player_x, int& animation, int& shootR, int& shootC) {
+		int posr = shootR;
+		int posc = shootC;
+		int checkhit = 0;
+		int dir = 0;
+		if (animation == 0 || animation == -1) {
+			dir = 1;
+		}
+		else if (animation == 1 || animation == -2) {
+			dir = -1;
+		}
+
+		
+		if ((posr != -1 && posc != -1) && dir == 1) {
+			int alreadyHit = 0;
+			int h = 1;
+			while (board[posr][posc + h] == ' ' && h < 20) {
+				board[posr][posc + h] = '=';
+
+				// Check for collision with the enemy
+				checkEnemyHit(posr, posc + h, enemy, checkhit);
+				if (!alreadyHit && (checkhit == 1)) {
+					enemy.health -= 30;  // Laser deals 10 damage
+					cout << "Laser hit! Enemy health: " << enemy.health << endl;
+					if (enemy.health <= 0) {
+						cout << "You killed the duck :(" << endl;
+						killed = 1;
+					}
+					alreadyHit = true;
+				}
+
+				h++;
+				system("cls");
+				dispBoard(board);
+			}
+
+			// Reset laser position
+			int k = h;
+			h = 1;
+			while (true) {
+				if (board[posr][posc + h] == '=') {
+					board[posr][posc + h] = ' ';
+				}
+				system("cls");
+				dispBoard(board);
+
+				h++;
+				if (h == k) {
+					break;
+				}
+			}
+		}
+
+
+		else if ((posr != -1 && posc != -1) && dir == -1) {
+			int alreadyHit = 0;
+			int h = 1;
+			while (board[posr][posc - h] == ' ' && h < 20)
+			{
+				board[posr][posc - h] = '=';
+
+				// Check for collision with the enemy
+				checkEnemyHit(posr, posc - h, enemy, checkhit);
+				if (!alreadyHit && (checkhit == 1)) {
+					enemy.health -= 30;  // Laser deals 10 damage
+					cout << "Laser hit! Enemy health: " << enemy.health << endl;
+					if (enemy.health <= 0) {
+						cout << "You killed the duck :(" << endl;
+						killed = 1;
+					}
+					alreadyHit = true;
+				}
+
+				h++;
+				system("cls");
+				dispBoard(board);
+
+			}
+
+			int k = h;
+			h = 1;
+
+			while (true)
+			{
+				if (board[posr][posc - h] == '=') {
+					board[posr][posc - h] = ' ';
+				}
+				system("cls");
+				dispBoard(board);
+
+				h++;
+				if (h == k) {
+					break;
+				}
+			}
+
+		}
+
+	}
+
+
+struct Ammo {
+	int count = 10;
+
+	void use() {
+		if (count > 0) {
+			count--;
+			cout << "Ammo used. Remaining: " << count << endl;
+		}
+		else {
+			cout << "Ammo is out!" << endl;
+		}
+	}
+
+	void reload(int amount) {
+		if (count <= 5)
+		{
+			count += amount;
+			cout << "Ammo reloaded! Current ammo: " << count << endl;
+		}
+		else
+		{
+			cout << "You can't reload! ---Your max Ammo is 10" << endl;
+		}
+
+	}
+};
+
+struct Gun {
+	void shootGun(Enemy& enemy, int& killed, char key, int& player_y, int& player_x, int& animation) {
+		int posr = -1, posc = -1;
+		int checkhit = 0;
+		int dir = 0;
+		if (animation == 0 || animation == -1) {
+			dir = 1;
+		}
+		else if (animation == 1 || animation == -2) {
+			dir = -1;
+		}
+
+
+		if (posr != -1 && posc != -1 && dir == 1) {
+			int r = posr;
+			int ct = 0;
+			int h = 1;
+			int hitRegistered = 0;
+
+			for (int c = posc + 1; c < 80; c++) {
+				if (board[r][c] == ' ') {
+					board[r][c] = 'o';
+				}
+				else {
+					h = -1;
+				}
+
+				// Check for collision with the enemy
+				checkEnemyHit(r, c, enemy, checkhit);
+				if (!hitRegistered && (checkhit == 1)) {
+					enemy.health -= 10;  // Gun deals 10 damage
+					cout << "Bullet hit! Enemy health: " << enemy.health << endl;
+					if (enemy.health <= 0) {
+						cout << "You killed the duck :(" << endl;
+						killed = 1;
+					}
+					hitRegistered = true;
+					board[r][c] = ' ';
+					break;  // Stop the bullet after hit
+				}
+
+				system("cls");
+				for (int i = 0; i < 24; i++) {
+					for (int j = 0; j < 80; j++) {
+						cout << board[i][j];
+
+					}
+					cout << endl;
+				}
+
+				Sleep(50);
+				if (board[r][c] == 'o') {
+					board[r][c] = ' ';
+				}
+
+				ct++;
+				if (ct == 25)
+					break;
+			}
+		}
+
+
+		else if ((posr != -1 && posc != -1) && dir == -1) {
+			int r = posr;
+			int ct = 0;
+			int h = 1;
+			int hitRegistered = 0;
+
+			for (int c = posc - 1; c > 0; c--) {
+				if (board[r][c] == ' ') {
+					board[r][c] = 'o';
+				}
+				else {
+					h = -1;
+				}
+
+				// Check for collision with the enemy
+				checkEnemyHit(r, c, enemy, checkhit);
+				if (!hitRegistered && (checkhit == 1)) {
+					enemy.health -= 10;  // Gun deals 10 damage
+					cout << "Bullet hit! Enemy health: " << enemy.health << endl;
+					if (enemy.health <= 0) {
+						cout << "You killed the duck :(" << endl;
+						killed = 1;
+					}
+					hitRegistered = true;
+					board[r][c] = ' ';
+					break;  // Stop the bullet after hit
+				}
+
+				system("cls");
+				for (int i = 0; i < 24; i++) {
+					for (int j = 0; j < 80; j++) {
+						cout << board[i][j];
+
+					}
+					cout << endl;
+				}
+
+				Sleep(50);
+				if (board[r][c] == 'o') {
+					board[r][c] = ' ';
+				}
+
+				ct++;
+				if (ct == 25)
+					break;
+			}
+
+		}
+	}
+};
 
 
 

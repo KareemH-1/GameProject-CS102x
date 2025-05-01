@@ -1,6 +1,5 @@
 #include <iostream>   // For input/output operations
 #include <conio.h>    // For keyboard input functions (_kbhit() and _getch())
-#include <windows.h>  // For Sleep() function to pause the game
 using namespace std;
 
 
