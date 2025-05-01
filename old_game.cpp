@@ -104,7 +104,7 @@ void displayInstructions() {
 	cout << "==================================================" << endl;
 	cout << "||  Controls:                                   ||" << endl;
 	cout << "||                                              ||" << endl;
-	cout << "||  W/Space  - Jump / Climb Up                  ||" << endl;
+	cout << "||  W  - Jump / Climb Up                        ||" << endl;
 	cout << "||  A  - Move Left                              ||" << endl;
 	cout << "||  D  - Move Right                             ||" << endl;
 	cout << "||  S  - Climb Down                             ||" << endl;
@@ -2088,20 +2088,16 @@ void EnemyPlayerCollision(Enemy iskill[], int numberIsKill, Enemy unkill[], int 
 
 
 
-//////////////////////////////////////////////
-/////////////////////////////////////////////
-////////////////////////////////////////////
 
-void scroll(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero, int& dispR, int& dispC) {
-	dispC = posJHero - 30;
-	if (dispC < 0) dispC = 0;
-	if (dispC > 1000 - 80) dispC = 1000 - 80;
 
-	dispR = posIHero + 2;
-	if (dispR < 24) dispR = 23;
-	if (dispR > 86) dispR = 98;
 
-}
+
+
+
+
+
+
+
 
 
 
@@ -2163,12 +2159,9 @@ void ElevatePlayer(int& pX, int& pY, Elevator elevator[], int nElevators) {
 			if ((pX + 1) == elTop && pY + 14 - 1 >= elLeft && pY <= elRight) {
 				if (elevator[i].direction == 1) { // Up
 					pX--;
-					scroll(board , pY , pX , 15 , 8 , dispR , dispC);
 				}
-				
 				else if (elevator[i].direction == 2) { // Down
 					pX++;
-					scroll(board , pY , pX , 15 , 8 , dispR , dispC);
 				}
 			}
 		}
@@ -2177,16 +2170,14 @@ void ElevatePlayer(int& pX, int& pY, Elevator elevator[], int nElevators) {
 			int elTop = elevator[i].row;
 			int elLeft = elevator[i].col;
 			int elRight = elevator[i].col + elevator[i].length - 1;
-			
+
 			// Check if player's feet are on elevator
 			if ((pX + 1) == elTop && pY + 14 - 1 >= elLeft && pY <= elRight) {
 				if (elevator[i].direction == 1) { // Right
 					pY++;
-					scroll(board , pY , pX , 15 , 8 , dispR , dispC);
 				}
 				else if (elevator[i].direction == 2) { // Left
 					pY--;
-					scroll(board , pY , pX , 15 , 8 , dispR , dispC);
 				}
 			}
 		}
@@ -2211,6 +2202,16 @@ void callDynamicObj(char board[100][1000], Elevator elevator[]) {
 
 ///////////////////////////////
 
+void scroll(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero, int& dispR, int& dispC) {
+	dispC = posJHero - 30;
+	if (dispC < 0) dispC = 0;
+	if (dispC > 1000 - 80) dispC = 1000 - 80;
+
+	dispR = posIHero + 2;
+	if (dispR < 24) dispR = 23;
+	if (dispR > 86) dispR = 98;
+
+}
 
 void clearMap(char board[100][1000], int dispR, int dispC) {
 	int top = dispR - 23;
@@ -2460,7 +2461,7 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 			pX--;
 
 			checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
-			ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
+			ElevatePlayer(Player.Row, Player.Col, elevator, 2);
 			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 			clearMap(board, dispR, dispC);
 			callObj(board, coins); // Call the function to draw the objects
@@ -2505,7 +2506,7 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 
 		pX++;
 		checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
-		ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
+		ElevatePlayer(Player.Row, Player.Col, elevator, 2);
 		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 		clearMap(board, dispR, dispC);
 		callObj(board, coins);
@@ -2526,7 +2527,7 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 		isFalling = 1;
 	}
 	checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
-	ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
+	ElevatePlayer(Player.Row, Player.Col, elevator, 2);
 	isJumping = 0;
 	isFalling = 0;
 }
@@ -2581,7 +2582,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
 		// Redraw everything
 		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
-		ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
+		ElevatePlayer(Player.Row, Player.Col, elevator, 2);
 		clearMap(board, dispR, dispC);
 		callObj(board, coins);
 		callDynamicObj(board, elevator);
@@ -2635,7 +2636,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		}
 
 		checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
-		ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
+		ElevatePlayer(Player.Row, Player.Col, elevator, 2);
 
 		// Redraw everything
 		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
@@ -2652,7 +2653,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		isFalling = 1;
 	}
 	checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
-	ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
+	ElevatePlayer(Player.Row, Player.Col, elevator, 2);
 	isJumping = 0;
 	isFalling = 0;
 	isWalking = 0;
@@ -2707,7 +2708,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 		pY--;
 
 		checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
-		ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
+		ElevatePlayer(Player.Row, Player.Col, elevator, 2);
 		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 		clearMap(board, dispR, dispC);
 		callObj(board, coins);
@@ -2746,7 +2747,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 
 
 			checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
-			ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
+			ElevatePlayer(Player.Row, Player.Col, elevator, 2);
 			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 			clearMap(board, dispR, dispC);
 			callObj(board, coins);
@@ -2761,11 +2762,31 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 		}
 	}
 	checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
-	ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
+	ElevatePlayer(Player.Row, Player.Col, elevator, 2);
 	isWalking = 0;
 	isJumping = 0, isFalling = 0; // Reset jumping and falling states after landing
 
 }
+/*
+NEXT STEPS:
+8. implement enemies
+9. implement maps
+10. implement elevator
+11.add reloading , climbing , elevator animations and implement them
+12. implement shooting animation
+13. add coins and health pickups
+14. add level up system (level up = increase max health)
+15. add player hitbox
+16. add boss Level
+17. add boss hitbox
+18. add boss health bar
+19. add boss attack animation
+20. add boss attack hitbox
+21. change game bar if needed
+22. change game frame size if needed
+
+*/
+
 
 int main() {
 	int width = 80, height = 24;
@@ -3002,7 +3023,7 @@ int main() {
 						isWalking = 1;
 					}
 				}
-				else if (key == 'w' || key == 'W' || key == ' ') {
+				else if (key == 'w' || key == 'W') {
 					if (isOnLadder == 0) {
 						if (isWalking == 0) {
 							if (Player.Row - Player.maxHeight > 0) {
@@ -3030,7 +3051,7 @@ int main() {
 				}
 
 				if (isOnLadder == 1) {
-					if ((key == 'w' || key == 'W' || key == ' ')) {
+					if ((key == 'w' || key == 'W')) {
 						if (Player.Row == ladders[currentLadder].Row - ladders[currentLadder].length + 1) {
 							animation = 0;
 						}
@@ -3077,7 +3098,8 @@ int main() {
 				else if (animation == 1) animation = -2;
 			}
 
-			ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
+			ElevatePlayer(Player.Row, Player.Col, elevator, 2);
+
 		}
 	}
 	else return 0;
