@@ -1,5 +1,6 @@
 #include <iostream>
 #include <conio.h>
+#include <ctime>
 using namespace std;
 
 
@@ -2849,6 +2850,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 	for (; pX + 1 < 23 && board[pX + 1][pY] == ' ' && pY > 1;) {
 		int checkDiagonal = 1;
 		for (int j = pY + 3; j <= pY + 9; j++) {
+			
 			if (board[pX + 1][j] != ' ') {
 				checkDiagonal = 0;
 				break;
@@ -2884,6 +2886,8 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 }
 
 int main() {
+	srand(time(0));
+
 	int width = 80, height = 24;
 	char board[100][1000];
 	int dispR = 95, dispC = 3;
