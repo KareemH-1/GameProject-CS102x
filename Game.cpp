@@ -1791,7 +1791,7 @@ void drawEnemyBirdRight(char board[100][1000], int row, int col) {
 ////////////////////////////////////////////////
 
 int chanceShoot() {
-	int chance = rand() % 3 + 1;
+	int chance = rand() % 2 + 1;
 
 	if (chance == 1) return 1;
 	else return 0;
@@ -1907,12 +1907,32 @@ void drawDevil(char board[100][1000], Enemy devil) {
 	board[row - 9][col + 5] = '_';
 	board[row - 9][col + 6] = '_';
 	board[row - 9][col + 7] = ')';
+
+	board[row -11][col] = 'Y';
+	board[row -11][col+1] = 'O';
+	board[row -11][col+2] = 'U';
+	board[row -11][col+3] = ' ';
+	board[row -11][col+4] = 'S';
+	board[row -11][col+5] = 'H';
+	board[row -11][col+6] = 'A';
+	board[row -11][col+7] = 'L';
+	board[row -11][col+8] = 'L';
+	board[row -11][col+9] = ' ';
+	board[row -11][col+10] = 'N';
+	board[row -11][col+11] = 'O';
+	board[row -11][col+12] = 'T';
+	board[row -11][col+13] = ' ';
+	board[row -11][col+14] = 'P';
+	board[row -11][col+15] = 'A';
+	board[row -11][col+16] = 'S';
+	board[row -11][col+17] = 'S';
+	board[row -11][col+18] = '!';
 }
 
 void SpawnFireBall(Enemy devil, int& row, int& col, int& r, int& endR, int& endC) {
 	int chance = chanceShoot();
 
-	if (chanceShoot() && row == -1 && col == -1) {
+	if (chance && row == -1 && col == -1) {
 		r = chanceMove();
 
 		if (r == 1) {
@@ -1961,6 +1981,7 @@ void drawMoveFireBallHorizontal(char board[100][1000], int& row, int& col, int e
 		col++;
 	}
 	else {
+		
 		row = -1;
 		col = -1;
 	}
@@ -1973,12 +1994,12 @@ int collisionCheckFireballPlayer(int ballR, int ballC, player Player) {
 	int playerLeft = Player.Col;
 
 	if (ballR >= playerTop - 1 && ballR <= playerBottom + 1 && ballC >= playerLeft - 1 && ballC <= playerRight + 1) return 1;
-
+	else return 0;
 }
 
 
 
-void controlFireBall(char board[100][1000], int& row, int& col, int r, int & endR, int &endC, player& Player) {
+void controlFireBall(char board[100][1000], int& row, int& col, int r, int& endR, int& endC, player& Player) {
 
 	if (row != -1 && col != -1 && !collisionCheckFireballPlayer(row, col, Player)) {
 
@@ -1986,6 +2007,7 @@ void controlFireBall(char board[100][1000], int& row, int& col, int r, int & end
 		else if (r == 2 && board[row][col + 1] == ' ') drawMoveFireBallHorizontal(board, row, col, endC);
 	}
 	else if (collisionCheckFireballPlayer(row, col, Player)) {
+
 		row = -1;
 		col = -1;
 		Player.Health -= 10; // player gets damaged if the fireball hits him
@@ -2850,7 +2872,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 	for (; pX + 1 < 23 && board[pX + 1][pY] == ' ' && pY > 1;) {
 		int checkDiagonal = 1;
 		for (int j = pY + 3; j <= pY + 9; j++) {
-			
+
 			if (board[pX + 1][j] != ' ') {
 				checkDiagonal = 0;
 				break;
@@ -3007,6 +3029,9 @@ int main() {
 		clearMap(board, dispR, dispC);
 		callObj(board, coins, enemyKill);
 		callDynamicObj(board, elevator);
+		//Devil's shooting mechanism
+		SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
+		controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
 		addBorders(board, dispR, dispC);
 		drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
 		system("cls");
@@ -3020,6 +3045,9 @@ int main() {
 			clearMap(board, dispR, dispC);
 			callObj(board, coins, enemyKill);
 			callDynamicObj(board, elevator);
+			//Devil's shooting mechanism
+			SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
+			controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
 			addBorders(board, dispR, dispC);
 			if (animation == 0) {
 				if (frame == 1) {
