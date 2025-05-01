@@ -2147,6 +2147,7 @@ void drawAndMoveElevatorH(char board[100][1000], Elevator elevator[], int i) {
 	moveElevatorHorizontally(elevator[i].col, elevator[i].startCol, elevator[i].endCol, elevator[i].direction);
 }
 
+// Vertical Elevator not working
 void ElevatePlayer(int& pX, int& pY, Elevator elevator[], int nElevators) {
 	for (int i = 0; i < nElevators; i++) {
 		// Vertical Elevator

@@ -14,6 +14,7 @@ char reset[] = "\033[0m";
 char bold[] = "\033[1m";
 
 char board[100][1000]; // Board size
+char dispBoard(board);
 
 struct Enemy {
 	int health = 100;
@@ -64,25 +65,19 @@ void checkEnemyHit(int row, int col, Enemy& enemy, int& checkhit) {
 
 
 struct Laser {
-	void shootLaser(Enemy& enemy, int& killed, char key, int& player_y, int& player_x) {
-		int posr = -1, posc = -1;
+	void shootLaser(Enemy& enemy, int& killed, char key, int& player_y, int& player_x, int& animation, int& shootR, int& shootC) {
+		int posr = shootR;
+		int posc = shootC;
 		int checkhit = 0;
 		int dir = 0;
-		for (int r = 0; r < 24; r++) {
-			for (int c = 0; c < 80; c++) {
-				if (board[r][c] == '\\' && board[r + 1][c] == '/') {
-					posr = r;
-					posc = c;
-					dir = 1;
-				}
-				if (board[r][c] == '/' && board[r + 1][c] == '\\') {
-					posr = r;
-					posc = c;
-					dir = -1;
-				}
-			}
+		if (animation == 0 || animation == -1) {
+			dir = 1;
+		}
+		else if (animation == 1 || animation == -2) {
+			dir = -1;
 		}
 
+		
 		if ((posr != -1 && posc != -1) && dir == 1) {
 			int alreadyHit = 0;
 			int h = 1;
@@ -103,13 +98,7 @@ struct Laser {
 
 				h++;
 				system("cls");
-				for (int r = 0; r < 24; r++) {
-					for (int c = 0; c < 80; c++) {
-						cout << board[r][c];
-
-					}
-					cout << endl;
-				}
+				dispBoard(board);
 			}
 
 			// Reset laser position
@@ -120,12 +109,8 @@ struct Laser {
 					board[posr][posc + h] = ' ';
 				}
 				system("cls");
-				for (int r = 0; r < 24; r++) {
-					for (int c = 0; c < 80; c++) {
-						cout << board[r][c];
-					}
-					cout << endl;
-				}
+				dispBoard(board);
+
 				h++;
 				if (h == k) {
 					break;
@@ -155,13 +140,8 @@ struct Laser {
 
 				h++;
 				system("cls");
-				for (int r = 0; r < 24; r++) {
-					for (int c = 0; c < 80; c++) {
-						cout << board[r][c];
+				dispBoard(board);
 
-					}
-					cout << endl;
-				}
 			}
 
 			int k = h;
@@ -173,12 +153,8 @@ struct Laser {
 					board[posr][posc - h] = ' ';
 				}
 				system("cls");
-				for (int r = 0; r < 24; r++) {
-					for (int c = 0; c < 80; c++) {
-						cout << board[r][c];
-					}
-					cout << endl;
-				}
+				dispBoard(board);
+
 				h++;
 				if (h == k) {
 					break;
@@ -218,24 +194,17 @@ struct Ammo {
 };
 
 struct Gun {
-	void shootGun(Enemy& enemy, int& killed, char key, int& player_y, int& player_x) {
+	void shootGun(Enemy& enemy, int& killed, char key, int& player_y, int& player_x, int& animation) {
 		int posr = -1, posc = -1;
 		int checkhit = 0;
 		int dir = 0;
-		for (int r = 0; r < 24; r++) {
-			for (int c = 0; c < 80; c++) {
-				if (board[r][c] == '\\' && board[r + 1][c] == '/') {
-					posr = r;
-					posc = c;
-					dir = 1;
-				}
-				if (board[r][c] == '/' && board[r + 1][c] == '\\') {
-					posr = r;
-					posc = c;
-					dir = -1;
-				}
-			}
+		if (animation == 0 || animation == -1) {
+			dir = 1;
 		}
+		else if (animation == 1 || animation == -2) {
+			dir = -1;
+		}
+
 
 		if (posr != -1 && posc != -1 && dir == 1) {
 			int r = posr;
@@ -2389,6 +2358,7 @@ void clearMap(char board[100][1000], int dispR, int dispC) {
 
 
 }
+
 void addBorders(char board[100][1000], int dispR, int dispC) {
 	int top = dispR - 23;
 	int bottom = dispR;
@@ -3103,7 +3073,7 @@ int main() {
 				if (ct % 2 == 0) {
 					if (key == 'f') {
 						if (Player.ammo.count > 0) {
-							Player.laser.shootLaser(enemy, killed, key, player_y, player_x);
+							Player.laser.shootLaser(enemy, killed, key, player_y, player_x, animation, Player.shootR, Player.shootC);
 							Player.ammo.use();
 						}
 						else {
@@ -3115,7 +3085,7 @@ int main() {
 				else {
 					if (key == 'f') {
 						if (Player.ammo.count > 0) {
-							Player.gun.shootGun(enemy, killed, key, player_y, player_x);
+							Player.gun.shootGun(enemy, killed, key, player_y, player_x, animation);
 							Player.ammo.use();
 						}
 						else {
