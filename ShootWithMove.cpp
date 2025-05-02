@@ -3020,9 +3020,6 @@ void shootLaser(char board[100][1000] , Enemy enemyKill[], int& player_y, int& p
 	else if (animation == 1 || animation == -2) {
 		dir = -1;
 	}
-	drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
-
-
 
 	int index = 0;
 
@@ -3031,6 +3028,182 @@ void shootLaser(char board[100][1000] , Enemy enemyKill[], int& player_y, int& p
 		
 		while (board[posr][posc + h] == ' ' && h < 20)
 		{   
+
+
+			clearMap(board, dispR, dispC);
+			callObj(board, coins, enemyKill);
+			callDynamicObj(board, elevator);
+			//Devil's shooting mechanism
+			SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
+			controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
+			addBorders(board, dispR, dispC);
+			if (animation == 0) {
+				if (frame == 1) {
+					drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 2) {
+					drawPlayerRightFrame2(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 3) {
+					drawPlayerRightFrame3(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 4) {
+					drawPlayerRightFrame4(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 5) {
+					drawPlayerRightFrame5(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+			}
+			else if (animation == 1) {
+				if (frame == 1) {
+					DrawPlayerLeftFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 2) {
+					DrawPlayerLeftFrame2(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 3) {
+					DrawPlayerLeftFrame3(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 4) {
+					DrawPlayerLeftFrame4(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 5) {
+					DrawPlayerLeftFrame5(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+			}
+			else if (animation == 2) {
+				if (frame == 1) {
+					climbFrame1(board, Player.Row, Player.Col);
+				}
+				else if (frame == 2) {
+					climbFrame2(board, Player.Row, Player.Col);
+				}
+			}
+			else if (animation == -1) {
+				drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+			}
+			else if (animation == -2) {
+				DrawPlayerLeftFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+			}
+
+			system("cls");
+			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, Player.gun);
+			Clear_LoadMap(board, dispR, dispC);
+
+			int isOnLadder = 0;
+			int currentLadder = -1;
+			if (_kbhit()) {
+
+				char key = _getch();
+				isOnLadder = 0;
+				int canGoDown = 0;
+
+				for (int i = 0; i < 4; i++) {
+					if (Player.Col >= ladders[i].Col - 1 && Player.Col <= ladders[i].Col + 12) {
+						if (Player.Row >= ladders[i].Row - ladders[i].length && Player.Row <= ladders[i].Row) {
+							canGoDown = 1;
+						}
+						if (Player.Row >= ladders[i].Row - ladders[i].length + 1 && Player.Row <= ladders[i].Row) {
+							isOnLadder = 1;
+							currentLadder = i;
+							break;
+						}
+					}
+				}
+
+				if ((key == 'a' || key == 'A') && isFalling == 0) {
+					if (Player.Col >= 2) {
+						if (isWalking == 2) {
+							if (frame == 5) frame = 1;
+							else frame++;
+						}
+						else {
+							frame = 1;
+						}
+						moveLeft(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, lastCellCol, ladders, coins, Player.coins);
+						scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						animation = 1;
+						isWalking = 2;
+						FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR , DFireBallC, chance, endR, endC);
+					}
+				}
+				else if ((key == 'd' || key == 'D') && isFalling == 0) {
+					if (Player.Col + Player.maxWidth < 999) {
+						if (isWalking == 1) {
+							if (frame == 5) frame = 1;
+							else frame++;
+						}
+						else {
+							frame = 1;
+						}
+						moveRight(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, lastCellCol, ladders, coins, Player.coins);
+						scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						animation = 0;
+						FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR , DFireBallC, chance, endR, endC);
+						isWalking = 1;
+					}
+				}
+				
+			
+
+				if (isOnLadder == 1) {
+					if ((key == 'w' || key == 'W' || key == ' ')) {
+						if (Player.Row == ladders[currentLadder].Row - ladders[currentLadder].length + 1) {
+							animation = 0;
+						}
+						else {
+							if (isWalking == 3) {
+								if (frame == 2) frame = 1;
+								else frame++;
+							}
+							else {
+								frame = 1;
+							}
+
+
+							animation = 2;
+							isWalking = 3;
+						}
+						if (Player.Row - 1 > 1) {
+							Player.Row--;
+							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						}
+						isClimbing = 1;
+					}
+					else {
+						isClimbing = 0;
+					}
+				}
+				if (canGoDown) {
+					if (key == 's' || key == 'S') {
+						if (isWalking == 3) {
+							if (frame == 2) frame = 1;
+							else frame++;
+						}
+						else {
+							frame = 1;
+						}
+						if (Player.Row <= 97) {
+							Player.Row++;
+							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						}
+						animation = 2;
+						isClimbing =1;
+						isWalking = 3;
+					}
+					else {
+						isClimbing = 0;
+					}
+				}
+
+			}
+			else {
+				if (animation == 0) animation = -1;
+				else if (animation == 1) animation = -2;
+			}
+
+			ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
+
 				clearMap(board, dispR, dispC);
 				
 
@@ -3038,6 +3211,7 @@ void shootLaser(char board[100][1000] , Enemy enemyKill[], int& player_y, int& p
 				for(int i = 0; i <= h; i++){
 					board[posr][posc + i] = '=';
 				}
+				
 				
 				for(int i =0 ; i<9 ; i++){
 					// Check for collision with the enemy
@@ -3053,6 +3227,8 @@ void shootLaser(char board[100][1000] , Enemy enemyKill[], int& player_y, int& p
 					}
 				}			
 			h++;
+			
+			
 
 			callObj(board, coins, enemyKill);
 			callDynamicObj(board, elevator);
@@ -3060,7 +3236,6 @@ void shootLaser(char board[100][1000] , Enemy enemyKill[], int& player_y, int& p
 			SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
 			controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
 			addBorders(board, dispR, dispC);
-			drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);		
 			system("cls");
 			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo,Player.gun);
 			Clear_LoadMap(board, dispR, dispC);
@@ -3072,6 +3247,180 @@ void shootLaser(char board[100][1000] , Enemy enemyKill[], int& player_y, int& p
 		int k = h;
 		h = 1;
 		while (true) {
+
+			clearMap(board, dispR, dispC);
+			callObj(board, coins, enemyKill);
+			callDynamicObj(board, elevator);
+			//Devil's shooting mechanism
+			SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
+			controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
+			addBorders(board, dispR, dispC);
+			if (animation == 0) {
+				if (frame == 1) {
+					drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 2) {
+					drawPlayerRightFrame2(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 3) {
+					drawPlayerRightFrame3(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 4) {
+					drawPlayerRightFrame4(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 5) {
+					drawPlayerRightFrame5(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+			}
+			else if (animation == 1) {
+				if (frame == 1) {
+					DrawPlayerLeftFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 2) {
+					DrawPlayerLeftFrame2(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 3) {
+					DrawPlayerLeftFrame3(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 4) {
+					DrawPlayerLeftFrame4(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 5) {
+					DrawPlayerLeftFrame5(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+			}
+			else if (animation == 2) {
+				if (frame == 1) {
+					climbFrame1(board, Player.Row, Player.Col);
+				}
+				else if (frame == 2) {
+					climbFrame2(board, Player.Row, Player.Col);
+				}
+			}
+			else if (animation == -1) {
+				drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+			}
+			else if (animation == -2) {
+				DrawPlayerLeftFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+			}
+
+			system("cls");
+			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, Player.gun);
+			Clear_LoadMap(board, dispR, dispC);
+
+			int isOnLadder = 0;
+			int currentLadder = -1;
+			if (_kbhit()) {
+
+				char key = _getch();
+				isOnLadder = 0;
+				int canGoDown = 0;
+
+				for (int i = 0; i < 4; i++) {
+					if (Player.Col >= ladders[i].Col - 1 && Player.Col <= ladders[i].Col + 12) {
+						if (Player.Row >= ladders[i].Row - ladders[i].length && Player.Row <= ladders[i].Row) {
+							canGoDown = 1;
+						}
+						if (Player.Row >= ladders[i].Row - ladders[i].length + 1 && Player.Row <= ladders[i].Row) {
+							isOnLadder = 1;
+							currentLadder = i;
+							break;
+						}
+					}
+				}
+
+				if ((key == 'a' || key == 'A') && isFalling == 0) {
+					if (Player.Col >= 2) {
+						if (isWalking == 2) {
+							if (frame == 5) frame = 1;
+							else frame++;
+						}
+						else {
+							frame = 1;
+						}
+						moveLeft(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, lastCellCol, ladders, coins, Player.coins);
+						scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						animation = 1;
+						isWalking = 2;
+						FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR , DFireBallC, chance, endR, endC);
+					}
+				}
+				else if ((key == 'd' || key == 'D') && isFalling == 0) {
+					if (Player.Col + Player.maxWidth < 999) {
+						if (isWalking == 1) {
+							if (frame == 5) frame = 1;
+							else frame++;
+						}
+						else {
+							frame = 1;
+						}
+						moveRight(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, lastCellCol, ladders, coins, Player.coins);
+						scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						animation = 0;
+						FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR , DFireBallC, chance, endR, endC);
+						isWalking = 1;
+					}
+				}
+				
+
+				if (isOnLadder == 1) {
+					if ((key == 'w' || key == 'W' || key == ' ')) {
+						if (Player.Row == ladders[currentLadder].Row - ladders[currentLadder].length + 1) {
+							animation = 0;
+						}
+						else {
+							if (isWalking == 3) {
+								if (frame == 2) frame = 1;
+								else frame++;
+							}
+							else {
+								frame = 1;
+							}
+
+
+							animation = 2;
+							isWalking = 3;
+						}
+						if (Player.Row - 1 > 1) {
+							Player.Row--;
+							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						}
+						isClimbing = 1;
+					}
+					else {
+						isClimbing = 0;
+					}
+				}
+				if (canGoDown) {
+					if (key == 's' || key == 'S') {
+						if (isWalking == 3) {
+							if (frame == 2) frame = 1;
+							else frame++;
+						}
+						else {
+							frame = 1;
+						}
+						if (Player.Row <= 97) {
+							Player.Row++;
+							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						}
+						animation = 2;
+						isClimbing =1;
+						isWalking = 3;
+					}
+					else {
+						isClimbing = 0;
+					}
+				}
+
+			}
+			else {
+				if (animation == 0) animation = -1;
+				else if (animation == 1) animation = -2;
+			}
+
+			ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
+
 			clearMap(board, dispR, dispC);
 			
 			for(int i = k-h+1; i >= h; i--){
@@ -3092,7 +3441,6 @@ void shootLaser(char board[100][1000] , Enemy enemyKill[], int& player_y, int& p
 			SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
 			controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
 			addBorders(board, dispR, dispC);
-			drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
 			system("cls");
 			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo,Player.gun);
 			Clear_LoadMap(board, dispR, dispC);
@@ -3119,9 +3467,179 @@ void shootLaser(char board[100][1000] , Enemy enemyKill[], int& player_y, int& p
 			while (board[posr][posc - h] == ' ' && h < 20)
 			{
 					clearMap(board, dispR,  dispC);
-				////////////////////////////Make an array to store each lazer cell and display it here 
+					clearMap(board, dispR, dispC);
+			callObj(board, coins, enemyKill);
+			callDynamicObj(board, elevator);
+			//Devil's shooting mechanism
+			SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
+			controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
+			addBorders(board, dispR, dispC);
+			if (animation == 0) {
+				if (frame == 1) {
+					drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 2) {
+					drawPlayerRightFrame2(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 3) {
+					drawPlayerRightFrame3(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 4) {
+					drawPlayerRightFrame4(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 5) {
+					drawPlayerRightFrame5(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+			}
+			else if (animation == 1) {
+				if (frame == 1) {
+					DrawPlayerLeftFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 2) {
+					DrawPlayerLeftFrame2(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 3) {
+					DrawPlayerLeftFrame3(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 4) {
+					DrawPlayerLeftFrame4(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 5) {
+					DrawPlayerLeftFrame5(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+			}
+			else if (animation == 2) {
+				if (frame == 1) {
+					climbFrame1(board, Player.Row, Player.Col);
+				}
+				else if (frame == 2) {
+					climbFrame2(board, Player.Row, Player.Col);
+				}
+			}
+			else if (animation == -1) {
+				drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+			}
+			else if (animation == -2) {
+				DrawPlayerLeftFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+			}
 
-									////////////////////////////Make an array to store each lazer cell and display it here 
+			system("cls");
+			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, Player.gun);
+			Clear_LoadMap(board, dispR, dispC);
+
+			int isOnLadder = 0;
+			int currentLadder = -1;
+			if (_kbhit()) {
+
+				char key = _getch();
+				isOnLadder = 0;
+				int canGoDown = 0;
+
+				for (int i = 0; i < 4; i++) {
+					if (Player.Col >= ladders[i].Col - 1 && Player.Col <= ladders[i].Col + 12) {
+						if (Player.Row >= ladders[i].Row - ladders[i].length && Player.Row <= ladders[i].Row) {
+							canGoDown = 1;
+						}
+						if (Player.Row >= ladders[i].Row - ladders[i].length + 1 && Player.Row <= ladders[i].Row) {
+							isOnLadder = 1;
+							currentLadder = i;
+							break;
+						}
+					}
+				}
+
+				if ((key == 'a' || key == 'A') && isFalling == 0) {
+					if (Player.Col >= 2) {
+						if (isWalking == 2) {
+							if (frame == 5) frame = 1;
+							else frame++;
+						}
+						else {
+							frame = 1;
+						}
+						moveLeft(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, lastCellCol, ladders, coins, Player.coins);
+						scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						animation = 1;
+						isWalking = 2;
+						FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR , DFireBallC, chance, endR, endC);
+					}
+				}
+				else if ((key == 'd' || key == 'D') && isFalling == 0) {
+					if (Player.Col + Player.maxWidth < 999) {
+						if (isWalking == 1) {
+							if (frame == 5) frame = 1;
+							else frame++;
+						}
+						else {
+							frame = 1;
+						}
+						moveRight(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, lastCellCol, ladders, coins, Player.coins);
+						scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						animation = 0;
+						FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR , DFireBallC, chance, endR, endC);
+						isWalking = 1;
+					}
+				}
+				
+
+				if (isOnLadder == 1) {
+					if ((key == 'w' || key == 'W' || key == ' ')) {
+						if (Player.Row == ladders[currentLadder].Row - ladders[currentLadder].length + 1) {
+							animation = 0;
+						}
+						else {
+							if (isWalking == 3) {
+								if (frame == 2) frame = 1;
+								else frame++;
+							}
+							else {
+								frame = 1;
+							}
+
+
+							animation = 2;
+							isWalking = 3;
+						}
+						if (Player.Row - 1 > 1) {
+							Player.Row--;
+							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						}
+						isClimbing = 1;
+					}
+					else {
+						isClimbing = 0;
+					}
+				}
+				if (canGoDown) {
+					if (key == 's' || key == 'S') {
+						if (isWalking == 3) {
+							if (frame == 2) frame = 1;
+							else frame++;
+						}
+						else {
+							frame = 1;
+						}
+						if (Player.Row <= 97) {
+							Player.Row++;
+							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						}
+						animation = 2;
+						isClimbing =1;
+						isWalking = 3;
+					}
+					else {
+						isClimbing = 0;
+					}
+				}
+
+			}
+			else {
+				if (animation == 0) animation = -1;
+				else if (animation == 1) animation = -2;
+			}
+
+			ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
+
 				for(int i = 0; i <= h; i++){
 					board[posr][posc - i] = '=';
 				}
@@ -3147,7 +3665,6 @@ void shootLaser(char board[100][1000] , Enemy enemyKill[], int& player_y, int& p
 				SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
 				controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
 				addBorders(board, dispR, dispC);
-				DrawPlayerLeftFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
 				system("cls");
 				dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo,Player.gun);
 				Clear_LoadMap(board, dispR, dispC);
@@ -3159,16 +3676,189 @@ void shootLaser(char board[100][1000] , Enemy enemyKill[], int& player_y, int& p
 			while (true)
 			{
 				clearMap(board, dispR, dispC);
+				clearMap(board, dispR, dispC);
+			callObj(board, coins, enemyKill);
+			callDynamicObj(board, elevator);
+			//Devil's shooting mechanism
+			SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
+			controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
+			addBorders(board, dispR, dispC);
+			if (animation == 0) {
+				if (frame == 1) {
+					drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 2) {
+					drawPlayerRightFrame2(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 3) {
+					drawPlayerRightFrame3(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 4) {
+					drawPlayerRightFrame4(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 5) {
+					drawPlayerRightFrame5(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+			}
+			else if (animation == 1) {
+				if (frame == 1) {
+					DrawPlayerLeftFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 2) {
+					DrawPlayerLeftFrame2(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 3) {
+					DrawPlayerLeftFrame3(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 4) {
+					DrawPlayerLeftFrame4(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+				else if (frame == 5) {
+					DrawPlayerLeftFrame5(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+				}
+			}
+			else if (animation == 2) {
+				if (frame == 1) {
+					climbFrame1(board, Player.Row, Player.Col);
+				}
+				else if (frame == 2) {
+					climbFrame2(board, Player.Row, Player.Col);
+				}
+			}
+			else if (animation == -1) {
+				drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+			}
+			else if (animation == -2) {
+				DrawPlayerLeftFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
+			}
+
+			system("cls");
+			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, Player.gun);
+			Clear_LoadMap(board, dispR, dispC);
+
+			int isOnLadder = 0;
+			int currentLadder = -1;
+			if (_kbhit()) {
+
+				char key = _getch();
+				isOnLadder = 0;
+				int canGoDown = 0;
+
+				for (int i = 0; i < 4; i++) {
+					if (Player.Col >= ladders[i].Col - 1 && Player.Col <= ladders[i].Col + 12) {
+						if (Player.Row >= ladders[i].Row - ladders[i].length && Player.Row <= ladders[i].Row) {
+							canGoDown = 1;
+						}
+						if (Player.Row >= ladders[i].Row - ladders[i].length + 1 && Player.Row <= ladders[i].Row) {
+							isOnLadder = 1;
+							currentLadder = i;
+							break;
+						}
+					}
+				}
+
+				if ((key == 'a' || key == 'A') && isFalling == 0) {
+					if (Player.Col >= 2) {
+						if (isWalking == 2) {
+							if (frame == 5) frame = 1;
+							else frame++;
+						}
+						else {
+							frame = 1;
+						}
+						moveLeft(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, lastCellCol, ladders, coins, Player.coins);
+						scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						animation = 1;
+						isWalking = 2;
+						FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR , DFireBallC, chance, endR, endC);
+					}
+				}
+				else if ((key == 'd' || key == 'D') && isFalling == 0) {
+					if (Player.Col + Player.maxWidth < 999) {
+						if (isWalking == 1) {
+							if (frame == 5) frame = 1;
+							else frame++;
+						}
+						else {
+							frame = 1;
+						}
+						moveRight(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, lastCellCol, ladders, coins, Player.coins);
+						scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						animation = 0;
+						FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR , DFireBallC, chance, endR, endC);
+						isWalking = 1;
+					}
+				}
+			
+
+				if (isOnLadder == 1) {
+					if ((key == 'w' || key == 'W' || key == ' ')) {
+						if (Player.Row == ladders[currentLadder].Row - ladders[currentLadder].length + 1) {
+							animation = 0;
+						}
+						else {
+							if (isWalking == 3) {
+								if (frame == 2) frame = 1;
+								else frame++;
+							}
+							else {
+								frame = 1;
+							}
+
+
+							animation = 2;
+							isWalking = 3;
+						}
+						if (Player.Row - 1 > 1) {
+							Player.Row--;
+							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						}
+						isClimbing = 1;
+					}
+					else {
+						isClimbing = 0;
+					}
+				}
+				if (canGoDown) {
+					if (key == 's' || key == 'S') {
+						if (isWalking == 3) {
+							if (frame == 2) frame = 1;
+							else frame++;
+						}
+						else {
+							frame = 1;
+						}
+						if (Player.Row <= 97) {
+							Player.Row++;
+							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
+						}
+						animation = 2;
+						isClimbing =1;
+						isWalking = 3;
+					}
+					else {
+						isClimbing = 0;
+					}
+				}
+
+			}
+			else {
+				if (animation == 0) animation = -1;
+				else if (animation == 1) animation = -2;
+			}
+
+			ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
+
 				////////////////////////////Make an array to store each lazer cell and display it here 
 
 				for(int i = k-h+1; i >= h; i--){
-					board[posr][posc + i] = '=';
+					board[posr][posc - i] = '=';
 				}
 				
 				for(int i= h ; i>=posc  ; i--){
 					
 					if (board[posr][posc - i] == '=') {
-						board[posr][posc + i] = ' ';
+						board[posr][posc - i] = ' ';
 				}
 				
 				}
@@ -3177,7 +3867,6 @@ void shootLaser(char board[100][1000] , Enemy enemyKill[], int& player_y, int& p
 					//Devil's shooting mechanism
 					SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
 					controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
-					DrawPlayerLeftFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);	
 					addBorders(board, dispR, dispC);
 					system("cls");
 					dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo,Player.gun);

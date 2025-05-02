@@ -2398,7 +2398,7 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 				jumpleftframe(board, pX, pY, LC, LR); // Draw the player jumping up
 			}
 			system("cls");
-			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, gun); // Display the bar first
+			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo,Player.gun); // Display the bar first
 			Clear_LoadMap(board, dispR, dispC); // Clear the screen and load the map
 
 			isJumping = 1;
