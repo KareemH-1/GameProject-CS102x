@@ -5,13 +5,15 @@ using namespace std;
 
 struct enemy{
 int Row , Col , Health;
+int isKillable = 1;
 };
 
 void DrawSkeleton(char board[100][1000] , enemy Skeleton) {
   
   int row = Skeleton.Row , col = Skeleton.Col;
   //head
-  
+  int isDead = Skeleton.isKillable;
+  if(isKillable != -1){
     board[row-14][col+5]='-';
     board[row-13][col+4]='.';
     board[row-13][col+6]='.';
@@ -126,8 +128,8 @@ void DrawSkeleton(char board[100][1000] , enemy Skeleton) {
     if (hp>9 && hp < 100){
       int fDig = hp/10 , sDig = hp%10;
   
-       board[row-16][col+6] = fDig + '0';
-       board[row-16][col+7] = sDig+ '0';
+      board[row-16][col+6] = fDig + '0';
+      board[row-16][col+7] = sDig+ '0';
     }
     else if (hp >= 100){
       int fDig = hp/100 , sDig = (hp/10)%10 , tDig = hp%10;
@@ -139,7 +141,7 @@ void DrawSkeleton(char board[100][1000] , enemy Skeleton) {
     else if(hp >=0 && hp <=9){
       board[row-16][col+6] = hp+ '0';
     }
-
+  }
 }
 
 

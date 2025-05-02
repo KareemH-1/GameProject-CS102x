@@ -4293,6 +4293,25 @@ void shootLaser(char board[100][1000] , Enemy enemyKill[], int& player_y, int& p
 
 
 
+void checkIsEnemyDead(Enemy enemyKill[] , int rowHeart[] , int colHeart[] , int& howManyHearts){
+	for(int i =0 ; i< 9 ; i++){
+		if(enemyKill[i].Health <=0){
+			enemyKill[i].isKillable = -1;
+			
+			int chance = rand()%5+1;
+			if(chance == 1 && howManyHearts < 99){
+				rowHeart[howManyHearts] = enemyKill[i].Row;
+				colHeart[howManyHearts] = enemyKill[i].Col;
+				spawnHeart(rowHeart , colHeart , howManyHearts);
+				howManyHearts++;
+			}
+
+			enemyKill[i].Row = -100;
+			enemyKill[i].Col = -100;
+		}
+	}		
+}
+
 
 
 

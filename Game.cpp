@@ -1754,7 +1754,12 @@ void drawSpike(char board[100][1000], int R, int C) {
 
 
 
-void drawEnemyBirdLeft(char board[100][1000], int row, int col) {
+void drawEnemyBirdLeft(char board[100][1000], Enemy bird) {
+	int row = bird.Row;
+	int col = bird.Col;
+	int isDead = bird.isKillable;
+	
+	if(isDead!= -1){
 	//base
 	board[row][col + 2] = '`';
 	board[row][col + 3] = '-';
@@ -1781,9 +1786,16 @@ void drawEnemyBirdLeft(char board[100][1000], int row, int col) {
 	board[row - 2][col + 1] = '(';
 	board[row - 1][col + 1] = '(';
 	board[row - 2][col] = '<';
+	}
 }
 
-void drawEnemyBirdRight(char board[100][1000], int row, int col) {
+void drawEnemyBirdRight(char board[100][1000], Enemy bird) {
+	int row = bird.Row;
+	int col = bird.Col;
+	int isDead = bird.isKillable;
+	
+	if(isDead!= -1){
+	
 	//base
 	board[row][col + 1] = '\'';
 	board[row][col + 2] = '-';
@@ -1811,6 +1823,7 @@ void drawEnemyBirdRight(char board[100][1000], int row, int col) {
 	board[row - 1][col] = '<';
 	board[row - 1][col + 1] = '_';
 	board[row - 1][col + 2] = '.';
+	}
 }
 
 
@@ -1822,6 +1835,8 @@ void drawEnemyBirdRight(char board[100][1000], int row, int col) {
 
 void drawDevil(char board[100][1000], Enemy devil) {
 	int row = devil.Row, col = devil.Col;
+	int isDead = devil.isKillable;
+	if(isDead != -1){
 	//legs
 	board[row][col + 2] = '#';
 	board[row][col + 6] = '#';
@@ -1965,6 +1980,7 @@ void drawDevil(char board[100][1000], Enemy devil) {
 		board[row - 12][col + 10] = hp + '0';
 	}
 }
+}
 
 
 
@@ -1976,7 +1992,7 @@ int chanceMove() {
 }
 
 void SpawnFireBall(Enemy devil, int& row, int& col, int& r, int& endR, int& endC) {
-	if (row == -1 && col == -1) {
+	if (row == -1 && col == -1 && devil.isKillable != -1) {
 		r = chanceMove();
 
 		if (r == 1) {
@@ -3251,7 +3267,28 @@ void shootLaser(char board[100][1000], Enemy enemyKill[], int& player_y, int& pl
 
 
 
+void spawnHeart(int row[] , int col[] ,int which){
 
+}
+
+void checkIsEnemyDead(Enemy enemyKill[] , int rowHeart[] , int colHeart[] , int& howManyHearts){
+	for(int i =0 ; i< 9 ; i++){
+		if(enemyKill[i].Health <=0){
+			enemyKill[i].isKillable = -1;
+			
+			int chance = rand()%5+1;
+			if(chance == 1 && howManyHearts < 99){
+				rowHeart[howManyHearts] = enemyKill[i].Row;
+				colHeart[howManyHearts] = enemyKill[i].Col;
+				spawnHeart(rowHeart , colHeart , howManyHearts);
+				howManyHearts++;
+			}
+
+			enemyKill[i].Row = -100;
+			enemyKill[i].Col = -100;
+		}
+	}		
+}
 
 
 
