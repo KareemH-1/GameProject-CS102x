@@ -2462,22 +2462,61 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 	drawTerrain(board, 95, 61, 1, 11);
 	drawTerrain(board, 92, 46, 1, 11);
 	drawTerrain(board, 88, 20, 1, 20);
-
 	drawLadder(board, 87, 20, 15);
 	drawTerrain(board, 71, 31, 1, 30);
-
 	drawLadder(board, 70, 50, 20);
 	drawTerrain(board, 50, 1, 1, 50);
-
 	drawDevil(board, isKill[0]);
 	drawCoin(board, coins[0].Row, coins[0].Col, coins[0].isCollected);
-	spawnHeart(board, heart, 0);
+	
+	
+	//The snail part
+
+	drawTerrain(board, 70, 65, 1, 23);
+	drawCoin(board , coins[1].Row , coins[1].Col , coins[1].isCollected); // row = 69 , col = 66
+	
+
+	//Crystals part
+	//each crystal takes width 10 , there are 5 crystals and we must leave a distance of 20 between each so its 10*5 + 20*5= 150
+	//this terrain is drawn over the crystals+ above the button so lets say 150 + 25 = 175  , 25 cols to leave space for button
+	drawTerrain(board, 70, 100, 1, 175);
+	//col at end is 100+ 175 = 275
+	
+	
+	//drawButton(board , 97 , 250); // 
+	// 
+	drawWall(board, 70, 275, 27);
+	//add the button logic to make the stairs appear 
+	/*
+	* //the ladder will be before the col that the terrain starts with - its width so its 100 -12 = 88
+		if(isButtonClicked ==1){
+			drawLadder(board , 97 , 88 , 27);
+		}
+
+	*/
+
+	spawnHeart(board, heart, 0); // row = 69 , col = 130
+
+	//elevator takes player to row 50 , col 150
+
+	//the part where the assault rifle drop should be 
+	drawWall(board, 2, 150 - 50, 47);
+	drawTerrain(board, 50, 150-50, 1, 50);
+
+	drawTerrain(board, 50, 150+10, 1, 50);
+
+	drawWall(board, 2, 210, 47);
 }
 
 
 void callDynamicObj(char board[100][1000], Elevator elevator[], int posc, int posr, int h, int k, int Direction, int isDeleting) {
-	drawAndMoveElevatorV(board, elevator, 0);
+	drawAndMoveElevatorV(board, elevator, 0); //(board, elevator, 0, 69, 150, 69, 51, 150, 150, 0, 1); // Vertical  
 	drawAndMoveElevatorH(board, elevator, 1);
+
+
+	//drawSnail( board , 69 , 75); DRAW IT IN CALLDYNAMICOBJ
+	//Draw crystal *5; . start col for the first should be 110 , leave 20 columns space between each , end col for the last should be 240
+
 
 	//Right
 	if (Direction == 1) {
@@ -3461,13 +3500,15 @@ int main() {
 
 		coin coins[5];
 		intializeCoin(board, coins[0], 49, 2);
+		intializeCoin(board, coins[1], 69, 66);
+		//Coin 2 row = 69, col = 66
 
 		hearts heart[4];
-		intializeHeart(board, heart[0], 97, 95);
+		intializeHeart(board, heart[0], 69, 130);
 
 		Elevator elevator[2];
 
-		intializeElevator(board, elevator, 0, 98, 110, 98, 70, 110, 110, 0, 1); // Vertical 
+		intializeElevator(board, elevator, 0, 69, 150, 69, 51, 150, 150, 0, 1); // Vertical  
 
 		intializeElevator(board, elevator, 1, 95, 130, 95, 95, 130, 150, 1, 1); //horizonatal
 
@@ -3729,7 +3770,7 @@ int main() {
 						else Player.gun = 0;
 					}
 					else {
-						if(Player.gun == 0) Player.gun = 1;
+						if (Player.gun == 0) Player.gun = 1;
 						else Player.gun = 0;
 					}
 				}
