@@ -1,7 +1,21 @@
+//NEXT STEPS::
+
+/*
+FIX LASER DAMAGING MORE THAN 35
+LET PLAYER MOVE WHILE SHOOTING
+ADD PISTOL
+ADD ASSUALT RIFLE
+
+FIX ELEVATOR
+ADD TELEPORTER
+ADD ENEMIES AND THIER LOGIC
+BUILD MAP
+ADD BOSS FIGHT
+*/
+
 #include <iostream>
 #include <conio.h>
 #include <ctime>
-#include <windows.h>
 using namespace std;
 
 
@@ -24,7 +38,7 @@ struct player {
 	int shootR, shootC;
 	int gun; //Either 1 Lazer or 0 for pistol , 2 for rifle
 	int ammo[3] = { 7 , 24 ,56 };
-
+	int didGetRifle = 0;
 
 	void reload(int amount) {
 		if (ammo[0] <= 2)
@@ -2219,7 +2233,7 @@ void spawnHeart(char board[100][1000], hearts heart[], int  i) {
 		board[row - 3][col + 3] = ':';
 		board[row - 2][col + 3] = ':';
 		board[row - 1][col + 3] = ':';
-		board[row ][col + 3] = '\'';
+		board[row][col + 3] = '\'';
 
 
 		board[row - 3][col + 4] = '.';
@@ -2243,7 +2257,7 @@ void spawnHeart(char board[100][1000], hearts heart[], int  i) {
 		board[row - 3][col + 5] = ':';
 		board[row - 2][col + 5] = ':';
 		board[row - 1][col + 5] = ':';
-		board[row ][col + 5] = '\'';
+		board[row][col + 5] = '\'';
 
 	}
 }
@@ -2443,7 +2457,7 @@ void ElevatePlayer(char board[100][1000], int& dispR, int& dispC, int& pX, int& 
 
 
 
-void callObj(char board[100][1000], coin coins[5], Enemy isKill[] , hearts heart[]) {
+void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[]) {
 	//The part for the devil
 	drawTerrain(board, 95, 61, 1, 11);
 	drawTerrain(board, 92, 46, 1, 11);
@@ -2628,8 +2642,8 @@ void checkHeartTouch(char board[100][1000], int pX, int pY, int pWidth, int pHei
 		if (!Heart[a].isCollected) {
 
 			int heartTop = Heart[a].Row - Heart[a].maxHeight + 2;
-			int heartBottom = Heart[a].Row+1;
-			int heartLeft = Heart[a].Col -1;
+			int heartBottom = Heart[a].Row + 1;
+			int heartLeft = Heart[a].Col - 1;
 			int heartRight = Heart[a].Col + Heart[a].maxWidth - 1 + 1;
 
 			int playerTop = pX - pHeight + 1;
@@ -2782,7 +2796,7 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 	clearMap(board, dispR, dispC);
-	callObj(board, coins, enemyKill , Heart); // Call the function to draw the objects
+	callObj(board, coins, enemyKill, Heart); // Call the function to draw the objects
 	SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
 	controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
 
@@ -2821,7 +2835,7 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 			ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
 			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 			clearMap(board, dispR, dispC);
-			callObj(board, coins, enemyKill , Heart);
+			callObj(board, coins, enemyKill, Heart);
 			SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
 			controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
 			callDynamicObj(board, elevator, -1, -1, -1, -1, -1, -1);
@@ -3181,7 +3195,7 @@ void checkEnemyHit(int row, int col, Enemy& enemy, int& checkhit) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////			
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////			
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////			
-void shootLaser(char board[100][1000], Enemy enemyKill[], int& player_y, int& player_x, int& animation, int shootR, int shootC, player& Player, int dispR, int dispC, int lastCellCol[9], int lastCellRow[], coin coins[5], Elevator elevator[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, int& isJumping, int& isFalling, int& isWalking, int& frame, int& isShooting, int& isClimbing, int& isOnLadder, int& canGoDown, int& currentLadder, ladder ladders[], int& gun , hearts heart[]) {
+void shootLaser(char board[100][1000], Enemy enemyKill[], int& player_y, int& player_x, int& animation, int shootR, int shootC, player& Player, int dispR, int dispC, int lastCellCol[9], int lastCellRow[], coin coins[5], Elevator elevator[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, int& isJumping, int& isFalling, int& isWalking, int& frame, int& isShooting, int& isClimbing, int& isOnLadder, int& canGoDown, int& currentLadder, ladder ladders[], int& gun, hearts heart[]) {
 	gun = 1;
 	int posr = shootR;
 	int posc = shootC;
@@ -3223,6 +3237,8 @@ void shootLaser(char board[100][1000], Enemy enemyKill[], int& player_y, int& pl
 					enemyKill[i].Health -= 30;
 					if (enemyKill[i].Health <= 0) {
 						enemyKill[i].isKillable = -1;
+						enemyKill[i].Row = -100;
+						enemyKill[i].Col = -100;
 					}
 					alreadyHit = 1;
 				}
@@ -3298,6 +3314,8 @@ void shootLaser(char board[100][1000], Enemy enemyKill[], int& player_y, int& pl
 					enemyKill[i].Health -= 30;  // Laser deals 10 damage
 					if (enemyKill[i].Health <= 0) {
 						enemyKill[i].isKillable = -1;
+						enemyKill[i].Row = -100;
+						enemyKill[i].Col = -100;
 					}
 					alreadyHit = 1;
 				}
@@ -3701,11 +3719,20 @@ int main() {
 				else if (key == 'f' || key == 'F') {
 					if (isShooting == 0 && Player.ammo[0] >= 1) {
 						isShooting = 1;
-						shootLaser(board, enemyKill, Player.Col, Player.Row, animation, Player.shootR, Player.shootC, Player, dispR, dispC, lastCellCol, lastCellRow, coins, elevator, DFireBallR, DFireBallC, chance, endR, endC, isJumping, isFalling, isWalking, frame, isShooting, isClimbing, isOnLadder, canGoDown, currentLadder, ladders, gun  ,heart);
+						shootLaser(board, enemyKill, Player.Col, Player.Row, animation, Player.shootR, Player.shootC, Player, dispR, dispC, lastCellCol, lastCellRow, coins, elevator, DFireBallR, DFireBallC, chance, endR, endC, isJumping, isFalling, isWalking, frame, isShooting, isClimbing, isOnLadder, canGoDown, currentLadder, ladders, gun, heart);
 						isShooting = 0;
 					}
 				}
-
+				else if (key == 'T' || key == 't') {
+					if (Player.didGetRifle == 1) {
+						if (Player.gun == 0 || Player.gun == 1) Player.gun++;
+						else Player.gun = 0;
+					}
+					else {
+						if(Player.gun == 0) Player.gun = 1;
+						else Player.gun = 0;
+					}
+				}
 				if (isOnLadder == 1) {
 					if ((key == 'w' || key == 'W' || key == ' ')) {
 						if (Player.Row == ladders[currentLadder].Row - ladders[currentLadder].length + 1) {
