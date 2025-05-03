@@ -72,6 +72,168 @@ struct Elevator {
 	int direction = 1; // if vertical : 1 for up , 2 for down ..... if horizonatal 1 for right , 2 for left
 };
 
+struct Crystal
+{
+	int frame;
+	int row,col;
+};
+
+void FallingCrystal(char board[100][1000], Crystal& crystal, int& frame, int row, int col) {
+	crystal.frame = frame;
+	crystal.row = row;
+	crystal.col = col;
+
+
+
+	switch(crystal.frame) {
+		case 0:
+		// Ceiling with spikes
+		break;
+        case 1:
+		board[row][col-9] = '^'; board[row][col-8] = '^'; board[row][col-7] = '^';
+        board[row][col-6] = '\'';
+        board[row][col-5] = '-';
+        board[row][col-4] = '-';
+        board[row][col-3] = '\'';
+        board[row][col-2] = '^'; board[row][col-1] = '^'; board[row][col] = '^';
+		cout << "We are in the crystal falling animation" << endl;
+		cout <<  row << endl;
+		cout << col << endl;
+		cout << frame << endl;
+		Sleep(1000);
+		break;
+        case 2:
+        board[row][col-9] = '^'; board[row][col-8] = '^'; 
+        board[row][col-7] = '\'';
+        board[row][col-6] = '-';
+        board[row][col-5] = '_';
+        board[row][col-4] = '_';
+        board[row][col-3] = '-';
+        board[row][col-2] = '\'';
+        board[row][col-1] = '^'; board[row][col] = '^';
+			cout << "We are in the crystal falling animation" << endl;
+			cout <<  row << endl;
+			cout << col << endl;
+			cout << frame << endl;
+			Sleep(1000);
+            break;
+        case 3:
+        board[row][col-9] = '^';
+        board[row][col-8] = '_';
+        board[row+1][col-7] = ' ';
+        board[row+1][col-6] = '-';
+        board[row+1][col-5] = '\\';
+        board[row+1][col-4] = '/';
+        board[row+1][col-3] = '-';
+        board[row+1][col-2] = ' ';
+        board[row][col-1] = '_';
+        board[row][col] = '^';
+			cout << "We are in the crystal falling animation" << endl;
+			cout <<  row << endl;
+			cout << col << endl;
+			cout << frame << endl;
+			Sleep(1000);
+            break;
+        case 4:
+        board[row+3][col-1] = '/';
+        board[row+3][col] = '\\';
+        board[row+4][col-2] = '(';
+        board[row+4][col+1] = ')';
+        board[row+5][col-1] = '\\';
+        board[row+5][col] = '/';
+		cout << "We are in the crystal falling animation" << endl;
+		cout <<  row << endl;
+		cout << col << endl;
+		cout << frame << endl;
+		Sleep(1000);
+		break;
+        case 5:
+        board[row+7][col-6] = '/';
+        board[row+7][col-6] = '\\';
+        board[row+8][col-6] = '(';
+        board[row+8][col+4] = ')';
+        board[row+9][col-3] = '\\';
+        board[row+9][col] = '/';
+		cout << "We are in the crystal falling animation" << endl;
+		cout <<  row << endl;
+		cout << col << endl;
+		cout << frame << endl;
+		cout << "The error is in the crystal falling animation!!!!!!!!!!!!!!!!" << endl;
+		Sleep(1000);
+            break;
+        case 6:
+        board[row+11][col-1] = '/';
+        board[row+11][col] = '\\';
+        board[row+12][col-2] = '(';
+        board[row+12][col+1] = ')';
+        board[row+13][col-1] = '\\';
+        board[row+13][col] = '/';
+		cout << "We are in the crystal falling animation" << endl;
+		cout <<  row << endl;
+		cout << col << endl;
+		cout << frame << endl;
+		cout << "The error is in the crystal falling animation!!!!!!!!!!!!!!!!" << endl;
+		Sleep(10000);
+            break;
+        case 7:
+        board[row+15][col-1] = '/';
+        board[row+15][col] = '\\';
+        board[row+16][col-2] = '(';
+        board[row+16][col+1] = ')';
+        board[row+17][col-1] = '\\';
+        board[row+17][col] = '/';
+            break;
+        case 8:
+        board[row+19][col-1] = '/';
+        board[row+19][col] = '\\';
+        board[row+20][col-2] = '(';
+        board[row+20][col+1] = ')';
+        board[row+21][col-1] = '\\';
+        board[row+21][col] = '/';
+            break;
+        case 9:
+            board[21][24] = '/';
+            board[21][25] = '\\';
+            board[22][23] = '(';
+            board[22][26] = ')';
+            break;
+        case 10:
+            board[22][22] = '>';
+            board[22][23] = '\'';
+            board[22][24] = '#';
+            board[22][25] = '&';
+            board[22][26] = '&';
+            board[22][27] = '<';
+            board[21][23] = ';';
+            board[21][25] = ':';
+            board[21][26] = ';';
+            board[20][22] = '^';
+            board[20][27] = '^';
+            break;
+        case 11:
+            board[22][22] = '_';
+            board[22][23] = '_';
+            board[22][26] = '_';
+            board[22][27] = '_';
+            board[20][23] = ';';
+            board[20][25] = '\'';
+            board[20][26] = '.';
+            board[19][22] = '^';
+            board[19][27] = '^';
+            break;
+    }
+    
+	frame++;
+	if (frame >= 11) {
+		frame = 0;
+	}
+}
+
+void intializeCrystal(char board[100][1000], Crystal& crystal, int row, int col) {
+	crystal.row = row;
+	crystal.col = col;
+}
+
 void intializeCoin(char board[100][1000], coin& e, int row, int col) {
 	e.Row = row;
 	e.Col = col;
@@ -2290,6 +2452,7 @@ void moveElevatorHorizontally(int& col, int startCol, int endCol, int& direction
 	if (direction == 1) col++;
 	else col--;
 }
+
 void drawElevator(char board[100][1000], int row, int col) {
 	board[row][col] = '_';
 	board[row][col + 1] = '_';
@@ -2392,6 +2555,8 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[]) {
 	drawCoin(board, coins[0].Row, coins[0].Col, coins[0].isCollected);
 	drawCoin(board, coins[1].Row, coins[1].Col, coins[1].isCollected);
 }
+
+
 
 
 void callDynamicObj(char board[100][1000], Elevator elevator[]) {
@@ -3174,6 +3339,13 @@ int main() {
 
 
 
+		Crystal crystal[5];
+		intializeCrystal(board, crystal[0],  80, 110);//crystal 1
+		intializeCrystal(board, crystal[1],  120, 1);//crystal 2
+		intializeCrystal(board, crystal[2],  200, 1);//crystal 3
+		intializeCrystal(board, crystal[3],  215, 1);//crystal 4
+		intializeCrystal(board, crystal[4],  230, 1);//crystal 5
+
 
 		int DFireBallR = -1, DFireBallC = -1, chance = -1, endR = -1, endC = -1; //intializeValues for devil shooting
 
@@ -3194,6 +3366,8 @@ int main() {
 		FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC);
 		int isWon = 0;
 
+
+		crystal[0].frame = 1;
 		for (; !isWon;) {
 			gun = Player.gun;
 			FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC);
@@ -3201,6 +3375,7 @@ int main() {
 			callObj(board, coins, enemyKill);
 			callDynamicObj(board, elevator);
 			//Devil's shooting mechanism
+			FallingCrystal(board, crystal[0],crystal[0].frame, crystal[0].row, crystal[0].col);
 			SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
 			controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
 			addBorders(board, dispR, dispC);
