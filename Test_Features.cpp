@@ -159,7 +159,7 @@ void displayCredits() {
 
 void initializePlayerValues(int& Row, int& Col, int& maxHeight, int& maxWidth, int& Health, int& coins, int& gun, int ammo[], int& maxAmmo, int& shootC, int& shootR) {
 	Row = 95;
-	Col = 70;
+	Col = 90;
 	maxHeight = 9;
 	maxWidth = 15;
 	Health = 100;
@@ -2383,6 +2383,8 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[]) {
 	
 	Hiddenladder(board,98,150,20,coins);
 	
+	drawTerrain(board, 78, 170, 1, 100);
+
 	drawLadder(board, 70, 50, 20);
 	drawTerrain(board, 50, 1, 1, 50);
 
@@ -2393,8 +2395,7 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[]) {
 
 
 void callDynamicObj(char board[100][1000], Elevator elevator[]) {
-
-
+	drawAndMoveElevatorV(board, elevator, 0);
 }
 
 ///////////////////////////////
@@ -3122,7 +3123,7 @@ int main() {
 
 		Elevator elevator[2];
 
-		intializeElevator(board, elevator, 0, 98, 110, 98, 70, 110, 110, 0, 1); // Vertical 
+		intializeElevator(board, elevator, 0, 77, 190, 77, 65, 190, 190, 0, 1); // Vertical 
 
 		intializeElevator(board, elevator, 1, 95, 130, 95, 95, 130, 150, 1, 1); //horizonatal
 
