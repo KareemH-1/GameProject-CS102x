@@ -2971,7 +2971,384 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 }
 
 
+//////////////////////JUMP / FALL FUNCTIONS DISPLAYING BULLETS/////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 
+
+void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player,int gun, int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int & DFireBallR, int &  DFireBallC, int & chance, int & endR, int & endC , int ) {
+
+
+	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+	clearMap(board, dispR, dispC);
+	callObj(board, coins, enemyKill); // Call the function to draw the objects
+	SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
+	controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
+
+	addBorders(board, dispR, dispC);
+	if (animation == 0 || animation == -1) {
+		jumprightframe(board, pX, pY, LC, LR); // Draw the player jumping up
+	}
+	else if (animation == 1 || animation == -2) {
+		jumpleftframe(board, pX, pY, LC, LR); // Draw the player jumping up
+	}
+
+	for (int i = 0; i < 4; i++) {
+		if (pX - pHeight < 0) break;
+		int check = 1;
+
+		for (int j = pY; j <= pY + (pWidth - 1) && j < 999; j++) {
+			int LR_index = j - pY;  // Correctly calculate LR_index based on the position you're checking
+			if (LR_index >= 0 && LR_index < 15) {  // Ensure it's within bounds
+				int checkR = LR[LR_index] - 1; // Check the row index
+				if (board[checkR][j] != ' ') {  // If there's a solid block, stop the jump
+					check = 0;
+					break;
+				}
+			}
+			else {
+				check = 0; // Exit loop if out-of-bounds
+				break;
+			}
+		}
+
+		if (pX - pHeight - 1 > 0 && check == 1) {
+			pX--;
+
+			checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
+			ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
+			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+			clearMap(board, dispR, dispC);
+			callObj(board, coins, enemyKill);
+			SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
+			controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
+			callDynamicObj(board, elevator);
+			addBorders(board, dispR, dispC);
+
+			if (animation == 0 || animation == -1) {
+				jumprightframe(board, pX, pY, LC, LR); // Draw the player jumping up
+			}
+			else if (animation == 1 || animation == -2) {
+				jumpleftframe(board, pX, pY, LC, LR); // Draw the player jumping up
+			}
+			system("cls");
+			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo,Player.gun); // Display the bar first
+			Clear_LoadMap(board, dispR, dispC); // Clear the screen and load the map
+
+			isJumping = 1;
+		}
+		else break;
+
+	}
+	isJumping = 0;
+}
+
+
+void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, int gun, int& isFalling, int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[] , int & DFireBallR, int &  DFireBallC, int & chance, int & endR, int & endC) {
+	for (; pX + 1 < 99; ) {
+		if (pX - pHeight < 0) break;
+
+		int check = 1; // Reset every fall attempt
+
+		for (int j = pY + 3; j <= pY + 9; j++) {
+			if (board[pX + 1][j] != ' ' && board[pX + 1][j] != char(186)) {
+				check = 0;
+				break;
+			}
+		}
+
+		if (check == 0) {
+			break; // Landed on something, stop falling
+		}
+
+		pX++;
+		checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
+		ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
+		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+		clearMap(board, dispR, dispC);
+		callObj(board, coins, enemyKill);
+		SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
+		controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
+		callDynamicObj(board, elevator);
+		addBorders(board, dispR, dispC);
+
+		if (animation == 0 || animation == -1) {
+			jumprightframe(board, pX, pY, LC, LR);
+		}
+		else if (animation == 1 || animation == -2) {
+			jumpleftframe(board, pX, pY, LC, LR);
+		}
+
+		system("cls");
+		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo,Player.gun);
+		Clear_LoadMap(board, dispR, dispC);
+
+		isFalling = 1;
+	}
+	checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
+	ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
+	isJumping = 0;
+	isFalling = 0;
+}
+
+
+void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
+	int& isJumping, player Player, int gun, int& isFalling,
+	int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int & DFireBallR, int &  DFireBallC, int & chance, int & endR, int & endC) {
+	// Initial setup
+	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+	clearMap(board, dispR, dispC);
+	SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
+	controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
+	callObj(board, coins, enemyKill);
+	callDynamicObj(board, elevator);
+	addBorders(board, dispR, dispC);
+	jumprightframe(board, pX, pY, LC, LR);
+
+	// Jump right (diagonal up-right movement)
+	for (int a = 0; a < 5; a++) {
+		int canJump = 1; // 1 = can jump, 0 = cannot jump
+
+		// Check right side collision using LC (last column in each row)
+		for (int row = pX; row >= pX - pHeight + 1; row--) {
+			int lc_index = pX - row;
+			if (lc_index >= 0 && lc_index < 9) {
+				if (board[row][LC[lc_index] + 1] != ' ' &&
+					board[row][LC[lc_index] + 1] != char(186)) {
+					canJump = 0;
+					break;
+				}
+			}
+		}
+
+		// Check upward clearance using LR (highest row in each column)
+		for (int col = pY; col < pY + pWidth; col++) {
+			int lr_index = col - pY;
+			if (lr_index >= 0 && lr_index < 15) {
+				if (LR[lr_index] - 1 < 0 ||  // Check bounds
+					(board[LR[lr_index] - 1][col] != ' ' &&
+						board[LR[lr_index] - 1][col] != char(186))) {
+					canJump = 0;
+					break;
+				}
+			}
+		}
+
+		if (canJump == 0) break;
+		if (pY + pWidth >= 998) break;
+		// Move diagonally up-right
+		pX--;
+		pY++;
+
+		checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
+		// Redraw everything
+		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+		ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
+		clearMap(board, dispR, dispC);
+		SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
+		controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
+
+		callObj(board, coins, enemyKill);
+		callDynamicObj(board, elevator);
+		addBorders(board, dispR, dispC);
+		jumprightframe(board, pX, pY, LC, LR);
+
+		system("cls");
+		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, Player.gun);
+		Clear_LoadMap(board, dispR, dispC);
+		isJumping = 1;
+	}
+
+	// Falling logic
+	for (;;) {
+		int canFall = 0;
+
+		// Check if we can fall straight down
+		for (int col = pY + 3; col <= pY + 9; col++) {
+			if (pX + 1 < 100 && (board[pX + 1][col] == ' ' || board[pX + 1][col] == char(186))) {
+				canFall = 1;
+			}
+			else {
+				canFall = 0;
+				break;
+			}
+		}
+
+		if (canFall == 0) break;
+
+		// Check if we can fall diagonally right
+		int canFallRight = 1;
+		if (pY + pWidth < 999) {
+			for (int row = pX; row <= pX + 1; row++) {
+				if (board[row][pY + pWidth] != ' ' &&
+					board[row][pY + pWidth] != char(186)) {
+					canFallRight = 0;
+					break;
+				}
+			}
+		}
+		else {
+			canFallRight = 0;
+		}
+
+		if (canFallRight == 1) {
+			pX++;
+			pY++;
+		}
+		else {
+			pX++;
+		}
+
+		checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
+		ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
+
+		// Redraw everything
+		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+		clearMap(board, dispR, dispC);
+
+		callObj(board, coins, enemyKill);
+		SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
+		controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
+
+		callDynamicObj(board, elevator);
+		addBorders(board, dispR, dispC);
+		jumprightframe(board, pX, pY, LC, LR);
+
+		system("cls");
+		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, Player.gun);
+		Clear_LoadMap(board, dispR, dispC);
+		isFalling = 1;
+	}
+	checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
+	ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
+	isJumping = 0;
+	isFalling = 0;
+	isWalking = 0;
+}
+void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, int gun, int& isFalling, int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int & DFireBallR, int &  DFireBallC, int & chance, int & endR, int & endC)  {
+
+	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+	clearMap(board, dispR, dispC);
+
+	callObj(board, coins, enemyKill);
+	callDynamicObj(board, elevator);
+
+	addBorders(board, dispR, dispC);
+	jumpleftframe(board, pX, pY, LC, LR);
+
+
+	for (int a = 0; a < 5; a++) {
+
+		int check = 1;
+		for (int j = pY; j <= pY + (pWidth - 1) && j < 999; j++) {
+			int LR_index = j - pY;  // Correctly calculate LR_index based on the position you're checking
+			if (LR_index >= 0 && LR_index < 15) {  // Ensure it's within bounds
+				int checkR = LR[LR_index] - 1; // Check the row index
+				if (board[checkR][j] != ' ') {  // If there's a solid block, stop the jump
+					check = 0;
+					break;
+				}
+			}
+			else {
+				check = 0; // Exit loop if out-of-bounds
+				break;
+			}
+
+		}
+
+		for (int i = pX; i >= pX - pHeight + 1; i--) {
+			int lc_index = pX - i;  // Convert to LC index (0 to 8)
+			if (lc_index >= 0 && lc_index < 9) {
+				if (board[i][LC[lc_index] - 1] != ' ' && board[i][LC[lc_index] - 1] != char(186)) {
+					check = 0;
+					break;
+				}
+			}
+		}
+
+		if (pX - pHeight < 1) break;
+		if (pY - 1 < 1) break;
+
+		if (check == 0) break;
+
+
+		pX--;
+		pY--;
+
+		checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
+		ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
+		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+		clearMap(board, dispR, dispC);
+		callObj(board, coins, enemyKill);
+		callDynamicObj(board, elevator);
+		addBorders(board, dispR, dispC);
+		jumpleftframe(board, pX, pY, LC, LR);
+
+		system("cls");
+		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo,Player.gun);
+		Clear_LoadMap(board, dispR, dispC);
+		isJumping = 1;
+
+	}
+
+	int check = 1;
+	for (int j = pY + 3; j <= pY + 9; j++) {
+		if (board[pX + 1][j] != ' ') {
+			check = 0;
+			break;
+		}
+	}
+
+	for (; pX + 1 < 23 && board[pX + 1][pY] == ' ' && pY > 1;) {
+		int checkDiagonal = 1;
+		for (int j = pY + 3; j <= pY + 9; j++) {
+
+			if (board[pX + 1][j] != ' ') {
+				checkDiagonal = 0;
+				break;
+			}
+		}
+
+
+		if (checkDiagonal && check) {
+			pX++;
+			pY--;
+
+
+			checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
+			ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
+			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+			clearMap(board, dispR, dispC);
+			callObj(board, coins, enemyKill);
+			callDynamicObj(board, elevator);
+			SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
+			controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
+	
+			addBorders(board, dispR, dispC);
+			jumpleftframe(board, pX, pY, LC, LR);
+
+			system("cls");
+			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo,Player.gun);
+			Clear_LoadMap(board, dispR, dispC);
+			isFalling = 1;
+		}
+	}
+	checkCoinTouch(board, pX, pX, pWidth, pHeight, coins, numCoinsP);
+	ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
+	isWalking = 0;
+	isJumping = 0, isFalling = 0; // Reset jumping and falling states after landing
+
+}
 
 
 
@@ -3211,7 +3588,7 @@ void shootLaser(char board[100][1000] , Enemy enemyKill[], int& player_y, int& p
 				for(int i = 0; i <= h; i++){
 					board[posr][posc + i] = '=';
 				}
-				
+				/////////////////////////////////////////////////////////////////////////////////////
 				
 				for(int i =0 ; i<9 ; i++){
 					// Check for collision with the enemy
@@ -3915,6 +4292,25 @@ void shootLaser(char board[100][1000] , Enemy enemyKill[], int& player_y, int& p
 
 
 
+
+void checkIsEnemyDead(Enemy enemyKill[] , int rowHeart[] , int colHeart[] , int& howManyHearts){
+	for(int i =0 ; i< 9 ; i++){
+		if(enemyKill[i].Health <=0){
+			enemyKill[i].isKillable = -1;
+			
+			int chance = rand()%5+1;
+			if(chance == 1 && howManyHearts < 99){
+				rowHeart[howManyHearts] = enemyKill[i].Row;
+				colHeart[howManyHearts] = enemyKill[i].Col;
+				spawnHeart(rowHeart , colHeart , howManyHearts);
+				howManyHearts++;
+			}
+
+			enemyKill[i].Row = -100;
+			enemyKill[i].Col = -100;
+		}
+	}		
+}
 
 
 
