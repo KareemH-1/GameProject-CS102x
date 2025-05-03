@@ -2395,14 +2395,14 @@ void drawElevator(char board[100][1000], int row, int col) {
 }
 
 void drawAndMoveElevatorV(char board[100][1000], Elevator elevator[], int i) {
-	drawElevator(board, elevator[i].row, elevator[i].col);
 	moveElevatorVertically(elevator[i].row, elevator[i].startRow, elevator[i].endRow, elevator[i].direction);
+	drawElevator(board, elevator[i].row, elevator[i].col);
 
 }
 
 void drawAndMoveElevatorH(char board[100][1000], Elevator elevator[], int i) {
-	drawElevator(board, elevator[i].row, elevator[i].col);
 	moveElevatorHorizontally(elevator[i].col, elevator[i].startCol, elevator[i].endCol, elevator[i].direction);
+	drawElevator(board, elevator[i].row, elevator[i].col);
 }
 
 
@@ -2416,7 +2416,7 @@ void ElevatePlayer(char board[100][1000], int& dispR, int& dispC, int& pX, int& 
 			int elRight = elevator[i].col + elevator[i].length - 1;
 
 			// Same horizontal range logic
-			if ((pX - 1) == elTop && pY + 14 - 1 >= elLeft && pY <= elRight) {
+			if ((pX + 1) == elTop && pY + 14 - 1 >= elLeft && pY <= elRight) {
 				if (elevator[i].direction == 1) { // Up
 					pX--;
 					scroll(board, pY, pX, 15, 8, dispR, dispC);
@@ -2479,7 +2479,7 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 	//Crystals part
 	//each crystal takes width 10 , there are 5 crystals and we must leave a distance of 20 between each so its 10*5 + 20*5= 150
 	//this terrain is drawn over the crystals+ above the button so lets say 150 + 25 = 175  , 25 cols to leave space for button
-	drawTerrain(board, 70, 100, 1, 175);
+	drawTerrain(board, 70, 97, 1, 178);
 	//col at end is 100+ 175 = 275
 	
 	
@@ -2906,7 +2906,7 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 
 		int check = 1; // Reset every fall attempt
 
-		for (int j = pY + 3; j <= pY + 9; j++) {
+		for (int j = pY +2; j <= pY + 10; j++) {
 			if (board[pX + 1][j] != ' ' && board[pX + 1][j] != char(186)) {
 				check = 0;
 				break;
@@ -2959,7 +2959,6 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 	SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
 	controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
 	callObj(board, coins, enemyKill, Heart);
-	callDynamicObj(board, elevator, -1, -1, -1, -1, -1, -1);
 	addBorders(board, dispR, dispC);
 	jumprightframe(board, pX, pY, LC, LR);
 
@@ -3022,7 +3021,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		int canFall = 0;
 
 		// Check if we can fall straight down
-		for (int col = pY + 3; col <= pY + 9; col++) {
+		for (int col = pY + 2; col <= pY + 10; col++) {
 			if (pX + 1 < 100 && (board[pX + 1][col] == ' ' || board[pX + 1][col] == char(186))) {
 				canFall = 1;
 			}
@@ -3089,7 +3088,6 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 	clearMap(board, dispR, dispC);
 
 	callObj(board, coins, enemyKill, Heart);
-	callDynamicObj(board, elevator, -1, -1, -1, -1, -1, -1);
 
 	addBorders(board, dispR, dispC);
 	jumpleftframe(board, pX, pY, LC, LR);
@@ -3151,7 +3149,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 	}
 
 	int check = 1;
-	for (int j = pY + 3; j <= pY + 9; j++) {
+	for (int j = pY +2; j <= pY +10; j++) {
 		if (board[pX + 1][j] != ' ') {
 			check = 0;
 			break;
@@ -3160,7 +3158,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 
 	for (; pX + 1 < 23 && board[pX + 1][pY] == ' ' && pY > 1;) {
 		int checkDiagonal = 1;
-		for (int j = pY + 3; j <= pY + 9; j++) {
+		for (int j = pY + 2; j <= pY + 10; j++) {
 
 			if (board[pX + 1][j] != ' ') {
 				checkDiagonal = 0;
@@ -3585,6 +3583,7 @@ int main() {
 			checkCoinTouch(board, Player.Row, Player.Col, Player.maxWidth, Player.maxHeight, coins, Player.coins);
 			checkHeartTouch(board, Player.Row, Player.Col, Player.maxWidth, Player.maxHeight, heart, Player.Health);
 			FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health);
+			ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
 			clearMap(board, dispR, dispC);
 			callObj(board, coins, enemyKill, heart);
 			callDynamicObj(board, elevator, -1, -1, -1, -1, -1, -1);
@@ -3831,7 +3830,6 @@ int main() {
 				else if (animation == 1) animation = -2;
 			}
 
-			ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
 			checkIsEnemyDead(enemyKill);
 		}
 	}
