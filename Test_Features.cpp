@@ -100,7 +100,6 @@ void FallingCrystal(char board[100][1000], Crystal& crystal, int& frame, int row
 		cout <<  row << endl;
 		cout << col << endl;
 		cout << frame << endl;
-		Sleep(1000);
 		break;
         case 2:
         board[row][col-9] = '^'; board[row][col-8] = '^'; 
@@ -115,7 +114,6 @@ void FallingCrystal(char board[100][1000], Crystal& crystal, int& frame, int row
 			cout <<  row << endl;
 			cout << col << endl;
 			cout << frame << endl;
-			Sleep(1000);
             break;
         case 3:
         board[row][col-9] = '^';
@@ -132,72 +130,71 @@ void FallingCrystal(char board[100][1000], Crystal& crystal, int& frame, int row
 			cout <<  row << endl;
 			cout << col << endl;
 			cout << frame << endl;
-			Sleep(1000);
             break;
         case 4:
-        board[row+3][col-1] = '/';
-        board[row+3][col] = '\\';
-        board[row+4][col-2] = '(';
-        board[row+4][col+1] = ')';
-        board[row+5][col-1] = '\\';
-        board[row+5][col] = '/';
+        board[row+3][col-5] = '/';
+        board[row+3][col-4] = '\\';
+        board[row+4][col-6] = '(';
+        board[row+4][col-3] = ')';
+        board[row+5][col-5] = '\\';
+        board[row+5][col-4] = '/';
 		cout << "We are in the crystal falling animation" << endl;
 		cout <<  row << endl;
 		cout << col << endl;
 		cout << frame << endl;
-		Sleep(1000);
 		break;
         case 5:
-        board[row+7][col-6] = '/';
-        board[row+7][col-6] = '\\';
+        board[row+7][col-5] = '/';
+        board[row+7][col-4] = '\\';
         board[row+8][col-6] = '(';
-        board[row+8][col+4] = ')';
-        board[row+9][col-3] = '\\';
-        board[row+9][col] = '/';
+        board[row+8][col-3] = ')';
+        board[row+9][col-5] = '\\';
+        board[row+9][col-4] = '/';
 		cout << "We are in the crystal falling animation" << endl;
 		cout <<  row << endl;
 		cout << col << endl;
 		cout << frame << endl;
 		cout << "The error is in the crystal falling animation!!!!!!!!!!!!!!!!" << endl;
-		Sleep(1000);
             break;
         case 6:
-        board[row+11][col-1] = '/';
-        board[row+11][col] = '\\';
-        board[row+12][col-2] = '(';
-        board[row+12][col+1] = ')';
-        board[row+13][col-1] = '\\';
-        board[row+13][col] = '/';
+        board[row+11][col-5] = '/';
+        board[row+11][col-4] = '\\';
+        board[row+12][col-6] = '(';
+        board[row+12][col-3] = ')';
+        board[row+13][col-5] = '\\';
+        board[row+13][col-4] = '/';
 		cout << "We are in the crystal falling animation" << endl;
 		cout <<  row << endl;
 		cout << col << endl;
 		cout << frame << endl;
 		cout << "The error is in the crystal falling animation!!!!!!!!!!!!!!!!" << endl;
-		Sleep(10000);
             break;
         case 7:
-        board[row+15][col-1] = '/';
-        board[row+15][col] = '\\';
-        board[row+16][col-2] = '(';
-        board[row+16][col+1] = ')';
-        board[row+17][col-1] = '\\';
-        board[row+17][col] = '/';
+        board[row+15][col-5] = '/';
+        board[row+15][col-4] = '\\';
+        board[row+16][col-6] = '(';
+        board[row+16][col-3] = ')';
+        board[row+17][col-5] = '\\';
+        board[row+17][col-4] = '/';
             break;
         case 8:
-        board[row+19][col-1] = '/';
-        board[row+19][col] = '\\';
-        board[row+20][col-2] = '(';
-        board[row+20][col+1] = ')';
-        board[row+21][col-1] = '\\';
-        board[row+21][col] = '/';
+        board[row+18][col-5] = '/';
+        board[row+18][col-4] = '\\';
+        board[row+19][col-6] = '(';
+        board[row+19][col-3] = ')';
+        board[row+20][col-5] = '\\';
+        board[row+20][col-4] = '/';
+		Sleep(2000);
             break;
         case 9:
-            board[21][24] = '/';
-            board[21][25] = '\\';
-            board[22][23] = '(';
-            board[22][26] = ')';
+            board[row+20][col-5] = '/';
+            board[row+20][col-4] = '\\';
+            board[row+21][col-6] = '(';
+            board[row+21][col-3] = ')';
+			Sleep(2000);
             break;
         case 10:
+		//need to adjust the position of the crystal
             board[22][22] = '>';
             board[22][23] = '\'';
             board[22][24] = '#';
@@ -211,6 +208,7 @@ void FallingCrystal(char board[100][1000], Crystal& crystal, int& frame, int row
             board[20][27] = '^';
             break;
         case 11:
+		//need to adjust the position of the crystal
             board[22][22] = '_';
             board[22][23] = '_';
             board[22][26] = '_';
