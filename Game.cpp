@@ -2639,14 +2639,15 @@ void Clear_LoadMap(char board[100][1000], int dispR, int dispC) {
 
 
 /////////////////////////////////////
+
 void checkCoinTouch(char board[100][1000], int pX, int pY, int pWidth, int pHeight, coin coins[5], int& numCoinsP) {
 	for (int a = 0; a < 5; a++) {
 		if (!coins[a].isCollected) {
 
-			int coinTop = coins[a].Row - coins[a].maxHeight + 1;
-			int coinBottom = coins[a].Row;
-			int coinLeft = coins[a].Col;
-			int coinRight = coins[a].Col + coins[a].maxWidth - 1;
+			int coinTop = coins[a].Row - coins[a].maxHeight + 1 -1;
+			int coinBottom = coins[a].Row + 1;
+			int coinLeft = coins[a].Col -1 ;
+			int coinRight = coins[a].Col + coins[a].maxWidth - 1 +1;
 
 			int playerTop = pX - pHeight + 1;
 			int playerBottom = pX;
@@ -2680,7 +2681,7 @@ void checkHeartTouch(char board[100][1000], int pX, int pY, int pWidth, int pHei
 	for (int a = 0; a < 4; a++) {
 		if (!Heart[a].isCollected) {
 
-			int heartTop = Heart[a].Row - Heart[a].maxHeight + 2;
+			int heartTop = Heart[a].Row - Heart[a].maxHeight + 1 - 1;
 			int heartBottom = Heart[a].Row + 1;
 			int heartLeft = Heart[a].Col - 1;
 			int heartRight = Heart[a].Col + Heart[a].maxWidth - 1 + 1;
