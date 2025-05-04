@@ -5,6 +5,8 @@ FIX LASER DAMAGING MORE THAN 35
 LET PLAYER MOVE WHILE SHOOTING
 ADD PISTOL
 ADD ASSUALT RIFLE
+
+FIX ELEVATOR
 ADD TELEPORTER
 ADD ENEMIES AND THIER LOGIC
 BUILD MAP
@@ -16,15 +18,6 @@ ADD BOSS FIGHT
 #include <ctime>
 using namespace std;
 
-
-//ANSI CODE COLORS
-char green[] = "\033[32m";
-char blue[] = "\033[34m";
-char red[] = "\033[31m";
-char yellow[] = "\033[33m";
-char cyan[] = "\033[36m";
-char reset[] = "\033[0m";
-char bold[] = "\033[1m";
 
 struct player {
 	int Row, Col; //Position
@@ -226,6 +219,16 @@ void initializeBoard(char border[100][1000]) {
 }
 
 void dispBar(int health, int coins, int ammo[], int maxAmmo, int gun) {
+
+	//ANSI CODE COLORS
+	char green[] = "\033[32m";
+	char blue[] = "\033[34m";
+	char red[] = "\033[31m";
+	char yellow[] = "\033[33m";
+	char cyan[] = "\033[36m";
+	char reset[] = "\033[0m";
+	char bold[] = "\033[1m";
+
 	cout << blue;
 	//upper border
 	cout << char(201);
@@ -235,19 +238,28 @@ void dispBar(int health, int coins, int ammo[], int maxAmmo, int gun) {
 	cout << char(187);
 	cout << endl;
 	cout << reset;
+	int countSpaces = 0;
+	if (gun == 0 && ammo[0] >= 1) cout << blue << char(186) << reset << "                 HEALTH " << red << bold << health << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << "Lazer " << reset << "  |  AMMO " << yellow << bold << ammo[0] << " / " << 7 << reset << blue << "             " << char(186) << reset << endl;
+	else if (gun == 1 && ammo[1] >= 1) cout << blue << char(186) << reset << "                 HEALTH " << red << bold << health << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << "Pistol" << reset << "  |  AMMO " << yellow << bold << ammo[1] << " / " << 24 << reset << blue << "             " << char(186) << reset << endl;
+	else if (gun == 2 && ammo[2] >= 1) cout << blue << char(186) << reset << "                 HEALTH " << red << bold << health << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << "Rifle " << reset << "  |  AMMO " << yellow << bold << ammo[2] << " / " << 56 << reset << blue << "             " << char(186) << reset << endl;
 
-	if (gun == 0 && ammo[0] >= 1) cout << blue << char(186) << reset << "          HEALTH " << red << bold << health << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << "Lazer " << reset << "  |  AMMO " << yellow << bold << ammo[0] << " / " << 7 << reset << blue << "           " << char(186) << reset << endl;
-	else if (gun == 1 && ammo[1] >= 1) cout << blue << char(186) << reset << "          HEALTH " << red << bold << health << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << "Pistol" << reset << "  |  AMMO " << yellow << bold << ammo[1] << " / " << 24 << reset << blue << "           " << char(186) << reset << endl;
-	else if (gun == 2 && ammo[2] >= 1) cout << blue << char(186) << reset << "          HEALTH " << red << bold << health << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << "Rifle " << reset << "  |  AMMO " << yellow << bold << ammo[2] << " / " << 56 << reset << blue << "           " << char(186) << reset << endl;
 
-
-	if (gun == 0 && ammo[0] <= 0) cout << blue << char(186) << reset << "          HEALTH " << red << bold << health << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << "Lazer " << reset << "  |  AMMO " << yellow << bold << "NO AMMO / " << maxAmmo << reset << blue << "           " << char(186) << reset << endl;
-	else if (gun == 1 && ammo[1] <= 0) cout << blue << char(186) << reset << "          HEALTH " << red << bold << health << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << "Pistol" << reset << "  |  AMMO " << yellow << bold << "NO AMMO / " << maxAmmo << reset << blue << "           " << char(186) << reset << endl;
-	else if (gun == 2 && ammo[2] <= 0) cout << blue << char(186) << reset << "          HEALTH " << red << bold << health << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << "Rifle " << reset << "  |  AMMO " << yellow << bold << "NO AMMO / " << maxAmmo << reset << blue << "           " << char(186) << reset << endl;
+	if (gun == 0 && ammo[0] <= 0) cout << blue << char(186) << reset << "                 HEALTH " << red << bold << health << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << "Lazer " << reset << "  |  AMMO " << yellow << bold << "NO AMMO / " << maxAmmo << reset << blue << "             " << char(186) << reset << endl;
+	else if (gun == 1 && ammo[1] <= 0) cout << blue << char(186) << reset << "                 HEALTH " << red << bold << health << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << "Pistol" << reset << "  |  AMMO " << yellow << bold << "NO AMMO / " << maxAmmo << reset << blue << "             " << char(186) << reset << endl;
+	else if (gun == 2 && ammo[2] <= 0) cout << blue << char(186) << reset << "                 HEALTH " << red << bold << health << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << "Rifle " << reset << "  |  AMMO " << yellow << bold << "NO AMMO / " << maxAmmo << reset << blue << "             " << char(186) << reset << endl;
 
 }
 
 void dispBoard(char board[100][1000]) {
+
+	//ANSI CODE COLORS
+	char green[] = "\033[32m";
+	char blue[] = "\033[34m";
+	char red[] = "\033[31m";
+	char yellow[] = "\033[33m";
+	char cyan[] = "\033[36m";
+	char reset[] = "\033[0m";
+	char bold[] = "\033[1m";
 
 
 	cout << blue; // Blue color for the board	
@@ -2368,7 +2380,7 @@ void moveElevatorVertically(int& row, int startRow, int endRow, int& direction) 
 	else if (row == startRow) direction = 1;
 
 	if (direction == 1) row--;
-	else if(direction == 2)row++;
+	else if (direction == 2)row++;
 }
 
 void moveElevatorHorizontally(int& col, int startCol, int endCol, int& direction) {
@@ -2376,7 +2388,7 @@ void moveElevatorHorizontally(int& col, int startCol, int endCol, int& direction
 	else if (col == startCol) direction = 1;
 
 	if (direction == 1) col++;
-	else if(direction == 2) col--;
+	else if (direction == 2) col--;
 }
 
 void drawElevator(char board[100][1000], int row, int col) {
@@ -2418,7 +2430,7 @@ void ElevatePlayer(char board[100][1000], int& dispR, int& dispC, int& pX, int& 
 				if (elevator[i].direction == 1) { // Up
 					if (elevator[i].endRow == elevator[i].row) {
 						pX++;
-					}	
+					}
 					else pX--;
 					scroll(board, pY, pX, 15, 8, dispR, dispC);
 				}
@@ -2617,6 +2629,16 @@ void addBorders(char board[100][1000], int dispR, int dispC) {
 
 
 void Clear_LoadMap(char board[100][1000], int dispR, int dispC) {
+
+	//ANSI CODE COLORS
+	char green[] = "\033[32m";
+	char blue[] = "\033[34m";
+	char red[] = "\033[31m";
+	char yellow[] = "\033[33m";
+	char cyan[] = "\033[36m";
+	char reset[] = "\033[0m";
+	char bold[] = "\033[1m";
+
 	int top = dispR - 23;
 	int bottom = dispR;
 
@@ -3660,6 +3682,7 @@ int main() {
 					if (Player.Col >= ladders[i].Col - 1 && Player.Col <= ladders[i].Col + 12) {
 						if (Player.Row >= ladders[i].Row - ladders[i].length && Player.Row <= ladders[i].Row) {
 							canGoDown = 1;
+							currentLadder = i;
 						}
 						if (Player.Row >= ladders[i].Row - ladders[i].length + 1 && Player.Row <= ladders[i].Row) {
 							isOnLadder = 1;
@@ -3762,10 +3785,16 @@ int main() {
 					if (Player.gun == 2) Player.reload(56);
 				}
 				else if (key == 'f' || key == 'F') {
-					if (isShooting == 0 && Player.ammo[0] >= 1) {
+					if (isShooting == 0 && Player.ammo[0] >= 1 && gun == 0) {
 						isShooting = 1;
 						shootLaser(board, enemyKill, Player.Col, Player.Row, animation, Player.shootR, Player.shootC, Player, dispR, dispC, lastCellCol, lastCellRow, coins, elevator, DFireBallR, DFireBallC, chance, endR, endC, isJumping, isFalling, isWalking, frame, isShooting, isClimbing, isOnLadder, canGoDown, currentLadder, ladders, gun, heart);
 						isShooting = 0;
+					}
+					else if (isShooting == 0 && Player.ammo[1] >= 1 && gun == 1) {
+						//shootPistol();
+					}
+					else if (Player.ammo[2] >= 1 && gun == 2){
+						//ShootAssualt();
 					}
 				}
 				else if (key == 'T' || key == 't') {
@@ -3815,7 +3844,7 @@ int main() {
 						else {
 							frame = 1;
 						}
-						if (Player.Row <= 97) {
+						if (Player.Row <= 97 && Player.Row <= ladders[currentLadder].Row-1) {
 							Player.Row++;
 							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 						}
