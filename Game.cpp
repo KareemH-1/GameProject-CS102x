@@ -220,7 +220,7 @@ void initializeBoard(char border[100][1000]) {
 
 void dispBar(int health, int coins, int ammo[], int maxAmmo, int gun) {
 
-	//ANSI CODE COLORS
+	// ANSI CODE COLORS
 	char green[] = "\033[32m";
 	char blue[] = "\033[34m";
 	char red[] = "\033[31m";
@@ -230,25 +230,89 @@ void dispBar(int health, int coins, int ammo[], int maxAmmo, int gun) {
 	char bold[] = "\033[1m";
 
 	cout << blue;
-	//upper border
 	cout << char(201);
 	for (int i = 1; i < 79; i++) {
 		cout << char(205);
 	}
-	cout << char(187);
-	cout << endl;
+	cout << char(187) << endl;
 	cout << reset;
-	int countSpaces = 0;
-	if (gun == 0 && ammo[0] >= 1) cout << blue << char(186) << reset << "                 HEALTH " << red << bold << health << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << "Lazer " << reset << "  |  AMMO " << yellow << bold << ammo[0] << " / " << 7 << reset << blue << "             " << char(186) << reset << endl;
-	else if (gun == 1 && ammo[1] >= 1) cout << blue << char(186) << reset << "                 HEALTH " << red << bold << health << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << "Pistol" << reset << "  |  AMMO " << yellow << bold << ammo[1] << " / " << 24 << reset << blue << "             " << char(186) << reset << endl;
-	else if (gun == 2 && ammo[2] >= 1) cout << blue << char(186) << reset << "                 HEALTH " << red << bold << health << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << "Rifle " << reset << "  |  AMMO " << yellow << bold << ammo[2] << " / " << 56 << reset << blue << "             " << char(186) << reset << endl;
+
+	cout << blue << char(186) << reset;
+
+	cout << "  HEALTH " << red << bold << health << reset;
+
+	int h = health;
+	int h_digits = 1;
+	if (h >= 100) h_digits = 3;
+	else if (h >= 10) h_digits = 2;
+
+	cout << "  " << cyan << "|" << reset << "  COINS " << yellow << bold << coins << reset;
+
+	int c = coins;
+	int c_digits = 1;
+	if (c >= 100) c_digits = 3;
+	else if (c >= 10) c_digits = 2;
+
+	cout << "  " << cyan << "|" << reset<< "  " << yellow << bold;
+
+	if (gun == 0) cout << "Lazer ";
+	else if (gun == 1) cout << "Pistol";
+	else if (gun == 2) cout << "Rifle ";
 
 
-	if (gun == 0 && ammo[0] <= 0) cout << blue << char(186) << reset << "                 HEALTH " << red << bold << health << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << "Lazer " << reset << "  |  AMMO " << yellow << bold << "NO AMMO "  << reset << blue << "             " << char(186) << reset << endl;
-	else if (gun == 1 && ammo[1] <= 0) cout << blue << char(186) << reset << "                 HEALTH " << red << bold << health << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << "Pistol" << reset << "  |  AMMO " << yellow << bold << "NO AMMO "<< reset << blue << "             " << char(186) << reset << endl;
-	else if (gun == 2 && ammo[2] <= 0) cout << blue << char(186) << reset << "                 HEALTH " << red << bold << health << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << "Rifle " << reset << "  |  AMMO " << yellow << bold << "NO AMMO " << reset << blue << "             " << char(186) << reset << endl;
+	cout << reset << "  "<< cyan<< "|"<<reset<<"  AMMO ";
 
+	int bullet = 0;
+	int max_bullet = 0;
+	if (gun == 0) {
+		bullet = ammo[0];
+		max_bullet = 7;
+	}
+	else if (gun == 1) {
+		bullet = ammo[1];
+		max_bullet = 24;
+	}
+	else if (gun == 2) {
+		bullet = ammo[2];
+		max_bullet = 56;
+	}
+
+	int b_digits = 1;
+	if (bullet >= 10) b_digits = 2;
+
+	int max_digits = 1;
+	if (max_bullet >= 10) max_digits = 2;
+
+	int usedChars = 0;
+
+
+	usedChars += 2;            
+	usedChars += 7;  
+	usedChars += h_digits;
+	usedChars += 5;      
+	usedChars += 6;         
+	usedChars += c_digits;
+	usedChars += 5;       
+	usedChars += 6;              
+	usedChars += 9;              
+
+	if (bullet > 0) {
+		usedChars += b_digits + 3 + max_digits; 
+		cout << yellow << bold << bullet << " / " << max_bullet << reset;
+	}
+	else {
+		usedChars += 7; // length of "NO AMMO"
+		cout << yellow << bold << "NO AMMO" << reset;
+	}
+
+	
+	for (int i = usedChars; i < 77; i++) {
+		cout << " ";
+	}
+
+	cout << blue << char(186) << reset << endl;
 }
+
 
 void dispBoard(char board[100][1000]) {
 
