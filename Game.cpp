@@ -244,9 +244,9 @@ void dispBar(int health, int coins, int ammo[], int maxAmmo, int gun) {
 	else if (gun == 2 && ammo[2] >= 1) cout << blue << char(186) << reset << "                 HEALTH " << red << bold << health << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << "Rifle " << reset << "  |  AMMO " << yellow << bold << ammo[2] << " / " << 56 << reset << blue << "             " << char(186) << reset << endl;
 
 
-	if (gun == 0 && ammo[0] <= 0) cout << blue << char(186) << reset << "                 HEALTH " << red << bold << health << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << "Lazer " << reset << "  |  AMMO " << yellow << bold << "NO AMMO / " << maxAmmo << reset << blue << "             " << char(186) << reset << endl;
-	else if (gun == 1 && ammo[1] <= 0) cout << blue << char(186) << reset << "                 HEALTH " << red << bold << health << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << "Pistol" << reset << "  |  AMMO " << yellow << bold << "NO AMMO / " << maxAmmo << reset << blue << "             " << char(186) << reset << endl;
-	else if (gun == 2 && ammo[2] <= 0) cout << blue << char(186) << reset << "                 HEALTH " << red << bold << health << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << "Rifle " << reset << "  |  AMMO " << yellow << bold << "NO AMMO / " << maxAmmo << reset << blue << "             " << char(186) << reset << endl;
+	if (gun == 0 && ammo[0] <= 0) cout << blue << char(186) << reset << "                 HEALTH " << red << bold << health << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << "Lazer " << reset << "  |  AMMO " << yellow << bold << "NO AMMO "  << reset << blue << "             " << char(186) << reset << endl;
+	else if (gun == 1 && ammo[1] <= 0) cout << blue << char(186) << reset << "                 HEALTH " << red << bold << health << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << "Pistol" << reset << "  |  AMMO " << yellow << bold << "NO AMMO "<< reset << blue << "             " << char(186) << reset << endl;
+	else if (gun == 2 && ammo[2] <= 0) cout << blue << char(186) << reset << "                 HEALTH " << red << bold << health << reset << "  |  COINS " << yellow << bold << coins << reset << "  |  " << yellow << bold << "Rifle " << reset << "  |  AMMO " << yellow << bold << "NO AMMO " << reset << blue << "             " << char(186) << reset << endl;
 
 }
 
@@ -319,7 +319,7 @@ void drawPlayerRightFrame1(char board[100][1000], int row, int col, int& shootR,
 	board[row - 4][col + 12] = '-';
 	board[row - 4][col + 13] = '|';
 	board[row - 4][col + 14] = '/';
-	shootR = row - 4;
+	shootR = row - 5;
 	shootC = col + 15;
 	board[row - 5][col + 14] = '\\';
 	board[row - 5][col + 13] = '|';
@@ -429,7 +429,7 @@ void drawPlayerRightFrame2(char board[100][1000], int row, int col, int& shootR,
 	board[row - 4][col + 12] = '-';
 	board[row - 4][col + 13] = '|';
 	board[row - 4][col + 14] = '/';
-	shootR = row - 4;
+	shootR = row - 5;
 	shootC = col + 15;
 	board[row - 5][col + 14] = '\\';
 	board[row - 5][col + 13] = '|';
@@ -528,7 +528,7 @@ void drawPlayerRightFrame3(char board[100][1000], int row, int col, int& shootR,
 	board[row - 4][col + 12] = '-';
 	board[row - 4][col + 13] = '|';
 	board[row - 4][col + 14] = '/';
-	shootR = row - 4;
+	shootR = row - 5;
 	shootC = col + 15;
 	board[row - 5][col + 14] = '\\';
 	board[row - 5][col + 13] = '|';
@@ -629,7 +629,7 @@ void drawPlayerRightFrame4(char board[100][1000], int row, int col, int& shootR,
 	board[row - 4][col + 12] = '-';
 	board[row - 4][col + 13] = '|';
 	board[row - 4][col + 14] = '/';
-	shootR = row - 4;
+	shootR = row - 5;
 	shootC = col + 15;
 	board[row - 5][col + 14] = '\\';
 	board[row - 5][col + 13] = '|';
@@ -729,7 +729,7 @@ void drawPlayerRightFrame5(char board[100][1000], int row, int col, int& shootR,
 	board[row - 4][col + 12] = '-';
 	board[row - 4][col + 13] = '|';
 	board[row - 4][col + 14] = '/';
-	shootR = row - 4;
+	shootR = row - 5;
 	shootC = col + 15;
 	board[row - 5][col + 14] = '\\';
 	board[row - 5][col + 13] = '|';
@@ -871,7 +871,7 @@ void DrawPlayerLeftFrame1(char board[100][1000], int row, int col, int& shooting
 	board[row - 4][col + 1] = '|';
 	board[row - 5][col] = '/';
 	board[row - 4][col] = '\\';
-	shootingR = row - 4;
+	shootingR = row - 5;
 	shootingC = col - 1;
 	board[row - 5][col + 1] = '|';
 	board[row - 5][col + 2] = '-';
@@ -923,7 +923,7 @@ void DrawPlayerLeftFrame2(char board[100][1000], int R, int C, int& shootingR, i
 	board[R - 4][C + 2] = '-';
 	board[R - 4][C + 3] = '-';
 	board[R - 4][C + 4] = '-';
-	shootingR = R - 4;
+	shootingR = R - 5;
 	shootingC = C - 1;
 	board[R - 5][C] = '/';
 	board[R - 5][C + 1] = '|';
@@ -1028,7 +1028,7 @@ void DrawPlayerLeftFrame3(char board[100][1000], int R, int C, int& shootingR, i
 	board[R - 4][C + 2] = '-';
 	board[R - 4][C + 3] = '-';
 	board[R - 4][C + 4] = '-';
-	shootingR = R - 4;
+	shootingR = R - 5;
 	shootingC = C - 1;
 	board[R - 5][C] = '/';
 	board[R - 5][C + 1] = '|';
@@ -1138,7 +1138,7 @@ void DrawPlayerLeftFrame4(char board[100][1000], int R, int C, int& shootingR, i
 	board[R - 4][C + 2] = '-';
 	board[R - 4][C + 3] = '-';
 	board[R - 4][C + 4] = '-';
-	shootingR = R - 4;
+	shootingR = R - 5;
 	shootingC = C - 1;
 	board[R - 5][C] = '/';
 	board[R - 5][C + 1] = '|';
@@ -1246,7 +1246,7 @@ void DrawPlayerLeftFrame5(char board[100][1000], int R, int C, int& shootingR, i
 	board[R - 4][C + 2] = '-';
 	board[R - 4][C + 3] = '-';
 	board[R - 4][C + 4] = '-';
-	shootingR = R - 4;
+	shootingR = R - 5;
 	shootingC = C - 1;
 	board[R - 5][C] = '/';
 	board[R - 5][C + 1] = '|';
@@ -3613,36 +3613,28 @@ int main() {
 				else if (key == 'r' || key == 'R') {
 
 
-					/*
-					if(Player.gun == 0) Player.ammo[0] = 7;
-					if(Player.gun == 1) Player.ammo[1] = 24;
-					if(Player.gun == 2) Player.ammo[2] = 56;
-					//////or
-
+					
 					if(Player.gun == 0){
 
-						if(ammo[0] <=5){
-							ammo[0] +=2;
+						if(Player.ammo[0] <=5){
+							Player.ammo[0] +=2;
 						}
-							else{
-							ammo[0]= 7;
+						else{
+							Player.ammo[0]= 7;
 						}
 					 }
 
 					 else if(Player.gun == 1){
-						if(ammo[1]<= 18) ammo[1] += 6;
-						else ammo[1] = 24;
+						if(Player.ammo[1]<= 18) Player.ammo[1] += 6;
+						else Player.ammo[1] = 24;
 					 }
 
 					 else {
-						if(ammo[2] <= 46 ) ammo[2] +=10;
-						else ammo[2]= 56
+						if (Player.ammo[2] <= 46) Player.ammo[2] += 10;
+						else Player.ammo[2] = 56;
 					 }
 
-					*/
-					if (Player.gun == 0) Player.reload(7);
-					if (Player.gun == 1) Player.reload(24);
-					if (Player.gun == 2) Player.reload(56);
+					
 				}
 				else if (key == 'f' || key == 'F') {
 					if (isShooting == 0 && Player.ammo[0] >= 1 && gun == 0) {
