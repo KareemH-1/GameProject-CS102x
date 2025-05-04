@@ -2351,14 +2351,14 @@ void drawButton(char board[100][1000], int row, int col, int isClicked) {
 		board[row - 15][col + 14] = 'D';
 		board[row - 15][col + 15] = '!';
 
-		board[row - 14][col + 6] = 'G';
-		board[row - 14][col + 7] = 'O';
-		board[row - 14][col + 8] = ' ';
-		board[row - 14][col + 9] = 'B';
-		board[row - 14][col + 10] = 'A';
-		board[row - 14][col + 11] = 'C';
-		board[row - 14][col + 12] = 'K';
-		board[row - 14][col + 13] = '!';
+		board[row - 14][col + 1] = 'G';
+		board[row - 14][col + 2] = 'O';
+		board[row - 14][col + 3] = ' ';
+		board[row - 14][col + 4] = 'B';
+		board[row - 14][col + 5] = 'A';
+		board[row - 14][col + 6] = 'C';
+		board[row - 14][col + 7] = 'K';
+		board[row - 14][col + 8] = '!';
 
 
 	}
@@ -2608,7 +2608,7 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 	drawButton(board , 98 , 250 , isClicked);
 	drawWall(board, 70, 275, 27);
 	
-	Hiddenladder(board, 97, 88, 27, isClicked);
+	Hiddenladder(board, 98, 88, 27, isClicked);
 
 	spawnHeart(board, heart, 0); // row = 69 , col = 130
 
@@ -3469,6 +3469,10 @@ int main() {
 		ladders[1].Row = 70;
 		ladders[1].Col = 50;
 		ladders[1].length = 20;
+
+		ladders[2].Row = 98;
+		ladders[2].Col = 88;
+		ladders[2].length = 27;
 
 		int gun = Player.gun;
 
