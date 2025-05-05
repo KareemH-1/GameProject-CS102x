@@ -114,6 +114,7 @@ void FallingCrystal(char board[100][1000], Crystal& crystal, int& frame, int row
 			cout <<  row << endl;
 			cout << col << endl;
 			cout << frame << endl;
+	Sleep(200);
             break;
         case 3:
         board[row][col-9] = '^';
@@ -130,6 +131,8 @@ void FallingCrystal(char board[100][1000], Crystal& crystal, int& frame, int row
 			cout <<  row << endl;
 			cout << col << endl;
 			cout << frame << endl;
+	Sleep(200);
+
             break;
         case 4:
         board[row+3][col-5] = '/';
@@ -142,6 +145,8 @@ void FallingCrystal(char board[100][1000], Crystal& crystal, int& frame, int row
 		cout <<  row << endl;
 		cout << col << endl;
 		cout << frame << endl;
+	Sleep(200);
+
 		break;
         case 5:
         board[row+7][col-5] = '/';
@@ -155,6 +160,8 @@ void FallingCrystal(char board[100][1000], Crystal& crystal, int& frame, int row
 		cout << col << endl;
 		cout << frame << endl;
 		cout << "The error is in the crystal falling animation!!!!!!!!!!!!!!!!" << endl;
+	Sleep(200);
+
             break;
         case 6:
         board[row+11][col-5] = '/';
@@ -168,6 +175,8 @@ void FallingCrystal(char board[100][1000], Crystal& crystal, int& frame, int row
 		cout << col << endl;
 		cout << frame << endl;
 		cout << "The error is in the crystal falling animation!!!!!!!!!!!!!!!!" << endl;
+	Sleep(200);
+
             break;
         case 7:
         board[row+15][col-5] = '/';
@@ -184,14 +193,14 @@ void FallingCrystal(char board[100][1000], Crystal& crystal, int& frame, int row
         board[row+19][col-3] = ')';
         board[row+20][col-5] = '\\';
         board[row+20][col-4] = '/';
-		Sleep(2000);
+		Sleep(200);
             break;
         case 9:
             board[row+20][col-5] = '/';
             board[row+20][col-4] = '\\';
             board[row+21][col-6] = '(';
             board[row+21][col-3] = ')';
-			Sleep(2000);
+			Sleep(200);
             break;
         case 10:
 		//need to adjust the position of the crystal
@@ -2381,7 +2390,6 @@ void EnemyPlayerCollision(Enemy iskill[], int numberIsKill, Enemy unkill[], int 
 		}
 	}
 	for (int i = 0; i < numberUnKill; i++) {
-
 		int enemyTop = unkill[i].Row - unkill[i].maxHeight + 1;
 		int enemyBottom = unkill[i].Row;
 		int enemyLeft = unkill[i].Col;
