@@ -2688,76 +2688,120 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 }
 
 
-void callDynamicObj(char board[100][1000], Elevator elevator[], int &posXLaz , int posYLaz[], int direction, int &whatLaz , int &isShooting , Enemy enemyKill[]) {
-	drawAndMoveElevatorV(board, elevator, 0); //(board, elevator, 0, 69, 150, 69, 51, 150, 150, 0, 1); // Vertical  
-	drawAndMoveElevatorH(board, elevator, 1);
+void callDynamicObj(char board[100][1000], Elevator elevator[], int &posXLaz, int posYLaz[], int direction, int &whatLaz, int &isShooting, Enemy enemyKill[], int &posXGUn, int posYGun[], int &whatGun) {
+    drawAndMoveElevatorV(board, elevator, 0);
+    drawAndMoveElevatorH(board, elevator, 1);
 
+    // Laser shooting logic
+    if (whatLaz <= 19 && isShooting == 1 && posXLaz >= 0 && posYLaz[0] >= 0) {
+        int nextLazerY;
 
+        // Decide nextY based on direction
+        if (direction == 0) {
+            nextLazerY = posYLaz[whatLaz] + 1;
+        }
+        else if (direction == 1) {
+            nextLazerY = posYLaz[whatLaz] - 1;
+        }
 
-	//drawSnail( board , 69 , 75); DRAW IT IN CALLDYNAMICOBJ
-	//Draw crystal *5; . start col for the first should be 110 , leave 20 columns space between each , end col for the last should be 240
+        // Make sure nextY is valid and space is empty
+        if (nextLazerY >= 0 && nextLazerY < 1000 && board[posXLaz][nextLazerY] == ' ') {
+            whatLaz++;
+            posYLaz[whatLaz] = nextLazerY;
 
-	if (whatLaz <= 19 && isShooting == 1 && posXLaz >= 0 && posYLaz[0] >= 0) {
-		int nextY;
+            // Draw trail (last 10 segments or less)
+            if (whatLaz >= 10) {
+                for (int i = whatLaz - 10; i <= whatLaz; i++) {
+                    board[posXLaz][posYLaz[i]] = '_';
+                }
+            }
+            else {
+                for (int i = 0; i <= whatLaz; i++) {
+                    board[posXLaz][posYLaz[i]] = '_';
+                }
+            }
+        }
+        else {
+            // Collision: check for enemy hit
+            for (int i = 0; i <= 9; i++) {
+                int check = checkEnemyHit(posXLaz, posYLaz[whatLaz], enemyKill[i]);
+                if (check == 1) {
+                    enemyKill[i].Health -= 30;
+                    if (enemyKill[i].Health <= 0) {
+                        enemyKill[i].isKillable = -1;
+                        enemyKill[i].Row = -100;
+                        enemyKill[i].Col = -100;
+                    }
+                }
+            }
 
-		// Decide nextY based on direction
-		if (direction == 0) {
-			nextY = posYLaz[whatLaz] + 1;
-		}
-		else if (direction == 1) {
-			nextY = posYLaz[whatLaz] - 1;
-		}
+            // Stop shooting
+            isShooting = 0;
+            whatLaz = 0;
+            for (int i = 0; i < 20; i++) {
+                posYLaz[i] = -1;
+            }
+            posXLaz = -1;
+        }
+    }
+    
+    // Gun shooting logic
+    else if (whatGun <= 25 && isShooting == 1 && posXGUn >= 0 && posYGun[0] >= 0) {
+        int nextGunY;
 
-		// Make sure nextY is valid and space is empty
-		if (nextY >= 0 && nextY < 1000 && board[posXLaz][nextY] == ' ') {
-			whatLaz++;
-			posYLaz[whatLaz] = nextY;
+        // Decide nextY based on direction
+        if (direction == 0) {
+            nextGunY = posYGun[whatGun] + 1;
+        }
+        else if (direction == 1) {
+            nextGunY = posYGun[whatGun] - 1;
+        }
 
-			// Draw trail (last 10 segments or less)
-			if (whatLaz >= 10) {
-				for (int i = whatLaz - 10; i <= whatLaz; i++) {
-					board[posXLaz][posYLaz[i]] = '_';
-				}
-			}
-			else {
-				for (int i = 0; i <= whatLaz; i++) {
-					board[posXLaz][posYLaz[i]] = '_';
-				}
-			}
-		}
-		else {
-			// Collision: check for enemy hit
-			for (int i = 0; i <= 9; i++) {
-				int check = checkEnemyHit(posXLaz, posYLaz[whatLaz], enemyKill[i]);
-				if (check == 1) {
-					enemyKill[i].Health -= 30;
-					if (enemyKill[i].Health <= 0) {
-						enemyKill[i].isKillable = -1;
-						enemyKill[i].Row = -100;
-						enemyKill[i].Col = -100;
-					}
-				}
-			}
+        // Make sure nextY is valid and space is empty
+        if (nextGunY >= 0 && nextGunY < 1000 && board[posXGUn][nextGunY] == ' ') {
+            whatGun++;
+            posYGun[whatGun] = nextGunY;
 
-			// Stop shooting
-			isShooting = 0;
-			whatLaz = 0;
-			for (int i = 0; i < 20; i++) {
-				posYLaz[i] = -1;
-			}
-			posXLaz = -1;
-		}
-	}
-	else {
-		// Reset if invalid
-		whatLaz = 0;
-		isShooting = 0;
-		for (int i = 0; i < 20; i++) {
-			posYLaz[i] = -1;
-		}
-		posXLaz = -1;
-	}
+            // Draw bullet (use * character for bullets rather than _ for laser)
+            board[posXGUn][posYGun[whatGun]] = '*';
+        }
+        else {
+            // Collision: check for enemy hit
+            for (int i = 0; i <= 9; i++) {
+                int check = checkEnemyHit(posXGUn, posYGun[whatGun], enemyKill[i]);
+                if (check == 1) {
+                    enemyKill[i].Health -= 30;
+                    if (enemyKill[i].Health <= 0) {
+                        enemyKill[i].isKillable = -1;
+                        enemyKill[i].Row = -100;
+                        enemyKill[i].Col = -100;
+                    }
+                }
+            }
 
+            // Stop shooting
+            isShooting = 0;
+            whatGun = 0;
+            for (int i = 0; i < 25; i++) {
+                posYGun[i] = -1;
+            }
+            posXGUn = -1;
+        }
+    }
+    else {
+        // Reset if invalid
+        whatLaz = 0;
+        whatGun = 0;
+        isShooting = 0;
+        for (int i = 0; i < 20; i++) {
+            posYLaz[i] = -1;
+        }
+        for (int i = 0; i < 25; i++) {
+            posYGun[i] = -1;
+        }
+        posXLaz = -1;
+        posXGUn = -1;
+    }
 }
 
 ///////////////////////////////
@@ -3030,7 +3074,7 @@ void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int widthHero
 
 }
 
-void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, int gun, int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp ,int &posXLaz,int posYLaz[], int direction, int &whatlaz, int &isShooting , int isClicked ) {
+void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, int gun, int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp ,int &posXLaz,int posYLaz[], int direction, int &whatlaz, int &isShooting , int isClicked, int &posXGun, int posYGun[], int &whatGUn) {
 
 
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
@@ -3078,7 +3122,7 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 			callObj(board, coins, enemyKill, Heart, isClicked);
 			SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
 			controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
-			callDynamicObj(board, elevator , posXLaz , posYLaz , direction , whatlaz , isShooting , enemyKill);
+			callDynamicObj(board, elevator, posXLaz, posYLaz, direction, whatlaz, isShooting, enemyKill, posXGun, posYGun, whatGUn);
 			addBorders(board, dispR, dispC);
 
 			if (animation == 0 || animation == -1) {
@@ -3100,7 +3144,7 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 }
 
 
-void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, int gun, int& isFalling, int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked) {
+void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, int gun, int& isFalling, int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& posXGun, int posYGun[], int& whatGUn) {
 	for (; pX + 1 < 99; ) {
 		if (pX - pHeight < 0) break;
 
@@ -3128,7 +3172,7 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 		SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
 		controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
 
-		callDynamicObj(board, elevator, posXLaz, posYLaz, direction, whatlaz, isShooting, enemyKill);
+		callDynamicObj(board, elevator, posXLaz, posYLaz, direction, whatlaz, isShooting, enemyKill, posXGun, posYGun, whatGUn);
 		addBorders(board, dispR, dispC);
 
 		if (animation == 0 || animation == -1) {
@@ -3154,7 +3198,7 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 
 void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 	int& isJumping, player Player, int gun, int& isFalling,
-	int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked) {
+	int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& posXGun, int posYGun[], int& whatGUn) {
 	// Initial setup
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 	clearMap(board, dispR, dispC);
@@ -3211,7 +3255,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 
 		callObj(board, coins, enemyKill, Heart, isClicked);
 
-		callDynamicObj(board, elevator, posXLaz, posYLaz, direction, whatlaz, isShooting, enemyKill);
+		callDynamicObj(board, elevator, posXLaz, posYLaz, direction, whatlaz, isShooting, enemyKill, posXGun, posYGun, whatGUn);		
 		addBorders(board, dispR, dispC);
 		jumprightframe(board, pX, pY, LC, LR);
 
@@ -3273,7 +3317,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
 
 
-		callDynamicObj(board, elevator, posXLaz, posYLaz, direction, whatlaz, isShooting, enemyKill);
+		callDynamicObj(board, elevator, posXLaz, posYLaz, direction, whatlaz, isShooting, enemyKill, posXGun, posYGun, whatGUn);			
 		addBorders(board, dispR, dispC);
 		jumprightframe(board, pX, pY, LC, LR);
 
@@ -3289,7 +3333,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 	isFalling = 0;
 	isWalking = 0;
 }
-void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, int gun, int& isFalling, int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting , int isClicked) {
+void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player Player, int gun, int& isFalling, int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting , int isClicked, int& whatGUn, int& posXGun, int posYGun[]) {
 
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 	clearMap(board, dispR, dispC);
@@ -3347,7 +3391,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 
 		callObj(board, coins, enemyKill, Heart, isClicked);
 
-		callDynamicObj(board, elevator, posXLaz, posYLaz, direction, whatlaz, isShooting, enemyKill);
+		callDynamicObj(board, elevator, posXLaz, posYLaz, direction, whatlaz, isShooting, enemyKill, posXGun, posYGun, whatGUn);			
 		addBorders(board, dispR, dispC);
 		jumpleftframe(board, pX, pY, LC, LR);
 
@@ -3390,7 +3434,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 
 			callObj(board, coins, enemyKill, Heart, isClicked);
 
-			callDynamicObj(board, elevator, posXLaz, posYLaz, direction, whatlaz, isShooting, enemyKill);
+			callDynamicObj(board, elevator, posXLaz, posYLaz, direction, whatlaz, isShooting, enemyKill, posXGun, posYGun, whatGUn);		
 			SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
 			controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
 
@@ -3459,6 +3503,12 @@ void shootLazer(int shootR , int shootC ,int& posXLaz , int posYlaz[] , int dire
 }
 
 
+void shootGUn(int shootR, int shootC, int& posXGun, int posYGun[], int direction) {
+    posXGun = shootR;
+    if (direction == 0) posYGun[0] = shootC + 1;
+    else posYGun[0] = shootC - 1;
+}
+
 
 /////////////////////////////////////////////////////////////////////
 
@@ -3519,8 +3569,11 @@ int main() {
 		int isWalking = 0, isJumping = 0, isFalling = 0, isShooting = 0, isReloading = 0, isClimbing = 0;
 
 		int posXLaz= -1;
+		int posXGun = -1;
 		int posYLaz[20] = { -1 };
+		int posYGun[25] = { -1 };
 		int whatLaz = 0 , direction =-1;
+		int whatGUn = 0;
 
 		int HiddenladderButtonClicked = 0 , btnrow = 98 , btnmaxR = 98-15 , btnCol = 250 , btnmaxC = 250 + 10;
 
@@ -3609,8 +3662,7 @@ int main() {
 		scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 		clearMap(board, dispR, dispC);
 		callObj(board, coins, enemyKill, heart , HiddenladderButtonClicked);
-
-		callDynamicObj(board, elevator, posXLaz, posYLaz, direction, whatLaz, isShooting, enemyKill);
+		callDynamicObj(board, elevator, posXLaz, posYLaz, direction, whatLaz, isShooting, enemyKill, posXGun, posYGun, whatGUn);			
 		//Devil's shooting mechanism
 		SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
 		controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
@@ -3619,19 +3671,18 @@ int main() {
 		system("cls");
 		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, Player.gun);
 		Clear_LoadMap(board, dispR, dispC);
-		FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health , posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked);
+		FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health , posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked, posXGun, posYGun, whatGUn);
 		int isWon = 0;
 
 		for (; !isWon;) {
 			gun = Player.gun;
 			checkCoinTouch(board, Player.Row, Player.Col, Player.maxWidth, Player.maxHeight, coins, Player.coins);
 			checkHeartTouch(board, Player.Row, Player.Col, Player.maxWidth, Player.maxHeight, heart, Player.Health);
-			FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health, posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked);
+			FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health, posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked, posXGun, posYGun, whatGUn);
 			ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
 			clearMap(board, dispR, dispC);
 			callObj(board, coins, enemyKill, heart, HiddenladderButtonClicked);
-			callDynamicObj(board, elevator, posXLaz, posYLaz, direction, whatLaz, isShooting, enemyKill);
-			//Devil's shooting mechanism
+			callDynamicObj(board, elevator, posXLaz, posYLaz, direction, whatLaz, isShooting, enemyKill, posXGun, posYGun, whatGUn);			
 			SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
 			controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
 			addBorders(board, dispR, dispC);
@@ -3723,7 +3774,7 @@ int main() {
 						scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 						animation = 1;
 						isWalking = 2;
-						FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health, posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked);
+						FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health, posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked, posXGun, posYGun, whatGUn);
 					}
 				}
 				else if ((key == 'd' || key == 'D') && isFalling == 0) {
@@ -3738,7 +3789,7 @@ int main() {
 						moveRight(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, lastCellCol, ladders, coins, Player.coins, heart, Player.Health);
 						scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 						animation = 0;
-						FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health, posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked);
+						FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health, posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked, posXGun, posYGun, whatGUn);
 						isWalking = 1;
 					}
 				}
@@ -3746,23 +3797,23 @@ int main() {
 					if (isOnLadder == 0) {
 						if (isWalking == 0) {
 							if (Player.Row - Player.maxHeight > 0) {
-								jumpStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health, posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked);
+								jumpStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health, posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked, posXGun, posYGun, whatGUn);
 								scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
-								FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health, posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked);
+								FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health, posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked, posXGun, posYGun, whatGUn);
 								scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 							}
 						}
 						else if (isWalking == 1) {
-							jumpRight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, isWalking, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health, posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked);
+							jumpRight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, isWalking, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health, posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked, posXGun, posYGun, whatGUn);
 							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
-							FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health, posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked);
+							FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health, posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked, posXGun, posYGun, whatGUn);
 							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 							isWalking = 0;
 						}
 						else if (isWalking == 2) {
-							jumpLeft(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, isWalking, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health, posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked);
+							jumpLeft(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, isWalking, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health, posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked, posXGun, whatGUn, posYGun);
 							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
-							FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health, posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked);
+							FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health, posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked, posXGun, posYGun, whatGUn);
 							scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 							isWalking = 0;
 						}
@@ -3794,36 +3845,44 @@ int main() {
 
 
 				}
-				else if (key == 'f' || key == 'F') {
-					if (isShooting == 0 && Player.ammo[0] >= 1 && gun == 0) {
-
-						if (animation == 0 || animation == -1)
-						{
-							isShooting = 1;
-							shootLazer(Player.shootR, Player.shootC, posXLaz, posYLaz, 0);
-							direction = 0;
-							whatLaz = 0;
-							Player.ammo[0]--;
-
-						}
-						else if (animation == 1 || animation == -2) {
-							isShooting = 1;
-							shootLazer(Player.shootR, Player.shootC, posXLaz, posYLaz, 1);
-							whatLaz = 0;
-							direction = 1;
-							Player.ammo[0]--;
-
-						}
-					}
-
-
-					else if (isShooting == 0 && Player.ammo[1] >= 1 && gun == 1) {
-						//shootPistol();
-					}
-					else if (Player.ammo[2] >= 1 && gun == 2) {
-						//ShootAssualt();
-					}
-				}
+				
+else if (key == 'f' || key == 'F') {
+    if (isShooting == 0 && Player.ammo[0] >= 1 && gun == 0) {
+        if (animation == 0 || animation == -1) {
+            isShooting = 1;
+            shootLazer(Player.shootR, Player.shootC, posXLaz, posYLaz, 0);
+            direction = 0;
+            whatLaz = 0;
+            Player.ammo[0]--;
+        }
+        else if (animation == 1 || animation == -2) {
+            isShooting = 1;
+            shootLazer(Player.shootR, Player.shootC, posXLaz, posYLaz, 1);
+            whatLaz = 0;
+            direction = 1;
+            Player.ammo[0]--;
+        }
+    }
+	else if (isShooting == 0 && Player.ammo[1] >= 1 && gun == 1) {
+		if (animation == 0 || animation == -1) {
+			isShooting = 1;
+			shootGUn(Player.shootR, Player.shootC, posXGun, posYGun, 0);
+			direction = 0;
+			whatGUn = 0;  
+			Player.ammo[1]--;
+		}
+		else if (animation == 1 || animation == -2) {
+			isShooting = 1;
+			shootGUn(Player.shootR, Player.shootC, posXGun, posYGun, 1);
+			whatGUn = 0;  
+			direction = 1;
+			Player.ammo[1]--;
+		}
+	}
+    else if (Player.ammo[2] >= 1 && gun == 2) {
+        //ShootAssualt(); - This would be implemented later
+    }
+}
 				else if (key == 'T' || key == 't') {
 					if (Player.didGetRifle == 1) {
 						if (Player.gun == 0 || Player.gun == 1) Player.gun++;
