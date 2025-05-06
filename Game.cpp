@@ -3816,18 +3816,17 @@ int main() {
 
 		intializeEnemy(enemyUnKill, 5, 75, 230, 0, 10, 12, 250, 30);//snail 1
 
-		intializeEnemy(enemyUnKill, 6, 75, 230, 0, 10, 12, 250, 30); //Spike 1
-		intializeEnemy(enemyUnKill, 7, 75, 230, 0, 10, 12, 250, 30); //Spike 2 
-		intializeEnemy(enemyUnKill, 8, 75, 230, 0, 10, 12, 250, 30); //Spike 3
-		intializeEnemy(enemyUnKill, 9, 75, 230, 0, 10, 12, 250, 30); //Spike 4
-		intializeEnemy(enemyUnKill, 10, 75, 230, 0, 10, 12, 250, 30); //Spike 5
-		intializeEnemy(enemyUnKill, 11, 75, 230, 0, 10, 12, 250, 30); //Spike 6 
-		intializeEnemy(enemyUnKill, 12, 75, 230, 0, 10, 12, 250, 30); //Spike 7 
-		intializeEnemy(enemyUnKill, 13, 75, 230, 0, 10, 12, 250, 30); //Spike 8
-		intializeEnemy(enemyUnKill, 14, 75, 230, 0, 10, 12, 250, 30); //Spike 9
-
-		intializeEnemy(enemyUnKill, 15, 75, 830, 0, 10, 12, 250, 30); //2nd place Spike 10
-		intializeEnemy(enemyUnKill, 16, 75, 831, 0, 10, 12, 250, 30); //2nd place Spike 11
+		intializeEnemy(enemyUnKill, 6, -10, -10, 0, 10, 12, 250, 30); //Spike 1
+		intializeEnemy(enemyUnKill, 7, -10, -10, 0, 10, 12, 250, 30); //Spike 2 
+		intializeEnemy(enemyUnKill, 8, -10, -10, 0, 10, 12, 250, 30); //Spike 3
+		intializeEnemy(enemyUnKill, 9, -10, -10, 0, 10, 12, 250, 30); //Spike 4
+		intializeEnemy(enemyUnKill,10, -10, -10, 0, 10, 12, 250, 30); //Spike 5
+		intializeEnemy(enemyUnKill,11, -10, -10, 0, 10, 12, 250, 30); //Spike 6 
+		intializeEnemy(enemyUnKill,12, -10, -10, 0, 10, 12, 250, 30); //Spike 7 
+		intializeEnemy(enemyUnKill,13, -10, -10, 0, 10, 12, 250, 30); //Spike 8
+		intializeEnemy(enemyUnKill,14, -10, -10, 0, 10, 12, 250, 30); //Spike 9
+		intializeEnemy(enemyUnKill,15, -10, -10, 0, 10, 12, 250, 30); //2nd place Spike 10
+		intializeEnemy(enemyUnKill,16, -10, -9, 0, 10, 12, 250, 30); //2nd place Spike 11
 
 
 
