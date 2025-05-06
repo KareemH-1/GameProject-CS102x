@@ -2146,11 +2146,11 @@ void drawMoveFireBallHorizontal(char board[100][1000], int& row, int& col, int e
 
 int collisionCheckFireballPlayer(int ballR, int ballC, player Player) {
 	int playerBottom = Player.Row;
-	int playerRight = Player.Col + 14;
-	int playerTop = Player.Row - 8;
+	int playerRight = Player.Col + 15 -1;
+	int playerTop = Player.Row - 9 +1;
 	int playerLeft = Player.Col;
 
-	if (ballR >= playerTop - 1 && ballR <= playerBottom + 1 && ballC >= playerLeft - 1 && ballC <= playerRight + 1) return 1;
+	if (ballR >= playerTop && ballR <= playerBottom && ballC >= playerLeft && ballC <= playerRight) return 1;
 	else return 0;
 }
 
@@ -2642,7 +2642,7 @@ void EnemyPlayerCollision(Enemy iskill[], int numberIsKill, Enemy unkill[], int 
 		int pLeft = P.Col;
 		int pRight = P.Col + 14;
 
-		if (pRight >= enemyLeft - 1 && pLeft <= enemyRight + 1 && pBottom >= enemyTop - 1 && pTop <= enemyBottom + 1) {
+		if (pRight >= enemyLeft  && pLeft <= enemyRight && pBottom >= enemyTop  && pTop <= enemyBottom) {
 			P.Health -= iskill[i].attackPower;
 		}
 	}
@@ -2658,7 +2658,7 @@ void EnemyPlayerCollision(Enemy iskill[], int numberIsKill, Enemy unkill[], int 
 		int pLeft = P.Col;
 		int pRight = P.Col + 14;
 
-		if (pRight >= enemyLeft - 1 && pLeft <= enemyRight + 1 && pBottom >= enemyTop - 1 && pTop <= enemyBottom + 1) {
+		if (pRight >= enemyLeft  && pLeft <= enemyRight && pBottom >= enemyTop && pTop <= enemyBottom) {
 			P.Health -= unkill[i].attackPower;
 		}
 	}
@@ -2815,7 +2815,7 @@ int checkEnemyHit(int row, int col, Enemy enemy) {
 	return checkhit;
 }
 
-
+/////////////////////////////////
 
 void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[], int isClicked) {
 	//The part for the devil
@@ -3249,7 +3249,7 @@ void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int widthHero
 
 }
 
-void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player &  Player, int gun, int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& posXGun, int posYGun[], int& whatGUn, int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping , Enemy enemyUNKill[]) {
+void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player& Player, int gun, int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& posXGun, int posYGun[], int& whatGUn, int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping, Enemy enemyUNKill[]) {
 
 
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
@@ -3321,7 +3321,7 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 }
 
 
-void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player &Player, int gun, int& isFalling, int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& posXGun, int posYGun[], int& whatGUn, int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping, Enemy enemyUNKill[]) {
+void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player& Player, int gun, int& isFalling, int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& posXGun, int posYGun[], int& whatGUn, int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping, Enemy enemyUNKill[]) {
 	for (; pX + 1 < 99; ) {
 		if (pX - pHeight < 0) break;
 
@@ -3376,7 +3376,7 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 
 
 void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
-	int& isJumping, player &Player, int gun, int& isFalling,
+	int& isJumping, player& Player, int gun, int& isFalling,
 	int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& posXGun, int posYGun[], int& whatGUn, int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping, Enemy enemyUNKill[]) {
 	// Initial setup
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
@@ -3516,7 +3516,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 	isFalling = 0;
 	isWalking = 0;
 }
-void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player &Player, int gun, int& isFalling, int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& whatGUn, int& posXGun, int posYGun[], int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping , Enemy enemyUNKill[]) {
+void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player& Player, int gun, int& isFalling, int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& whatGUn, int& posXGun, int posYGun[], int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping, Enemy enemyUNKill[]) {
 
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 	clearMap(board, dispR, dispC);
@@ -3787,23 +3787,23 @@ int main() {
 		Enemy enemyKill[9];
 		intializeEnemy(enemyKill, 0, 49, 12, 1, 11, 13, 100, 10); //Devil
 
-		intializeEnemy(enemyKill, 1, 50, 30, 1, 10, 12, 250, 30); //Reaper
+		intializeEnemy(enemyKill, 1, -10, -10, 1, 10, 12, 250, 30); //Reaper
 
 		intializeEnemy(enemyKill, 2, 98, 600, 1, 6, 12, 150, 15); //Blob
 
-		intializeEnemy(enemyKill, 3, 50, 30, 1, 15, 10, 70, 15); //Skeleton
+		intializeEnemy(enemyKill, 3, -10, -10, 1, 15, 10, 70, 15); //Skeleton
 
-		intializeEnemy(enemyKill, 4, 10, 800, 1, 10, 12, 100, 15);// Bird
+		intializeEnemy(enemyKill, 4, -10, -10, 1, 10, 12, 100, 15);// Bird
 
-		intializeEnemy(enemyKill, 5, 50, 30, 1, 10, 12, 100, 20);//Alien
+		intializeEnemy(enemyKill, 5, -10, -10, 1, 10, 12, 100, 20);//Alien
 
-		intializeEnemy(enemyKill, 6, 50, 30, 1, 10, 12, 500, 30);//Boss
-
-		intializeEnemy(enemyKill, 7, 50, 30, 1, 10, 12, 100, 20);//Devil boss minion
-
-		intializeEnemy(enemyKill, 8, 50, 30, 1, 10, 12, 100, 20);//Alien boss minion
-
-		intializeEnemy(enemyKill, 9, 50, 30, 1, 10, 12, 250, 30);//Reaper boss minion
+		intializeEnemy(enemyKill, 6, -10, -10, 1, 10, 12, 500, 30);//Boss
+				
+		intializeEnemy(enemyKill, 7,  -10, -10, 1, 10, 12, 100, 20);//Devil boss minion
+								
+		intializeEnemy(enemyKill, 8,  -10, -10, 1, 10, 12, 100, 20);//Alien boss minion
+				
+		intializeEnemy(enemyKill, 9,  -10, -10, 1, 10, 12, 250, 30);//Reaper boss minion
 
 
 
@@ -3848,7 +3848,7 @@ int main() {
 		system("cls");
 		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, Player.gun);
 		Clear_LoadMap(board, dispR, dispC);
-		FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health, posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked, posXGun, posYGun, whatGUn, blobStartC, blobEndC, blobDirection, blobIsJumping , enemyUnKill);
+		FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health, posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked, posXGun, posYGun, whatGUn, blobStartC, blobEndC, blobDirection, blobIsJumping, enemyUnKill);
 		int isWon = 0;
 
 
@@ -3858,7 +3858,7 @@ int main() {
 			EnemyPlayerCollision(enemyKill, 9, enemyUnKill, 17, Player);
 			checkCoinTouch(board, Player.Row, Player.Col, Player.maxWidth, Player.maxHeight, coins, Player.coins);
 			checkHeartTouch(board, Player.Row, Player.Col, Player.maxWidth, Player.maxHeight, heart, Player.Health);
-			FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health, posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked, posXGun, posYGun, whatGUn, blobStartC, blobEndC, blobDirection, blobIsJumping , enemyUnKill);
+			FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health, posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked, posXGun, posYGun, whatGUn, blobStartC, blobEndC, blobDirection, blobIsJumping, enemyUnKill);
 			ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
 			clearMap(board, dispR, dispC);
 			callObj(board, coins, enemyKill, heart, HiddenladderButtonClicked);
