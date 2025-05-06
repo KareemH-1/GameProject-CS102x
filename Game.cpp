@@ -1,16 +1,15 @@
 //NEXT STEPS::
 
 /*
-FIX LASER DAMAGING MORE THAN 35
-LET PLAYER MOVE WHILE SHOOTING
-ADD PISTOL
 ADD ASSUALT RIFLE
 
-FIX ELEVATOR
 ADD TELEPORTER
 ADD ENEMIES AND THIER LOGIC
+
 BUILD MAP
 ADD BOSS FIGHT
+ADD THE ASSUALT RIFLE COLLECTABLE
+END SCREEN
 */
 
 #include <iostream>
@@ -2863,10 +2862,25 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 }
 
 
-void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, int posYLaz[], int direction, int& whatLaz, int& isShooting, Enemy enemyKill[], int& posXGUn, int posYGun[], int& whatGun, int blobStartC, int blobEndC, int& blobIsJumping, int& blobDirection) {
+void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, int posYLaz[], int direction, int& whatLaz, int& isShooting, Enemy enemyKill[], int& posXGUn, int posYGun[], int& whatGun, int blobStartC, int blobEndC, int& blobIsJumping, int& blobDirection  , int AssaultR[] , int AssaultC[] , int & assaultDirection , int& AssaultIndex ) {
 	drawAndMoveElevatorV(board, elevator, 0);
 	drawAndMoveElevatorH(board, elevator, 1);
 	drawAndMoveBlob(board, enemyKill[2].Row, enemyKill[2].Col, blobStartC, blobEndC, blobDirection, blobIsJumping);
+	
+	/////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////
+	// Assault rifle
+	//int AssaultR[] , int AssaultC[] , int & assaultDirection , int& AssaultIndex
+
+	if()
+	
+	
+	
+	
+	
+	
+	/////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////
 	// Laser shooting logic
 	if (whatLaz <= 19 && isShooting == 1 && posXLaz >= 0 && posYLaz[0] >= 0) {
 		int nextLazerY;
@@ -2919,6 +2933,9 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 			posXLaz = -1;
 		}
 	}
+	
+	//////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////
 
 	// Gun shooting logic
 	else if (whatGun <= 25 && isShooting == 1 && posXGUn >= 0 && posYGun[0] >= 0) {
@@ -2977,6 +2994,9 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 		posXLaz = -1;
 		posXGUn = -1;
 	}
+
+
+
 }
 
 ///////////////////////////////
@@ -3752,6 +3772,17 @@ int main() {
 		int whatGUn = 0;
 
 		int HiddenladderButtonClicked = 0, btnrow = 98, btnmaxR = 98 - 15, btnCol = 250, btnmaxC = 250 + 10;
+
+
+
+
+		int assaultR[20] = {-1};
+		int assaultC[20] = {-1};
+		int direction = -1;
+		int assaultIndex =0;
+
+
+
 
 		ladder ladders[4];
 		ladders[0].Row = 87;
