@@ -2203,7 +2203,7 @@ void Clear_LoadMap(char board[100][1000], int dispR, int dispC) {
 
 /////////////////////////////////////
 void checkCoinTouch(char board[100][1000], int pX, int pY, int pWidth, int pHeight, coin coins[5], int& numCoinsP) {
-	for (int a = 0; a < 5; a++) {
+	for (int a = 0; a < 10; a++) {
 		if (coins[a].isCollected) continue; // Skip if already collected
 
 		int coinTop = coins[a].Row - coins[a].maxHeight + 1;

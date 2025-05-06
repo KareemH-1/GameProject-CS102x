@@ -13,7 +13,7 @@ void DrawSkeleton(char board[100][1000] , enemy Skeleton) {
   int row = Skeleton.Row , col = Skeleton.Col;
   //head
   int isDead = Skeleton.isKillable;
-  if(isKillable != -1){
+  if(Skeleton.isKillable != -1){
     board[row-14][col+5]='-';
     board[row-13][col+4]='.';
     board[row-13][col+6]='.';
@@ -151,7 +151,7 @@ void DrawSkeleton(char board[100][1000] , enemy Skeleton) {
 
 
 void skeleton(char board[100][1000], int& col ,int stCol,int endCol,int& direction) {
-    
+    int ct=0;
   int direction =0;
       if(col==endCol) {
         direction = 1;
@@ -162,9 +162,12 @@ void skeleton(char board[100][1000], int& col ,int stCol,int endCol,int& directi
     
       if(direction==0) {
         col++;
+        
       } else {
         col--;
+        
       }
+        
         
     
 }

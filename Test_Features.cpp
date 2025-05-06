@@ -78,30 +78,138 @@ struct Crystal
 	int row,col;
 };
 
-void FallingCrystal(char board[100][1000], Crystal& crystal, int& frame, int row, int col) {
-	crystal.frame = frame;
-	crystal.row = row;
-	crystal.col = col;
-
-
-
-	switch(crystal.frame) {
-		case 0:
-		// Ceiling with spikes
-		break;
+void ClearPreviousCrystalFrame(char board[100][1000], Crystal& crystal, int frame) {
+    switch (frame) {
+        case 0:
+            // Ceiling with spikes - nothing to clear
+            break;
         case 1:
-		board[row][col-9] = '^'; board[row][col-8] = '^'; board[row][col-7] = '^';
+            board[crystal.row][crystal.col-9] = ' '; board[crystal.row][crystal.col-8] = ' '; board[crystal.row][crystal.col-7] = ' ';
+            board[crystal.row][crystal.col-6] = ' ';
+            board[crystal.row][crystal.col-5] = ' ';
+            board[crystal.row][crystal.col-4] = ' ';
+            board[crystal.row][crystal.col-3] = ' ';
+            board[crystal.row][crystal.col-2] = ' '; board[crystal.row][crystal.col-1] = ' '; board[crystal.row][crystal.col] = ' ';
+            break;
+        case 2:
+            board[crystal.row][crystal.col-9] = ' '; board[crystal.row][crystal.col-8] = ' '; 
+            board[crystal.row][crystal.col-7] = ' ';
+            board[crystal.row][crystal.col-6] = ' ';
+            board[crystal.row][crystal.col-5] = ' ';
+            board[crystal.row][crystal.col-4] = ' ';
+            board[crystal.row][crystal.col-3] = ' ';
+            board[crystal.row][crystal.col-2] = ' '; 
+            board[crystal.row][crystal.col-1] = ' '; 
+            board[crystal.row][crystal.col] = ' ';
+            break;
+        case 3:
+            board[crystal.row][crystal.col-9] = ' ';
+            board[crystal.row][crystal.col-8] = ' ';
+            board[crystal.row+1][crystal.col-7] = ' ';
+            board[crystal.row+1][crystal.col-6] = ' ';
+            board[crystal.row+1][crystal.col-5] = ' ';
+            board[crystal.row+1][crystal.col-4] = ' ';
+            board[crystal.row+1][crystal.col-3] = ' ';
+            board[crystal.row+1][crystal.col-2] = ' ';
+            board[crystal.row][crystal.col-1] = ' ';
+            board[crystal.row][crystal.col] = ' ';
+            break;
+        case 4:
+            board[crystal.row+3][crystal.col-5] = ' ';
+            board[crystal.row+3][crystal.col-4] = ' ';
+            board[crystal.row+4][crystal.col-6] = ' ';
+            board[crystal.row+4][crystal.col-3] = ' ';
+            board[crystal.row+5][crystal.col-5] = ' ';
+            board[crystal.row+5][crystal.col-4] = ' ';
+            break;
+        case 5:
+            board[crystal.row+7][crystal.col-5] = ' ';
+            board[crystal.row+7][crystal.col-4] = ' ';
+            board[crystal.row+8][crystal.col-6] = ' ';
+            board[crystal.row+8][crystal.col-3] = ' ';
+            board[crystal.row+9][crystal.col-5] = ' ';
+            board[crystal.row+9][crystal.col-4] = ' ';
+            break;
+        case 6:
+            board[crystal.row+11][crystal.col-5] = ' ';
+            board[crystal.row+11][crystal.col-4] = ' ';
+            board[crystal.row+12][crystal.col-6] = ' ';
+            board[crystal.row+12][crystal.col-3] = ' ';
+            board[crystal.row+13][crystal.col-5] = ' ';
+            board[crystal.row+13][crystal.col-4] = ' ';
+            break;
+        case 7:
+            board[crystal.row+15][crystal.col-5] = ' ';
+            board[crystal.row+15][crystal.col-4] = ' ';
+            board[crystal.row+16][crystal.col-6] = ' ';
+            board[crystal.row+16][crystal.col-3] = ' ';
+            board[crystal.row+17][crystal.col-5] = ' ';
+            board[crystal.row+17][crystal.col-4] = ' ';
+            break;
+        case 8:
+            board[crystal.row+18][crystal.col-5] = ' ';
+            board[crystal.row+18][crystal.col-4] = ' ';
+            board[crystal.row+19][crystal.col-6] = ' ';
+            board[crystal.row+19][crystal.col-3] = ' ';
+            board[crystal.row+20][crystal.col-5] = ' ';
+            board[crystal.row+20][crystal.col-4] = ' ';
+            break;
+        case 9:
+            board[crystal.row+20][crystal.col-5] = ' ';
+            board[crystal.row+20][crystal.col-4] = ' ';
+            board[crystal.row+21][crystal.col-6] = ' ';
+            board[crystal.row+21][crystal.col-3] = ' ';
+            break;
+        case 10:
+            // Clear the static position positions hardcoded in the original function
+			board[crystal.row+22][crystal.col+22] = ' ';
+			board[crystal.row+22][crystal.col+23] = ' ';
+			board[crystal.row+22][crystal.col+24] = ' ';
+			board[crystal.row+22][crystal.col+25] = ' ';
+			board[crystal.row+22][crystal.col+26] = ' ';
+			board[crystal.row+22][crystal.col+27] = ' ';
+			board[crystal.row+21][crystal.col+23] = ' ';
+			board[crystal.row+21][crystal.col+25] = ' ';
+			board[crystal.row+21][crystal.col+26] = ' ';
+			board[crystal.row+20][crystal.col+22] = ' ';
+			board[crystal.row+20][crystal.col+27] = ' ';
+            break;
+        case 11:
+            // Clear the static position positions hardcoded in the original function
+			board[crystal.row+22][crystal.col+22] = ' ';
+			board[crystal.row+22][crystal.col+23] = ' ';
+			board[crystal.row+22][crystal.col+26] = ' ';
+			board[crystal.row+22][crystal.col+27] = ' ';
+			board[crystal.row+20][crystal.col+23] = ' ';
+			board[crystal.row+20][crystal.col+25] = ' ';
+			board[crystal.row+20][crystal.col+26] = ' ';
+			board[crystal.row+19][crystal.col+22] = ' ';
+			board[crystal.row+19][crystal.col+27] = ' ';
+            break;
+    }
+}
+
+void FallingCrystal(char board[100][1000], Crystal& crystal, int& frame, int row, int col , int & htiRow , int & hitCol) {
+    crystal.frame = frame;
+    crystal.row = row;
+    crystal.col = col;
+
+    if(frame == 0) {
+        // Ceiling with spikes
+		hitRow = -10;
+		hitCol = -10;
+	}
+    else if(frame == 1) {
+        board[row][col-9] = '^'; board[row][col-8] = '^'; board[row][col-7] = '^';
         board[row][col-6] = '\'';
         board[row][col-5] = '-';
         board[row][col-4] = '-';
         board[row][col-3] = '\'';
         board[row][col-2] = '^'; board[row][col-1] = '^'; board[row][col] = '^';
-		cout << "We are in the crystal falling animation" << endl;
-		cout <<  row << endl;
-		cout << col << endl;
-		cout << frame << endl;
-		break;
-        case 2:
+		hitRow = -10;
+		hitCol = -10;
+	}
+    else if(frame == 2) {
         board[row][col-9] = '^'; board[row][col-8] = '^'; 
         board[row][col-7] = '\'';
         board[row][col-6] = '-';
@@ -110,13 +218,10 @@ void FallingCrystal(char board[100][1000], Crystal& crystal, int& frame, int row
         board[row][col-3] = '-';
         board[row][col-2] = '\'';
         board[row][col-1] = '^'; board[row][col] = '^';
-			cout << "We are in the crystal falling animation" << endl;
-			cout <<  row << endl;
-			cout << col << endl;
-			cout << frame << endl;
-	Sleep(200);
-            break;
-        case 3:
+		hitRow = -10;
+		hitCol = -10;
+	}
+    else if(frame == 3) {
         board[row][col-9] = '^';
         board[row][col-8] = '_';
         board[row+1][col-7] = ' ';
@@ -127,115 +232,101 @@ void FallingCrystal(char board[100][1000], Crystal& crystal, int& frame, int row
         board[row+1][col-2] = ' ';
         board[row][col-1] = '_';
         board[row][col] = '^';
-			cout << "We are in the crystal falling animation" << endl;
-			cout <<  row << endl;
-			cout << col << endl;
-			cout << frame << endl;
-	Sleep(200);
+		hitRow = -10;
+		hitCol = -10;
+	}
 
-            break;
-        case 4:
+	/////
+    else if(frame == 4) {
         board[row+3][col-5] = '/';
         board[row+3][col-4] = '\\';
         board[row+4][col-6] = '(';
         board[row+4][col-3] = ')';
         board[row+5][col-5] = '\\';
         board[row+5][col-4] = '/';
-		cout << "We are in the crystal falling animation" << endl;
-		cout <<  row << endl;
-		cout << col << endl;
-		cout << frame << endl;
-	Sleep(200);
-
-		break;
-        case 5:
+		hitRow = row+5;
+		hitCol = col-3;
+	}
+    else if(frame == 5) {
         board[row+7][col-5] = '/';
         board[row+7][col-4] = '\\';
         board[row+8][col-6] = '(';
         board[row+8][col-3] = ')';
         board[row+9][col-5] = '\\';
         board[row+9][col-4] = '/';
-		cout << "We are in the crystal falling animation" << endl;
-		cout <<  row << endl;
-		cout << col << endl;
-		cout << frame << endl;
-		cout << "The error is in the crystal falling animation!!!!!!!!!!!!!!!!" << endl;
-	Sleep(200);
-
-            break;
-        case 6:
+		hitRow = row+9;
+		hitCol = col-3;
+    }
+    else if(frame == 6) {
         board[row+11][col-5] = '/';
         board[row+11][col-4] = '\\';
         board[row+12][col-6] = '(';
         board[row+12][col-3] = ')';
         board[row+13][col-5] = '\\';
         board[row+13][col-4] = '/';
-		cout << "We are in the crystal falling animation" << endl;
-		cout <<  row << endl;
-		cout << col << endl;
-		cout << frame << endl;
-		cout << "The error is in the crystal falling animation!!!!!!!!!!!!!!!!" << endl;
-	Sleep(200);
-
-            break;
-        case 7:
+		htiRow = row+13;
+		hitCol = col-3;
+	}
+    else if(frame == 7) {
         board[row+15][col-5] = '/';
         board[row+15][col-4] = '\\';
         board[row+16][col-6] = '(';
         board[row+16][col-3] = ')';
         board[row+17][col-5] = '\\';
         board[row+17][col-4] = '/';
-            break;
-        case 8:
+		hitRow = row+17;
+		hitCol = col-3;
+    }
+    else if(frame == 8) {
         board[row+18][col-5] = '/';
         board[row+18][col-4] = '\\';
         board[row+19][col-6] = '(';
         board[row+19][col-3] = ')';
         board[row+20][col-5] = '\\';
         board[row+20][col-4] = '/';
-		Sleep(200);
-            break;
-        case 9:
-            board[row+20][col-5] = '/';
-            board[row+20][col-4] = '\\';
-            board[row+21][col-6] = '(';
-            board[row+21][col-3] = ')';
-			Sleep(200);
-            break;
-        case 10:
-		//need to adjust the position of the crystal
-            board[22][22] = '>';
-            board[22][23] = '\'';
-            board[22][24] = '#';
-            board[22][25] = '&';
-            board[22][26] = '&';
-            board[22][27] = '<';
-            board[21][23] = ';';
-            board[21][25] = ':';
-            board[21][26] = ';';
-            board[20][22] = '^';
-            board[20][27] = '^';
-            break;
-        case 11:
-		//need to adjust the position of the crystal
-            board[22][22] = '_';
-            board[22][23] = '_';
-            board[22][26] = '_';
-            board[22][27] = '_';
-            board[20][23] = ';';
-            board[20][25] = '\'';
-            board[20][26] = '.';
-            board[19][22] = '^';
-            board[19][27] = '^';
-            break;
+		hitRow = row+20;
+		hitCol = col-3;
     }
-    
-	frame++;
-	if (frame >= 11) {
-		frame = 0;
-	}
-}
+    else if(frame == 9) {
+        board[row+20][col-5] = '/';
+        board[row+20][col-4] = '\\';
+        board[row+21][col-6] = '(';
+        board[row+21][col-3] = ')';
+		hitRow = row+21;
+		hitCol = col-3;
+    }
+    else if(frame == 10) {
+        //need to adjust the position of the crystal
+        board[row+22][col+22] = '>';
+        board[row+22][col+23] = '\'';
+        board[row+22][col+24] = '#';
+        board[row+22][col+25] = '&';
+        board[row+22][col+26] = '&';
+        board[row+22][col+27] = '<';
+        board[row+21][col+23] = ';';
+        board[row+21][col+25] = ':';
+        board[row+21][col+26] = ';';
+        board[row+20][col+22] = '^';
+        board[row+20][col+27] = '^';
+    }
+    else if(frame == 11) {
+        //need to adjust the position of the crystal
+        board[row+22][col+22] = '_';
+        board[row+22][col+23] = '_';
+        board[row+22][col+26] = '_';
+        board[row+22][col+27] = '_';
+        board[row+20][col+23] = ';';
+        board[row+20][col+25] = '\'';
+        board[row+20][col+26] = '.';
+        board[row+19][col+22] = '^';
+        board[row+19][col+27] = '^';
+    }
 
+    frame++;
+    if (frame >= 11) {
+        frame = 0;
+    }
+}
 void intializeCrystal(char board[100][1000], Crystal& crystal, int row, int col) {
 	crystal.row = row;
 	crystal.col = col;
