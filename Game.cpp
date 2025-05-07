@@ -4440,30 +4440,13 @@ int main() {
 						}
 					}
 					else if (isShooting == 0 && Player.ammo[1] >= 1 && gun == 1) {
-						if (animation == 0 || animation == -1) {
-							isShooting = 1;
-							shootGUn(Player.shootR, Player.shootC, posXGun, posYGun, 0);
-							direction = 0;
-							whatGUn = 0;
-							Player.ammo[1]--;
-						}
-						else if (animation == 1 || animation == -2) {
-							isShooting = 1;
-							shootGUn(Player.shootR, Player.shootC, posXGun, posYGun, 1);
-							whatGUn = 0;
-							direction = 1;
-							Player.ammo[1]--;
-						}
-					}
-					else if (Player.ammo[2] >= 1 && gun == 2) {
-
 						int firstFreeBullet = -1;
 						for (int i = 0; i < 20; i++) {
 							if (assaultR[i] == -1) firstFreeBullet = i;
 						}
 						if (firstFreeBullet != -1) {
 
-							Player.ammo[2]--;
+							Player.ammo[1]--;
 							if (animation == 0 || animation == -1) {
 								assaultDirection[firstFreeBullet] = 0;
 								assaultR[firstFreeBullet] = Player.shootR;
@@ -4479,6 +4462,10 @@ int main() {
 							}
 						}
 
+					}
+					else if (Player.ammo[2] >= 1 && gun == 2) {
+
+	
 					}
 				}
 				else if (key == 'T' || key == 't') {
