@@ -2948,7 +2948,7 @@ void drawAndMoveElevatorH(char board[100][1000], Elevator elevator[], int i) {
 
 
 void ElevatePlayer(char board[100][1000], int& dispR, int& dispC, int& pX, int& pY, Elevator elevator[], int nElevators) {
-	for (int i = 0; i < nElevators; i++) {
+	for (int i = 0; i < 3; i++) {
 		// Vertical Elevator
 		if (elevator[i].whichD == 0) {
 			int ignoreElevetor = 0;
@@ -3368,12 +3368,30 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 	
 	drawWall(board, 2, 210, 49);
 	drawWall(board, 2, 211, 49);
+
+	//Upper terrain for skeleton and bird
+
+	drawTerrain(board , 30 , 362 , 2 , 38);
+	drawLadder(board, 50, 400, 21);
+	drawTerrain(board, 51, 400, 2, 214);
+
+	drawLadder(board, 50, 600, 21);
+	drawTerrain(board, 30, 614, 2, 86);
+
+
+	drawWall(board, 2, 700, 30);
+	drawWall(board, 2, 701, 30);
+
 }
 
 
 void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, int posYLaz[], int direction, int& whatLaz, int& isShooting, Enemy enemyKill[], int& posXGUn, int posYGun[], int& whatGun, int blobStartC, int blobEndC, int& blobIsJumping, int& blobDirection, int AssaultR[], int AssaultC[], int startCAssault[], int assaultDirection[]) {
 	drawAndMoveElevatorV(board, elevator, 0);
 	drawAndMoveElevatorH(board, elevator, 1);
+
+	drawAndMoveElevatorV(board, elevator, 2); // Col = 350 , row = 98 -> 20
+
+
 	drawAndMoveBlob(board, enemyKill[2].Row, enemyKill[2].Col, blobStartC, blobEndC, blobDirection, blobIsJumping);
 
 	/////////////////////////////////////////////////////////////////////////
@@ -3740,8 +3758,8 @@ void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHer
 	}
 
 	int isOnLadder = 0;
-	for (int i = 0; i < 4; i++) {
-		if (posJHero + widthHero >= ladders[i].Col - 1 && posJHero <= ladders[i].Col + ladders[i].length) { // <- FIXED here
+	for (int i = 0; i < 5; i++) {
+		if (posJHero + widthHero >= ladders[i].Col - 1 && posJHero <= ladders[i].Col + ladders[i].length) {
 			if (posIHero <= ladders[i].Row + 1 && posIHero - heightHero + 1 >= ladders[i].Row - ladders[i].length - 1) {
 				isOnLadder = 1;
 				break;
@@ -3812,8 +3830,8 @@ void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int widthHero
 	}
 
 	int isOnLadder = 0;
-	for (int i = 0; i < 4; i++) {
-		if (posJHero >= ladders[i].Col - widthHero && posJHero <= ladders[i].Col + ladders[i].length + widthHero) { // <- FIXED here
+	for (int i = 0; i < 5; i++) {
+		if (posJHero >= ladders[i].Col - widthHero && posJHero <= ladders[i].Col + ladders[i].length + widthHero) { 
 			if (posIHero <= ladders[i].Row + 1 && posIHero - heightHero + 1 >= ladders[i].Row - ladders[i].length - 1) {
 				isOnLadder = 1;
 				break;
@@ -4455,8 +4473,7 @@ int main() {
 
 		int HiddenladderButtonClicked = 0, btnrow = 98, btnmaxR = 98 - 15, btnCol = 290, btnmaxC = 290 + 10;
 
-		Player.Col = 88;
-
+		Player.Col = 600, Player.Row = 22;
 		int assaultR[20] = { -1 };
 		int assaultC[20] = { -1 };
 		int assaultDirection[20] = { -1 };
@@ -4466,7 +4483,7 @@ int main() {
 
 
 		///////////Ladders////////////
-		ladder ladders[4];
+		ladder ladders[5];
 		ladders[0].Row = 88;
 		ladders[0].Col = 20;
 		ladders[0].length = 17;
@@ -4481,6 +4498,14 @@ int main() {
 		ladders[2].Row = 98;
 		ladders[2].Col = 134;
 		ladders[2].length = 28;
+
+		ladders[3].Row = 50;
+		ladders[3].Col = 400;
+		ladders[3].length = 21;
+
+		ladders[4].Row = 50;
+		ladders[4].Col = 600;
+		ladders[4].length = 21;
 
 
 		////////////Coins/////////////
@@ -4504,11 +4529,17 @@ int main() {
 		
 
 		/////////////Elevators//////////////
-		Elevator elevator[2];
+		Elevator elevator[3];
 
 		intializeElevator(board, elevator, 0, 70, 170, 70, 43, 170, 170, 0, 1); // Vertical  
 
+
 		intializeElevator(board, elevator, 1, 95, 600, 95, 95, 600, 650, 1, 1); //horizonatal
+
+		drawWall(board, 71, 311, 28);
+
+		
+		intializeElevator(board, elevator, 2, 98, 350, 98, 20, 350, 350, 0, 1); // Vertical 2 
 
 		
 		////////////Enemies//////////////////
@@ -4517,7 +4548,7 @@ int main() {
 		Enemy enemyKill[9];
 		intializeEnemy(enemyKill, 0, 49, 12, 1, 11, 13, 100, 10); //Devil
 
-		intializeEnemy(enemyKill, 1, -10, -10, 1, 10, 12, 250, 30); //Reaper
+		intializeEnemy(enemyKill, 1, -10, -10, 1, 10, 12, 1, 30); //Hittable door
 
 		intializeEnemy(enemyKill, 2, 98, 600, 1, 6, 12, 150, 15); //Blob
 
@@ -4672,7 +4703,7 @@ int main() {
 				isOnLadder = 0;
 				int canGoDown = 0;
 
-				for (int i = 0; i < 4; i++) {
+				for (int i = 0; i < 5; i++) {
 					if (Player.Col >= ladders[i].Col - 1 && Player.Col <= ladders[i].Col + 12) {
 						if (Player.Row >= ladders[i].Row - ladders[i].length && Player.Row <= ladders[i].Row) {
 							canGoDown = 1;
