@@ -2646,7 +2646,7 @@ void spawnHeart(char board[100][1000], hearts heart[], int  i) {
 		board[row - 2][col + 1] = ':';
 		board[row - 1][col + 1] = '\'';
 
-		board[row - 3][col + 2] = ':5';
+		board[row - 3][col + 2] = ':';
 		board[row - 2][col + 2] = ':';
 		board[row - 1][col + 2] = ':';
 
@@ -3112,9 +3112,6 @@ void checkIsAssaultTaken(player& Player) {
 
 void drawMoveSkeleton(char board[100][1000] , Enemy& Skeleton , int stCol , int endCol , int& direction) {
   
-	
-	int ct=0;
-	int direction =0;
 	if(Skeleton.Col == endCol) {
 		direction = 1;
 	}
@@ -3277,9 +3274,12 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 	drawTerrain(board, 95, 61, 2, 11); //first platform
 
 	drawTerrain(board, 92, 46, 2, 11); //second platform
-	drawTerrain(board, 89, 20, 2, 21); //third platform
+	drawTerrain(board, 89, 2, 2, 39); //third platform
 
 	drawLadder(board, 88, 20, 17);
+
+
+
 	drawTerrain(board, 71, 33, 2, 32);
 	drawLadder(board, 70, 50, 20);
 	drawTerrain(board, 50, 1, 2, 50);
@@ -3291,7 +3291,8 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 
 	//The snail part
 
-	drawTerrain(board, 70, 110, 2, 23);
+	drawTerrain(board, 70, 100, 2, 33);
+	drawWall(board, 51 , 100 , 20);
 	drawCoin(board, coins[1].Row, coins[1].Col, coins[1].isCollected); // row = 69 , col = 66
 
 
@@ -3813,7 +3814,7 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 		jumpleftframe(board, pX, pY, LC, LR); // Draw the player jumping up
 	}
 
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 5; i++) {
 		if (pX - pHeight < 0) break;
 		int check = 1;
 
@@ -3924,10 +3925,8 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 }
 
 
-void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
-	int& isJumping, player& Player, int gun, int& isFalling,
-	int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& posXGun, int posYGun[], int& whatGUn, int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping, Enemy enemyUNKill[], int AssaultR[], int AssaultC[], int startCAssault[], int assaultDirection[]) {
-	// Initial setup
+void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player& Player, int gun, int& isFalling, int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& posXGun, int posYGun[], int& whatGUn, int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping, Enemy enemyUNKill[], int AssaultR[], int AssaultC[], int startCAssault[], int assaultDirection[]) {
+
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 	clearMap(board, dispR, dispC);
 	SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
@@ -3937,40 +3936,61 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 	addBorders(board, dispR, dispC);
 	jumprightframe(board, pX, pY, LC, LR);
 
-	// Jump right (diagonal up-right movement)
-	for (int a = 0; a < 5; a++) {
+	for (int a = 0; a < 6; a++) {
 		int canJump = 1; // 1 = can jump, 0 = cannot jump
 
-		// Check right side collision using LC (last column in each row)
 		for (int row = pX; row >= pX - pHeight + 1; row--) {
 			int lc_index = pX - row;
 			if (lc_index >= 0 && lc_index < 9) {
-				if (board[row][LC[lc_index] + 1] != ' ' &&
-					board[row][LC[lc_index] + 1] != char(186)) {
+				if (board[row][LC[lc_index] + 1] != ' ' && board[row][LC[lc_index] + 1] != char(186)) {
+					canJump = 0;
+					break;
+				}
+			}
+		}
+		int canJump2ndCol = 1;
+		for (int row = pX; row >= pX - pHeight + 1; row--) {
+			int lc_index = pX - row;
+			if (lc_index >= 0 && lc_index < 9) {
+				if (board[row][LC[lc_index] + 2] != ' ' && board[row][LC[lc_index] + 2] != char(186)) {
+					canJump2ndCol = 0;
+					break;
+				}
+			}
+		}
+
+		for (int col = pY; col < pY + pWidth; col++) {
+			int lr_index = col - pY;
+			if (lr_index >= 0 && lr_index < 15) {
+				if (LR[lr_index] - 1 < 0 ||
+					(board[LR[lr_index] - 1][col] != ' ' && board[LR[lr_index] - 1][col] != char(186))) {
 					canJump = 0;
 					break;
 				}
 			}
 		}
 
-		// Check upward clearance using LR (highest row in each column)
 		for (int col = pY; col < pY + pWidth; col++) {
 			int lr_index = col - pY;
 			if (lr_index >= 0 && lr_index < 15) {
-				if (LR[lr_index] - 1 < 0 ||  // Check bounds
-					(board[LR[lr_index] - 1][col] != ' ' &&
-						board[LR[lr_index] - 1][col] != char(186))) {
-					canJump = 0;
+				if (LR[lr_index] - 2 < 0 ||
+					(board[LR[lr_index] - 2][col] != ' ' && board[LR[lr_index] - 2][col] != char(186))) {
+					canJump2ndCol = 0;
 					break;
 				}
 			}
 		}
+
 
 		if (canJump == 0) break;
 		if (pY + pWidth >= 998) break;
 		// Move diagonally up-right
 		pX--;
 		pY++;
+		
+		if (canJump2ndCol == 1) {
+			pY++;
+		}
 		checkIsAssaultTaken(Player);
 		EnemyPlayerCollision(enemyKill, 9, enemyUNKill, 17, Player);
 		checkCoinTouch(board, pX, pY, pWidth, pHeight, coins, numCoinsP);
@@ -4010,6 +4030,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 			}
 		}
 
+
 		if (canFall == 0) break;
 
 		// Check if we can fall diagonally right
@@ -4027,12 +4048,34 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 			canFallRight = 0;
 		}
 
+
+		int canFallRight2ndCol = 1;
+		if (pY + pWidth+1 < 999) {
+			for (int row = pX; row <= pX + 1; row++) {
+				if (board[row][pY + pWidth+1] != ' ' &&
+					board[row][pY + pWidth+1] != char(186)) {
+					canFallRight2ndCol = 0;
+					break;
+				}
+			}
+		}
+		else {
+			canFallRight2ndCol = 0;
+		}
+
+
+
+		
 		if (canFallRight == 1) {
 			pX++;
 			pY++;
 		}
 		else {
 			pX++;
+		}
+
+		if(canFallRight2ndCol == 1) {
+			pY++;
 		}
 
 		EnemyPlayerCollision(enemyKill, 9, enemyUNKill, 17, Player);
@@ -4080,7 +4123,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 	jumpleftframe(board, pX, pY, LC, LR);
 
 
-	for (int a = 0; a < 5; a++) {
+	for (int a = 0; a < 6; a++) {
 
 		int check = 1;
 		for (int j = pY; j <= pY + (pWidth - 1) && j < 999; j++) {
@@ -4109,6 +4152,17 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 			}
 		}
 
+		int check2ndCol = 0;
+		for (int i = pX; i >= pX - pHeight + 1; i--) {
+			int lc_index = pX - i;  // Convert to LC index (0 to 8)
+			if (lc_index >= 0 && lc_index < 9) {
+				if (board[i][LC[lc_index] - 2] != ' ' && board[i][LC[lc_index] - 2] != char(186)) {
+					check2ndCol = 0;
+					break;
+				}
+			}
+		}
+
 		if (pX - pHeight < 1) break;
 		if (pY - 1 < 1) break;
 
@@ -4117,6 +4171,8 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 
 		pX--;
 		pY--;
+
+		if(check2ndCol == 0) pY--;
 
 		checkIsAssaultTaken(Player);
 		EnemyPlayerCollision(enemyKill, 9, enemyUNKill, 17, Player);
@@ -4157,11 +4213,24 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 			}
 		}
 
+		int check2ndCol;
+
+		for(int i = pX; i >= pX - pHeight + 1; i--) {
+			int lc_index = pX - i;  // Convert to LC index (0 to 8)
+			if (lc_index >= 0 && lc_index < 9) {
+				if (board[i][LC[lc_index] - 2] != ' ' && board[i][LC[lc_index] - 2] != char(186)) {
+					check2ndCol = 0;
+					break;
+				}
+			}
+		}
+
 
 		if (checkDiagonal && check) {
 			pX++;
 			pY--;
 
+			if(check2ndCol == 0) pY--;
 
 			checkIsAssaultTaken(Player);
 			EnemyPlayerCollision(enemyKill, 9, enemyUNKill, 17, Player);
