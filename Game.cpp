@@ -291,9 +291,32 @@ void displayInstructions() {
 	cout << "||  F  - Shoot                                  ||" << endl;
 	cout << "||  R  - Reload                                 ||" << endl;
 	cout << "||  T  - Switch Weapons                         ||" << endl;
+	cout << "||                                              ||" << endl;
+	cout << "||                                              ||" << endl;
+	cout << "||  Game Rules:                                 ||" << endl;
+	cout << "||                                              ||" << endl;
+	cout << "||  1. Collect 10 coins scattered across the    ||" << endl;
+	cout << "||     map to unlock the teleporter to the boss.||" << endl;
+	cout << "||                                              ||" << endl;
+	cout << "||  2. Once the teleporter is unlocked, reach   ||" << endl;
+	cout << "||     it to face the boss.                     ||" << endl;
+	cout << "||                                              ||" << endl;
+	cout << "||  3. Defeat the boss to win the game.         ||" << endl;
+	cout << "||                                              ||" << endl;
+	cout << "||  4. If your health reaches zero, you lose.   ||" << endl;
+	cout << "||                                              ||" << endl;
+	cout << "||  5. Enemies and traps will decrease your     ||" << endl;
+	cout << "||     health, so stay alert.                   ||" << endl;
+	cout << "||                                              ||" << endl;
+	cout << "||  6. Collect hearts to regain health.         ||" << endl;
+	cout << "||                                              ||" << endl;
+	cout << "||  7. A powerful weapon is hidden on the map.  ||" << endl;
+	cout << "||     Find it to increase your attack power.   ||" << endl;
+	cout << "||                                              ||" << endl;
 	cout << "==================================================" << endl;
 	cout << "||  Press any key to return to main menu...     ||" << endl;
 	cout << "==================================================" << endl;
+
 
 	char Key;
 	cin >> Key;
@@ -319,23 +342,23 @@ void displayCredits() {
 
 
 void gameOverScreen() {
-    cout << "==================================================" << endl;
-    cout << "||                                              ||" << endl;
-    cout << "||                G A M E  O V E R              ||" << endl;
-    cout << "||                                              ||" << endl;
-    cout << "||                   YOU LOST!                  ||" << endl;
-    cout << "||                                              ||" << endl;
-    cout << "==================================================" << endl;
+	cout << "==================================================" << endl;
+	cout << "||                                              ||" << endl;
+	cout << "||                G A M E  O V E R              ||" << endl;
+	cout << "||                                              ||" << endl;
+	cout << "||                   YOU LOST!                  ||" << endl;
+	cout << "||                                              ||" << endl;
+	cout << "==================================================" << endl;
 }
 
 void winScreen() {
-    cout << "==================================================" << endl;
-    cout << "||                                              ||" << endl;
-    cout << "||         C O N G R A T U L A T I O N S        ||" << endl;
-    cout << "||                                              ||" << endl;
-    cout << "||          YOU HAVE FINISHED THE GAME!         ||" << endl;
-    cout << "||                                              ||" << endl;
-    cout << "==================================================" << endl;
+	cout << "==================================================" << endl;
+	cout << "||                                              ||" << endl;
+	cout << "||         C O N G R A T U L A T I O N S        ||" << endl;
+	cout << "||                                              ||" << endl;
+	cout << "||          YOU HAVE FINISHED THE GAME!         ||" << endl;
+	cout << "||                                              ||" << endl;
+	cout << "==================================================" << endl;
 }
 
 
@@ -2800,7 +2823,7 @@ void EnemyPlayerCollision(Enemy iskill[], int numberIsKill, Enemy unkill[], int 
 	for (int i = 0; i < numberIsKill; i++) {
 
 		int enemyTop = iskill[i].Row - iskill[i].maxHeight;
-		int enemyBottom = iskill[i].Row+1;
+		int enemyBottom = iskill[i].Row + 1;
 		int enemyLeft = iskill[i].Col;
 		int enemyRight = iskill[i].Col + iskill[i].maxWidth;
 
@@ -2816,7 +2839,7 @@ void EnemyPlayerCollision(Enemy iskill[], int numberIsKill, Enemy unkill[], int 
 	for (int i = 0; i < 19; i++) {
 		if (i >= 5) {
 			int enemyTop = unkill[i].Row - unkill[i].maxHeight;
-			int enemyBottom = unkill[i].Row+1;
+			int enemyBottom = unkill[i].Row + 1;
 			int enemyLeft = unkill[i].Col;
 			int enemyRight = unkill[i].Col + unkill[i].maxWidth;
 
@@ -3110,165 +3133,166 @@ void checkIsAssaultTaken(player& Player) {
 /////////////////////////////////////////
 
 
-void drawMoveSkeleton(char board[100][1000] , Enemy& Skeleton , int stCol , int endCol , int& direction) {
-  
-	if(Skeleton.Col == endCol) {
+void drawMoveSkeleton(char board[100][1000], Enemy& Skeleton, int stCol, int endCol, int& direction) {
+
+	if (Skeleton.Col == endCol) {
 		direction = 1;
 	}
-	if(Skeleton.Col == stCol) {
+	if (Skeleton.Col == stCol) {
 		direction = 0;
 	}
-	  
-	if(direction==0) {
+
+	if (direction == 0) {
 		Skeleton.Col++;
-		  
-	} else {
-		Skeleton.Col--;  
+
+	}
+	else {
+		Skeleton.Col--;
 	}
 
 	//height = 13 , width =11
 
-	int row = Skeleton.Row , col = Skeleton.Col;
+	int row = Skeleton.Row, col = Skeleton.Col;
 	//head
 	int isDead = Skeleton.isKillable;
-	if(Skeleton.isKillable != -1){
-	  board[row-14][col+5]='-';
-	  board[row-13][col+4]='.';
-	  board[row-13][col+6]='.';
-	  board[row-12][col+3]='(';
-	  board[row-12][col+4]='o';
-	  board[row-12][col+5]='.';
-	  board[row-12][col+6]='o';
-	  board[row-12][col+7]=')';
-	  board[row-11][col+6]='|';
-	  board[row-11][col+5]='=';
-	  board[row-11][col+4]='|';
-  
-  
-	  //body
-  
-	  board[row-10][col+3]='_';
-	  board[row-9][col+3]='.';
-	  board[row-8][col+3]='.';
-	  board[row-7][col+3]='.';
-	  board[row-6][col+3]='(';
-	  board[row-10][col+4]='_';
-	  board[row-9][col+4]='=';
-	  board[row-8][col+4]='=';
-	  board[row-7][col+4]='=';
-	  board[row-6][col+4]='_';
-	  board[row-10][col+5]='|';
-	  board[row-9][col+5]='|';
-	  board[row-8][col+5]='|';
-	  board[row-7][col+5]='|';
-	  board[row-6][col+5]='=';
-	  board[row-10][col+6]='_';
-	  board[row-9][col+6]='=';
-	  board[row-8][col+6]='=';
-	  board[row-7][col+6]='=';
-	  board[row-6][col+6]='_';
-	  board[row-10][col+7]='_';
-	  board[row-9][col+7]='.';
-	  board[row-8][col+7]='.';
-	  board[row-7][col+7]='.';
-	  board[row-6][col+7]='_';
-  
-  
-  
-	  //right hand
-	  
-	  
-	  board[row-9][col+8]='\\';
-	  board[row-9][col+9]='\\';
-	  board[row-8][col+9]='\\';
-	  board[row-8][col+10]='\\';
-	  board[row-7][col+10]='/';
-	  board[row-7][col+9]='/';
-	  board[row-6][col+9]='/';
-	  board[row-6][col+8]='/';
-	  board[row-5][col+8]=')';
-  
-  
-  
-	  //left hand
-	  board[row-9][col+2]='/';
-	  board[row-9][col+1]='/';
-	  board[row-8][col+1]='/';
-	  board[row-8][col]='/';
-	  board[row-7][col]='\\';
-	  board[row-7][col+1]='\\';
-	  board[row-6][col+1]='\\';
-	  board[row-6][col+2]='\\';
-	  board[row-5][col+3]='(';
-  
-  
-	  //right leg
-  
-	  board[row-5][col+3]=':';
-	  board[row-4][col+3]='|';
-	  board[row-3][col+3]=')';
-	  board[row-2][col+3]='|';
-	  board[row-1][col+3]='|';
-	  board[row][col+3]='=';
-	  board[row][col+2]='=';
-	  board[row-5][col+4]='|';
-	  board[row-4][col+4]='|';
-	  board[row-3][col+4]=')';
-	  board[row-2][col+4]='|'; 
-	  board[row-1][col+4]='|';
-	  board[row][col+4]='\'';
-	  
-  
-  
-	  //left leg
-	  board[row-5][col+6]='|';
-	  board[row-4][col+6]='|';
-	  board[row-3][col+6]='(';
-	  board[row-2][col+6]='|';
-	  board[row-1][col+6]='|';
-	  board[row][col+6]='\'';
-	  board[row-5][col+7]=':';
-	  board[row-4][col+7]='|';
-	  board[row-3][col+7]=')';
-	  board[row-2][col+7]='|';
-	  board[row-1][col+7]='|';
-	  board[row][col+7]='=';
-	  board[row][col+8]='=';
-	  
-  
-	  
-  
-	  int hp = Skeleton.Health;
-	  board[row-16][col+3] = 'H';
-	  board[row-16][col+4] = 'P';
-	  board[row-16][col+5] = ':';
-	  
-	  if (hp>9 && hp < 100){
-		int fDig = hp/10 , sDig = hp%10;
-	
-		board[row-16][col+6] = fDig + '0';
-		board[row-16][col+7] = sDig+ '0';
-	  }
-	  else if (hp >= 100){
-		int fDig = hp/100 , sDig = (hp/10)%10 , tDig = hp%10;
-	
-		board[row-16][col+6] = fDig+ '0';
-		board[row-16][col+7] = sDig+ '0';
-		board[row-16][col+8] = tDig+ '0';
-	  }
-	  else if(hp >=0 && hp <=9){
-		board[row-16][col+6] = hp+ '0';
-	  }
+	if (Skeleton.isKillable != -1) {
+		board[row - 14][col + 5] = '-';
+		board[row - 13][col + 4] = '.';
+		board[row - 13][col + 6] = '.';
+		board[row - 12][col + 3] = '(';
+		board[row - 12][col + 4] = 'o';
+		board[row - 12][col + 5] = '.';
+		board[row - 12][col + 6] = 'o';
+		board[row - 12][col + 7] = ')';
+		board[row - 11][col + 6] = '|';
+		board[row - 11][col + 5] = '=';
+		board[row - 11][col + 4] = '|';
+
+
+		//body
+
+		board[row - 10][col + 3] = '_';
+		board[row - 9][col + 3] = '.';
+		board[row - 8][col + 3] = '.';
+		board[row - 7][col + 3] = '.';
+		board[row - 6][col + 3] = '(';
+		board[row - 10][col + 4] = '_';
+		board[row - 9][col + 4] = '=';
+		board[row - 8][col + 4] = '=';
+		board[row - 7][col + 4] = '=';
+		board[row - 6][col + 4] = '_';
+		board[row - 10][col + 5] = '|';
+		board[row - 9][col + 5] = '|';
+		board[row - 8][col + 5] = '|';
+		board[row - 7][col + 5] = '|';
+		board[row - 6][col + 5] = '=';
+		board[row - 10][col + 6] = '_';
+		board[row - 9][col + 6] = '=';
+		board[row - 8][col + 6] = '=';
+		board[row - 7][col + 6] = '=';
+		board[row - 6][col + 6] = '_';
+		board[row - 10][col + 7] = '_';
+		board[row - 9][col + 7] = '.';
+		board[row - 8][col + 7] = '.';
+		board[row - 7][col + 7] = '.';
+		board[row - 6][col + 7] = '_';
+
+
+
+		//right hand
+
+
+		board[row - 9][col + 8] = '\\';
+		board[row - 9][col + 9] = '\\';
+		board[row - 8][col + 9] = '\\';
+		board[row - 8][col + 10] = '\\';
+		board[row - 7][col + 10] = '/';
+		board[row - 7][col + 9] = '/';
+		board[row - 6][col + 9] = '/';
+		board[row - 6][col + 8] = '/';
+		board[row - 5][col + 8] = ')';
+
+
+
+		//left hand
+		board[row - 9][col + 2] = '/';
+		board[row - 9][col + 1] = '/';
+		board[row - 8][col + 1] = '/';
+		board[row - 8][col] = '/';
+		board[row - 7][col] = '\\';
+		board[row - 7][col + 1] = '\\';
+		board[row - 6][col + 1] = '\\';
+		board[row - 6][col + 2] = '\\';
+		board[row - 5][col + 3] = '(';
+
+
+		//right leg
+
+		board[row - 5][col + 3] = ':';
+		board[row - 4][col + 3] = '|';
+		board[row - 3][col + 3] = ')';
+		board[row - 2][col + 3] = '|';
+		board[row - 1][col + 3] = '|';
+		board[row][col + 3] = '=';
+		board[row][col + 2] = '=';
+		board[row - 5][col + 4] = '|';
+		board[row - 4][col + 4] = '|';
+		board[row - 3][col + 4] = ')';
+		board[row - 2][col + 4] = '|';
+		board[row - 1][col + 4] = '|';
+		board[row][col + 4] = '\'';
+
+
+
+		//left leg
+		board[row - 5][col + 6] = '|';
+		board[row - 4][col + 6] = '|';
+		board[row - 3][col + 6] = '(';
+		board[row - 2][col + 6] = '|';
+		board[row - 1][col + 6] = '|';
+		board[row][col + 6] = '\'';
+		board[row - 5][col + 7] = ':';
+		board[row - 4][col + 7] = '|';
+		board[row - 3][col + 7] = ')';
+		board[row - 2][col + 7] = '|';
+		board[row - 1][col + 7] = '|';
+		board[row][col + 7] = '=';
+		board[row][col + 8] = '=';
+
+
+
+
+		int hp = Skeleton.Health;
+		board[row - 16][col + 3] = 'H';
+		board[row - 16][col + 4] = 'P';
+		board[row - 16][col + 5] = ':';
+
+		if (hp > 9 && hp < 100) {
+			int fDig = hp / 10, sDig = hp % 10;
+
+			board[row - 16][col + 6] = fDig + '0';
+			board[row - 16][col + 7] = sDig + '0';
+		}
+		else if (hp >= 100) {
+			int fDig = hp / 100, sDig = (hp / 10) % 10, tDig = hp % 10;
+
+			board[row - 16][col + 6] = fDig + '0';
+			board[row - 16][col + 7] = sDig + '0';
+			board[row - 16][col + 8] = tDig + '0';
+		}
+		else if (hp >= 0 && hp <= 9) {
+			board[row - 16][col + 6] = hp + '0';
+		}
 	}
-  }
-  
-  
-  
-  
-  
-  
-  
-  
+}
+
+
+
+
+
+
+
+
 void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[], int isClicked, player& Player, Enemy unKill[]) {
 	//The part for the devil
 	drawTerrain(board, 95, 61, 2, 12); //first platform
@@ -3292,7 +3316,7 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 	//The snail part
 
 	drawTerrain(board, 70, 100, 2, 33);
-	drawWall(board, 51 , 100 , 20);
+	drawWall(board, 51, 100, 20);
 	drawCoin(board, coins[1].Row, coins[1].Col, coins[1].isCollected); // row = 69 , col = 66
 
 
@@ -3315,10 +3339,9 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 	//drawButton(board , 97 , 250);
 
 
-	drawAssaultRifle(board, Player.assaultRow, Player.assaultCol, Player.didGetRifle);
 
 
-	drawSpike(board , 98 , 110);
+	drawSpike(board, 98, 110);
 	Hiddenladder(board, 98, 134, 98 - 70, isClicked);
 	drawButton(board, 98, 290, isClicked);
 
@@ -3327,20 +3350,22 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 
 
 
-	drawSpike(board , 69 , 250);
+	drawSpike(board, 69, 250);
 	spawnHeart(board, heart, 0); // row = 69 , col = 130
 	spawnHeart(board, heart, 1); // row = 98 , col = 210
 
-	//elevator takes player to row 50 , col 150
-
+	
 	//the part where the assault rifle drop should be 
 
 	drawWall(board, 2, 150 - 50, 49);
 	drawWall(board, 2, 150 - 51, 49);
-	drawTerrain(board, 50, 150 - 50, 2, 70);
 
+	drawTerrain(board, 50, 170 - 70, 2, 70);
 	drawTerrain(board, 50, 180, 2, 30);
 
+	drawAssaultRifle(board, Player.assaultRow, Player.assaultCol, Player.didGetRifle);
+	drawCoin(board, coins[2].Row, coins[2].Col, coins[2].isCollected); // row = 69 , col = 66
+	
 	drawWall(board, 2, 210, 49);
 	drawWall(board, 2, 211, 49);
 }
@@ -3476,7 +3501,7 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 		else if (direction == 1) {
 			nextGunY = posYGun[whatGun] - 1;
 		}
-		
+
 		// Make sure nextY is valid and space is empty
 		if (nextGunY >= 0 && nextGunY < 1000 && board[posXGUn][nextGunY] == ' ') {
 			whatGun++;
@@ -3737,7 +3762,7 @@ void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHer
 		// Convert to LC index (0=bottom)
 		if (lc_index >= 0 && lc_index < 9) {
 			if (board[i][LC[lc_index] + 2] != ' ' && board[i][LC[lc_index] + 2] != char(186)) {
-				check2ndCol =0;
+				check2ndCol = 0;
 				break;
 			}
 		}
@@ -3746,7 +3771,7 @@ void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHer
 		posIHero--;
 		posJHero++;
 
-		if(check2ndCol == 1) {
+		if (check2ndCol == 1) {
 			posJHero++;
 		}
 	}
@@ -4027,7 +4052,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		// Move diagonally up-right
 		pX--;
 		pY++;
-		
+
 		if (canJump2ndCol == 1) {
 			pY++;
 		}
@@ -4090,10 +4115,10 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 
 
 		int canFallRight2ndCol = 1;
-		if (pY + pWidth+1 < 999) {
+		if (pY + pWidth + 1 < 999) {
 			for (int row = pX; row <= pX + 1; row++) {
-				if (board[row][pY + pWidth+1] != ' ' &&
-					board[row][pY + pWidth+1] != char(186)) {
+				if (board[row][pY + pWidth + 1] != ' ' &&
+					board[row][pY + pWidth + 1] != char(186)) {
 					canFallRight2ndCol = 0;
 					break;
 				}
@@ -4105,7 +4130,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 
 
 
-		
+
 		if (canFallRight == 1) {
 			pX++;
 			pY++;
@@ -4114,7 +4139,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 			pX++;
 		}
 
-		if(canFallRight2ndCol == 1) {
+		if (canFallRight2ndCol == 1) {
 			pY++;
 		}
 
@@ -4212,7 +4237,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 		pX--;
 		pY--;
 
-		if(check2ndCol == 0) pY--;
+		if (check2ndCol == 0) pY--;
 
 		checkIsAssaultTaken(Player);
 		EnemyPlayerCollision(enemyKill, 9, enemyUNKill, 17, Player);
@@ -4258,9 +4283,9 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 
 
 
-		int check2ndCol =1;
+		int check2ndCol = 1;
 
-		for(int i = pX; i >= pX - pHeight + 1; i--) {
+		for (int i = pX; i >= pX - pHeight + 1; i--) {
 			int lc_index = pX - i;  // Convert to LC index (0 to 8)
 			if (lc_index >= 0 && lc_index < 9) {
 				if (board[i][LC[lc_index] - 2] != ' ' && board[i][LC[lc_index] - 2] != char(186)) {
@@ -4284,28 +4309,28 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 		}
 
 
-			checkIsAssaultTaken(Player);
-			EnemyPlayerCollision(enemyKill, 9, enemyUNKill, 17, Player);
-			checkCoinTouch(board, pX, pY, pWidth, pHeight, coins, numCoinsP);
-			checkHeartTouch(board, pX, pY, pWidth, pHeight, Heart, playerHp);
-			ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
-			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
-			clearMap(board, dispR, dispC);
+		checkIsAssaultTaken(Player);
+		EnemyPlayerCollision(enemyKill, 9, enemyUNKill, 17, Player);
+		checkCoinTouch(board, pX, pY, pWidth, pHeight, coins, numCoinsP);
+		checkHeartTouch(board, pX, pY, pWidth, pHeight, Heart, playerHp);
+		ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
+		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
+		clearMap(board, dispR, dispC);
 
-			callObj(board, coins, enemyKill, Heart, isClicked, Player, enemyUNKill);
+		callObj(board, coins, enemyKill, Heart, isClicked, Player, enemyUNKill);
 
-			callDynamicObj(board, elevator, posXLaz, posYLaz, direction, whatlaz, isShooting, enemyKill, posXGun, posYGun, whatGUn, blobStartC, blobEndC, blobIsJumping, blobDirection, AssaultR, AssaultC, startCAssault, assaultDirection);
-			SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
-			controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
+		callDynamicObj(board, elevator, posXLaz, posYLaz, direction, whatlaz, isShooting, enemyKill, posXGun, posYGun, whatGUn, blobStartC, blobEndC, blobIsJumping, blobDirection, AssaultR, AssaultC, startCAssault, assaultDirection);
+		SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
+		controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
 
-			addBorders(board, dispR, dispC);
-			jumpleftframe(board, pX, pY, LC, LR);
+		addBorders(board, dispR, dispC);
+		jumpleftframe(board, pX, pY, LC, LR);
 
-			system("cls");
-			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, Player.gun);
-			Clear_LoadMap(board, dispR, dispC);
-			isFalling = 1;
-		
+		system("cls");
+		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, Player.gun);
+		Clear_LoadMap(board, dispR, dispC);
+		isFalling = 1;
+
 	}
 	checkIsAssaultTaken(Player);
 	checkCoinTouch(board, pX, pY, pWidth, pHeight, coins, numCoinsP);
@@ -4418,6 +4443,9 @@ int main() {
 
 		int isWalking = 0, isJumping = 0, isFalling = 0, isShooting = 0, isReloading = 0, isClimbing = 0;
 
+
+
+		////////////////Guns//////////////
 		int posXLaz = -1;
 		int posXGun = -1;
 		int posYLaz[20] = { -1 };
@@ -4427,15 +4455,17 @@ int main() {
 
 		int HiddenladderButtonClicked = 0, btnrow = 98, btnmaxR = 98 - 15, btnCol = 290, btnmaxC = 290 + 10;
 
+		Player.Col = 88;
 
 		int assaultR[20] = { -1 };
 		int assaultC[20] = { -1 };
 		int assaultDirection[20] = { -1 };
 		int startCAssault[20] = { -1 };
 
+		int gun = Player.gun;
 
 
-
+		///////////Ladders////////////
 		ladder ladders[4];
 		ladders[0].Row = 88;
 		ladders[0].Col = 20;
@@ -4451,26 +4481,38 @@ int main() {
 		ladders[2].Row = 98;
 		ladders[2].Col = 134;
 		ladders[2].length = 28;
-		int gun = Player.gun;
 
-		Player.Col = 88;
+
+		////////////Coins/////////////
 		coin coins[10];
 
 		intializeCoin(board, coins[0], 49, 2);
 		intializeCoin(board, coins[1], 69, 112);
-		//Coin 2 row = 69, col = 66
+		intializeCoin(board, coins[2], 49, 200);
 
+		drawTerrain(board, 50, 180, 2, 30);
+
+		drawWall(board, 2, 210, 49);
+		drawWall(board, 2, 211, 49);
+		
+
+		/////////////Hearts////////////////
 		hearts heart[8];
 		intializeHeart(board, heart[0], 69, 240);
 
 		intializeHeart(board, heart[1], 95, 195);
+		
 
+		/////////////Elevators//////////////
 		Elevator elevator[2];
 
 		intializeElevator(board, elevator, 0, 70, 170, 70, 43, 170, 170, 0, 1); // Vertical  
 
-		intializeElevator(board, elevator, 1, 95, 600, 95, 95, 130, 150, 1, 1); //horizonatal
+		intializeElevator(board, elevator, 1, 95, 600, 95, 95, 600, 650, 1, 1); //horizonatal
 
+		
+		////////////Enemies//////////////////
+		
 		int blobStartC = 600, blobEndC = 650, blobIsJumping = 0, blobDirection = 1;
 		Enemy enemyKill[9];
 		intializeEnemy(enemyKill, 0, 49, 12, 1, 11, 13, 100, 10); //Devil
@@ -4527,11 +4569,11 @@ int main() {
 
 		intializeEnemy(enemyUnKill, 15, -10, -10, 0, 10, 12, 250, 5); //2nd place Spike 10
 		intializeEnemy(enemyUnKill, 16, -10, -9, 0, 10, 12, 250, 5); //2nd place Spike 11
-		
-		intializeEnemy(enemyUnKill, 17, 69, 250, 0, 2, 2, 250, 5); //2nd place Spike 12
-		intializeEnemy(enemyUnKill, 18,  98, 110, 0, 2, 2, 250, 5); //2nd place Spike 13
 
-	
+		intializeEnemy(enemyUnKill, 17, 69, 250, 0, 2, 2, 250, 5); //2nd place Spike 12
+		intializeEnemy(enemyUnKill, 18, 98, 110, 0, 2, 2, 250, 5); //2nd place Spike 13
+
+
 
 
 		int DFireBallR = -1, DFireBallC = -1, chance = -1, endR = -1, endC = -1; //intializeValues for devil shooting
@@ -4557,7 +4599,7 @@ int main() {
 			if (Player.Health >= 999) Player.Health = 999;
 			gun = Player.gun;
 			checkIsAssaultTaken(Player);
-			scroll(board , Player.Col , Player.Row , Player.maxWidth , Player.maxHeight , dispR , dispC);
+			scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 			EnemyPlayerCollision(enemyKill, 9, enemyUnKill, 17, Player);
 			checkCoinTouch(board, Player.Row, Player.Col, Player.maxWidth, Player.maxHeight, coins, Player.coins);
 			checkHeartTouch(board, Player.Row, Player.Col, Player.maxWidth, Player.maxHeight, heart, Player.Health);
@@ -4861,7 +4903,7 @@ int main() {
 
 			checkIsEnemyDead(enemyKill);
 		}
-		if(isWon == 1){
+		if (isWon == 1) {
 			system("cls");
 			winScreen();
 		}
