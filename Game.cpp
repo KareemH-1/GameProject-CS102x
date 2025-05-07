@@ -61,6 +61,7 @@ struct Enemy {
 	int Health = 100;
 	int attackPower = 10;
 	int hitRow = -1, hitCol = -1, frame = 0;
+	int direction = 0;
 };
 
 struct ladder {
@@ -3391,9 +3392,15 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 
 	drawAndMoveElevatorV(board, elevator, 2); // Col = 350 , row = 98 -> 20
 
+	// //Skeleton  skeletonCol = 430, skeletonRow = 50;
+	// startC is 430 , endC is 500
 
+	drawMoveSkeleton(board , enemyKill[3], 430 , 500 , enemyKill[3].direction);
+	
+	
 	drawAndMoveBlob(board, enemyKill[2].Row, enemyKill[2].Col, blobStartC, blobEndC, blobDirection, blobIsJumping);
-
+	
+	
 	/////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////
 	// Assault rifle
@@ -4473,7 +4480,7 @@ int main() {
 
 		int HiddenladderButtonClicked = 0, btnrow = 98, btnmaxR = 98 - 15, btnCol = 290, btnmaxC = 290 + 10;
 
-		Player.Col = 600, Player.Row = 22;
+		Player.Col = 420, Player.Row = 22;
 		int assaultR[20] = { -1 };
 		int assaultC[20] = { -1 };
 		int assaultDirection[20] = { -1 };
@@ -4552,7 +4559,7 @@ int main() {
 
 		intializeEnemy(enemyKill, 2, 98, 600, 1, 6, 12, 150, 15); //Blob
 
-		intializeEnemy(enemyKill, 3, -10, -10, 1, 15, 10, 70, 15); //Skeleton
+		intializeEnemy(enemyKill, 3, 50, 430, 1, 15, 10, 200, 30); //Skeleton  skeletonCol = 430, skeletonRow = 50;
 
 		intializeEnemy(enemyKill, 4, -10, -10, 1, 10, 12, 100, 15);// Bird
 
