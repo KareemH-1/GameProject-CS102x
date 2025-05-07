@@ -4554,6 +4554,7 @@ int main() {
 		int isWon = 0;
 
 		for (; !isWon;) {
+			if (Player.Health >= 999) Player.Health = 999;
 			gun = Player.gun;
 			checkIsAssaultTaken(Player);
 			scroll(board , Player.Col , Player.Row , Player.maxWidth , Player.maxHeight , dispR , dispC);
