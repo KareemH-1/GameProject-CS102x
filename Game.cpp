@@ -3731,13 +3731,31 @@ void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHer
 	//Go up a row if its only 1 row diffrence in terrain
 
 
+	int check2ndCol = 1;
+	for (int i = posIHero; i >= posIHero - heightHero + 1; i--) {
+		int lc_index = posIHero - i;
+		// Convert to LC index (0=bottom)
+		if (lc_index >= 0 && lc_index < 9) {
+			if (board[i][LC[lc_index] + 2] != ' ' && board[i][LC[lc_index] + 2] != char(186)) {
+				check2ndCol =0;
+				break;
+			}
+		}
+	}
 	if (board[posIHero][LC[0]] != ' ' && board[posIHero][LC[0]] != char(186) && check2 && !check) {
 		posIHero--;
 		posJHero++;
+
+		if(check2ndCol == 1) {
+			posJHero++;
+		}
 	}
 	// Only move if all checks passed AND we won't go out of bounds
 	else if (check == 1 && posJHero + widthHero + 1 < 999) {
 		posJHero++;
+		if (check2ndCol == 1) {
+			posJHero++;
+		}
 	}
 
 	checkCoinTouch(board, posIHero, posJHero, widthHero, heightHero, coins, numCoinsP);
@@ -3778,6 +3796,20 @@ void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int widthHero
 		}
 	}
 
+
+
+	int check2ndCol = 1;
+	for (int i = posIHero; i >= posIHero - heightHero + 1; i--) {
+		int lc_index = posIHero - i;
+		if (lc_index >= 0 && lc_index < 9) {
+			if (board[i][LC[lc_index] - 2] != ' ' && board[i][LC[lc_index] - 2] != char(186)) {
+				check = 0;
+				break;
+			}
+		}
+	}
+
+
 	if (isOnLadder == 1) {
 		check = 1;
 	}
@@ -3785,9 +3817,17 @@ void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int widthHero
 	if (board[posIHero][LC[0]] != ' ' && board[posIHero][LC[0]] != char(186) && check2 && !check) {
 		posJHero--;
 		posIHero--;
+		if (check2ndCol == 1) {
+			posJHero--;
+		}
+
 	}
 	else if (check == 1 && posJHero - 1 >= 0) {
 		posJHero--;
+		if (check2ndCol == 1) {
+			posJHero--;
+		}
+
 	}
 
 
@@ -4195,25 +4235,31 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 
 	}
 
-	int check = 1;
-	for (int j = pY + 2; j <= pY + 10; j++) {
-		if (board[pX + 1][j] != ' ') {
-			check = 0;
-			break;
-		}
-	}
 
-	for (; pX + 1 < 23 && board[pX + 1][pY] == ' ' && pY > 1;) {
-		int checkDiagonal = 1;
+	for (; pX + 1 < 23 && board[pX + 1][pY-1] == ' ' && pY > 1;) {
+		int checkDown = 1;
 		for (int j = pY + 2; j <= pY + 10; j++) {
 
 			if (board[pX + 1][j] != ' ') {
-				checkDiagonal = 0;
+				checkDown = 0;
 				break;
 			}
 		}
 
-		int check2ndCol;
+		int checkLeft = 1;
+		for (int i = pX; i >= pX - pHeight + 1; i--) {
+			int lc_index = pX - i;  // Convert to LC index (0 to 8)
+			if (lc_index >= 0 && lc_index < 9) {
+				if (board[i][LC[lc_index] - 1] != ' ' && board[i][LC[lc_index] - 1] != char(186)) {
+					checkLeft = 0;
+					break;
+				}
+			}
+		}
+
+
+
+		int check2ndCol =1;
 
 		for(int i = pX; i >= pX - pHeight + 1; i--) {
 			int lc_index = pX - i;  // Convert to LC index (0 to 8)
@@ -4226,11 +4272,18 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 		}
 
 
-		if (checkDiagonal && check) {
+		if (checkDown && checkLeft) {
 			pX++;
 			pY--;
+		}
 
-			if(check2ndCol == 0) pY--;
+		else if (checkDown && !checkLeft) {
+			pX++;
+		}
+
+		if (check2ndCol == 1) {
+			pY--; 
+		}
 
 			checkIsAssaultTaken(Player);
 			EnemyPlayerCollision(enemyKill, 9, enemyUNKill, 17, Player);
@@ -4253,7 +4306,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, Player.gun);
 			Clear_LoadMap(board, dispR, dispC);
 			isFalling = 1;
-		}
+		
 	}
 	checkIsAssaultTaken(Player);
 	checkCoinTouch(board, pX, pY, pWidth, pHeight, coins, numCoinsP);
