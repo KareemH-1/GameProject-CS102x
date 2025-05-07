@@ -3271,9 +3271,9 @@ void drawMoveSkeleton(char board[100][1000] , Enemy& Skeleton , int stCol , int 
   
 void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[], int isClicked, player& Player, Enemy unKill[]) {
 	//The part for the devil
-	drawTerrain(board, 95, 61, 2, 11); //first platform
+	drawTerrain(board, 95, 61, 2, 12); //first platform
 
-	drawTerrain(board, 92, 46, 2, 11); //second platform
+	drawTerrain(board, 92, 46, 2, 12); //second platform
 	drawTerrain(board, 89, 2, 2, 39); //third platform
 
 	drawLadder(board, 88, 20, 17);
@@ -4235,8 +4235,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 
 	}
 
-
-	for (; pX + 1 < 23 && board[pX + 1][pY-1] == ' ' && pY > 1;) {
+	for (; pX + 1 < 98 && board[pX + 1][pY] == ' ' && pY > 1;) {
 		int checkDown = 1;
 		for (int j = pY + 2; j <= pY + 10; j++) {
 
@@ -4270,20 +4269,20 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 				}
 			}
 		}
+		if (pX - pHeight <= 1) break;
 
+		if (pY - 1 <= 1) break;
+		if (checkDown == 0 || checkLeft == 0) break;
 
 		if (checkDown && checkLeft) {
 			pX++;
 			pY--;
 		}
 
-		else if (checkDown && !checkLeft) {
-			pX++;
+		if (check2ndCol == 1 && checkDown && checkLeft) {
+			pY--;
 		}
 
-		if (check2ndCol == 1) {
-			pY--; 
-		}
 
 			checkIsAssaultTaken(Player);
 			EnemyPlayerCollision(enemyKill, 9, enemyUNKill, 17, Player);
