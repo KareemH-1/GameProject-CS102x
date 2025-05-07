@@ -318,6 +318,27 @@ void displayCredits() {
 }
 
 
+void gameOverScreen() {
+    cout << "==================================================" << endl;
+    cout << "||                                              ||" << endl;
+    cout << "||                G A M E  O V E R              ||" << endl;
+    cout << "||                                              ||" << endl;
+    cout << "||                   YOU LOST!                  ||" << endl;
+    cout << "||                                              ||" << endl;
+    cout << "==================================================" << endl;
+}
+
+void winScreen() {
+    cout << "==================================================" << endl;
+    cout << "||                                              ||" << endl;
+    cout << "||         C O N G R A T U L A T I O N S        ||" << endl;
+    cout << "||                                              ||" << endl;
+    cout << "||          YOU HAVE FINISHED THE GAME!         ||" << endl;
+    cout << "||                                              ||" << endl;
+    cout << "==================================================" << endl;
+}
+
+
 void initializePlayerValues(int& Row, int& Col, int& maxHeight, int& maxWidth, int& Health, int& coins, int& gun, int ammo[], int& maxAmmo, int& shootC, int& shootR) {
 	Row = 95;
 	Col = 70;
@@ -4717,6 +4738,14 @@ int main() {
 			}
 
 			checkIsEnemyDead(enemyKill);
+		}
+		if(isWon == 1){
+			system("cls");
+			winScreen();
+		}
+		else {
+			system("cls");
+			gameOverScreen();
 		}
 	}
 	else return 0;
