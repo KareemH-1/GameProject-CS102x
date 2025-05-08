@@ -3445,6 +3445,27 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 	//the part where the assault rifle drop should be 
 
 
+
+	//////place to put 2nd elevator
+	drawTerrain(board, 98, 330, 1, 3);
+	board[98][333] = char(188);
+	drawTerrain(board, 97, 334, 1, 3);
+	board[97][337] = char(188);
+	drawTerrain(board , 96 , 338, 1 , 11);
+	drawWall(board, 96, 349, 3, 1, 1, 0);
+	
+	drawTerrain(board, 98, 350, 1, 12);
+
+
+	drawWall(board, 96, 362, 3, 0, 1, 0);
+	drawTerrain(board, 96, 363, 1, 10);
+
+	board[97][373] = char(200);
+	drawTerrain(board, 97, 374, 1, 3);
+	board[98][377] = char(200);
+	drawTerrain(board, 98, 378, 1, 3);
+	////////////////////////////////////
+
 	drawTerrain(board, 50, 170 - 70, 1, 70);
 	drawTerrain(board, 50, 180, 1, 30);
 	drawWall(board, 2, 150 - 50, 49, 0, 0, 1);
@@ -3464,7 +3485,7 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 	drawTerrain(board, 30, 614, 1, 86);
 
 
-	drawWall(board, 2, 700, 30, 0, 0, 1);
+	drawWall(board, 2, 700, 29, 1, 0, 1);
 
 }
 
@@ -4553,7 +4574,9 @@ int main() {
 
 		int HiddenladderButtonClicked = 0, btnrow = 98, btnmaxR = 98 - 15, btnCol = 290, btnmaxC = 290 + 10;
 
-		Player.Col = 80, Player.Row = 95;
+		Player.Col = 330, Player.Row = 95;
+
+
 		int assaultR[20] = { -1 };
 		int assaultC[20] = { -1 };
 		int assaultDirection[20] = { -1 };
