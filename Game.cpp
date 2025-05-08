@@ -2612,7 +2612,7 @@ void drawTerrain(char board[100][1000], int r, int c, int NumR, int NumC) {
 	tempCol = c;
 	for (int i = 0; i < NumR; i++) {
 		for (int j = 0; j < NumC; j++) {
-			board[r][tempCol] = '#';
+			board[r][tempCol] = char(205);
 			tempCol++;
 		}
 		tempCol = c;
@@ -2620,11 +2620,33 @@ void drawTerrain(char board[100][1000], int r, int c, int NumR, int NumC) {
 	}
 }
 
-void drawWall(char board[100][1000], int r, int c, int length) {
+void drawWall(char board[100][1000], int r, int c, int length, int direction, int doTop, int doBottom) {
+
+	if (doTop == 1) {
+		if (direction == 0) {
+			board[r][c] = char(201);
+		}
+		else if (direction == 1) {
+			board[r][c] = char(187);
+		}
+
+		r++;
+		length--;
+	}
+	if (doBottom == 1) length--;
 
 	for (int i = 0; i < length; i++) {
-		board[r][c] = '#';
+		board[r][c] = char(186);
 		r++;
+	}
+
+	if (doBottom == 1) {
+		if (direction == 0) {
+			board[r][c] = char(200);
+		}
+		else if (direction == 1) {
+			board[r][c] = char(188);
+		}
 	}
 }
 
@@ -2774,22 +2796,22 @@ void spawnHeart(char board[100][1000], hearts heart[], int  i) {
 void drawLadder(char board[100][1000], int row, int col, int length) {
 
 	for (int i = 0; i < length; i++) {
-		board[row - i][col] = '|';
-		board[row - i][col + 1] = '|';
+		board[row - i][col] = char(186);
+		board[row - i][col + 1] = char(186);
 
-		board[row - i][col + 2] = '-';
-		board[row - i][col + 3] = '-';
-		board[row - i][col + 4] = '-';
-		board[row - i][col + 5] = '-';
-		board[row - i][col + 6] = '-';
-		board[row - i][col + 7] = '-';
-		board[row - i][col + 8] = '-';
-		board[row - i][col + 9] = '-';
-		board[row - i][col + 10] = '-';
-		board[row - i][col + 11] = '-';
+		board[row - i][col + 2] = char(205);
+		board[row - i][col + 3] = char(205);
+		board[row - i][col + 4] = char(205);
+		board[row - i][col + 5] = char(205);
+		board[row - i][col + 6] = char(205);
+		board[row - i][col + 7] = char(205);
+		board[row - i][col + 8] = char(205);
+		board[row - i][col + 9] = char(205);
+		board[row - i][col + 10] = char(205);
+		board[row - i][col + 11] = char(205);
 
-		board[row - i][col + 12] = '|';
-		board[row - i][col + 13] = '|';
+		board[row - i][col + 12] = char(186);
+		board[row - i][col + 13] = char(186);
 	}
 
 }
@@ -3361,18 +3383,18 @@ void drawMoveSkeleton(char board[100][1000], Enemy& Skeleton, int stCol, int end
 
 void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[], int isClicked, player& Player, Enemy unKill[]) {
 	//The part for the devil
-	drawTerrain(board, 95, 61, 2, 12); //first platform
+	drawTerrain(board, 95, 61, 1, 12); //first platform
 
-	drawTerrain(board, 92, 46, 2, 12); //second platform
-	drawTerrain(board, 89, 2, 2, 39); //third platform
+	drawTerrain(board, 92, 46, 1, 12); //second platform
+	drawTerrain(board, 89, 2, 1, 39); //third platform
 
 	drawLadder(board, 88, 20, 17);
 
 
 
-	drawTerrain(board, 71, 33, 2, 32);
+	drawTerrain(board, 71, 33, 1, 32);
 	drawLadder(board, 70, 50, 20);
-	drawTerrain(board, 50, 1, 2, 50);
+	drawTerrain(board, 50, 1, 1, 50);
 	drawDevil(board, isKill[0]);
 	drawCoin(board, coins[0].Row, coins[0].Col, coins[0].isCollected);
 
@@ -3381,8 +3403,8 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 
 	//The snail part
 
-	drawTerrain(board, 70, 100, 2, 33);
-	drawWall(board, 51, 100, 20);
+	drawTerrain(board, 70, 100, 1, 33);
+	drawWall(board, 51, 100, 20, 0, 0, 1);
 	drawCoin(board, coins[1].Row, coins[1].Col, coins[1].isCollected); // row = 69 , col = 66
 
 
@@ -3398,7 +3420,7 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 
 
 
-	drawTerrain(board, 70, 134 + 15, 2, 162);
+	drawTerrain(board, 70, 134 + 15, 1, 162);
 	//col at end is 100+ 175 = 275
 
 
@@ -3411,8 +3433,7 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 	Hiddenladder(board, 98, 134, 98 - 70, isClicked);
 	drawButton(board, 98, 290, isClicked);
 
-	drawWall(board, 71, 310, 28);
-	drawWall(board, 71, 311, 28);
+	drawWall(board, 70, 310, 28, 1, 1, 0);
 
 
 
@@ -3423,30 +3444,27 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 
 	//the part where the assault rifle drop should be 
 
-	drawWall(board, 2, 150 - 50, 49);
-	drawWall(board, 2, 150 - 51, 49);
 
-	drawTerrain(board, 50, 170 - 70, 2, 70);
-	drawTerrain(board, 50, 180, 2, 30);
+	drawTerrain(board, 50, 170 - 70, 1, 70);
+	drawTerrain(board, 50, 180, 1, 30);
+	drawWall(board, 2, 150 - 50, 49, 0, 0, 1);
 
 	drawAssaultRifle(board, Player.assaultRow, Player.assaultCol, Player.didGetRifle);
 	drawCoin(board, coins[2].Row, coins[2].Col, coins[2].isCollected); // row = 69 , col = 66
 
-	drawWall(board, 2, 210, 49);
-	drawWall(board, 2, 211, 49);
+	drawWall(board, 2, 210, 49, 1, 0, 1);
 
 	//Upper terrain for skeleton and bird
 
-	drawTerrain(board, 30, 362, 2, 38);
+	drawTerrain(board, 30, 362, 1, 38);
 	drawLadder(board, 50, 400, 21);
-	drawTerrain(board, 51, 400, 2, 214);
+	drawTerrain(board, 51, 400, 1, 214);
 
 	drawLadder(board, 50, 600, 21);
-	drawTerrain(board, 30, 614, 2, 86);
+	drawTerrain(board, 30, 614, 1, 86);
 
 
-	drawWall(board, 2, 700, 30);
-	drawWall(board, 2, 701, 30);
+	drawWall(board, 2, 700, 30, 0, 0, 1);
 
 }
 
@@ -3455,7 +3473,7 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 	drawAndMoveElevatorV(board, elevator, 0);
 	drawAndMoveElevatorH(board, elevator, 1);
 
-	drawAndMoveElevatorV(board, elevator, 2); // Col = 350 , row = 98 -> 20
+	drawAndMoveElevatorV(board, elevator, 2); // Col = 350 , row = 99 -> 20
 
 	// //Skeleton  skeletonCol = 430, skeletonRow = 50;
 	// startC is 430 , endC is 500
@@ -3806,7 +3824,7 @@ void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHer
 		int lc_index = posIHero - i;
 		// Convert to LC index (0=bottom)
 		if (lc_index >= 0 && lc_index < 9) {
-			if (board[i][LC[lc_index] + 1] != ' ' && board[i][LC[lc_index] + 1] != char(186)) {
+			if (board[i][LC[lc_index] + 1] != ' ') {
 				check = 0;
 				break;
 			}
@@ -3816,7 +3834,7 @@ void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHer
 	for (int i = posIHero - 1; i >= posIHero - heightHero + 1; i--) {
 		int lc_index = posIHero - i;  // Convert to LC index (0 to 8)
 		if (lc_index >= 0 && lc_index < 9) {
-			if (board[i][LC[lc_index] + 1] != ' ' && board[i][LC[lc_index] + 1] != char(186)) {
+			if (board[i][LC[lc_index] + 1] != ' ') {
 				check2 = 0;
 				break;
 			}
@@ -3845,13 +3863,13 @@ void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHer
 		int lc_index = posIHero - i;
 		// Convert to LC index (0=bottom)
 		if (lc_index >= 0 && lc_index < 9) {
-			if (board[i][LC[lc_index] + 2] != ' ' && board[i][LC[lc_index] + 2] != char(186)) {
+			if (board[i][LC[lc_index] + 2] != ' ') {
 				check2ndCol = 0;
 				break;
 			}
 		}
 	}
-	if (board[posIHero][LC[0]] != ' ' && board[posIHero][LC[0]] != char(186) && check2 && !check) {
+	if (board[posIHero][LC[0]] != ' ' && check2 && !check) {
 		posIHero--;
 		posJHero++;
 
@@ -3878,7 +3896,7 @@ void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int widthHero
 	for (int i = posIHero; i >= posIHero - heightHero + 1; i--) {
 		int lc_index = posIHero - i;
 		if (lc_index >= 0 && lc_index < 9) {
-			if (board[i][LC[lc_index] - 1] != ' ' && board[i][LC[lc_index] - 1] != char(186)) {
+			if (board[i][LC[lc_index] - 1] != ' ') {
 				check = 0;
 				break;
 			}
@@ -3888,7 +3906,7 @@ void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int widthHero
 	for (int i = posIHero - 1; i >= posIHero - heightHero + 1; i--) {
 		int lc_index = posIHero - i;
 		if (lc_index >= 0 && lc_index < 9) {
-			if (board[i][LC[lc_index] - 1] != ' ' && board[i][LC[lc_index] - 1] != char(186)) {
+			if (board[i][LC[lc_index] - 1] != ' ') {
 				check2 = 0;
 				break;
 			}
@@ -3911,7 +3929,7 @@ void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int widthHero
 	for (int i = posIHero; i >= posIHero - heightHero + 1; i--) {
 		int lc_index = posIHero - i;
 		if (lc_index >= 0 && lc_index < 9) {
-			if (board[i][LC[lc_index] - 2] != ' ' && board[i][LC[lc_index] - 2] != char(186)) {
+			if (board[i][LC[lc_index] - 2] != ' ') {
 				check = 0;
 				break;
 			}
@@ -3923,7 +3941,7 @@ void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int widthHero
 		check = 1;
 	}
 
-	if (board[posIHero][LC[0]] != ' ' && board[posIHero][LC[0]] != char(186) && check2 && !check) {
+	if (board[posIHero][LC[0]] != ' ' && check2 && !check) {
 		posJHero--;
 		posIHero--;
 		if (check2ndCol == 1) {
@@ -4026,7 +4044,7 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 		int check = 1; // Reset every fall attempt
 
 		for (int j = pY + 2; j <= pY + 10; j++) {
-			if (board[pX + 1][j] != ' ' && board[pX + 1][j] != char(186)) {
+			if (board[pX + 1][j] != ' ') {
 				check = 0;
 				break;
 			}
@@ -4091,7 +4109,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		for (int row = pX; row >= pX - pHeight + 1; row--) {
 			int lc_index = pX - row;
 			if (lc_index >= 0 && lc_index < 9) {
-				if (board[row][LC[lc_index] + 1] != ' ' && board[row][LC[lc_index] + 1] != char(186)) {
+				if (board[row][LC[lc_index] + 1] != ' ') {
 					canJump = 0;
 					break;
 				}
@@ -4101,7 +4119,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		for (int row = pX; row >= pX - pHeight + 1; row--) {
 			int lc_index = pX - row;
 			if (lc_index >= 0 && lc_index < 9) {
-				if (board[row][LC[lc_index] + 2] != ' ' && board[row][LC[lc_index] + 2] != char(186)) {
+				if (board[row][LC[lc_index] + 2] != ' ') {
 					canJump2ndCol = 0;
 					break;
 				}
@@ -4111,8 +4129,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		for (int col = pY; col < pY + pWidth; col++) {
 			int lr_index = col - pY;
 			if (lr_index >= 0 && lr_index < 15) {
-				if (LR[lr_index] - 1 < 0 ||
-					(board[LR[lr_index] - 1][col] != ' ' && board[LR[lr_index] - 1][col] != char(186))) {
+				if (LR[lr_index] - 1 < 0 || (board[LR[lr_index] - 1][col] != ' ')) {
 					canJump = 0;
 					break;
 				}
@@ -4122,8 +4139,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		for (int col = pY; col < pY + pWidth; col++) {
 			int lr_index = col - pY;
 			if (lr_index >= 0 && lr_index < 15) {
-				if (LR[lr_index] - 2 < 0 ||
-					(board[LR[lr_index] - 2][col] != ' ' && board[LR[lr_index] - 2][col] != char(186))) {
+				if (LR[lr_index] - 2 < 0 || (board[LR[lr_index] - 2][col] != ' ')) {
 					canJump2ndCol = 0;
 					break;
 				}
@@ -4170,7 +4186,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 
 		// Check if we can fall straight down
 		for (int col = pY + 2; col <= pY + 10; col++) {
-			if (pX + 1 < 100 && (board[pX + 1][col] == ' ' || board[pX + 1][col] == char(186))) {
+			if (pX + 1 < 100 && (board[pX + 1][col] == ' ')) {
 				canFall = 1;
 			}
 			else {
@@ -4186,8 +4202,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		int canFallRight = 1;
 		if (pY + pWidth < 999) {
 			for (int row = pX; row <= pX + 1; row++) {
-				if (board[row][pY + pWidth] != ' ' &&
-					board[row][pY + pWidth] != char(186)) {
+				if (board[row][pY + pWidth] != ' ') {
 					canFallRight = 0;
 					break;
 				}
@@ -4201,8 +4216,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		int canFallRight2ndCol = 1;
 		if (pY + pWidth + 1 < 999) {
 			for (int row = pX; row <= pX + 1; row++) {
-				if (board[row][pY + pWidth + 1] != ' ' &&
-					board[row][pY + pWidth + 1] != char(186)) {
+				if (board[row][pY + pWidth + 1] != ' ') {
 					canFallRight2ndCol = 0;
 					break;
 				}
@@ -4294,7 +4308,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 		for (int i = pX; i >= pX - pHeight + 1; i--) {
 			int lc_index = pX - i;  // Convert to LC index (0 to 8)
 			if (lc_index >= 0 && lc_index < 9) {
-				if (board[i][LC[lc_index] - 1] != ' ' && board[i][LC[lc_index] - 1] != char(186)) {
+				if (board[i][LC[lc_index] - 1] != ' ') {
 					check = 0;
 					break;
 				}
@@ -4305,7 +4319,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 		for (int i = pX; i >= pX - pHeight + 1; i--) {
 			int lc_index = pX - i;  // Convert to LC index (0 to 8)
 			if (lc_index >= 0 && lc_index < 9) {
-				if (board[i][LC[lc_index] - 2] != ' ' && board[i][LC[lc_index] - 2] != char(186)) {
+				if (board[i][LC[lc_index] - 2] != ' ') {
 					check2ndCol = 0;
 					break;
 				}
@@ -4358,7 +4372,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 		for (int i = pX; i >= pX - pHeight + 1; i--) {
 			int lc_index = pX - i;  // Convert to LC index (0 to 8)
 			if (lc_index >= 0 && lc_index < 9) {
-				if (board[i][LC[lc_index] - 1] != ' ' && board[i][LC[lc_index] - 1] != char(186)) {
+				if (board[i][LC[lc_index] - 1] != ' ') {
 					checkLeft = 0;
 					break;
 				}
@@ -4372,7 +4386,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 		for (int i = pX; i >= pX - pHeight + 1; i--) {
 			int lc_index = pX - i;  // Convert to LC index (0 to 8)
 			if (lc_index >= 0 && lc_index < 9) {
-				if (board[i][LC[lc_index] - 2] != ' ' && board[i][LC[lc_index] - 2] != char(186)) {
+				if (board[i][LC[lc_index] - 2] != ' ') {
 					check2ndCol = 0;
 					break;
 				}
@@ -4539,7 +4553,7 @@ int main() {
 
 		int HiddenladderButtonClicked = 0, btnrow = 98, btnmaxR = 98 - 15, btnCol = 290, btnmaxC = 290 + 10;
 
-		Player.Col = 560, Player.Row = 22;
+		Player.Col = 80, Player.Row = 95;
 		int assaultR[20] = { -1 };
 		int assaultC[20] = { -1 };
 		int assaultDirection[20] = { -1 };
@@ -4581,11 +4595,6 @@ int main() {
 		intializeCoin(board, coins[1], 69, 112);
 		intializeCoin(board, coins[2], 49, 200);
 
-		drawTerrain(board, 50, 180, 2, 30);
-
-		drawWall(board, 2, 210, 49);
-		drawWall(board, 2, 211, 49);
-
 
 		/////////////Hearts////////////////
 		hearts heart[8];
@@ -4602,10 +4611,8 @@ int main() {
 
 		intializeElevator(board, elevator, 1, 95, 600, 95, 95, 600, 650, 1, 1); //horizonatal
 
-		drawWall(board, 71, 311, 28);
 
-
-		intializeElevator(board, elevator, 2, 98, 350, 98, 20, 350, 350, 0, 1); // Vertical 2 
+		intializeElevator(board, elevator, 2, 99, 350, 99, 20, 350, 350, 0, 1); // Vertical 2 
 
 
 		////////////Enemies//////////////////
