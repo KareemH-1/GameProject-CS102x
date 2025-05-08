@@ -411,47 +411,37 @@ void initializeBoard(char border[100][1000]) {
 
 void dispBar(int health, int coins, int ammo[], int maxAmmo, int gun) {
 
-	// ANSI CODE COLORS
-	char green[] = "\033[32m";
-	char blue[] = "\033[34m";
-	char red[] = "\033[31m";
-	char yellow[] = "\033[33m";
-	char cyan[] = "\033[36m";
-	char reset[] = "\033[0m";
-	char bold[] = "\033[1m";
 
-	cout << blue;
 	cout << char(201);
 	for (int i = 1; i < 79; i++) {
 		cout << char(205);
 	}
 	cout << char(187) << endl;
-	cout << reset;
 
-	cout << blue << char(186) << reset;
+	cout << char(186);
 
-	cout << "  HEALTH " << red << bold << health << reset;
+	cout << "  HEALTH " << health;
 
 	int h = health;
 	int h_digits = 1;
 	if (h >= 100) h_digits = 3;
 	else if (h >= 10) h_digits = 2;
 
-	cout << "  " << cyan << "|" << reset << "  COINS " << yellow << bold << coins << reset;
+	cout << "  " <<  "|"  << "  COINS " << coins;
 
 	int c = coins;
 	int c_digits = 1;
 	if (c >= 100) c_digits = 3;
 	else if (c >= 10) c_digits = 2;
 
-	cout << "  " << cyan << "|" << reset << "  " << yellow << bold;
+	cout << "  " << "|" <<  "  ";
 
 	if (gun == 0) cout << "Lazer ";
 	else if (gun == 1) cout << "Pistol";
 	else if (gun == 2) cout << "Rifle ";
 
 
-	cout << reset << "  " << cyan << "|" << reset << "  AMMO ";
+	cout <<  "  " << "|" << "  AMMO ";
 
 	int bullet = 0;
 	int max_bullet = 0;
@@ -489,11 +479,11 @@ void dispBar(int health, int coins, int ammo[], int maxAmmo, int gun) {
 
 	if (bullet > 0) {
 		usedChars += b_digits + 3 + max_digits;
-		cout << yellow << bold << bullet << " / " << max_bullet << reset;
+		cout <<  bullet << " / " << max_bullet;
 	}
 	else {
 		usedChars += 7; // length of "NO AMMO"
-		cout << yellow << bold << "NO AMMO" << reset;
+		cout << "NO AMMO";
 	}
 
 
@@ -501,24 +491,13 @@ void dispBar(int health, int coins, int ammo[], int maxAmmo, int gun) {
 		cout << " ";
 	}
 
-	cout << blue << char(186) << reset << endl;
+	cout << char(186)  << endl;
 }
 
 
 void dispBoard(char board[100][1000]) {
 
-	//ANSI CODE COLORS
-	char green[] = "\033[32m";
-	char blue[] = "\033[34m";
-	char red[] = "\033[31m";
-	char yellow[] = "\033[33m";
-	char cyan[] = "\033[36m";
-	char reset[] = "\033[0m";
-	char bold[] = "\033[1m";
-
-
-	cout << blue; // Blue color for the board	
-
+	
 	for (int i = 0; i < 80; i++) {
 		cout << board[0][i];
 	}
@@ -526,11 +505,9 @@ void dispBoard(char board[100][1000]) {
 	//i =1 to ignore first border and i<23 to ignore last border
 	for (int i = 1; i < 23; i++) {
 		cout << board[i][0]; //Left border
-		cout << reset; //reset the blue color , as we dont want the whole board to be blue
 		for (int j = 1; j < 79; j++) {
 			cout << board[i][j];
 		}
-		cout << blue; //Blue color for the right board
 		cout << board[i][79]; //Right border
 		cout << endl;
 	}
@@ -538,8 +515,7 @@ void dispBoard(char board[100][1000]) {
 		cout << board[23][i];
 	}
 	cout << endl;
-	cout << reset;
-
+	
 }
 
 
@@ -2116,7 +2092,7 @@ void drawEnemyBirdRight(char board[100][1000], Enemy bird) {
 }
 
 
-void controlBird(char board[100][1000], Enemy& bird, int startC, int endC, int rEggs[], int cEggs[], int& count , player &Player) {
+void controlBird(char board[100][1000], Enemy& bird, int startC, int endC, int rEggs[], int cEggs[], int& count, player& Player) {
 
 	if (bird.Col == startC) {
 		bird.direction = 0;
@@ -2126,7 +2102,7 @@ void controlBird(char board[100][1000], Enemy& bird, int startC, int endC, int r
 		bird.direction = 1;
 	}
 
-	if(bird.direction == 0) {
+	if (bird.direction == 0) {
 		drawEnemyBirdRight(board, bird);
 		bird.Col++;
 	}
@@ -2147,23 +2123,23 @@ void controlBird(char board[100][1000], Enemy& bird, int startC, int endC, int r
 		for (int i = 0; i < 5; i++) {
 			if (rEggs[i] != -1 && cEggs[i] != -1) {
 				int check = 1;
-				
-				if (board[rEggs[i]+1][cEggs[i]] != ' ') { 
-					check = 0; 
+
+				if (board[rEggs[i] + 1][cEggs[i]] != ' ') {
+					check = 0;
 				}
-				
-				if (Player.Row - Player.maxHeight < rEggs[i]&&  rEggs[i] <  Player.Row && Player.Col + Player.maxWidth >= cEggs[i] && Player.Col <= cEggs[i]) {
+
+				if (Player.Row - Player.maxHeight < rEggs[i] && rEggs[i] < Player.Row && Player.Col + Player.maxWidth >= cEggs[i] && Player.Col <= cEggs[i]) {
 					check = 2;
 				}
 
 
 
-				if (check ==1) {
+				if (check == 1) {
 					rEggs[i]++;
 				}
 				else if (check == 0) {
 					rEggs[i] = -1;
-					cEggs[i] = -1; 
+					cEggs[i] = -1;
 				}
 				else {
 					Player.Health -= bird.attackPower;
@@ -2175,10 +2151,10 @@ void controlBird(char board[100][1000], Enemy& bird, int startC, int endC, int r
 			}
 		}
 
-		
+
 	}
 
-	
+
 }
 
 ////////////////////DEVIL/////////////////////////
@@ -2427,7 +2403,7 @@ void controlFireBall(char board[100][1000], int& row, int& col, int r, int& endR
 	}
 }
 ///////////
-void drawAndMoveBlob(char board[100][1000], Enemy& blob , int& row, int& col, int startCol, int endCol, int& direction, int& isJumping) {
+void drawAndMoveBlob(char board[100][1000], Enemy& blob, int& row, int& col, int startCol, int endCol, int& direction, int& isJumping) {
 
 	if (col <= startCol) {
 		direction = 1;
@@ -2981,7 +2957,7 @@ void scroll(char board[100][1000], int& posJHero, int& posIHero, int widthHero, 
 	if (dispC > 1000 - 80) dispC = 1000 - 80;
 
 	dispR = posIHero + 2;
-	if (dispR < 24) dispR = 23;
+	if (dispR < 24) dispR = 24;
 	if (dispR > 86) dispR = 98;
 
 }
@@ -3444,7 +3420,7 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 	spawnHeart(board, heart, 0); // row = 69 , col = 130
 	spawnHeart(board, heart, 1); // row = 98 , col = 210
 
-	
+
 	//the part where the assault rifle drop should be 
 
 	drawWall(board, 2, 150 - 50, 49);
@@ -3455,13 +3431,13 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 
 	drawAssaultRifle(board, Player.assaultRow, Player.assaultCol, Player.didGetRifle);
 	drawCoin(board, coins[2].Row, coins[2].Col, coins[2].isCollected); // row = 69 , col = 66
-	
+
 	drawWall(board, 2, 210, 49);
 	drawWall(board, 2, 211, 49);
 
 	//Upper terrain for skeleton and bird
 
-	drawTerrain(board , 30 , 362 , 2 , 38);
+	drawTerrain(board, 30, 362, 2, 38);
 	drawLadder(board, 50, 400, 21);
 	drawTerrain(board, 51, 400, 2, 214);
 
@@ -3475,7 +3451,7 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 }
 
 
-void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, int posYLaz[], int direction, int& whatLaz, int& isShooting, Enemy enemyKill[], int& posXGUn, int posYGun[], int& whatGun, int blobStartC, int blobEndC, int& blobIsJumping, int& blobDirection, int AssaultR[], int AssaultC[], int startCAssault[], int assaultDirection[] , int rEggs[], int cEggs[], int &countE, player & Player , Enemy enemyUnKill[]) {
+void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, int posYLaz[], int direction, int& whatLaz, int& isShooting, Enemy enemyKill[], int& posXGUn, int posYGun[], int& whatGun, int blobStartC, int blobEndC, int& blobIsJumping, int& blobDirection, int AssaultR[], int AssaultC[], int startCAssault[], int assaultDirection[], int rEggs[], int cEggs[], int& countE, player& Player, Enemy enemyUnKill[]) {
 	drawAndMoveElevatorV(board, elevator, 0);
 	drawAndMoveElevatorH(board, elevator, 1);
 
@@ -3483,8 +3459,8 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 
 	// //Skeleton  skeletonCol = 430, skeletonRow = 50;
 	// startC is 430 , endC is 500
-	drawMoveSkeleton(board , enemyKill[3], 430 , 500 , enemyKill[3].direction);
-		
+	drawMoveSkeleton(board, enemyKill[3], 430, 500, enemyKill[3].direction);
+
 	drawAndMoveBlob(board, enemyKill[2], enemyKill[2].Row, enemyKill[2].Col, blobStartC, blobEndC, blobDirection, blobIsJumping);
 
 	controlBird(board, enemyUnKill[5], 520, 590, rEggs, cEggs, countE, Player);
@@ -3492,7 +3468,7 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 
 
 
-	
+
 	/////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////
 	// Assault rifle
@@ -3673,7 +3649,7 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 
 
 void clearMap(char board[100][1000], int dispR, int dispC) {
-	int top = dispR - 23;
+	int top = dispR - 24;
 	if (top < 0) top = 0;
 	for (int i = top; i <= dispR; i++) {
 		for (int j = dispC + 1; j < dispC + 80 - 1; j++) {
@@ -3685,7 +3661,7 @@ void clearMap(char board[100][1000], int dispR, int dispC) {
 }
 
 void addBorders(char board[100][1000], int dispR, int dispC) {
-	int top = dispR - 23;
+	int top = dispR - 24;
 	int bottom = dispR;
 
 	// Top border
@@ -3711,26 +3687,17 @@ void addBorders(char board[100][1000], int dispR, int dispC) {
 
 
 void Clear_LoadMap(char board[100][1000], int dispR, int dispC) {
-
-	//ANSI CODE COLORS
-	char green[] = "\033[32m";
-	char blue[] = "\033[34m";
-	char red[] = "\033[31m";
-	char yellow[] = "\033[33m";
-	char cyan[] = "\033[36m";
-	char reset[] = "\033[0m";
-	char bold[] = "\033[1m";
-
-	int top = dispR - 23;
+;
+	int top = dispR - 24;
 	int bottom = dispR;
 
 	for (int i = top - 1; i <= bottom + 1; i++) { // includes borders
 		for (int j = dispC; j < dispC + 80; j++) {
 			if (i == top - 1 || i == bottom + 1) { // top or bottom border
-				cout << blue << board[i][j] << reset;
+				cout << board[i][j];
 			}
 			else if (j == dispC || j == dispC + 80 - 1) { // side borders
-				cout << blue << board[i][j] << reset;
+				cout <<  board[i][j];
 			}
 			else {
 				cout << board[i][j];
@@ -3930,7 +3897,7 @@ void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int widthHero
 
 	int isOnLadder = 0;
 	for (int i = 0; i < 5; i++) {
-		if (posJHero >= ladders[i].Col - widthHero && posJHero <= ladders[i].Col + ladders[i].length + widthHero) { 
+		if (posJHero >= ladders[i].Col - widthHero && posJHero <= ladders[i].Col + ladders[i].length + widthHero) {
 			if (posIHero <= ladders[i].Row + 1 && posIHero - heightHero + 1 >= ladders[i].Row - ladders[i].length - 1) {
 				isOnLadder = 1;
 				break;
@@ -3979,7 +3946,7 @@ void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int widthHero
 
 }
 
-void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player& Player, int gun, int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& posXGun, int posYGun[], int& whatGUn, int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping, Enemy enemyUNKill[], int AssaultR[], int AssaultC[], int startCAssault[], int assaultDirection[] , int rEggs[], int cEggs[], int& countE) {
+void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player& Player, int gun, int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& posXGun, int posYGun[], int& whatGUn, int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping, Enemy enemyUNKill[], int AssaultR[], int AssaultC[], int startCAssault[], int assaultDirection[], int rEggs[], int cEggs[], int& countE) {
 
 
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
@@ -4030,7 +3997,7 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 			callObj(board, coins, enemyKill, Heart, isClicked, Player, enemyUNKill);
 			SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
 			controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
-			callDynamicObj(board, elevator, posXLaz, posYLaz, direction, whatlaz, isShooting, enemyKill, posXGun, posYGun, whatGUn, blobStartC, blobEndC, blobIsJumping, blobDirection, AssaultR, AssaultC, startCAssault, assaultDirection ,rEggs, cEggs, countE ,Player, enemyUNKill);
+			callDynamicObj(board, elevator, posXLaz, posYLaz, direction, whatlaz, isShooting, enemyKill, posXGun, posYGun, whatGUn, blobStartC, blobEndC, blobIsJumping, blobDirection, AssaultR, AssaultC, startCAssault, assaultDirection, rEggs, cEggs, countE, Player, enemyUNKill);
 			addBorders(board, dispR, dispC);
 
 			if (animation == 0 || animation == -1) {
@@ -4618,14 +4585,14 @@ int main() {
 
 		drawWall(board, 2, 210, 49);
 		drawWall(board, 2, 211, 49);
-		
+
 
 		/////////////Hearts////////////////
 		hearts heart[8];
 		intializeHeart(board, heart[0], 69, 240);
 
 		intializeHeart(board, heart[1], 95, 195);
-		
+
 
 		/////////////Elevators//////////////
 		Elevator elevator[3];
@@ -4637,12 +4604,12 @@ int main() {
 
 		drawWall(board, 71, 311, 28);
 
-		
+
 		intializeElevator(board, elevator, 2, 98, 350, 98, 20, 350, 350, 0, 1); // Vertical 2 
 
-		
+
 		////////////Enemies//////////////////
-		
+
 		int blobStartC = 600, blobEndC = 650, blobIsJumping = 0, blobDirection = 1;
 		Enemy enemyKill[9];
 		intializeEnemy(enemyKill, 0, 49, 12, 1, 11, 13, 100, 10); //Devil
@@ -4734,7 +4701,7 @@ int main() {
 		system("cls");
 		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, Player.gun);
 		Clear_LoadMap(board, dispR, dispC);
-		FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health, posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked, posXGun, posYGun, whatGUn, blobStartC, blobEndC, blobDirection, blobIsJumping, enemyUnKill, assaultR, assaultC, startCAssault, assaultDirection , rEggs, cEggs, countE);
+		FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health, posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked, posXGun, posYGun, whatGUn, blobStartC, blobEndC, blobDirection, blobIsJumping, enemyUnKill, assaultR, assaultC, startCAssault, assaultDirection, rEggs, cEggs, countE);
 		int isWon = 0;
 
 		for (; !isWon;) {
