@@ -427,21 +427,21 @@ void dispBar(int health, int coins, int ammo[], int maxAmmo, int gun) {
 	if (h >= 100) h_digits = 3;
 	else if (h >= 10) h_digits = 2;
 
-	cout << "  " <<  "|"  << "  COINS " << coins;
+	cout << "  " << "|" << "  COINS " << coins;
 
 	int c = coins;
 	int c_digits = 1;
 	if (c >= 100) c_digits = 3;
 	else if (c >= 10) c_digits = 2;
 
-	cout << "  " << "|" <<  "  ";
+	cout << "  " << "|" << "  ";
 
 	if (gun == 0) cout << "Lazer ";
 	else if (gun == 1) cout << "Pistol";
 	else if (gun == 2) cout << "Rifle ";
 
 
-	cout <<  "  " << "|" << "  AMMO ";
+	cout << "  " << "|" << "  AMMO ";
 
 	int bullet = 0;
 	int max_bullet = 0;
@@ -479,7 +479,7 @@ void dispBar(int health, int coins, int ammo[], int maxAmmo, int gun) {
 
 	if (bullet > 0) {
 		usedChars += b_digits + 3 + max_digits;
-		cout <<  bullet << " / " << max_bullet;
+		cout << bullet << " / " << max_bullet;
 	}
 	else {
 		usedChars += 7; // length of "NO AMMO"
@@ -491,13 +491,13 @@ void dispBar(int health, int coins, int ammo[], int maxAmmo, int gun) {
 		cout << " ";
 	}
 
-	cout << char(186)  << endl;
+	cout << char(186) << endl;
 }
 
 
 void dispBoard(char board[100][1000]) {
 
-	
+
 	for (int i = 0; i < 80; i++) {
 		cout << board[0][i];
 	}
@@ -515,7 +515,7 @@ void dispBoard(char board[100][1000]) {
 		cout << board[23][i];
 	}
 	cout << endl;
-	
+
 }
 
 
@@ -3649,7 +3649,7 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 
 
 void clearMap(char board[100][1000], int dispR, int dispC) {
-	int top = dispR - 24;
+	int top = dispR - 23;
 	if (top < 0) top = 0;
 	for (int i = top; i <= dispR; i++) {
 		for (int j = dispC + 1; j < dispC + 80 - 1; j++) {
@@ -3661,7 +3661,7 @@ void clearMap(char board[100][1000], int dispR, int dispC) {
 }
 
 void addBorders(char board[100][1000], int dispR, int dispC) {
-	int top = dispR - 24;
+	int top = dispR - 23;
 	int bottom = dispR;
 
 	// Top border
@@ -3687,8 +3687,8 @@ void addBorders(char board[100][1000], int dispR, int dispC) {
 
 
 void Clear_LoadMap(char board[100][1000], int dispR, int dispC) {
-;
-	int top = dispR - 24;
+	;
+	int top = dispR - 23;
 	int bottom = dispR;
 
 	for (int i = top - 1; i <= bottom + 1; i++) { // includes borders
@@ -3697,7 +3697,7 @@ void Clear_LoadMap(char board[100][1000], int dispR, int dispC) {
 				cout << board[i][j];
 			}
 			else if (j == dispC || j == dispC + 80 - 1) { // side borders
-				cout <<  board[i][j];
+				cout << board[i][j];
 			}
 			else {
 				cout << board[i][j];
@@ -4539,7 +4539,7 @@ int main() {
 
 		int HiddenladderButtonClicked = 0, btnrow = 98, btnmaxR = 98 - 15, btnCol = 290, btnmaxC = 290 + 10;
 
-		Player.Col = 420, Player.Row = 22;
+		Player.Col = 560, Player.Row = 22;
 		int assaultR[20] = { -1 };
 		int assaultC[20] = { -1 };
 		int assaultDirection[20] = { -1 };
