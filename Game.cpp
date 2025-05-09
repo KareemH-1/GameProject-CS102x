@@ -2618,21 +2618,21 @@ void drawTerrain(char board[100][1000], int r, int c, int NumR, int NumC) {
 	}
 	else if (NumR == 2) {
 		board[r][c] = char(201);
-		tempCol = c+1;
-		for (int j = 0; j < NumC-1; j++) {
+		tempCol = c + 1;
+		for (int j = 0; j < NumC - 1; j++) {
 			board[r][tempCol] = char(205);
 			tempCol++;
 		}
 		board[r][tempCol] = char(187);
 		tempCol = c;
-		board[r+1][tempCol] = char(200);
+		board[r + 1][tempCol] = char(200);
 		tempCol++;
-		for (int j = 0; j < NumC-1; j++) {
-			board[r+1][tempCol] = char(205);
+		for (int j = 0; j < NumC - 1; j++) {
+			board[r + 1][tempCol] = char(205);
 			tempCol++;
 
 		}
-		board[r+1][tempCol] = char(188);
+		board[r + 1][tempCol] = char(188);
 	}
 
 
@@ -3452,7 +3452,7 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 	Hiddenladder(board, 98, 134, 98 - 70, isClicked);
 	drawButton(board, 98, 290, isClicked);
 
-	drawWall(board, 70, 310, 28, 1, 1, 0);
+	drawWall(board, 70, 310, 29, 1, 1, 0);
 
 
 
@@ -4241,8 +4241,8 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		// Check if we can fall diagonally right
 		int canFallRight = 1;
 		if (pY + pWidth < 999) {
-			for (int row = pX-pHeight+1; row <= pX; row++) {
-				if (board[row][pY + pWidth+1] != ' ') {
+			for (int row = pX - pHeight + 1; row <= pX; row++) {
+				if (board[row][pY + pWidth + 1] != ' ') {
 					canFallRight = 0;
 					break;
 				}
@@ -4774,7 +4774,7 @@ int main() {
 				if (frame == 1) {
 					drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
 				}
-				else if (frame == 2) {
+				else if (frame == 2 ) {
 					drawPlayerRightFrame2(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
 				}
 				else if (frame == 3) {
@@ -5056,6 +5056,7 @@ int main() {
 				}
 			}
 			else {
+				isWalking = 0;
 				if (animation == 0) animation = -1;
 				else if (animation == 1) animation = -2;
 			}
