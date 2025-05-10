@@ -2609,15 +2609,34 @@ void drawAndMoveBlob(char board[100][1000], Enemy& blob, int& row, int& col, int
 
 void drawTerrain(char board[100][1000], int r, int c, int NumR, int NumC) {
 	int tempCol;
-	tempCol = c;
-	for (int i = 0; i < NumR; i++) {
+	if (NumR == 1) {
+		tempCol = c;
 		for (int j = 0; j < NumC; j++) {
 			board[r][tempCol] = char(205);
 			tempCol++;
 		}
-		tempCol = c;
-		r++;
 	}
+	else if (NumR == 2) {
+		board[r][c] = char(201);
+		tempCol = c + 1;
+		for (int j = 0; j < NumC - 1; j++) {
+			board[r][tempCol] = char(205);
+			tempCol++;
+		}
+		board[r][tempCol] = char(187);
+		tempCol = c;
+		board[r + 1][tempCol] = char(200);
+		tempCol++;
+		for (int j = 0; j < NumC - 1; j++) {
+			board[r + 1][tempCol] = char(205);
+			tempCol++;
+
+		}
+		board[r + 1][tempCol] = char(188);
+	}
+
+
+
 }
 
 void drawWall(char board[100][1000], int r, int c, int length, int direction, int doTop, int doBottom) {
@@ -3383,17 +3402,17 @@ void drawMoveSkeleton(char board[100][1000], Enemy& Skeleton, int stCol, int end
 
 void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[], int isClicked, player& Player, Enemy unKill[]) {
 	//The part for the devil
-	drawTerrain(board, 95, 61, 1, 12); //first platform
+	drawTerrain(board, 95, 60, 2, 13); //first platform
 
-	drawTerrain(board, 92, 46, 1, 12); //second platform
-	drawTerrain(board, 89, 2, 1, 39); //third platform
+	drawTerrain(board, 92, 45, 2, 13); //second platform
+	drawTerrain(board, 89, 2, 2, 39); //third platform
 
-	drawLadder(board, 88, 20, 17);
+	drawLadder(board, 88, 19, 18);
 
 
 
 	drawTerrain(board, 71, 33, 1, 32);
-	drawLadder(board, 70, 50, 20);
+	drawLadder(board, 70, 51, 21);
 	drawTerrain(board, 50, 1, 1, 50);
 	drawDevil(board, isKill[0]);
 	drawCoin(board, coins[0].Row, coins[0].Col, coins[0].isCollected);
@@ -3433,7 +3452,7 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 	Hiddenladder(board, 98, 134, 98 - 70, isClicked);
 	drawButton(board, 98, 290, isClicked);
 
-	drawWall(board, 70, 310, 28, 1, 1, 0);
+	drawWall(board, 70, 310, 29, 1, 1, 0);
 
 
 
@@ -3451,9 +3470,9 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 	board[98][333] = char(188);
 	drawTerrain(board, 97, 334, 1, 3);
 	board[97][337] = char(188);
-	drawTerrain(board , 96 , 338, 1 , 11);
+	drawTerrain(board, 96, 338, 1, 11);
 	drawWall(board, 96, 349, 3, 1, 1, 0);
-	
+
 	drawTerrain(board, 98, 350, 1, 12);
 
 
@@ -4064,7 +4083,7 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 
 		int check = 1; // Reset every fall attempt
 
-		for (int j = pY + 2; j <= pY + 10; j++) {
+		for (int j = pY + 3; j <= pY + 9; j++) {
 			if (board[pX + 1][j] != ' ') {
 				check = 0;
 				break;
@@ -4206,7 +4225,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		int canFall = 0;
 
 		// Check if we can fall straight down
-		for (int col = pY + 2; col <= pY + 10; col++) {
+		for (int col = pY + 3; col <= pY + 9; col++) {
 			if (pX + 1 < 100 && (board[pX + 1][col] == ' ')) {
 				canFall = 1;
 			}
@@ -4222,8 +4241,8 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		// Check if we can fall diagonally right
 		int canFallRight = 1;
 		if (pY + pWidth < 999) {
-			for (int row = pX; row <= pX + 1; row++) {
-				if (board[row][pY + pWidth] != ' ') {
+			for (int row = pX - pHeight + 1; row <= pX; row++) {
+				if (board[row][pY + pWidth + 1] != ' ') {
 					canFallRight = 0;
 					break;
 				}
@@ -4233,10 +4252,11 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 			canFallRight = 0;
 		}
 
+		if (canFallRight == 0) break;
 
 		int canFallRight2ndCol = 1;
 		if (pY + pWidth + 1 < 999) {
-			for (int row = pX; row <= pX + 1; row++) {
+			for (int row = pX - pHeight; row <= pX + 1; row++) {
 				if (board[row][pY + pWidth + 1] != ' ') {
 					canFallRight2ndCol = 0;
 					break;
@@ -4381,7 +4401,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 
 	for (; pX + 1 < 98 && board[pX + 1][pY] == ' ' && pY > 1;) {
 		int checkDown = 1;
-		for (int j = pY + 2; j <= pY + 10; j++) {
+		for (int j = pY + 3; j <= pY + 9; j++) {
 
 			if (board[pX + 1][j] != ' ') {
 				checkDown = 0;
@@ -4574,7 +4594,7 @@ int main() {
 
 		int HiddenladderButtonClicked = 0, btnrow = 98, btnmaxR = 98 - 15, btnCol = 290, btnmaxC = 290 + 10;
 
-		Player.Col = 330, Player.Row = 95;
+		Player.Col = 40, Player.Row = 40;
 
 
 		int assaultR[20] = { -1 };
@@ -4588,13 +4608,13 @@ int main() {
 		///////////Ladders////////////
 		ladder ladders[5];
 		ladders[0].Row = 88;
-		ladders[0].Col = 20;
-		ladders[0].length = 17;
+		ladders[0].Col = 19;
+		ladders[0].length = 18;
 
 
 		ladders[1].Row = 70;
-		ladders[1].Col = 50;
-		ladders[1].length = 20;
+		ladders[1].Col = 51;
+		ladders[1].length = 21;
 
 
 		//HIDDEN LADDER
@@ -4754,7 +4774,7 @@ int main() {
 				if (frame == 1) {
 					drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
 				}
-				else if (frame == 2) {
+				else if (frame == 2 ) {
 					drawPlayerRightFrame2(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
 				}
 				else if (frame == 3) {
@@ -5036,6 +5056,7 @@ int main() {
 				}
 			}
 			else {
+				isWalking = 0;
 				if (animation == 0) animation = -1;
 				else if (animation == 1) animation = -2;
 			}
