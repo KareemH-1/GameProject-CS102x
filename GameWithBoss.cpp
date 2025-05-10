@@ -364,8 +364,8 @@ void winScreen() {
 
 
 void initializePlayerValues(int& Row, int& Col, int& maxHeight, int& maxWidth, int& Health, int& coins, int& gun, int ammo[], int& maxAmmo, int& shootC, int& shootR) {
-	Row = 95;
-	Col = 70;
+	Row = 92;
+	Col = 750;
 	maxHeight = 9;
 	maxWidth = 15;
 	Health = 500;
@@ -928,7 +928,6 @@ void drawPlayerRightFrame4(char board[100][1000], int row, int col, int& shootR,
 	LC[6] = col + 8;  // row - 6 (head base: '/' at col+8)
 	LC[7] = col + 8;  // row - 7 (eyes: ')' at col+8)
 	LC[8] = col + 7;  // row - 8 (top head: '_' at col+7)
-
 }
 
 
@@ -2405,6 +2404,7 @@ void controlFireBall(char board[100][1000], int& row, int& col, int r, int& endR
 ///////////
 void drawAndMoveBlob(char board[100][1000], Enemy& blob, int& row, int& col, int startCol, int endCol, int& direction, int& isJumping) {
 
+	
 	if (direction == 1) {
 		if (!isJumping) {
 			row--;
@@ -2430,7 +2430,8 @@ void drawAndMoveBlob(char board[100][1000], Enemy& blob, int& row, int& col, int
 		}
 	}
 
-
+	if(col >= endCol) direction == 2;
+	else if (col <= startCol) direction = 1;
 	if (blob.isKillable != -1) {
 		if (direction == 1) {
 			board[row][col + 3] = '|';
@@ -3230,153 +3231,155 @@ void checkIsAssaultTaken(player& Player) {
 
 /////////////////////////////////////
 void Draw_And_Move_Boss(char board[100][1000], Enemy& boss, int& row, int& col, int startc, int endc, int& direction) {
-    int BOSS_HEIGHT = 10;
-    int BOSS_WIDTH = 25;
-    
-    if (direction == 1) {
-        if (col < endc) {
-            col++;
-        } else {
-            direction = 2;
-        }
-    } else if (direction == 2) {
-        if (col > startc) {
-            col--;
-        } else {
-            direction = 1;
-        }
-    }
-
-    if(boss.iskillable != -1){
-            if (direction == 1) {
-
-            board[row - 9][col + 8] = '.';
-            board[row - 9][col + 9] = '-';
-            board[row - 9][col + 10] = '"';
-            board[row - 9][col + 16] = '"';
-            board[row - 9][col + 17] = '-';
-            board[row - 9][col + 18] = '.';
-
-            board[row - 8][col + 7] = '/';
-            board[row - 8][col + 9] = 'o';
-            board[row - 8][col + 17] = 'o';
-            board[row - 8][col + 19] = '\\';
-
-            board[row - 7][col + 6] = '/';
-            board[row - 7][col + 10] = '\\';
-            board[row - 7][col + 16] = '/';
-            board[row - 7][col + 20] = '\\';
-
-            board[row - 6][col + 5] = '/';
-            board[row - 6][col + 11] = ')';
-            board[row - 6][col + 12] = '-';
-            board[row - 6][col + 13] = '"';
-            board[row - 6][col + 14] = '-';
-            board[row - 6][col + 15] = '(';
-            board[row - 6][col + 21] = '\\';
-
-            board[row - 5][col + 4] = '/';
-            board[row - 5][col + 11] = '(';
-            board[row - 5][col + 12] = '6';
-            board[row - 5][col + 14] = '6';
-            board[row - 5][col + 15] = ')';
-            board[row - 5][col + 22] = '\\';
-
-            board[row - 4][col + 3] = '/';
-            board[row - 4][col + 11] = '\\';
-            board[row - 4][col + 13] = '=';
-            board[row - 4][col + 15] = '/';
-            board[row - 4][col + 23] = '\\';
-
-            board[row - 3][col + 2] = '(';
-            board[row - 3][col + 3] = '"';
-            board[row - 3][col + 4] = '.';
-            board[row - 3][col + 5] = '_';
-            board[row - 3][col + 6] = '_';
-            board[row - 3][col + 7] = '\\';
-            board[row - 3][col + 8] = '/';
-            board[row - 3][col + 9] = '_';
-            board[row - 3][col + 10] = '_';
-            board[row - 3][col + 11] = '\\';
-            board[row - 3][col + 12] = '_';
-            board[row - 3][col + 13] = '_';
-            board[row - 3][col + 14] = '_';
-            board[row - 3][col + 15] = '/';
-            board[row - 3][col + 16] = '_';
-            board[row - 3][col + 17] = '_';
-            board[row - 3][col + 18] = '\\';
-            board[row - 3][col + 19] = '/';
-            board[row - 3][col + 20] = '_';
-            board[row - 3][col + 21] = '_';
-            board[row - 3][col + 22] = '.';
-            board[row - 3][col + 23] = '"';
-            board[row - 3][col + 24] = ')';
-
-            board[row - 2][col + 2] = '"';
-            board[row - 2][col + 3] = '-';
-            board[row - 2][col + 4] = '_';
-            board[row - 2][col + 7] = 'o';
-            board[row - 2][col + 9] = 'O';
-            board[row - 2][col + 11] = 'o';
-            board[row - 2][col + 13] = 'O';
-            board[row - 2][col + 15] = 'o';
-            board[row - 2][col + 17] = 'O';
-            board[row - 2][col + 19] = 'o';
-            board[row - 2][col + 22] = '_';
-            board[row - 2][col + 23] = '-';
-            board[row - 2][col + 24] = '"';
-
-            board[row - 1][col + 2] = '`';
-            board[row - 1][col + 3] = '-';
-            board[row - 1][col + 4] = 'Y';
-            board[row - 1][col + 5] = '-';
-            board[row - 1][col + 6] = '-';
-            board[row - 1][col + 7] = '.';
-            board[row - 1][col + 8] = '_';
-            board[row - 1][col + 9] = '_';
-            board[row - 1][col + 10] = '_';
-            board[row - 1][col + 11] = '_';
-            board[row - 1][col + 12] = '_';
-            board[row - 1][col + 13] = '_';
-            board[row - 1][col + 14] = '_';
-            board[row - 1][col + 15] = '_';
-            board[row - 1][col + 16] = '_';
-            board[row - 1][col + 17] = '_';
-            board[row - 1][col + 18] = '.';
-            board[row - 1][col + 19] = '-';
-            board[row - 1][col + 20] = '-';
-            board[row - 1][col + 21] = 'Y';
-            board[row - 1][col + 22] = '-';
-            board[row - 1][col + 23] = '\'';
-
-            board[row][col + 2] = '`';
-            board[row][col + 3] = '-';
-            board[row][col + 4] = 'Y';
-            board[row][col + 5] = '-';
-            board[row][col + 6] = '-';
-            board[row][col + 7] = '.';
-            board[row][col + 8] = '_';
-            board[row][col + 9] = '_';
-            board[row][col + 10] = '_';
-            board[row][col + 11] = '_';
-            board[row][col + 12] = '_';
-            board[row][col + 13] = '_';
-            board[row][col + 14] = '_';
-            board[row][col + 15] = '_';
-            board[row][col + 16] = '_';
-            board[row][col + 17] = '_';
-
-            board[row][col + 18] = '.';
-            board[row][col + 19] = '-';
-            board[row][col + 20] = '-';
-            board[row][col + 21] = 'Y';
-            board[row][col + 22] = '-';
-            board[row][col + 23] = '\'';
-        }
-    }
 
 
+	if (direction == 1) {
+		if (col < endc) {
+			col++;
+		}
+		else {
+			direction = 2;
+		}
+	}
+	else if (direction == 2) {
+		if (col > startc) {
+			col--;
+		}
+		else {
+			direction = 1;
+		}
+	}
+
+	if (true) {
+
+
+			board[row - 9][col + 8] = '.';
+			board[row - 9][col + 9] = '-';
+			board[row - 9][col + 10] = '"';
+			board[row - 9][col + 16] = '"';
+			board[row - 9][col + 17] = '-';
+			board[row - 9][col + 18] = '.';
+
+			board[row - 8][col + 7] = '/';
+			board[row - 8][col + 9] = 'o';
+			board[row - 8][col + 17] = 'o';
+			board[row - 8][col + 19] = '\\';
+
+			board[row - 7][col + 6] = '/';
+			board[row - 7][col + 10] = '\\';
+			board[row - 7][col + 16] = '/';
+			board[row - 7][col + 20] = '\\';
+
+			board[row - 6][col + 5] = '/';
+			board[row - 6][col + 11] = ')';
+			board[row - 6][col + 12] = '-';
+			board[row - 6][col + 13] = '"';
+			board[row - 6][col + 14] = '-';
+			board[row - 6][col + 15] = '(';
+			board[row - 6][col + 21] = '\\';
+
+			board[row - 5][col + 4] = '/';
+			board[row - 5][col + 11] = '(';
+			board[row - 5][col + 12] = '6';
+			board[row - 5][col + 14] = '6';
+			board[row - 5][col + 15] = ')';
+			board[row - 5][col + 22] = '\\';
+
+			board[row - 4][col + 3] = '/';
+			board[row - 4][col + 11] = '\\';
+			board[row - 4][col + 13] = '=';
+			board[row - 4][col + 15] = '/';
+			board[row - 4][col + 23] = '\\';
+
+			board[row - 3][col + 2] = '(';
+			board[row - 3][col + 3] = '"';
+			board[row - 3][col + 4] = '.';
+			board[row - 3][col + 5] = '_';
+			board[row - 3][col + 6] = '_';
+			board[row - 3][col + 7] = '\\';
+			board[row - 3][col + 8] = '/';
+			board[row - 3][col + 9] = '_';
+			board[row - 3][col + 10] = '_';
+			board[row - 3][col + 11] = '\\';
+			board[row - 3][col + 12] = '_';
+			board[row - 3][col + 13] = '_';
+			board[row - 3][col + 14] = '_';
+			board[row - 3][col + 15] = '/';
+			board[row - 3][col + 16] = '_';
+			board[row - 3][col + 17] = '_';
+			board[row - 3][col + 18] = '\\';
+			board[row - 3][col + 19] = '/';
+			board[row - 3][col + 20] = '_';
+			board[row - 3][col + 21] = '_';
+			board[row - 3][col + 22] = '.';
+			board[row - 3][col + 23] = '"';
+			board[row - 3][col + 24] = ')';
+
+			board[row - 2][col + 2] = '"';
+			board[row - 2][col + 3] = '-';
+			board[row - 2][col + 4] = '_';
+			board[row - 2][col + 7] = 'o';
+			board[row - 2][col + 9] = 'O';
+			board[row - 2][col + 11] = 'o';
+			board[row - 2][col + 13] = 'O';
+			board[row - 2][col + 15] = 'o';
+			board[row - 2][col + 17] = 'O';
+			board[row - 2][col + 19] = 'o';
+			board[row - 2][col + 22] = '_';
+			board[row - 2][col + 23] = '-';
+			board[row - 2][col + 24] = '"';
+
+			board[row - 1][col + 2] = '`';
+			board[row - 1][col + 3] = '-';
+			board[row - 1][col + 4] = 'Y';
+			board[row - 1][col + 5] = '-';
+			board[row - 1][col + 6] = '-';
+			board[row - 1][col + 7] = '.';
+			board[row - 1][col + 8] = '_';
+			board[row - 1][col + 9] = '_';
+			board[row - 1][col + 10] = '_';
+			board[row - 1][col + 11] = '_';
+			board[row - 1][col + 12] = '_';
+			board[row - 1][col + 13] = '_';
+			board[row - 1][col + 14] = '_';
+			board[row - 1][col + 15] = '_';
+			board[row - 1][col + 16] = '_';
+			board[row - 1][col + 17] = '_';
+			board[row - 1][col + 18] = '.';
+			board[row - 1][col + 19] = '-';
+			board[row - 1][col + 20] = '-';
+			board[row - 1][col + 21] = 'Y';
+			board[row - 1][col + 22] = '-';
+			board[row - 1][col + 23] = '\'';
+
+			board[row][col + 2] = '`';
+			board[row][col + 3] = '-';
+			board[row][col + 4] = 'Y';
+			board[row][col + 5] = '-';
+			board[row][col + 6] = '-';
+			board[row][col + 7] = '.';
+			board[row][col + 8] = '_';
+			board[row][col + 9] = '_';
+			board[row][col + 10] = '_';
+			board[row][col + 11] = '_';
+			board[row][col + 12] = '_';
+			board[row][col + 13] = '_';
+			board[row][col + 14] = '_';
+			board[row][col + 15] = '_';
+			board[row][col + 16] = '_';
+			board[row][col + 17] = '_';
+
+			board[row][col + 18] = '.';
+			board[row][col + 19] = '-';
+			board[row][col + 20] = '-';
+			board[row][col + 21] = 'Y';
+			board[row][col + 22] = '-';
+			board[row][col + 23] = '\'';
+		
+	}
 }
+
+
 
 /////////////////////////////////////////
 
@@ -3404,7 +3407,7 @@ void drawMoveSkeleton(char board[100][1000], Enemy& Skeleton, int stCol, int end
 	//head
 	int isDead = Skeleton.isKillable;
 	if (Skeleton.isKillable != -1) {
-		board[row - 14][col + 5] = '-';
+		board[row - 13][col + 5] = '-';
 		board[row - 13][col + 4] = '.';
 		board[row - 13][col + 6] = '.';
 		board[row - 12][col + 3] = '(';
@@ -3471,14 +3474,14 @@ void drawMoveSkeleton(char board[100][1000], Enemy& Skeleton, int stCol, int end
 		board[row - 7][col + 1] = '\\';
 		board[row - 6][col + 1] = '\\';
 		board[row - 6][col + 2] = '\\';
-		board[row - 5][col + 3] = '(';
+		board[row - 5][col + 2] = '(';
 
 
 		//right leg
 
 		board[row - 5][col + 3] = ':';
 		board[row - 4][col + 3] = '|';
-		board[row - 3][col + 3] = ')';
+		board[row - 3][col + 3] = '(';
 		board[row - 2][col + 3] = '|';
 		board[row - 1][col + 3] = '|';
 		board[row][col + 3] = '=';
@@ -3580,7 +3583,7 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 
 
 
-	drawTerrain(board, 70, 134 + 15, 1, 162);
+	drawTerrain(board, 70, 134 + 15, 1, 162);	
 	//col at end is 100+ 175 = 275
 
 
@@ -3647,6 +3650,14 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 
 	drawWall(board, 2, 700, 29, 1, 0, 1);
 
+
+
+	//boss area
+
+	drawWall(board, 2, 699, 99, 1, 0, 0);
+	drawWall(board, 2, 801, 99, 1, 0, 0);
+	drawTerrain(board, 20, 802, 1, 40);
+	drawWall(board, 2, 841, 20, 1, 0, 0);
 }
 
 
@@ -3659,10 +3670,16 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 	// //Skeleton  skeletonCol = 430, skeletonRow = 50;
 	// startC is 430 , endC is 500
 	drawMoveSkeleton(board, enemyKill[3], 430, 500, enemyKill[3].direction);
+	drawMoveSkeleton(board, enemyKill[7], 810, 840, enemyKill[7].direction);
+
+
+	Draw_And_Move_Boss(board, enemyKill[6], enemyKill[6].Row, enemyKill[6].Col, 700, 775, enemyKill[6].direction);
 
 	drawAndMoveBlob(board, enemyKill[2], enemyKill[2].Row, enemyKill[2].Col, blobStartC, blobEndC, blobDirection, blobIsJumping);
 
 	controlBird(board, enemyUnKill[5], 520, 590, rEggs, cEggs, countE, Player);
+
+
 
 
 
@@ -3692,18 +3709,6 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 					AssaultC[i]--;
 				}
 				else {
-					for (int  = 0; i <= 9; i++) {
-						int check = checkEnemyHit(AssaultR, posYLaz[whatLaz], enemyKill[i]);
-						if (check == 1) {
-							enemyKill[i].Health -= 7;
-							if (enemyKill[i].Health <= 0) {
-								enemyKill[i].isKillable = -1;
-								enemyKill[i].Row = -100;
-								enemyKill[i].Col = -100;
-							}
-						}
-					}
-
 					AssaultC[i] = -1;
 					assaultDirection[i] = -1;
 					AssaultR[i] = -1;
@@ -3711,15 +3716,36 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 				}
 			}
 
+			int isHit = 0;
+
+			for (int j = 0; j < 9; j++) {
+				int check = checkEnemyHit(AssaultR[i], AssaultC[i], enemyKill[j]);
+				if (check == 1) {
+					if (i >= 7) enemyKill[6].Health -= 7;
+					enemyKill[j].Health -= 7;
+					isHit = 1;
+
+					if (enemyKill[j].Health <= 0) {
+						enemyKill[j].isKillable = -1;
+						enemyKill[j].Row = -100;
+						enemyKill[j].Col = -100;
+					}
+				}
+			}
+
+			if (isHit == 1) {
+				AssaultC[i] = -1;
+				assaultDirection[i] = -1;
+				AssaultR[i] = -1;
+				startCAssault[i] = -1;
+			}
 		}
+
 		if (AssaultR[i] != -1 && AssaultC[i] != -1) {
 			board[AssaultR[i]][AssaultC[i]] = '*';
 		}
-
-
-
-
 	}
+
 
 
 
@@ -3757,9 +3783,10 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 		}
 		else {
 			// Collision: check for enemy hit
-			for (int i = 0; i <= 9; i++) {
+			for (int i = 0; i < 9; i++) {
 				int check = checkEnemyHit(posXLaz, posYLaz[whatLaz], enemyKill[i]);
 				if (check == 1) {
+					if (i >= 7) enemyKill[6].Health -= 50;
 					enemyKill[i].Health -= 50;
 					if (enemyKill[i].Health <= 0) {
 						enemyKill[i].isKillable = -1;
@@ -3804,9 +3831,10 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 		}
 		else {
 			// Collision: check for enemy hit
-			for (int i = 0; i <= 9; i++) {
+			for (int i = 0; i < 9; i++) {
 				int check = checkEnemyHit(posXGUn, posYGun[whatGun], enemyKill[i]);
 				if (check == 1) {
+					if (i >= 7) enemyKill[6].Health -= 30;
 					enemyKill[i].Health -= 30;
 					if (enemyKill[i].Health <= 0) {
 						enemyKill[i].isKillable = -1;
@@ -3827,16 +3855,12 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 	}
 	else {
 		// Reset if invalid
-		whatLaz = 0;
+
 		whatGun = 0;
 		isShooting = 0;
 		for (int i = 0; i < 20; i++) {
-			posYLaz[i] = -1;
-		}
-		for (int i = 0; i < 25; i++) {
 			posYGun[i] = -1;
 		}
-		posXLaz = -1;
 		posXGUn = -1;
 	}
 
@@ -4735,7 +4759,6 @@ int main() {
 
 		int HiddenladderButtonClicked = 0, btnrow = 98, btnmaxR = 98 - 15, btnCol = 290, btnmaxC = 290 + 10;
 
-		Player.Col = 40, Player.Row = 40;
 
 
 		int assaultR[20] = { -1 };
@@ -4815,13 +4838,13 @@ int main() {
 
 		intializeEnemy(enemyKill, 5, -10, -10, 1, 10, 12, 100, 20);//Alien
 
-		intializeEnemy(enemyKill, 6, -10, 750, 1, 10, 12, 500, 30);//Boss
+		intializeEnemy(enemyKill, 6, 80, 750, 1, 10, 12, 500, 30);//Boss
 
-		intializeEnemy(enemyKill, 7, -10, -10, 1, 10, 12, 100, 20);//Devil boss minion
+		intializeEnemy(enemyKill, 7,98, 810, 1, 15, 10, 250, 50);//Devil boss minion / sekeleton
 
 		intializeEnemy(enemyKill, 8, -10, -10, 1, 10, 12, 100, 20);//Alien boss minion
 
-	
+
 
 
 		//Width  = 10 , col is most right one 
@@ -4862,7 +4885,8 @@ int main() {
 		intializeEnemy(enemyUnKill, 18, 98, 110, 0, 2, 2, 250, 5); //2nd place Spike 13
 
 
-
+		enemyKill[6].direction = 1;
+		enemyKill[7].direction = 1;
 
 		int DFireBallR = -1, DFireBallC = -1, chance = -1, endR = -1, endC = -1; //intializeValues for devil shooting
 
@@ -4915,7 +4939,7 @@ int main() {
 				if (frame == 1) {
 					drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
 				}
-				else if (frame == 2 ) {
+				else if (frame == 2) {
 					drawPlayerRightFrame2(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
 				}
 				else if (frame == 3) {
