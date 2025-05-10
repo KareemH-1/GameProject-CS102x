@@ -90,98 +90,7 @@ struct Elevator {
 	int direction = 1; // if vertical : 1 for up , 2 for down ..... if horizonatal 1 for right , 2 for left
 };
 
-void TeleportPlayer1(char board[100][1000],player & Player,int row,int col, int teleportX, int teleportY ,int teleport2x, int teleport2y){
 
-    int pY = Player.Col;
-    int pX = Player.Row;
-    int coins = Player.coins;
-    int hp = Player.Health;
-    
-    if(coins>=250 ) {
-         board[row-16][col+4] = 'B';
-         board[row-16][col+5] = 'O';
-         board[row-16][col+6] = 'S';
-         board[row-16][col+7] = 'S';
-         board[row-16][col+8] = ' ';
-         board[row-16][col+9] = 'R';
-         board[row-16][col+10] = 'O';
-         board[row-16][col+11] = 'O';
-         board[row-16][col+12] = 'M';
-         if(pX-14<=teleportX+1 && pX >= teleportX-11 && pY>=teleportY && pY<=teleportY+17){
-            if(_kbhit()) {
-                char signal = _getch();
-                if(signal == 'e' || signal == 'E') {
-                    pX = teleport2x - 1;
-                    pY = teleport2y + 1;
-                    Player.coins -= 250; // Deduct the cost of teleportation
-            }
-         }   
-        }
-        else {
-
-        //isOnTelep
-            board[row-16][col+4] = 'L';
-            board[row-16][col+5] = 'A';
-            board[row-16][col+6] = 'C';
-            board[row-16][col+6] = 'K';
-            board[row-16][col+7] = 'I';
-            board[row-16][col+8] = 'N';
-            board[row-16][col+9] = 'G';
-            board[row-16][col+10] = ' ';
-            board[row-16][col+11] = 'C';
-            board[row-16][col+12] = 'O';
-            board[row-16][col+13] = 'I';
-            board[row-16][col+14] = 'N';
-            board[row-16][col+15] = 'S';
-    }
-
-    if(pX==teleport2x-1 && pY>=teleport2y && pY<=teleport2y+17){
-        if(_kbhit()) {
-            char signal = _getch();
-            if(signal == 'e' || signal == 'E') {
-            
-                //The teleporter takes no cowards massage
-                board[teleport2x-16][teleport2y] = 'T';
-                board[teleport2x-16][teleport2y+1] = 'h';
-                board[teleport2x-16][teleport2y+2] = 'e';
-                board[teleport2x-16][teleport2y+3] = ' ';
-                board[teleport2x-16][teleport2y+4] = 't';
-                board[teleport2x-16][teleport2y+5] = 'e';
-                board[teleport2x-16][teleport2y+6] = 'l';
-                board[teleport2x-16][teleport2y+7] = 'e';
-                board[teleport2x-16][teleport2y+8] = 'p';
-                board[teleport2x-16][teleport2y+9] = 'o';
-                board[teleport2x-16][teleport2y+10] = 'r';
-                board[teleport2x-16][teleport2y+11] = 't';
-                board[teleport2x-16][teleport2y+12] = 'e';
-                board[teleport2x-16][teleport2y+13] = 'r';
-                board[teleport2x-16][teleport2y+14] = ' ';
-                board[teleport2x-16][teleport2y+15] = 't';
-                board[teleport2x-16][teleport2y+16] = 'a';
-                board[teleport2x-16][teleport2y+17] = 'k';
-                board[teleport2x-16][teleport2y+18] = 'e';
-                board[teleport2x-16][teleport2y+19] = 's';
-                board[teleport2x-16][teleport2y+20] = ' ';
-                board[teleport2x-16][teleport2y+21] = 'n';
-                board[teleport2x-16][teleport2y+22] = 'o';
-                board[teleport2x-16][teleport2y+23] = ' ';
-                board[teleport2x-16][teleport2y+24] = 'c';
-                board[teleport2x-16][teleport2y+25] = 'o';
-                board[teleport2x-16][teleport2y+26] = 'w';
-                board[teleport2x-16][teleport2y+28] = 'a';
-                board[teleport2x-16][teleport2y+29] = 'r';
-                board[teleport2x-16][teleport2y+30] = 'd';
-                board[teleport2x-16][teleport2y+31] = 's';
-
-                Player.Health--;
-                }
-            }
-        }
-    }
-}
-
-
-Z
 void FallingCrystal(char board[100][1000], Enemy& crystal) {
 	int frame = crystal.frame;
 	int row = crystal.Row;
@@ -2496,13 +2405,6 @@ void controlFireBall(char board[100][1000], int& row, int& col, int r, int& endR
 ///////////
 void drawAndMoveBlob(char board[100][1000], Enemy& blob, int& row, int& col, int startCol, int endCol, int& direction, int& isJumping) {
 
-	if (col <= startCol) {
-		direction = 1;
-	}
-	else if (col >= endCol) {
-		direction = 2;
-	}
-
 	if (direction == 1) {
 		if (!isJumping) {
 			row--;
@@ -2514,7 +2416,6 @@ void drawAndMoveBlob(char board[100][1000], Enemy& blob, int& row, int& col, int
 			col++;
 			isJumping = 0;
 		}
-
 	}
 	else if (direction == 2) {
 		if (!isJumping) {
@@ -2527,7 +2428,6 @@ void drawAndMoveBlob(char board[100][1000], Enemy& blob, int& row, int& col, int
 			col--;
 			isJumping = 0;
 		}
-
 	}
 
 
@@ -2813,98 +2713,6 @@ void drawTeleporter(char board[100][1000], int R, int C) {
 	board[R][C + 17] = char(188);
 
 }
-
-void TeleportPlayer1(char board[100][1000],player & Player,int row,int col, int teleportX, int teleportY ,int teleport2x, int teleport2y){
-
-    int pY = Player.Col;
-    int pX = Player.Row;
-    int coins = Player.coins;
-    int hp = Player.Health;
-    
-    if(coins>=250 ) {
-         board[row-16][col+4] = 'B';
-         board[row-16][col+5] = 'O';
-         board[row-16][col+6] = 'S';
-         board[row-16][col+7] = 'S';
-         board[row-16][col+8] = ' ';
-         board[row-16][col+9] = 'R';
-         board[row-16][col+10] = 'O';
-         board[row-16][col+11] = 'O';
-         board[row-16][col+12] = 'M';
-         if(pX-14<=teleportX+1 && pX >= teleportX-11 && pY>=teleportY && pY<=teleportY+17){
-            if(_kbhit()) {
-                char signal = _getch();
-                if(signal == 'e' || signal == 'E') {
-                    pX = teleport2x - 1;
-                    pY = teleport2y + 1;
-                    Player.coins -= 250; // Deduct the cost of teleportation
-            }
-         }   
-        }
-        else {
-
-        //isOnTelep
-            board[row-16][col+4] = 'L';
-            board[row-16][col+5] = 'A';
-            board[row-16][col+6] = 'C';
-            board[row-16][col+6] = 'K';
-            board[row-16][col+7] = 'I';
-            board[row-16][col+8] = 'N';
-            board[row-16][col+9] = 'G';
-            board[row-16][col+10] = ' ';
-            board[row-16][col+11] = 'C';
-            board[row-16][col+12] = 'O';
-            board[row-16][col+13] = 'I';
-            board[row-16][col+14] = 'N';
-            board[row-16][col+15] = 'S';
-    }
-
-    if(pX==teleport2x-1 && pY>=teleport2y && pY<=teleport2y+17){
-        if(_kbhit()) {
-            char signal = _getch();
-            if(signal == 'e' || signal == 'E') {
-            
-                //The teleporter takes no cowards massage
-                board[teleport2x-16][teleport2y] = 'T';
-                board[teleport2x-16][teleport2y+1] = 'h';
-                board[teleport2x-16][teleport2y+2] = 'e';
-                board[teleport2x-16][teleport2y+3] = ' ';
-                board[teleport2x-16][teleport2y+4] = 't';
-                board[teleport2x-16][teleport2y+5] = 'e';
-                board[teleport2x-16][teleport2y+6] = 'l';
-                board[teleport2x-16][teleport2y+7] = 'e';
-                board[teleport2x-16][teleport2y+8] = 'p';
-                board[teleport2x-16][teleport2y+9] = 'o';
-                board[teleport2x-16][teleport2y+10] = 'r';
-                board[teleport2x-16][teleport2y+11] = 't';
-                board[teleport2x-16][teleport2y+12] = 'e';
-                board[teleport2x-16][teleport2y+13] = 'r';
-                board[teleport2x-16][teleport2y+14] = ' ';
-                board[teleport2x-16][teleport2y+15] = 't';
-                board[teleport2x-16][teleport2y+16] = 'a';
-                board[teleport2x-16][teleport2y+17] = 'k';
-                board[teleport2x-16][teleport2y+18] = 'e';
-                board[teleport2x-16][teleport2y+19] = 's';
-                board[teleport2x-16][teleport2y+20] = ' ';
-                board[teleport2x-16][teleport2y+21] = 'n';
-                board[teleport2x-16][teleport2y+22] = 'o';
-                board[teleport2x-16][teleport2y+23] = ' ';
-                board[teleport2x-16][teleport2y+24] = 'c';
-                board[teleport2x-16][teleport2y+25] = 'o';
-                board[teleport2x-16][teleport2y+26] = 'w';
-                board[teleport2x-16][teleport2y+28] = 'a';
-                board[teleport2x-16][teleport2y+29] = 'r';
-                board[teleport2x-16][teleport2y+30] = 'd';
-                board[teleport2x-16][teleport2y+31] = 's';
-
-                Player.Health--;
-                }
-            }
-        }
-    }
-}
-
-
 
 void drawCoin(char board[100][1000], int R, int C, int  isCollectable) {
 	if (isCollectable == 0) {
@@ -3420,6 +3228,156 @@ void checkIsAssaultTaken(player& Player) {
 
 }
 
+/////////////////////////////////////
+void Draw_And_Move_Boss(char board[100][1000], Enemy& boss, int& row, int& col, int startc, int endc, int& direction) {
+    int BOSS_HEIGHT = 10;
+    int BOSS_WIDTH = 25;
+    
+    if (direction == 1) {
+        if (col < endc) {
+            col++;
+        } else {
+            direction = 2;
+        }
+    } else if (direction == 2) {
+        if (col > startc) {
+            col--;
+        } else {
+            direction = 1;
+        }
+    }
+
+    if(boss.iskillable != -1){
+            if (direction == 1) {
+
+            board[row - 9][col + 8] = '.';
+            board[row - 9][col + 9] = '-';
+            board[row - 9][col + 10] = '"';
+            board[row - 9][col + 16] = '"';
+            board[row - 9][col + 17] = '-';
+            board[row - 9][col + 18] = '.';
+
+            board[row - 8][col + 7] = '/';
+            board[row - 8][col + 9] = 'o';
+            board[row - 8][col + 17] = 'o';
+            board[row - 8][col + 19] = '\\';
+
+            board[row - 7][col + 6] = '/';
+            board[row - 7][col + 10] = '\\';
+            board[row - 7][col + 16] = '/';
+            board[row - 7][col + 20] = '\\';
+
+            board[row - 6][col + 5] = '/';
+            board[row - 6][col + 11] = ')';
+            board[row - 6][col + 12] = '-';
+            board[row - 6][col + 13] = '"';
+            board[row - 6][col + 14] = '-';
+            board[row - 6][col + 15] = '(';
+            board[row - 6][col + 21] = '\\';
+
+            board[row - 5][col + 4] = '/';
+            board[row - 5][col + 11] = '(';
+            board[row - 5][col + 12] = '6';
+            board[row - 5][col + 14] = '6';
+            board[row - 5][col + 15] = ')';
+            board[row - 5][col + 22] = '\\';
+
+            board[row - 4][col + 3] = '/';
+            board[row - 4][col + 11] = '\\';
+            board[row - 4][col + 13] = '=';
+            board[row - 4][col + 15] = '/';
+            board[row - 4][col + 23] = '\\';
+
+            board[row - 3][col + 2] = '(';
+            board[row - 3][col + 3] = '"';
+            board[row - 3][col + 4] = '.';
+            board[row - 3][col + 5] = '_';
+            board[row - 3][col + 6] = '_';
+            board[row - 3][col + 7] = '\\';
+            board[row - 3][col + 8] = '/';
+            board[row - 3][col + 9] = '_';
+            board[row - 3][col + 10] = '_';
+            board[row - 3][col + 11] = '\\';
+            board[row - 3][col + 12] = '_';
+            board[row - 3][col + 13] = '_';
+            board[row - 3][col + 14] = '_';
+            board[row - 3][col + 15] = '/';
+            board[row - 3][col + 16] = '_';
+            board[row - 3][col + 17] = '_';
+            board[row - 3][col + 18] = '\\';
+            board[row - 3][col + 19] = '/';
+            board[row - 3][col + 20] = '_';
+            board[row - 3][col + 21] = '_';
+            board[row - 3][col + 22] = '.';
+            board[row - 3][col + 23] = '"';
+            board[row - 3][col + 24] = ')';
+
+            board[row - 2][col + 2] = '"';
+            board[row - 2][col + 3] = '-';
+            board[row - 2][col + 4] = '_';
+            board[row - 2][col + 7] = 'o';
+            board[row - 2][col + 9] = 'O';
+            board[row - 2][col + 11] = 'o';
+            board[row - 2][col + 13] = 'O';
+            board[row - 2][col + 15] = 'o';
+            board[row - 2][col + 17] = 'O';
+            board[row - 2][col + 19] = 'o';
+            board[row - 2][col + 22] = '_';
+            board[row - 2][col + 23] = '-';
+            board[row - 2][col + 24] = '"';
+
+            board[row - 1][col + 2] = '`';
+            board[row - 1][col + 3] = '-';
+            board[row - 1][col + 4] = 'Y';
+            board[row - 1][col + 5] = '-';
+            board[row - 1][col + 6] = '-';
+            board[row - 1][col + 7] = '.';
+            board[row - 1][col + 8] = '_';
+            board[row - 1][col + 9] = '_';
+            board[row - 1][col + 10] = '_';
+            board[row - 1][col + 11] = '_';
+            board[row - 1][col + 12] = '_';
+            board[row - 1][col + 13] = '_';
+            board[row - 1][col + 14] = '_';
+            board[row - 1][col + 15] = '_';
+            board[row - 1][col + 16] = '_';
+            board[row - 1][col + 17] = '_';
+            board[row - 1][col + 18] = '.';
+            board[row - 1][col + 19] = '-';
+            board[row - 1][col + 20] = '-';
+            board[row - 1][col + 21] = 'Y';
+            board[row - 1][col + 22] = '-';
+            board[row - 1][col + 23] = '\'';
+
+            board[row][col + 2] = '`';
+            board[row][col + 3] = '-';
+            board[row][col + 4] = 'Y';
+            board[row][col + 5] = '-';
+            board[row][col + 6] = '-';
+            board[row][col + 7] = '.';
+            board[row][col + 8] = '_';
+            board[row][col + 9] = '_';
+            board[row][col + 10] = '_';
+            board[row][col + 11] = '_';
+            board[row][col + 12] = '_';
+            board[row][col + 13] = '_';
+            board[row][col + 14] = '_';
+            board[row][col + 15] = '_';
+            board[row][col + 16] = '_';
+            board[row][col + 17] = '_';
+
+            board[row][col + 18] = '.';
+            board[row][col + 19] = '-';
+            board[row][col + 20] = '-';
+            board[row][col + 21] = 'Y';
+            board[row][col + 22] = '-';
+            board[row][col + 23] = '\'';
+        }
+    }
+
+
+}
+
 /////////////////////////////////////////
 
 
@@ -3734,6 +3692,18 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 					AssaultC[i]--;
 				}
 				else {
+					for (int  = 0; i <= 9; i++) {
+						int check = checkEnemyHit(AssaultR, posYLaz[whatLaz], enemyKill[i]);
+						if (check == 1) {
+							enemyKill[i].Health -= 7;
+							if (enemyKill[i].Health <= 0) {
+								enemyKill[i].isKillable = -1;
+								enemyKill[i].Row = -100;
+								enemyKill[i].Col = -100;
+							}
+						}
+					}
+
 					AssaultC[i] = -1;
 					assaultDirection[i] = -1;
 					AssaultR[i] = -1;
@@ -3741,35 +3711,15 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 				}
 			}
 
-			int isHit = 0; 
-
-			for (int j = 0; j <= 9; j++) {
-				int check = checkEnemyHit(AssaultR[i], AssaultC[i], enemyKill[j]);
-				if (check == 1) {
-					enemyKill[j].Health -= 7;
-					isHit = 1;
-
-					if (enemyKill[j].Health <= 0) {
-						enemyKill[j].isKillable = -1;
-						enemyKill[j].Row = -100;
-						enemyKill[j].Col = -100;
-					}
-				}
-			}
-
-			if (isHit == 1) {
-				AssaultC[i] = -1;
-				assaultDirection[i] = -1;
-				AssaultR[i] = -1;
-				startCAssault[i] = -1;
-			}
 		}
-
 		if (AssaultR[i] != -1 && AssaultC[i] != -1) {
 			board[AssaultR[i]][AssaultC[i]] = '*';
 		}
-	}
 
+
+
+
+	}
 
 
 
@@ -4785,7 +4735,7 @@ int main() {
 
 		int HiddenladderButtonClicked = 0, btnrow = 98, btnmaxR = 98 - 15, btnCol = 290, btnmaxC = 290 + 10;
 
-		Player.Col = 40, Player.Row = 40 , Player.didGetRifle=1;
+		Player.Col = 40, Player.Row = 40;
 
 
 		int assaultR[20] = { -1 };
@@ -4865,13 +4815,13 @@ int main() {
 
 		intializeEnemy(enemyKill, 5, -10, -10, 1, 10, 12, 100, 20);//Alien
 
-		intializeEnemy(enemyKill, 6, -10, -10, 1, 10, 12, 500, 30);//Boss
+		intializeEnemy(enemyKill, 6, -10, 750, 1, 10, 12, 500, 30);//Boss
 
 		intializeEnemy(enemyKill, 7, -10, -10, 1, 10, 12, 100, 20);//Devil boss minion
 
 		intializeEnemy(enemyKill, 8, -10, -10, 1, 10, 12, 100, 20);//Alien boss minion
 
-		intializeEnemy(enemyKill, 9, -10, -10, 1, 10, 12, 250, 30);//Reaper boss minion
+	
 
 
 		//Width  = 10 , col is most right one 
@@ -4965,7 +4915,7 @@ int main() {
 				if (frame == 1) {
 					drawPlayerRightFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
 				}
-				else if (frame == 2) {
+				else if (frame == 2 ) {
 					drawPlayerRightFrame2(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
 				}
 				else if (frame == 3) {

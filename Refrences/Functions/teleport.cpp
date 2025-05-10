@@ -2,36 +2,57 @@
 #include <conio.h>
 using namespace std;
 
-void TeleportPlayer1(char board[100][1000],int row,int col, int& pX, int& pY, int teleportX, int teleportY,int& coins,char& signal,int teleport2x, int teleport2y,int& hp)  {
-         if(coins>=250 && pX==teleportX-1 && pY>=teleportY && pY<=teleportY+17) {
+struct player {
+    int Row;
+    int Col;
+    int coins;
+    int Health;
+};
+void TeleportPlayer1(char board[100][1000],player & Player,int row,int col, int teleportX, int teleportY ,int teleport2x, int teleport2y){
+
+    int pY = Player.Col;
+    int pX = Player.Row;
+    int coins = Player.coins;
+    int hp = Player.Health;
+    
+    if(coins>=250 ) {
+         board[row-16][col+4] = 'B';
+         board[row-16][col+5] = 'O';
+         board[row-16][col+6] = 'S';
+         board[row-16][col+7] = 'S';
+         board[row-16][col+8] = ' ';
+         board[row-16][col+9] = 'R';
+         board[row-16][col+10] = 'O';
+         board[row-16][col+11] = 'O';
+         board[row-16][col+12] = 'M';
+         if(pX-14<=teleportX+1 && pX >= teleportX-11 && pY>=teleportY && pY<=teleportY+17){
             if(_kbhit()) {
                 char signal = _getch();
                 if(signal == 'e' || signal == 'E') {
                     pX = teleport2x - 1;
                     pY = teleport2y + 1;
-                    coins -= 250; // Deduct the cost of teleportation
-                    signal = 'e'; // Signal that teleportation has occurred
-                }
+                    Player.coins -= 250; // Deduct the cost of teleportation
             }
          }   
-     else {
+        }
+        else {
 
         //isOnTelep
-        board[row-1][col+4] = 'L';
-        board[row-1][col+5] = 'A';
-        board[row-1][col+6] = 'C';
-        board[row-1][col+6] = 'K';
-        board[row-1][col+7] = 'I';
-        board[row-1][col+8] = 'N';
-        board[row-1][col+9] = 'G';
-        board[row-1][col+10] = ' ';
-        board[row-1][col+11] = 'C';
-        board[row-1][col+12] = 'O';
-        board[row-1][col+13] = 'I';
-        board[row-1][col+14] = 'N';
-        board[row-1][col+15] = 'S';
-        cout << "lacking coins" << endl; //???? maybe send a variable to the draw teleporter 1 and display this message in a form of board[row-number][col+ anotherNumber] = 'Y'; and so on
+            board[row-16][col+4] = 'L';
+            board[row-16][col+5] = 'A';
+            board[row-16][col+6] = 'C';
+            board[row-16][col+6] = 'K';
+            board[row-16][col+7] = 'I';
+            board[row-16][col+8] = 'N';
+            board[row-16][col+9] = 'G';
+            board[row-16][col+10] = ' ';
+            board[row-16][col+11] = 'C';
+            board[row-16][col+12] = 'O';
+            board[row-16][col+13] = 'I';
+            board[row-16][col+14] = 'N';
+            board[row-16][col+15] = 'S';
     }
+
     if(pX==teleport2x-1 && pY>=teleport2y && pY<=teleport2y+17){
         if(_kbhit()) {
             char signal = _getch();
@@ -70,7 +91,8 @@ void TeleportPlayer1(char board[100][1000],int row,int col, int& pX, int& pY, in
                 board[teleport2x-16][teleport2y+30] = 'd';
                 board[teleport2x-16][teleport2y+31] = 's';
 
-                hp--;
+                Player.Health--;
+                }
             }
         }
     }
