@@ -150,7 +150,7 @@ void drawBoss(char board[100][1000], int row, int col) {
 
 
 
-int boss(char board[100][1000], int row, int col,int stCol, int endCol) {
+int boss(char board[100][1000], int row, int col,int stCol, int i ,int endCol,float bossHP) {
    
 int ct=0;
     int direction =0;
@@ -166,14 +166,21 @@ int ct=0;
       ct++;
     } else {
       col--;
-      ct++
+      ct++;
     }
 
-    if (col%5==0 {
+    if (col % 5 == 0) {
          
         board[i][col+12]='0';
 
 
+   }
+
+   if (bossHP==bossHP*0.5){
+
+
+
+    
    }
     
     return 0;
