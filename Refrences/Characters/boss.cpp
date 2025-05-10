@@ -148,22 +148,9 @@ void drawBoss(char board[100][1000], int row, int col) {
 
 }
 
-/*
-phase 1:
-Boss spawns Devil boss minion, and Alien boss minion
 
-once they die he falls and shoots the player until reaching a specific hp then goes back
 
-phase 2:
-
-spawns devil , alien and reaper 
-
-once they die he falls again and his bullets are doubled
-
-(if he falls on player , player dies)
-*/
-
-int boss(char board[100][1000], int &row, int &col,int stCol, int& i ,int endCol,int &fullBossHP, int& bossHP , int &isFalling) {
+int boss(char board[100][1000], int row, int col,int stCol, int endCol) {
    
 int ct=0;
 int direction =0;
@@ -180,7 +167,7 @@ int direction =0;
       
     } else {
       col--;
-      
+      ct++
     }
 
     if (col % 5 == 0) {
@@ -188,6 +175,13 @@ int direction =0;
         board[i][col+12]='0';
 
 
+   }
+
+   if (bossHP==bossHP*0.5){
+
+
+
+    
    }
 
    if(ct==3){
