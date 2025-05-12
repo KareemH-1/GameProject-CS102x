@@ -365,7 +365,7 @@ void winScreen() {
 
 void initializePlayerValues(int& Row, int& Col, int& maxHeight, int& maxWidth, int& Health, int& coins, int& gun, int ammo[], int& maxAmmo, int& shootC, int& shootR) {
 	Row = 92;
-	Col = 650;
+	Col = 350;
 	maxHeight = 9;
 	maxWidth = 15;
 	Health = 500;
@@ -3677,6 +3677,42 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 
 
 
+	//////////////////////////////////
+	/////////////SPIKE AREA//////////
+
+
+		//430 , 478
+	drawTerrain(board, 99 - 1, 396, 2, 3);
+	drawTerrain(board, 99 - 2, 400, 2, 3);
+	drawTerrain(board, 99 - 3, 404, 2, 3);
+	drawTerrain(board, 99 - 4, 408, 2, 3);
+	drawTerrain(board, 99 - 5, 412, 2, 3);
+	drawTerrain(board, 99 - 6, 416, 2, 3);
+	drawTerrain(board, 99-7, 420, 2, 9);
+	drawWall(board, 99-7, 429, 7, 1, 0, 0);
+
+
+	int i = 430;
+	for (; i <= 478; i += 6) {
+		drawSpike(board, 99, i);
+	}
+
+	drawWall(board, 99 - 7, 483, 7, 1, 0, 0);
+	drawTerrain(board, 99 - 7, 484, 2, 3);
+	drawTerrain(board, 99 - 6, 488, 2, 3);
+	drawTerrain(board, 99 - 5, 492, 2, 3);
+	drawTerrain(board, 99 - 4, 496, 2, 3);
+	drawTerrain(board, 99 - 3, 500, 2, 3);
+	drawTerrain(board, 99 - 2, 504, 2, 3);
+	drawTerrain(board, 99 - 1, 508, 2, 3);
+
+
+
+
+	/////////////////
+	////////////////
+	// 
+	// 
 	//boss area
 
 	drawWall(board, 2, 699, 99, 1, 0, 0);
@@ -3685,42 +3721,44 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 	drawWall(board, 2, 841, 20, 1, 0, 0);
 
 
-
+	///////////TELEPORTER;///////////
 	drawTeleporter(board, 98, 680);
 	drawTeleporter(board, 98, 702);
 	int row = 98, col = 680;
 	int teleport2x = 98, teleport2y = 702;
-	if (Player.coins >= 250) {
-		board[row - 16][col + 4] = 'B';
-		board[row - 16][col + 5] = 'O';
-		board[row - 16][col + 6] = 'S';
-		board[row - 16][col + 7] = 'S';
-		board[row - 16][col + 8] = ' ';
-		board[row - 16][col + 9] = 'R';
-		board[row - 16][col + 10] = 'O';
-		board[row - 16][col + 11] = 'O';
-		board[row - 16][col + 12] = 'M';
+	if (isTeleClicked == 0) {
+		if (Player.coins >= 250) {
+			board[row - 16][col + 4] = 'B';
+			board[row - 16][col + 5] = 'O';
+			board[row - 16][col + 6] = 'S';
+			board[row - 16][col + 7] = 'S';
+			board[row - 16][col + 8] = ' ';
+			board[row - 16][col + 9] = 'R';
+			board[row - 16][col + 10] = 'O';
+			board[row - 16][col + 11] = 'O';
+			board[row - 16][col + 12] = 'M';
+
+		}
+
+
+		else {
+			//isOnTelep
+			board[row - 16][col + 4] = 'L';
+			board[row - 16][col + 5] = 'A';
+			board[row - 16][col + 6] = 'C';
+			board[row - 16][col + 7] = 'K';
+			board[row - 16][col + 8] = 'I';
+			board[row - 16][col + 9] = 'N';
+			board[row - 16][col + 10] = 'G';
+			board[row - 16][col + 11] = ' ';
+			board[row - 16][col + 12] = 'C';
+			board[row - 16][col + 13] = 'O';
+			board[row - 16][col + 14] = 'I';
+			board[row - 16][col + 15] = 'N';
+			board[row - 16][col + 16] = 'S';
+		}
 
 	}
-
-
-	else {
-		//isOnTelep
-		board[row - 16][col + 4] = 'L';
-		board[row - 16][col + 5] = 'A';
-		board[row - 16][col + 6] = 'C';
-		board[row - 16][col + 7] = 'K';
-		board[row - 16][col + 8] = 'I';
-		board[row - 16][col + 9] = 'N';
-		board[row - 16][col + 10] = 'G';
-		board[row - 16][col + 11] = ' ';
-		board[row - 16][col + 12] = 'C';
-		board[row - 16][col + 13] = 'O';
-		board[row - 16][col + 14] = 'I';
-		board[row - 16][col + 15] = 'N';
-		board[row - 16][col + 16] = 'S';
-	}
-
 	if (isTeleClicked == 1) {
 		board[teleport2x - 16][teleport2y] = 'T';
 		board[teleport2x - 16][teleport2y + 1] = 'h';
@@ -4920,10 +4958,11 @@ int main() {
 		intializeElevator(board, elevator, 0, 70, 170, 70, 43, 170, 170, 0, 1); // Vertical  
 
 
-		intializeElevator(board, elevator, 1, 95, 600, 95, 95, 600, 650, 1, 1); //horizonatal
-
+		intializeElevator(board, elevator, 1, 95, 430, 95, 95, 430, 478-10, 1, 1); 
 
 		intializeElevator(board, elevator, 2, 99, 350, 99, 20, 350, 350, 0, 1); // Vertical 2 
+
+
 
 
 		////////////Enemies//////////////////
@@ -4972,15 +5011,17 @@ int main() {
 
 		intializeEnemy(enemyUnKill, 5, 30, 520, 0, 4, 8, 250, 25);// Bird
 
-		intializeEnemy(enemyUnKill, 6, -10, -10, 0, 10, 12, 250, 5); //Spike 1
-		intializeEnemy(enemyUnKill, 7, -10, -10, 0, 10, 12, 250, 5); //Spike 2 
-		intializeEnemy(enemyUnKill, 8, -10, -10, 0, 10, 12, 250, 5); //Spike 3
-		intializeEnemy(enemyUnKill, 9, -10, -10, 0, 10, 12, 250, 5); //Spike 4
-		intializeEnemy(enemyUnKill, 10, -10, -10, 0, 10, 12, 250, 5); //Spike 5
-		intializeEnemy(enemyUnKill, 11, -10, -10, 0, 10, 12, 250, 5); //Spike 6 
-		intializeEnemy(enemyUnKill, 12, -10, -10, 0, 10, 12, 250, 5); //Spike 7 
-		intializeEnemy(enemyUnKill, 13, -10, -10, 0, 10, 12, 250, 5); //Spike 8
-		intializeEnemy(enemyUnKill, 14, -10, -10, 0, 10, 12, 250, 5); //Spike 9
+
+
+		intializeEnemy(enemyUnKill, 6, 99, 430, 0, 2, 2, 250, 5); //Spike 1
+		intializeEnemy(enemyUnKill, 7, 99, 436, 0, 2, 2, 250, 5); //Spike 2 
+		intializeEnemy(enemyUnKill, 8, 99, 442, 0, 2, 2, 250, 5); //Spike 3
+		intializeEnemy(enemyUnKill, 9, 99, 448, 0, 2, 2, 250, 5); //Spike 4
+		intializeEnemy(enemyUnKill, 10, 99, 454, 0, 2, 2, 250, 5); //Spike 5
+		intializeEnemy(enemyUnKill, 11, 99, 460, 0, 2, 2, 250, 5); //Spike 6 
+		intializeEnemy(enemyUnKill, 12, 99, 466, 0, 2, 2, 250, 5); //Spike 7 
+		intializeEnemy(enemyUnKill, 13, 99, 472, 0, 2, 2, 250, 5); //Spike 8
+		intializeEnemy(enemyUnKill, 14, 99, 478, 0, 2, 2, 250, 5); //Spike 9
 
 		intializeEnemy(enemyUnKill, 15, -10, -10, 0, 10, 12, 250, 5); //2nd place Spike 10
 		intializeEnemy(enemyUnKill, 16, -10, -9, 0, 10, 12, 250, 5); //2nd place Spike 11
