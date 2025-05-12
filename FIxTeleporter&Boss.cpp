@@ -364,8 +364,8 @@ void winScreen() {
 
 
 void initializePlayerValues(int& Row, int& Col, int& maxHeight, int& maxWidth, int& Health, int& coins, int& gun, int ammo[], int& maxAmmo, int& shootC, int& shootR) {
-	Row = 92;
-	Col = 650;
+	Row = 98;
+	Col = 640;
 	maxHeight = 9;
 	maxWidth = 15;
 	Health = 500;
@@ -2742,10 +2742,6 @@ void drawTeleporter(char board[100][1000], int r, int c) {
 
 
 
-
-void TeleportPlayer1(char board[100][1000], player& Player, int teleportX, int teleportY, int teleport2x, int teleport2y) {
-}
-
 void drawCoin(char board[100][1000], int R, int C, int  isCollectable) {
 	if (isCollectable == 0) {
 		board[R][C + 1] = '\\';
@@ -3575,7 +3571,7 @@ void drawMoveSkeleton(char board[100][1000], Enemy& Skeleton, int stCol, int end
 
 
 
-void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[], int isClicked, player& Player, Enemy unKill[] , int isClicked2) {
+void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[], int isClicked, player& Player, Enemy unKill[], int isClicked2) {
 	//The part for the devil
 	drawTerrain(board, 95, 60, 2, 13); //first platform
 
@@ -3692,7 +3688,7 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 
 	drawTeleporter(board, 98, 680);
 	drawTeleporter(board, 98, 702);
-	int row = 98, col = 680; 
+	int row = 98, col = 680;
 	int teleport2x = 98, teleport2y = 702;
 	if (Player.coins >= 250) {
 		board[row - 16][col + 4] = 'B';
@@ -3704,7 +3700,7 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 		board[row - 16][col + 10] = 'O';
 		board[row - 16][col + 11] = 'O';
 		board[row - 16][col + 12] = 'M';
- 
+
 	}
 
 
@@ -4270,12 +4266,12 @@ void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int widthHero
 
 
 }
-void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player& Player, int gun, int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& posXGun, int posYGun[], int& whatGUn, int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping, Enemy enemyUNKill[], int AssaultR[], int AssaultC[], int startCAssault[], int assaultDirection[], int rEggs[], int cEggs[], int& countE, int teleportX, int teleportY, int teleport2X, int teleport2Y , int isClicked2) {
+void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player& Player, int gun, int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& posXGun, int posYGun[], int& whatGUn, int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping, Enemy enemyUNKill[], int AssaultR[], int AssaultC[], int startCAssault[], int assaultDirection[], int rEggs[], int cEggs[], int& countE, int teleportX, int teleportY, int teleport2X, int teleport2Y, int isClicked2) {
 
 
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 	clearMap(board, dispR, dispC);
-	callObj(board, coins, enemyKill, Heart, isClicked, Player, enemyUNKill , isClicked2); // Call the function to draw the objects
+	callObj(board, coins, enemyKill, Heart, isClicked, Player, enemyUNKill, isClicked2); // Call the function to draw the objects
 	SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
 	controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
 
@@ -4313,7 +4309,6 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 			EnemyPlayerCollision(enemyKill, 9, enemyUNKill, 19, Player);
 			checkIsAssaultTaken(Player);
 			checkCoinTouch(board, pX, pY, pWidth, pHeight, coins, numCoinsP);
-			TeleportPlayer1(board, Player, teleportX, teleportY, teleport2X, teleport2Y);
 			checkHeartTouch(board, pX, pY, pWidth, pHeight, Heart, playerHp);
 			ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
 			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
@@ -4344,7 +4339,7 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 }
 
 
-void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player& Player, int gun, int& isFalling, int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& posXGun, int posYGun[], int& whatGUn, int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping, Enemy enemyUNKill[], int AssaultR[], int AssaultC[], int startCAssault[], int assaultDirection[], int rEggs[], int cEggs[], int& countE, int teleportX, int teleportY, int teleport2X, int teleport2Y , int isClicked2) {
+void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player& Player, int gun, int& isFalling, int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& posXGun, int posYGun[], int& whatGUn, int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping, Enemy enemyUNKill[], int AssaultR[], int AssaultC[], int startCAssault[], int assaultDirection[], int rEggs[], int cEggs[], int& countE, int teleportX, int teleportY, int teleport2X, int teleport2Y, int isClicked2) {
 	for (; pX + 1 < 99; ) {
 		if (pX - pHeight < 0) break;
 
@@ -4366,7 +4361,6 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 		EnemyPlayerCollision(enemyKill, 9, enemyUNKill, 17, Player);
 		checkIsAssaultTaken(Player);
 		checkCoinTouch(board, pX, pY, pWidth, pHeight, coins, numCoinsP);
-		TeleportPlayer1(board, Player, teleportX, teleportY, teleport2X, teleport2Y);
 		checkHeartTouch(board, pX, pY, pWidth, pHeight, Heart, playerHp);
 		ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
 		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
@@ -4400,7 +4394,7 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 }
 
 
-void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player& Player, int gun, int& isFalling, int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& posXGun, int posYGun[], int& whatGUn, int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping, Enemy enemyUNKill[], int AssaultR[], int AssaultC[], int startCAssault[], int assaultDirection[], int rEggs[], int cEggs[], int& countE, int teleportX, int teleportY, int teleport2X, int teleport2Y , int isClicked2) {
+void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player& Player, int gun, int& isFalling, int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& posXGun, int posYGun[], int& whatGUn, int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping, Enemy enemyUNKill[], int AssaultR[], int AssaultC[], int startCAssault[], int assaultDirection[], int rEggs[], int cEggs[], int& countE, int teleportX, int teleportY, int teleport2X, int teleport2Y, int isClicked2) {
 
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 	clearMap(board, dispR, dispC);
@@ -4467,7 +4461,6 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		checkIsAssaultTaken(Player);
 		EnemyPlayerCollision(enemyKill, 9, enemyUNKill, 17, Player);
 		checkCoinTouch(board, pX, pY, pWidth, pHeight, coins, numCoinsP);
-		TeleportPlayer1(board, Player, teleportX, teleportY, teleport2X, teleport2Y);
 		checkHeartTouch(board, pX, pY, pWidth, pHeight, Heart, playerHp);
 		// Redraw everything
 		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
@@ -4554,7 +4547,6 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		EnemyPlayerCollision(enemyKill, 9, enemyUNKill, 17, Player);
 		checkIsAssaultTaken(Player);
 		checkCoinTouch(board, pX, pY, pWidth, pHeight, coins, numCoinsP);
-		TeleportPlayer1(board, Player, teleportX, teleportY, teleport2X, teleport2Y);
 		checkHeartTouch(board, pX, pY, pWidth, pHeight, Heart, playerHp);
 		ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
 
@@ -4585,7 +4577,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 	isFalling = 0;
 	isWalking = 0;
 }
-void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player& Player, int gun, int& isFalling, int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& whatGUn, int& posXGun, int posYGun[], int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping, Enemy enemyUNKill[], int AssaultR[], int AssaultC[], int startCAssault[], int assaultDirection[], int rEggs[], int cEggs[], int& countE, int teleportX, int teleportY, int teleport2X, int teleport2Y , int isClicked2) {
+void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player& Player, int gun, int& isFalling, int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& whatGUn, int& posXGun, int posYGun[], int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping, Enemy enemyUNKill[], int AssaultR[], int AssaultC[], int startCAssault[], int assaultDirection[], int rEggs[], int cEggs[], int& countE, int teleportX, int teleportY, int teleport2X, int teleport2Y, int isClicked2) {
 
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 	clearMap(board, dispR, dispC);
@@ -4651,7 +4643,6 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 		checkIsAssaultTaken(Player);
 		EnemyPlayerCollision(enemyKill, 9, enemyUNKill, 17, Player);
 		checkCoinTouch(board, pX, pY, pWidth, pHeight, coins, numCoinsP);
-		TeleportPlayer1(board, Player, teleportX, teleportY, teleport2X, teleport2Y);
 		checkHeartTouch(board, pX, pY, pWidth, pHeight, Heart, playerHp);
 		ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
 		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
@@ -4721,8 +4712,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 
 		checkIsAssaultTaken(Player);
 		EnemyPlayerCollision(enemyKill, 9, enemyUNKill, 17, Player);
-		checkCoinTouch(board, pX, pY, pWidth, pHeight, coins, numCoinsP);
-		TeleportPlayer1(board, Player, teleportX, teleportY, teleport2X, teleport2Y);
+		checkCoinTouch(board, pX, pY, pWidth, pHeight, coins, numCoinsP); 
 		checkHeartTouch(board, pX, pY, pWidth, pHeight, Heart, playerHp);
 		ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
 		scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
@@ -5039,7 +5029,6 @@ int main() {
 			scroll(board, Player.Col, Player.Row, Player.maxWidth, Player.maxHeight, dispR, dispC);
 			EnemyPlayerCollision(enemyKill, 9, enemyUnKill, 17, Player);
 			checkCoinTouch(board, Player.Row, Player.Col, Player.maxWidth, Player.maxHeight, coins, Player.coins);
-			TeleportPlayer1(board, Player, teleportX, teleportY, teleport2X, teleport2Y);
 			checkHeartTouch(board, Player.Row, Player.Col, Player.maxWidth, Player.maxHeight, heart, Player.Health);
 			FallStraight(board, Player.Row, Player.Col, Player.maxHeight, Player.maxWidth, isJumping, Player, gun, isFalling, animation, dispR, dispC, lastCellCol, lastCellRow, coins, Player.coins, elevator, enemyKill, DFireBallR, DFireBallC, chance, endR, endC, heart, Player.Health, posXLaz, posYLaz, direction, whatLaz, isShooting, HiddenladderButtonClicked, posXGun, posYGun, whatGUn, blobStartC, blobEndC, blobDirection, blobIsJumping, enemyUnKill, assaultR, assaultC, startCAssault, assaultDirection, rEggs, cEggs, countE, teleportX, teleportY, teleport2X, teleport2Y, isClicked2);
 			ElevatePlayer(board, dispR, dispC, Player.Row, Player.Col, elevator, 2);
@@ -5285,15 +5274,11 @@ int main() {
 
 				else if ((key == 'E ' || key == 'e') && (Player.Row - 8 <= teleportX + 1 && Player.Row >= teleportX - 11 && Player.Col + 14 >= teleportY && Player.Col <= teleportY + 17)) {
 
-					int pY = Player.Col;
-					int pX = Player.Row;
+		
 					int coins = Player.coins;
-					int hp = Player.Health;
-
 					int row = teleportX;
 					int col = teleportY;
 					if (coins >= 250) {
-						Player.coins -= 250;
 						board[row - 16][col + 4] = 'B';
 						board[row - 16][col + 5] = 'O';
 						board[row - 16][col + 6] = 'S';
@@ -5306,10 +5291,10 @@ int main() {
 						Player.Row = teleport2X - 5;
 						Player.Col = teleport2Y + 10;
 						Player.coins -= 250; // Deduct the cost of teleportation
-					
+
 					}
-				
-		
+
+
 					else {
 						//isOnTelep
 						board[row - 16][col + 4] = 'L';
@@ -5327,11 +5312,11 @@ int main() {
 						board[row - 16][col + 15] = 'S';
 					}
 
-			
+
 				}
 				else if ((key == 'E ' || key == 'e') && (Player.Row - 8 <= teleport2X + 1 && Player.Row >= teleport2X - 11 && Player.Col + 14 >= teleport2Y && Player.Col <= teleport2Y + 17)) {
-						isClicked2 = 1;
-						Player.Health--;
+					isClicked2 = 1;
+					Player.Health--;
 
 				}
 
