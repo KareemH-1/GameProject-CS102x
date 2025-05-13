@@ -4016,7 +4016,7 @@ void drawAlien(char board[100][1000], int row, int col, int frame, Enemy& Alien)
 }
 ///////////////////////////////////
 
-void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[], int isClicked, player& Player, Enemy unKill[], int isTeleClicked) {
+void callObj(char board[100][1000], coin coins[], Enemy isKill[], hearts heart[], int isClicked, player& Player, Enemy unKill[], int isTeleClicked) {
 	//The part for the devil
 	drawTerrain(board, 95, 60, 2, 13); //first platform
 
@@ -5413,7 +5413,7 @@ int main() {
 
 		intializeHeart(board, heart[1], 50, 350);
 
-		intializeHeart(board, heart[1], 98, 665);
+		intializeHeart(board, heart[2], 98, 665);
 
 
 		/////////////Elevators//////////////
