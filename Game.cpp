@@ -4120,7 +4120,7 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 	drawTerrain(board, 30, 614, 1, 86);
 	drawCoin(board, coins[3].Row, coins[3].Col, coins[3].isCollected);
 	drawCoin(board, coins[6].Row, coins[6].Col, coins[6].isCollected);
-	
+
 
 
 	//////////////////////////////////
@@ -4155,14 +4155,14 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 	drawTerrain(board, 99 - 2, 504, 2, 3);
 	drawTerrain(board, 99 - 1, 508, 2, 3);
 
-	drawCoin(board, coins[5].Row, coins[5].Col, coins[5].isCollected); 
+	drawCoin(board, coins[5].Row, coins[5].Col, coins[5].isCollected);
 
 	/////////////////////////////////
-	
-	spawnHeart(board, heart, 2); 
-	
-	
-	
+
+	spawnHeart(board, heart, 2);
+
+
+
 	///////////TELEPORTER;///////////
 	drawTeleporter(board, 98, 680);
 	drawTeleporter(board, 98, 702);
@@ -4203,7 +4203,7 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 
 	}
 	if (isTeleClicked == 1) {
-		board[teleport2x - 16][teleport2y-1] = 'T';
+		board[teleport2x - 16][teleport2y - 1] = 'T';
 		board[teleport2x - 16][teleport2y] = 'h';
 		board[teleport2x - 16][teleport2y + 1] = 'e';
 		board[teleport2x - 16][teleport2y + 2] = ' ';
@@ -4529,7 +4529,7 @@ void Clear_LoadMap(char board[100][1000], int dispR, int dispC) {
 
 /////////////////////////////////////
 
-void checkCoinTouch(char board[100][1000], int pX, int pY, int pWidth, int pHeight, coin coins[5], int& numCoinsP) {
+void checkCoinTouch(char board[100][1000], int pX, int pY, int pWidth, int pHeight, coin coins[], int& numCoinsP) {
 	for (int a = 0; a < 10; a++) {
 		if (!coins[a].isCollected) {
 
@@ -4566,7 +4566,7 @@ void checkCoinTouch(char board[100][1000], int pX, int pY, int pWidth, int pHeig
 }
 
 
-void checkHeartTouch(char board[100][1000], int pX, int pY, int pWidth, int pHeight, hearts Heart[4], int& playerHp) {
+void checkHeartTouch(char board[100][1000], int pX, int pY, int pWidth, int pHeight, hearts Heart[], int& playerHp) {
 	for (int a = 0; a < 3; a++) {
 		if (!Heart[a].isCollected) {
 
@@ -4613,7 +4613,7 @@ void checkHeartTouch(char board[100][1000], int pX, int pY, int pWidth, int pHei
 ///////////////////////////////////////
 //Player Movement Functions
 
-void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero, int LC[9], ladder ladders[4], coin coins[5], int& numCoinsP, hearts Heart[4], int& playerHp) {
+void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero, int LC[9], ladder ladders[], coin coins[], int& numCoinsP, hearts Heart[], int& playerHp) {
 	int check = 1;
 	// Check every cell in the column to the right of the player
 	for (int i = posIHero; i >= posIHero - heightHero + 1; i--) {
@@ -4686,7 +4686,7 @@ void moveRight(char board[100][1000], int& posJHero, int& posIHero, int widthHer
 	checkHeartTouch(board, posIHero, posJHero, widthHero, heightHero, Heart, playerHp);
 }
 
-void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero, int LC[9], ladder ladders[4], coin coins[5], int& numCoinsP, hearts Heart[4], int& playerHp) {
+void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int widthHero, int heightHero, int LC[9], ladder ladders[], coin coins[], int& numCoinsP, hearts Heart[], int& playerHp) {
 	int check = 1;
 
 	for (int i = posIHero; i >= posIHero - heightHero + 1; i--) {
@@ -4760,7 +4760,7 @@ void moveLeft(char board[100][1000], int& posJHero, int& posIHero, int widthHero
 
 }
 
-void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player& Player, int gun, int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& posXGun, int posYGun[], int& whatGUn, int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping, Enemy enemyUNKill[], int AssaultR[], int AssaultC[], int startCAssault[], int assaultDirection[], int rEggs[], int cEggs[], int& countE, int isTeleClicked) {
+void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player& Player, int gun, int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& posXGun, int posYGun[], int& whatGUn, int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping, Enemy enemyUNKill[], int AssaultR[], int AssaultC[], int startCAssault[], int assaultDirection[], int rEggs[], int cEggs[], int& countE, int isTeleClicked) {
 
 
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
@@ -4833,7 +4833,7 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 }
 
 
-void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player& Player, int gun, int& isFalling, int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& posXGun, int posYGun[], int& whatGUn, int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping, Enemy enemyUNKill[], int AssaultR[], int AssaultC[], int startCAssault[], int assaultDirection[], int rEggs[], int cEggs[], int& countE, int isTeleClicked) {
+void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player& Player, int gun, int& isFalling, int animation, int dispR, int dispC, int LC[9], int LR[15], coin coins[], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& posXGun, int posYGun[], int& whatGUn, int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping, Enemy enemyUNKill[], int AssaultR[], int AssaultC[], int startCAssault[], int assaultDirection[], int rEggs[], int cEggs[], int& countE, int isTeleClicked) {
 	for (; pX + 1 < 99; ) {
 		if (pX - pHeight < 0) break;
 
@@ -4888,7 +4888,7 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 }
 
 
-void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player& Player, int gun, int& isFalling, int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& posXGun, int posYGun[], int& whatGUn, int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping, Enemy enemyUNKill[], int AssaultR[], int AssaultC[], int startCAssault[], int assaultDirection[], int rEggs[], int cEggs[], int& countE, int isTeleClicked) {
+void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player& Player, int gun, int& isFalling, int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& posXGun, int posYGun[], int& whatGUn, int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping, Enemy enemyUNKill[], int AssaultR[], int AssaultC[], int startCAssault[], int assaultDirection[], int rEggs[], int cEggs[], int& countE, int isTeleClicked) {
 
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 	clearMap(board, dispR, dispC);
@@ -5071,7 +5071,7 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 	isFalling = 0;
 	isWalking = 0;
 }
-void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player& Player, int gun, int& isFalling, int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[5], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[4], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& whatGUn, int& posXGun, int posYGun[], int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping, Enemy enemyUNKill[], int AssaultR[], int AssaultC[], int startCAssault[], int assaultDirection[], int rEggs[], int cEggs[], int& countE, int isTeleClicked) {
+void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, int& isJumping, player& Player, int gun, int& isFalling, int& isWalking, int dispR, int dispC, int LC[9], int LR[15], coin coins[], int& numCoinsP, Elevator elevator[], Enemy enemyKill[], int& DFireBallR, int& DFireBallC, int& chance, int& endR, int& endC, hearts Heart[], int& playerHp, int& posXLaz, int posYLaz[], int direction, int& whatlaz, int& isShooting, int isClicked, int& whatGUn, int& posXGun, int posYGun[], int blobStartC, int blobEndC, int& blobDirection, int& blobIsJumping, Enemy enemyUNKill[], int AssaultR[], int AssaultC[], int startCAssault[], int assaultDirection[], int rEggs[], int cEggs[], int& countE, int isTeleClicked) {
 
 	scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 	clearMap(board, dispR, dispC);
@@ -5265,7 +5265,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 
 
 void shootLazer(int shootR, int shootC, int& posXLaz, int posYlaz[], int direction) {
-	
+
 	posXLaz = shootR;
 
 	if (direction == 0) posYlaz[0] = shootC + 1;
@@ -5397,7 +5397,7 @@ int main() {
 		intializeCoin(board, coins[0], 49, 2);
 		intializeCoin(board, coins[1], 69, 112);
 		intializeCoin(board, coins[2], 49, 200);
-		
+
 		intializeCoin(board, coins[3], 29, 685);
 		intializeCoin(board, coins[6], 29, 675);
 
@@ -5412,7 +5412,7 @@ int main() {
 		intializeHeart(board, heart[0], 95, 195);
 
 		intializeHeart(board, heart[1], 50, 350);
-		
+
 		intializeHeart(board, heart[1], 98, 665);
 
 
@@ -5774,7 +5774,7 @@ int main() {
 				else if ((key == 'E' || key == 'e') && Player.Row <= btnrow + 1 && Player.Row >= btnmaxR - 1 && Player.Col <= btnmaxC + 1 && Player.Col >= btnCol - 5) {
 					HiddenladderButtonClicked = 1;
 				}
-				else if ((key == 'E ' || key == 'e') && (Player.Row - 8 <= teleportX + 1 && Player.Row >= teleportX - 11 && Player.Col + 14 >= teleportY-2 && Player.Col <= teleportY + 19)) {
+				else if ((key == 'E ' || key == 'e') && (Player.Row - 8 <= teleportX + 1 && Player.Row >= teleportX - 11 && Player.Col + 14 >= teleportY - 2 && Player.Col <= teleportY + 19)) {
 
 
 					int coins = Player.coins;
