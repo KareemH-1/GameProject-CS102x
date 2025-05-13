@@ -365,7 +365,7 @@ void winScreen() {
 
 void initializePlayerValues(int& Row, int& Col, int& maxHeight, int& maxWidth, int& Health, int& coins, int& gun, int ammo[], int& maxAmmo, int& shootC, int& shootR) {
 	Row = 92;
-	Col = 650;
+	Col = 350;
 	maxHeight = 9;
 	maxWidth = 15;
 	Health = 500;
@@ -4074,8 +4074,8 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 
 	drawSpike(board, 69, 250);
 	spawnHeart(board, heart, 0); // row = 69 , col = 130
-	spawnHeart(board, heart, 1); // row = 98 , col = 210
 
+	spawnHeart(board, heart, 1); // row = 98 , col = 210
 
 	//the part where the assault rifle drop should be 
 
@@ -4118,10 +4118,9 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 
 	drawLadder(board, 50, 600, 21);
 	drawTerrain(board, 30, 614, 1, 86);
-
-
-	drawWall(board, 2, 700, 29, 1, 0, 1);
-
+	drawCoin(board, coins[3].Row, coins[3].Col, coins[3].isCollected);
+	drawCoin(board, coins[6].Row, coins[6].Col, coins[6].isCollected);
+	
 
 
 	//////////////////////////////////
@@ -4144,6 +4143,9 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 		drawSpike(board, 99, i);
 	}
 
+	drawCoin(board, coins[4].Row, coins[4].Col, coins[4].isCollected);
+
+
 	drawWall(board, 99 - 7, 483, 7, 1, 0, 0);
 	drawTerrain(board, 99 - 7, 484, 2, 3);
 	drawTerrain(board, 99 - 6, 488, 2, 3);
@@ -4153,9 +4155,14 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 	drawTerrain(board, 99 - 2, 504, 2, 3);
 	drawTerrain(board, 99 - 1, 508, 2, 3);
 
+	drawCoin(board, coins[5].Row, coins[5].Col, coins[5].isCollected); 
 
-
-
+	/////////////////////////////////
+	
+	spawnHeart(board, heart, 2); 
+	
+	
+	
 	///////////TELEPORTER;///////////
 	drawTeleporter(board, 98, 680);
 	drawTeleporter(board, 98, 702);
@@ -4560,7 +4567,7 @@ void checkCoinTouch(char board[100][1000], int pX, int pY, int pWidth, int pHeig
 
 
 void checkHeartTouch(char board[100][1000], int pX, int pY, int pWidth, int pHeight, hearts Heart[4], int& playerHp) {
-	for (int a = 0; a < 8; a++) {
+	for (int a = 0; a < 3; a++) {
 		if (!Heart[a].isCollected) {
 
 			int heartTop = Heart[a].Row - Heart[a].maxHeight + 1 - 1;
@@ -5387,17 +5394,26 @@ int main() {
 
 		////////////Coins/////////////
 		coin coins[10];
-
 		intializeCoin(board, coins[0], 49, 2);
 		intializeCoin(board, coins[1], 69, 112);
 		intializeCoin(board, coins[2], 49, 200);
+		
+		intializeCoin(board, coins[3], 29, 685);
+		intializeCoin(board, coins[6], 29, 675);
+
+
+		intializeCoin(board, coins[4], 94, 460);
+		intializeCoin(board, coins[5], 98, 515);
 
 
 		/////////////Hearts////////////////
-		hearts heart[8];
-		intializeHeart(board, heart[0], 69, 240);
+		hearts heart[3];
 
-		intializeHeart(board, heart[1], 95, 195);
+		intializeHeart(board, heart[0], 95, 195);
+
+		intializeHeart(board, heart[1], 50, 350);
+		
+		intializeHeart(board, heart[1], 98, 665);
 
 
 		/////////////Elevators//////////////
