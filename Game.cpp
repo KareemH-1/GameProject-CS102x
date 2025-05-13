@@ -364,12 +364,12 @@ void winScreen() {
 
 
 void initializePlayerValues(int& Row, int& Col, int& maxHeight, int& maxWidth, int& Health, int& coins, int& gun, int ammo[], int& maxAmmo, int& shootC, int& shootR) {
-	Row = 92;
-	Col = 641;
+	Row = 96;
+	Col = 500;
 	maxHeight = 9;
 	maxWidth = 15;
 	Health = 500;
-	coins = 270;
+	coins = 0;
 	gun = 0; //Start with gun
 	ammo[0] = 7;
 	ammo[1] = 24;
@@ -2429,9 +2429,8 @@ void drawAndMoveBlob(char board[100][1000], Enemy& blob, int& row, int& col, int
 			isJumping = 0;
 		}
 	}
-
-	if (col >= 650) direction = 2;
-	else if (col <= 600) direction = 1;
+	if (col >= endCol) direction = 2;
+	else if (col <= startCol) direction = 1;
 
 	if (blob.isKillable != -1) {
 		if (direction == 1) {
@@ -4087,7 +4086,6 @@ void callObj(char board[100][1000], coin coins[], Enemy isKill[], hearts heart[]
 	FallingCrystal(board, unKill[4]);
 
 
-
 	drawTerrain(board, 70, 134 + 15, 1, 162);
 	//col at end is 100+ 175 = 275
 
@@ -4173,7 +4171,7 @@ void callObj(char board[100][1000], coin coins[], Enemy isKill[], hearts heart[]
 
 	int i = 430;
 	for (; i <= 478; i += 6) {
-		drawSpike(board, 99, i);
+		drawSpike(board, 98, i);
 	}
 
 	drawCoin(board, coins[4].Row, coins[4].Col, coins[4].isCollected);
@@ -4190,7 +4188,20 @@ void callObj(char board[100][1000], coin coins[], Enemy isKill[], hearts heart[]
 
 	drawCoin(board, coins[5].Row, coins[5].Col, coins[5].isCollected);
 
+
+	drawCoin(board, coins[8].Row, coins[8].Col, coins[8].isCollected);
+
+	drawCoin(board, coins[9].Row, coins[9].Col, coins[9].isCollected);
+
+
 	/////////////////////////////////
+
+
+	drawSpike(board, 98, 530);
+	drawSpike(board, 98, 535);
+
+	///
+
 
 	spawnHeart(board, heart, 2);
 
@@ -4204,7 +4215,7 @@ void callObj(char board[100][1000], coin coins[], Enemy isKill[], hearts heart[]
 
 
 	int row = 98, col = 680;
-	drawTerrain(board, row - 18, col - 8, 1, 698-671);
+	drawTerrain(board, row - 18, col - 8, 1, 698 - 671);
 	drawCoin(board, coins[7].Row, coins[7].Col, coins[7].isCollected);
 
 	int teleport2x = 98, teleport2y = 702;
@@ -5447,6 +5458,10 @@ int main() {
 
 		intializeCoin(board, coins[7], 98, 655);
 
+		intializeCoin(board, coins[8], 98, 265);
+		intializeCoin(board, coins[9], 69, 260);
+
+
 		/////////////Hearts////////////////
 		hearts heart[3];
 
@@ -5472,25 +5487,25 @@ int main() {
 
 		////////////Enemies//////////////////
 
-		int blobStartC = 600, blobEndC = 650, blobIsJumping = 0, blobDirection = 1;
+		int blobStartC = 550, blobEndC = 635, blobIsJumping = 0, blobDirection = 1;
 		Enemy enemyKill[9];
-		intializeEnemy(enemyKill, 0, 49, 12, 1, 11, 13, 100, 10); //Devil
+		intializeEnemy(enemyKill, 0, 49, 12, 1, 11, 13, 100, 10); //Devil / done
 
-		intializeEnemy(enemyKill, 1, 98 , 672, 1, 18, 1, 1, 0); //Hittable door
+		intializeEnemy(enemyKill, 1, 98, 672, 1, 18, 1, 1, 0); //Hittable door / done 
 
-		intializeEnemy(enemyKill, 2, 98, 600, 1, 6, 12, 150, 15); //Blob
+		intializeEnemy(enemyKill, 2, 98, 600, 1, 6, 12, 150, 15); //Blob / done 
 
-		intializeEnemy(enemyKill, 3, 50, 430, 1, 15, 10, 70, 30); //Skeleton  skeletonCol = 430, skeletonRow = 50;
+		intializeEnemy(enemyKill, 3, 50, 430, 1, 15, 10, 70, 30); //Skeleton  /done 
 
-		intializeEnemy(enemyKill, 4, -10, -10, 1, 10, 12, 100, 15);// Bird should be unkill
+		intializeEnemy(enemyKill, 4, -10, -10, 1, 10, 12, 100, 15);// NOT
 
-		intializeEnemy(enemyKill, 5, -10, -10, 1, 10, 12, 100, 20);//Alien
+		intializeEnemy(enemyKill, 5, -10, -10, 1, 10, 12, 100, 20);//Alien NOT 
 
-		intializeEnemy(enemyKill, 6, 80, 733, 1, 10, 12, 500, 30);//Boss
+		intializeEnemy(enemyKill, 6, 80, 733, 1, 10, 12, 500, 30);//Boss //not fully
 
-		intializeEnemy(enemyKill, 7, 98, 850, 1, 15, 10, 250, 50);//Devil boss minion / sekeleton
+		intializeEnemy(enemyKill, 7, 98, 850, 1, 15, 10, 250, 50);//Devil boss minion / skeleton / Done
 
-		intializeEnemy(enemyKill, 8, -10, -10, 1, 10, 12, 100, 20);//Alien boss minion
+		intializeEnemy(enemyKill, 8, -10, -10, 1, 10, 12, 100, 20);//Alien boss minion / NOT
 
 
 		//Width  = 10 , col is most right one 
@@ -5499,38 +5514,38 @@ int main() {
 
 		drawTerrain(board, 70, 134 + 15, 2, 178);
 		Enemy enemyUnKill[19];
-		intializeEnemy(enemyUnKill, 0, 98 - 23, 135 + 10, 0, 23, 10, 250, 3);//Crystal 1
+		intializeEnemy(enemyUnKill, 0, 98 - 23, 135 + 10, 0, 23, 10, 250, 3);//Crystal 1 done
 
-		intializeEnemy(enemyUnKill, 1, 98 - 23, 160 + 20, 0, 23, 10, 250, 3);//Crystal 2
+		intializeEnemy(enemyUnKill, 1, 98 - 23, 160 + 20, 0, 23, 10, 250, 3);//Crystal 2 done
 
-		intializeEnemy(enemyUnKill, 2, 98 - 23, 185 + 20, 0, 23, 10, 250, 3);//Crystal 3
+		intializeEnemy(enemyUnKill, 2, 98 - 23, 185 + 20, 0, 23, 10, 250, 3);//Crystal 3 done
 
-		intializeEnemy(enemyUnKill, 3, 98 - 23, 210 + 20, 0, 23, 10, 250, 3);//Crystal 4
+		intializeEnemy(enemyUnKill, 3, 98 - 23, 210 + 20, 0, 23, 10, 250, 3);//Crystal 4 done
 
-		intializeEnemy(enemyUnKill, 4, 98 - 23, 235 + 20, 0, 23, 10, 250, 3);//Crystal 5
-
-
-
-
-		intializeEnemy(enemyUnKill, 5, 30, 520, 0, 4, 8, 250, 25);// Bird
+		intializeEnemy(enemyUnKill, 4, 98 - 23, 235 + 20, 0, 23, 10, 250, 3);//Crystal 5 done
 
 
 
-		intializeEnemy(enemyUnKill, 6, 99, 430, 0, 2, 2, 250, 5); //Spike 1
-		intializeEnemy(enemyUnKill, 7, 99, 436, 0, 2, 2, 250, 5); //Spike 2 
-		intializeEnemy(enemyUnKill, 8, 99, 442, 0, 2, 2, 250, 5); //Spike 3
-		intializeEnemy(enemyUnKill, 9, 99, 448, 0, 2, 2, 250, 5); //Spike 4
-		intializeEnemy(enemyUnKill, 10, 99, 454, 0, 2, 2, 250, 5); //Spike 5
-		intializeEnemy(enemyUnKill, 11, 99, 460, 0, 2, 2, 250, 5); //Spike 6 
-		intializeEnemy(enemyUnKill, 12, 99, 466, 0, 2, 2, 250, 5); //Spike 7 
-		intializeEnemy(enemyUnKill, 13, 99, 472, 0, 2, 2, 250, 5); //Spike 8
-		intializeEnemy(enemyUnKill, 14, 99, 478, 0, 2, 2, 250, 5); //Spike 9
 
-		intializeEnemy(enemyUnKill, 15, -10, -10, 0, 10, 12, 250, 5); //2nd place Spike 10
-		intializeEnemy(enemyUnKill, 16, -10, -9, 0, 10, 12, 250, 5); //2nd place Spike 11
+		intializeEnemy(enemyUnKill, 5, 30, 520, 0, 4, 8, 250, 25);// Bird done
 
-		intializeEnemy(enemyUnKill, 17, 69, 250, 0, 2, 2, 250, 5); //2nd place Spike 12
-		intializeEnemy(enemyUnKill, 18, 98, 110, 0, 2, 2, 250, 5); //2nd place Spike 13
+
+
+		intializeEnemy(enemyUnKill, 6, 98, 430, 0, 2, 2, 250, 5); //Spike 1 done
+		intializeEnemy(enemyUnKill, 7, 98, 436, 0, 2, 2, 250, 5); //Spike 2 done
+		intializeEnemy(enemyUnKill, 8, 98, 442, 0, 2, 2, 250, 5); //Spike 3 done
+		intializeEnemy(enemyUnKill, 9, 98, 448, 0, 2, 2, 250, 5); //Spike 4 done
+		intializeEnemy(enemyUnKill, 10, 98, 454, 0, 2, 2, 250, 5); //Spike 5 done
+		intializeEnemy(enemyUnKill, 11, 98, 460, 0, 2, 2, 250, 5); //Spike 6  done
+		intializeEnemy(enemyUnKill, 12, 98, 466, 0, 2, 2, 250, 5); //Spike 7 done
+		intializeEnemy(enemyUnKill, 13, 98, 472, 0, 2, 2, 250, 5); //Spike 8 done
+		intializeEnemy(enemyUnKill, 14, 98, 478, 0, 2, 2, 250, 5); //Spike 9 done
+
+		intializeEnemy(enemyUnKill, 15, 98, 530, 0, 2, 2, 250, 5); //2nd place Spike 10
+		intializeEnemy(enemyUnKill, 16, 98, 535, 0, 2, 2, 250, 5); //2nd place Spike 11
+
+		intializeEnemy(enemyUnKill, 17, 69, 250, 0, 2, 2, 250, 5); //2nd place Spike 12 done 
+		intializeEnemy(enemyUnKill, 18, 98, 110, 0, 2, 2, 250, 5); //2nd place Spike 13 done
 
 
 		enemyKill[6].direction = 1;
