@@ -5352,7 +5352,7 @@ int main() {
 		int gun = Player.gun;
 
 		//////////////TELEPORTER/////////////
-
+		int isClicked1 = 0;
 		int isClicked2 = 0;
 		int teleportX = 98, teleportY = 680, teleport2X = 98, teleport2Y = 702;
 
@@ -5764,41 +5764,43 @@ int main() {
 					int coins = Player.coins;
 					int row = teleportX;
 					int col = teleportY;
-					if (coins >= 250) {
-						board[row - 16][col + 4] = 'B';
-						board[row - 16][col + 5] = 'O';
-						board[row - 16][col + 6] = 'S';
-						board[row - 16][col + 7] = 'S';
-						board[row - 16][col + 8] = ' ';
-						board[row - 16][col + 9] = 'R';
-						board[row - 16][col + 10] = 'O';
-						board[row - 16][col + 11] = 'O';
-						board[row - 16][col + 12] = 'M';
-						Player.Row = teleport2X - 5;
-						Player.Col = teleport2Y + 20;
-						Player.coins -= 250; // Deduct the cost of teleportation
+					if(isClicked1 == 0){
+						if (coins >= 250) {
+							isClicked1 = 1;
+							board[row - 16][col + 4] = 'B';
+							board[row - 16][col + 5] = 'O';
+							board[row - 16][col + 6] = 'S';
+							board[row - 16][col + 7] = 'S';
+							board[row - 16][col + 8] = ' ';
+							board[row - 16][col + 9] = 'R';
+							board[row - 16][col + 10] = 'O';
+							board[row - 16][col + 11] = 'O';
+							board[row - 16][col + 12] = 'M';
+							Player.Row = teleport2X - 5;
+							Player.Col = teleport2Y + 20;
+							Player.coins -= 250; // Deduct the cost of teleportation
+
+						}
+
+
+						else {
+							//isOnTelep
+							board[row - 16][col + 4] = 'L';
+							board[row - 16][col + 5] = 'A';
+							board[row - 16][col + 6] = 'C';
+							board[row - 16][col + 6] = 'K';
+							board[row - 16][col + 7] = 'I';
+							board[row - 16][col + 8] = 'N';
+							board[row - 16][col + 9] = 'G';
+							board[row - 16][col + 10] = ' ';
+							board[row - 16][col + 11] = 'C';
+							board[row - 16][col + 12] = 'O';
+							board[row - 16][col + 13] = 'I';
+							board[row - 16][col + 14] = 'N';
+							board[row - 16][col + 15] = 'S';
+						}
 
 					}
-
-
-					else {
-						//isOnTelep
-						board[row - 16][col + 4] = 'L';
-						board[row - 16][col + 5] = 'A';
-						board[row - 16][col + 6] = 'C';
-						board[row - 16][col + 6] = 'K';
-						board[row - 16][col + 7] = 'I';
-						board[row - 16][col + 8] = 'N';
-						board[row - 16][col + 9] = 'G';
-						board[row - 16][col + 10] = ' ';
-						board[row - 16][col + 11] = 'C';
-						board[row - 16][col + 12] = 'O';
-						board[row - 16][col + 13] = 'I';
-						board[row - 16][col + 14] = 'N';
-						board[row - 16][col + 15] = 'S';
-					}
-
-
 				}
 				else if ((key == 'E ' || key == 'e') && (Player.Row - 8 <= teleport2X + 1 && Player.Row >= teleport2X - 11 && Player.Col + 14 >= teleport2Y && Player.Col <= teleport2Y + 17)) {
 					isClicked2 = 1;
