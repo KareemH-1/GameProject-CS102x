@@ -365,7 +365,7 @@ void winScreen() {
 
 void initializePlayerValues(int& Row, int& Col, int& maxHeight, int& maxWidth, int& Health, int& coins, int& gun, int ammo[], int& maxAmmo, int& shootC, int& shootR) {
 	Row = 92;
-	Col = 350;
+	Col = 650;
 	maxHeight = 9;
 	maxWidth = 15;
 	Health = 500;
@@ -3042,8 +3042,8 @@ void moveElevatorHorizontally(int& col, int startCol, int endCol, int& direction
 	if (col == endCol) direction = 2;
 	else if (col == startCol) direction = 1;
 
-	if (direction == 1) col+=2;
-	else if (direction == 2) col-=2;
+	if (direction == 1) col += 2;
+	else if (direction == 2) col -= 2;
 }
 
 void drawElevator(char board[100][1000], int row, int col) {
@@ -3115,7 +3115,7 @@ void ElevatePlayer(char board[100][1000], int& dispR, int& dispC, int& pX, int& 
 					scroll(board, pY, pX, 15, 8, dispR, dispC);
 				}
 				else if (elevator[i].direction == 2) { // Left
-					if (elevator[i].col == elevator[i].startCol) pY+=2;
+					if (elevator[i].col == elevator[i].startCol) pY += 2;
 					pY--;
 					scroll(board, pY, pX, 15, 8, dispR, dispC);
 				}
@@ -3569,7 +3569,7 @@ void drawMoveSkeleton(char board[100][1000], Enemy& Skeleton, int stCol, int end
 
 ///////////////////////////////////
 
-void drawAlien(char board[100][1000], int row, int col , int frame , Enemy& Alien) {
+void drawAlien(char board[100][1000], int row, int col, int frame, Enemy& Alien) {
 	if (Alien.isKillable != -1) {
 		if (frame == 1) {
 			board[row - 8][col + 30] = '\\';
@@ -3984,7 +3984,7 @@ void drawAlien(char board[100][1000], int row, int col , int frame , Enemy& Alie
 			board[row - 0][col + 34] = '|';
 			board[row - 0][col + 35] = '_';
 		}
-		
+
 		frame++;
 
 		if (frame == 7) {
@@ -4156,21 +4156,10 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 
 
 
-	/////////////////
-	////////////////
-	// 
-	// 
-	//boss area
-
-	drawWall(board, 2, 699, 99, 1, 0, 0);
-	drawWall(board, 2, 801, 99, 1, 0, 0);
-	drawTerrain(board, 20, 802, 1, 40);
-	drawWall(board, 2, 841, 20, 1, 0, 0);
-
-
 	///////////TELEPORTER;///////////
 	drawTeleporter(board, 98, 680);
 	drawTeleporter(board, 98, 702);
+	drawWall(board, 2, 732, 85, 1, 0, 0);
 	int row = 98, col = 680;
 	int teleport2x = 98, teleport2y = 702;
 	if (isTeleClicked == 0) {
@@ -4207,40 +4196,52 @@ void callObj(char board[100][1000], coin coins[5], Enemy isKill[], hearts heart[
 
 	}
 	if (isTeleClicked == 1) {
-		board[teleport2x - 16][teleport2y] = 'T';
-		board[teleport2x - 16][teleport2y + 1] = 'h';
-		board[teleport2x - 16][teleport2y + 2] = 'e';
-		board[teleport2x - 16][teleport2y + 3] = ' ';
-		board[teleport2x - 16][teleport2y + 4] = 't';
-		board[teleport2x - 16][teleport2y + 5] = 'e';
-		board[teleport2x - 16][teleport2y + 6] = 'l';
-		board[teleport2x - 16][teleport2y + 7] = 'e';
-		board[teleport2x - 16][teleport2y + 8] = 'p';
-		board[teleport2x - 16][teleport2y + 9] = 'o';
-		board[teleport2x - 16][teleport2y + 10] = 'r';
-		board[teleport2x - 16][teleport2y + 11] = 't';
-		board[teleport2x - 16][teleport2y + 12] = 'e';
-		board[teleport2x - 16][teleport2y + 13] = 'r';
-		board[teleport2x - 16][teleport2y + 14] = ' ';
-		board[teleport2x - 16][teleport2y + 15] = 't';
-		board[teleport2x - 16][teleport2y + 16] = 'a';
-		board[teleport2x - 16][teleport2y + 17] = 'k';
-		board[teleport2x - 16][teleport2y + 18] = 'e';
-		board[teleport2x - 16][teleport2y + 19] = 's';
-		board[teleport2x - 16][teleport2y + 20] = ' ';
-		board[teleport2x - 16][teleport2y + 21] = 'n';
-		board[teleport2x - 16][teleport2y + 22] = 'o';
-		board[teleport2x - 16][teleport2y + 23] = ' ';
-		board[teleport2x - 16][teleport2y + 24] = 'c';
-		board[teleport2x - 16][teleport2y + 25] = 'o';
-		board[teleport2x - 16][teleport2y + 26] = 'w';
-		board[teleport2x - 16][teleport2y + 27] = 'a';
-		board[teleport2x - 16][teleport2y + 28] = 'r';
-		board[teleport2x - 16][teleport2y + 29] = 'd';
-		board[teleport2x - 16][teleport2y + 30] = 's';
+		board[teleport2x - 16][teleport2y-1] = 'T';
+		board[teleport2x - 16][teleport2y] = 'h';
+		board[teleport2x - 16][teleport2y + 1] = 'e';
+		board[teleport2x - 16][teleport2y + 2] = ' ';
+		board[teleport2x - 16][teleport2y + 3] = 't';
+		board[teleport2x - 16][teleport2y + 4] = 'e';
+		board[teleport2x - 16][teleport2y + 5] = 'l';
+		board[teleport2x - 16][teleport2y + 6] = 'e';
+		board[teleport2x - 16][teleport2y + 7] = 'p';
+		board[teleport2x - 16][teleport2y + 8] = 'o';
+		board[teleport2x - 16][teleport2y + 9] = 'r';
+		board[teleport2x - 16][teleport2y + 10] = 't';
+		board[teleport2x - 16][teleport2y + 11] = 'e';
+		board[teleport2x - 16][teleport2y + 12] = 'r';
+		board[teleport2x - 16][teleport2y + 13] = ' ';
+		board[teleport2x - 16][teleport2y + 14] = 't';
+		board[teleport2x - 16][teleport2y + 15] = 'a';
+		board[teleport2x - 16][teleport2y + 16] = 'k';
+		board[teleport2x - 16][teleport2y + 17] = 'e';
+		board[teleport2x - 16][teleport2y + 18] = 's';
+		board[teleport2x - 16][teleport2y + 19] = ' ';
+		board[teleport2x - 16][teleport2y + 20] = 'n';
+		board[teleport2x - 16][teleport2y + 21] = 'o';
+		board[teleport2x - 16][teleport2y + 22] = ' ';
+		board[teleport2x - 16][teleport2y + 23] = 'c';
+		board[teleport2x - 16][teleport2y + 24] = 'o';
+		board[teleport2x - 16][teleport2y + 25] = 'w';
+		board[teleport2x - 16][teleport2y + 26] = 'a';
+		board[teleport2x - 16][teleport2y + 27] = 'r';
+		board[teleport2x - 16][teleport2y + 28] = 'd';
+		board[teleport2x - 16][teleport2y + 29] = 's';
 
 
 	}
+
+	/////////////////
+	////////////////
+	// 
+	// 
+	//boss area
+
+	drawWall(board, 2, 699, 97, 1, 0, 0);
+	drawWall(board, 2, 845, 97, 1, 0, 0);
+	drawTerrain(board, 20, 802, 1, 40);
+	drawWall(board, 2, 885, 20, 1, 0, 0);
+
 }
 
 
@@ -4253,10 +4254,10 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 	// //Skeleton  skeletonCol = 430, skeletonRow = 50;
 	// startC is 430 , endC is 500
 	drawMoveSkeleton(board, enemyKill[3], 430, 500, enemyKill[3].direction);
-	drawMoveSkeleton(board, enemyKill[7], 810, 840, enemyKill[7].direction);
+	drawMoveSkeleton(board, enemyKill[7], 850, 880, enemyKill[7].direction);
 
 
-	Draw_And_Move_Boss(board, enemyKill[6], enemyKill[6].Row, enemyKill[6].Col, 700, 775, enemyKill[6].direction);
+	Draw_And_Move_Boss(board, enemyKill[6], enemyKill[6].Row, enemyKill[6].Col, 733, 820, enemyKill[6].direction);
 
 	drawAndMoveBlob(board, enemyKill[2], enemyKill[2].Row, enemyKill[2].Col, blobStartC, blobEndC, blobDirection, blobIsJumping);
 
@@ -5257,7 +5258,7 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 
 
 void shootLazer(int shootR, int shootC, int& posXLaz, int posYlaz[], int direction) {
-
+	
 	posXLaz = shootR;
 
 	if (direction == 0) posYlaz[0] = shootC + 1;
@@ -5428,12 +5429,11 @@ int main() {
 
 		intializeEnemy(enemyKill, 5, -10, -10, 1, 10, 12, 100, 20);//Alien
 
-		intializeEnemy(enemyKill, 6, 80, 750, 1, 10, 12, 500, 30);//Boss
+		intializeEnemy(enemyKill, 6, 80, 733, 1, 10, 12, 500, 30);//Boss
 
-		intializeEnemy(enemyKill, 7, 98, 810, 1, 15, 10, 250, 50);//Devil boss minion / sekeleton
+		intializeEnemy(enemyKill, 7, 98, 850, 1, 15, 10, 250, 50);//Devil boss minion / sekeleton
 
 		intializeEnemy(enemyKill, 8, -10, -10, 1, 10, 12, 100, 20);//Alien boss minion
-
 
 
 		//Width  = 10 , col is most right one 
@@ -5758,13 +5758,13 @@ int main() {
 				else if ((key == 'E' || key == 'e') && Player.Row <= btnrow + 1 && Player.Row >= btnmaxR - 1 && Player.Col <= btnmaxC + 1 && Player.Col >= btnCol - 5) {
 					HiddenladderButtonClicked = 1;
 				}
-				else if ((key == 'E ' || key == 'e') && (Player.Row - 8 <= teleportX + 1 && Player.Row >= teleportX - 11 && Player.Col + 14 >= teleportY && Player.Col <= teleportY + 17)) {
+				else if ((key == 'E ' || key == 'e') && (Player.Row - 8 <= teleportX + 1 && Player.Row >= teleportX - 11 && Player.Col + 14 >= teleportY-2 && Player.Col <= teleportY + 19)) {
 
 
 					int coins = Player.coins;
 					int row = teleportX;
 					int col = teleportY;
-					if(isClicked1 == 0){
+					if (isClicked1 == 0) {
 						if (coins >= 250) {
 							isClicked1 = 1;
 							board[row - 16][col + 4] = 'B';
@@ -5802,7 +5802,7 @@ int main() {
 
 					}
 				}
-				else if ((key == 'E ' || key == 'e') && (Player.Row - 8 <= teleport2X + 1 && Player.Row >= teleport2X - 11 && Player.Col + 14 >= teleport2Y && Player.Col <= teleport2Y + 17)) {
+				else if ((key == 'E ' || key == 'e') && (Player.Row - 8 <= teleport2X + 1 && Player.Row >= teleport2X - 11 && Player.Col + 14 >= teleport2Y && Player.Col <= teleport2Y + 19)) {
 					isClicked2 = 1;
 					Player.Health--;
 
