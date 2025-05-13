@@ -365,7 +365,7 @@ void winScreen() {
 
 void initializePlayerValues(int& Row, int& Col, int& maxHeight, int& maxWidth, int& Health, int& coins, int& gun, int ammo[], int& maxAmmo, int& shootC, int& shootR) {
 	Row = 92;
-	Col = 350;
+	Col = 641;
 	maxHeight = 9;
 	maxWidth = 15;
 	Health = 500;
@@ -3014,9 +3014,9 @@ void scroll(char board[100][1000], int& posJHero, int& posIHero, int widthHero, 
 	if (dispC < 0) dispC = 0;
 	if (dispC > 1000 - 80) dispC = 1000 - 80;
 
-	dispR = posIHero + 2;
-	if (dispR < 24) dispR = 24;
-	if (dispR > 86) dispR = 98;
+	dispR = posIHero + 4;
+	if (dispR <= 20) dispR = 24;
+	if (dispR > 94) dispR = 98;
 
 }
 
@@ -3401,6 +3401,28 @@ void Draw_And_Move_Boss(char board[100][1000], Enemy& boss, int& row, int& col, 
 		board[row][col + 22] = '-';
 		board[row][col + 23] = '\'';
 
+		int hp = boss.Health;
+		board[row - 9][col + 3] = 'H';
+		board[row - 9][col + 4] = 'P';
+		board[row - 9][col + 5] = ':';
+
+		if (hp > 9 && hp < 100) {
+			int fDig = hp / 10, sDig = hp % 10;
+
+			board[row - 9][col + 6] = fDig + '0';
+			board[row - 9][col + 7] = sDig + '0';
+		}
+		else if (hp >= 100) {
+			int fDig = hp / 100, sDig = (hp / 10) % 10, tDig = hp % 10;
+
+			board[row - 9][col + 6] = fDig + '0';
+			board[row - 9][col + 7] = sDig + '0';
+			board[row - 9][col + 8] = tDig + '0';
+		}
+		else if (hp >= 0 && hp <= 9) {
+			board[row - 9][col + 6] = hp + '0';
+		}
+
 	}
 }
 
@@ -3566,6 +3588,17 @@ void drawMoveSkeleton(char board[100][1000], Enemy& Skeleton, int stCol, int end
 
 
 
+///////////////////////////////////
+// 
+void drawHittableDoor(char board[100][1000], Enemy& Door, int height) {
+	if (Door.isKillable != -1) {
+		int r = Door.Row;
+		for (int i = 0; i < height; i++) {
+			board[r][Door.Col] = '|';
+			r--;
+		}
+	}
+}
 
 ///////////////////////////////////
 
@@ -4167,7 +4200,13 @@ void callObj(char board[100][1000], coin coins[], Enemy isKill[], hearts heart[]
 	drawTeleporter(board, 98, 680);
 	drawTeleporter(board, 98, 702);
 	drawWall(board, 2, 732, 85, 1, 0, 0);
+
+
+
 	int row = 98, col = 680;
+	drawTerrain(board, row - 18, col - 8, 1, 698-671);
+	drawCoin(board, coins[7].Row, coins[7].Col, coins[7].isCollected);
+
 	int teleport2x = 98, teleport2y = 702;
 	if (isTeleClicked == 0) {
 		if (Player.coins >= 250) {
@@ -4263,6 +4302,7 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 	drawMoveSkeleton(board, enemyKill[3], 430, 500, enemyKill[3].direction);
 	drawMoveSkeleton(board, enemyKill[7], 850, 880, enemyKill[7].direction);
 
+	drawHittableDoor(board, enemyKill[1], 18);
 
 	Draw_And_Move_Boss(board, enemyKill[6], enemyKill[6].Row, enemyKill[6].Col, 733, 820, enemyKill[6].direction);
 
@@ -5405,6 +5445,7 @@ int main() {
 		intializeCoin(board, coins[4], 94, 460);
 		intializeCoin(board, coins[5], 98, 515);
 
+		intializeCoin(board, coins[7], 98, 655);
 
 		/////////////Hearts////////////////
 		hearts heart[3];
@@ -5413,7 +5454,7 @@ int main() {
 
 		intializeHeart(board, heart[1], 50, 350);
 
-		intializeHeart(board, heart[2], 98, 665);
+		intializeHeart(board, heart[2], 98, 640);
 
 
 		/////////////Elevators//////////////
@@ -5435,7 +5476,7 @@ int main() {
 		Enemy enemyKill[9];
 		intializeEnemy(enemyKill, 0, 49, 12, 1, 11, 13, 100, 10); //Devil
 
-		intializeEnemy(enemyKill, 1, -10, -10, 1, 10, 12, 1, 30); //Hittable door
+		intializeEnemy(enemyKill, 1, 98 , 672, 1, 18, 1, 1, 0); //Hittable door
 
 		intializeEnemy(enemyKill, 2, 98, 600, 1, 6, 12, 150, 15); //Blob
 
