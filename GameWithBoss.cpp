@@ -18,6 +18,7 @@ END SCREEN
 #include <iostream>
 #include <conio.h>
 #include <ctime>
+#include <Windows.h>
 using namespace std;
 
 
@@ -3279,10 +3280,7 @@ void Draw_And_Move_Boss(char board[100][1000], Enemy& boss, int& row, int& col, 
 	if (direction == 1) {
 		if (col < endc) {
 			col++;
-			if (col == 855)
-			{
-				board[row][col] = 'o';
-			}
+
 		}
 		else {
 			direction = 2;
@@ -3292,10 +3290,7 @@ void Draw_And_Move_Boss(char board[100][1000], Enemy& boss, int& row, int& col, 
 	else if (direction == 2) {
 		if (col > startc) {
 			col--;
-			if (col == 855)
-			{
-				board[row][col] = 'o';
-			}
+
 		}
 		else {
 			direction = 1;
@@ -3456,6 +3451,54 @@ void Draw_And_Move_Boss(char board[100][1000], Enemy& boss, int& row, int& col, 
 }
 
 
+void controlboss(char board[100][1000], Enemy& boss, int startC, int endC, int rEggs[], int cEggs[], int& count, player& Player, Enemy enemyKill[]) {
+
+
+	count++;
+	if (count % 4 == 0) {
+		for (int i = 0; i < 5; i++) {
+			if (rEggs[i] == -1 && cEggs[i] == -1) {
+				rEggs[i] = enemyKill[6].Row;
+				cEggs[i] = enemyKill[6].Col;
+				break;
+			}
+		}
+
+		for (int i = 0; i < 5; i++) {
+			if (rEggs[i] != -1 && cEggs[i] != -1) {
+				int check = 1;
+
+				if (board[rEggs[i] + 1][cEggs[i]] != ' ') {
+					check = 0;
+				}
+
+				if (Player.Row - Player.maxHeight < rEggs[i] && rEggs[i] < Player.Row && Player.Col + Player.maxWidth >= cEggs[i] && Player.Col <= cEggs[i]) {
+					check = 2;
+				}
+
+
+
+				if (check == 1) {
+					rEggs[i]++;
+				}
+				else if (check == 0) {
+					rEggs[i] = -1;
+					cEggs[i] = -1;
+				}
+				else {
+					Player.Health -= boss.attackPower;
+					rEggs[i] = -1;
+					cEggs[i] = -1;
+				}
+
+				board[rEggs[i]][cEggs[i]] = 'o';
+
+		
+			}
+		}
+	}
+
+}
 
 
 
@@ -4238,7 +4281,7 @@ void callObj(char board[100][1000], coin coins[], Enemy isKill[], hearts heart[]
 
 
 
-	
+
 
 
 	spawnHeart(board, heart, 2);
@@ -4364,9 +4407,8 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 
 	drawAndMoveBlob(board, enemyKill[2], enemyKill[2].Row, enemyKill[2].Col, blobStartC, blobEndC, blobDirection, blobIsJumping);
 
-	controlBird(board, enemyUnKill[5], 520, 590, rEggs, cEggs, countE, Player);
 
-
+	controlboss(board, enemyUnKill[6],800,890 ,rEggs, cEggs, countE, Player, enemyKill);
 
 
 
@@ -4903,7 +4945,7 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 			scroll(board, pY, pX, Player.maxWidth, Player.maxHeight, dispR, dispC);
 			clearMap(board, dispR, dispC);
 
-			callObj(board, coins, enemyKill, Heart, isClicked, Player, enemyUNKill, isTeleClicked ,Player.Col, Player.Row);
+			callObj(board, coins, enemyKill, Heart, isClicked, Player, enemyUNKill, isTeleClicked, Player.Col, Player.Row);
 			SpawnFireBall(enemyKill[0], DFireBallR, DFireBallC, chance, endR, endC);
 			controlFireBall(board, DFireBallR, DFireBallC, chance, endR, endC, Player);
 			callDynamicObj(board, elevator, posXLaz, posYLaz, direction, whatlaz, isShooting, enemyKill, posXGun, posYGun, whatGUn, blobStartC, blobEndC, blobIsJumping, blobDirection, AssaultR, AssaultC, startCAssault, assaultDirection, rEggs, cEggs, countE, Player, enemyUNKill);
