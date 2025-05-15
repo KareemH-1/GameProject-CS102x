@@ -3461,51 +3461,53 @@ void Draw_And_Move_Boss(char board[100][1000], Enemy& boss, int& row, int& col, 
 
 void controlboss(char board[100][1000], Enemy& boss, int rEggs[], int cEggs[], int& count, player& Player, Enemy enemyKill[]) {
 
-
-	count++;
-	if (count % 2 == 0) {
-		for (int i = 0; i < 5; i++) {
-			if (rEggs[i] == -1 && cEggs[i] == -1) {
-				rEggs[i] = enemyKill[6].Row;
-				cEggs[i] = enemyKill[6].Col;
-				break;
+	if (enemyKill[6].isKillable != -1)
+	{
+		count++;
+		if (count % 2 == 0) {
+			for (int i = 0; i < 5; i++) {
+				if (rEggs[i] == -1 && cEggs[i] == -1) {
+					rEggs[i] = enemyKill[6].Row;
+					cEggs[i] = enemyKill[6].Col;
+					break;
+				}
 			}
-		}
 
-		for (int i = 0; i < 5; i++) {
-			if (rEggs[i] != -1 && cEggs[i] != -1) {
-				int check = 1;
+			for (int i = 0; i < 5; i++) {
+				if (rEggs[i] != -1 && cEggs[i] != -1) {
+					int check = 1;
 
-				if (board[rEggs[i] + 1][cEggs[i]] != ' ') {
-					check = 0;
+					if (board[rEggs[i] + 1][cEggs[i]] != ' ') {
+						check = 0;
+					}
+
+					if (Player.Row - Player.maxHeight < rEggs[i] && rEggs[i] < Player.Row && Player.Col + Player.maxWidth >= cEggs[i] && Player.Col <= cEggs[i]) {
+						check = 2;
+					}
+
+
+
+					if (check == 1) {
+						rEggs[i]++;
+					}
+					else if (check == 0) {
+						rEggs[i] = -1;
+						cEggs[i] = -1;
+					}
+					else {
+						Player.Health -= boss.attackPower;
+						rEggs[i] = -1;
+						cEggs[i] = -1;
+					}
+
+					board[rEggs[i]][cEggs[i]] = 'o';
+
+
 				}
-
-				if (Player.Row - Player.maxHeight < rEggs[i] && rEggs[i] < Player.Row && Player.Col + Player.maxWidth >= cEggs[i] && Player.Col <= cEggs[i]) {
-					check = 2;
-				}
-
-
-
-				if (check == 1) {
-					rEggs[i]++;
-				}
-				else if (check == 0) {
-					rEggs[i] = -1;
-					cEggs[i] = -1;
-				}
-				else {
-					Player.Health -= boss.attackPower;
-					rEggs[i] = -1;
-					cEggs[i] = -1;
-				}
-
-				board[rEggs[i]][cEggs[i]] = 'o';
-
-
 			}
 		}
 	}
-
+	
 }
 
 
