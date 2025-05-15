@@ -97,7 +97,8 @@
     "stdexcept": "cpp",
     "streambuf": "cpp",
     "typeinfo": "cpp",
-    "ctime": "cpp"
+    "ctime": "cpp",
+    "xutility": "cpp"
   },
   "github.copilot.enable": {
     "*": true,

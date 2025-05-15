@@ -5629,11 +5629,11 @@ int main() {
 		//row = 49 , col = 190
 		intializeEnemy(enemyKill, 5, -10, -10, 1, 10, 12, 100, 20);//Alien NOT 
 
-		intializeEnemy(enemyKill, 6, 82, 850, 1, 10, 12, 500, 30);//Boss Done
+		intializeEnemy(enemyKill, 6, 82, 850, 1, 10, 12, 500, 15);//Boss Done
 
-		intializeEnemy(enemyKill, 7, 98, 900, 1, 15, 10, 250, 50);//Skeleton1 boss minion Done
+		intializeEnemy(enemyKill, 7, 98, 900, 1, 15, 10, 250, 10);//Skeleton1 boss minion Done
 
-		intializeEnemy(enemyKill, 8, 98, 800, 1, 15, 10, 250, 50);//Skeleton2 boss minion Done
+		intializeEnemy(enemyKill, 8, 98, 800, 1, 15, 10, 250, 10);//Skeleton2 boss minion Done
 
 		//Width  = 10 , col is most right one 
 		//height = 23 , row is the top one
