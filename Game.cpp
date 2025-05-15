@@ -3272,7 +3272,9 @@ void checkIsAssaultTaken(player& Player) {
 
 }
 
-/////////////////////////////////////
+//////////////////BOSS///////////////////
+////////////////////////////////////////
+////////////////////////////////////////
 void Draw_And_Move_Boss(char board[100][1000], Enemy& boss, int& row, int& col, int startc, int endc, int& direction) {
 
 
@@ -3444,8 +3446,13 @@ void Draw_And_Move_Boss(char board[100][1000], Enemy& boss, int& row, int& col, 
 	}
 }
 
+void BossLazer(char board[100][1000]  , Enemy & boss , int count , int startR[], int endR[] , int currentR[]){
+	
+}
 
 
+////////////////////////////////////////
+////////////////////////////////////////
 /////////////////////////////////////////
 
 
@@ -5366,6 +5373,7 @@ void checkIsEnemyDead(Enemy enemyKill[]) {
 
 
 int main() {
+
 	srand(time(0));
 
 	int width = 80, height = 24;

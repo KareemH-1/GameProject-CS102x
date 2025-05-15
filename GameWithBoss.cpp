@@ -2987,7 +2987,7 @@ void EnemyPlayerCollision(Enemy iskill[], int numberIsKill, Enemy unkill[], int 
 			P.Health -= iskill[i].attackPower;
 		}
 	}
-	for (int i = 0; i < 19; i++) {
+	for (int i = 0; i < 21; i++) {
 		if (i >= 5) {
 			int enemyTop = unkill[i].Row - unkill[i].maxHeight;
 			int enemyBottom = unkill[i].Row + 1;
