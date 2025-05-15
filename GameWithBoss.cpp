@@ -5671,11 +5671,11 @@ int main() {
 
 		intializeEnemy(enemyKill, 5, -10, -10, 1, 10, 12, 100, 20);//Alien NOT 
 
-		intializeEnemy(enemyKill, 6, 82, 850, 1, 10, 12, 500, 30);//Boss //not fully
+		intializeEnemy(enemyKill, 6, 82, 850, 1, 10, 12, 500, 30);//Boss Done
 
-		intializeEnemy(enemyKill, 7, 98, 900, 1, 15, 10, 250, 50);//Devil boss minion / skeleton / Done
+		intializeEnemy(enemyKill, 7, 98, 900, 1, 15, 10, 250, 50);//Skeleton1 boss minion Done
 
-		intializeEnemy(enemyKill, 8, 98, 800, 1, 15, 10, 250, 50);//Devil boss minion / skeleton / Done
+		intializeEnemy(enemyKill, 8, 98, 800, 1, 15, 10, 250, 50);//Skeleton2 boss minion Done
 
 
 
@@ -6120,10 +6120,15 @@ int main() {
 			}
 
 			checkIsEnemyDead(enemyKill);
+			if (enemyKill[6].isKillable == -1)
+			{
+				isWon = 1;
+			}
 		}
 		if (isWon == 1) {
 			system("cls");
 			winScreen();
+			Sleep(1000);
 		}
 		else {
 			system("cls");
