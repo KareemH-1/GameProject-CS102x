@@ -5830,7 +5830,6 @@ int main() {
 			system("cls");
 			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, Player.gun);
 			Clear_LoadMap(board, dispR, dispC);
-
 			int isOnLadder = 0;
 			int currentLadder = -1;
 			if (_kbhit()) {
