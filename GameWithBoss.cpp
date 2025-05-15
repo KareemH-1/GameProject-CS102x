@@ -315,6 +315,13 @@ void displayInstructions() {
 	cout << "||  7. A powerful weapon is hidden on the map.  ||" << endl;
 	cout << "||     Find it to increase your attack power.   ||" << endl;
 	cout << "||                                              ||" << endl;
+	cout << "||  8. After reaching the boss area:            ||" << endl;
+	cout << "||     You must defeat the two minion skeletons ||" << endl;
+	cout << "||     in order to kill the boss.               ||" << endl;
+	cout << "||     But beware! There are spikes ,and        ||" << endl;
+	cout << "||     The boss keeps dropping fireballs        ||" << endl;
+	cout << "||     so stay on the move!!!                   ||" << endl;
+	cout << "||                                              ||" << endl;
 	cout << "==================================================" << endl;
 	cout << "||  Press any key to return to main menu...     ||" << endl;
 	cout << "==================================================" << endl;
@@ -384,8 +391,8 @@ void winScreen() {
 
 
 void initializePlayerValues(int& Row, int& Col, int& maxHeight, int& maxWidth, int& Health, int& coins, int& gun, int ammo[], int& maxAmmo, int& shootC, int& shootR) {
-	Row = 90;
-	Col = 850;
+	Row = 60;
+	Col = 860;
 	maxHeight = 9;
 	maxWidth = 15;
 	Health = 500;
@@ -3456,7 +3463,7 @@ void controlboss(char board[100][1000], Enemy& boss, int rEggs[], int cEggs[], i
 
 
 	count++;
-	if (count % 10 == 0) {
+	if (count % 2 == 0) {
 		for (int i = 0; i < 5; i++) {
 			if (rEggs[i] == -1 && cEggs[i] == -1) {
 				rEggs[i] = enemyKill[6].Row;
@@ -4291,7 +4298,7 @@ void callObj(char board[100][1000], coin coins[], Enemy isKill[], hearts heart[]
 
 	///////////TELEPORTER;///////////
 	drawTeleporter(board, 98, 680);
-	drawTeleporter(board, 98, 702);
+	drawTeleporter(board, 70, 860);
 
 
 
@@ -4299,7 +4306,80 @@ void callObj(char board[100][1000], coin coins[], Enemy isKill[], hearts heart[]
 	drawTerrain(board, row - 18, col - 8, 1, 698 - 671);
 	drawCoin(board, coins[7].Row, coins[7].Col, coins[7].isCollected);
 
-	int teleport2x = 98, teleport2y = 702;
+	board[row-47][col+160] = 'W';
+	board[row-47][col+161] = 'E';
+	board[row-47][col+162] = 'L';
+	board[row-47][col+163] = 'C';
+	board[row-47][col+164] = 'O';
+	board[row-47][col+165] = 'M';
+	board[row-47][col+166] = 'E';
+	board[row-47][col+167] = ' ';
+	board[row - 47][col + 168] = 'T';
+	board[row - 47][col + 169] = 'O';
+	board[row - 47][col + 171] = ' ';
+	board[row - 47][col + 172] = 'B';
+	board[row - 47][col + 173] = 'O';
+	board[row - 47][col + 174] = 'S';
+	board[row - 47][col + 175] = 'S';
+	board[row - 47][col + 176] = ' ';
+	board[row - 47][col + 177] = 'A';
+	board[row - 47][col + 178] = 'R';
+	board[row - 47][col + 179] = 'E';
+	board[row - 47][col + 180] = 'A';
+	board[row - 47][col + 181] = '!';
+	///////////////////////////////
+	board[row - 46][col + 160] = 'A';
+	board[row - 46][col + 161] = 'f';
+	board[row - 46][col + 162] = 't';
+	board[row - 46][col + 163] = 'e';
+	board[row - 46][col + 164] = 'r';
+
+	board[row - 46][col + 165] = ' ';
+
+	board[row - 46][col + 166] = 'D';
+	board[row - 46][col + 167] = 'r';
+	board[row - 46][col + 168] = 'o';
+	board[row - 46][col + 169] = 'p';
+	board[row - 46][col + 170] = 'p';
+	board[row - 46][col + 171] = 'i';
+	board[row - 46][col + 172] = 'n';
+	board[row - 46][col + 173] = 'g';
+
+
+	board[row - 45][col + 160] = 'T';
+	board[row - 45][col + 161] = 'h';
+	board[row - 45][col + 162] = 'e';
+	board[row - 45][col + 163] = 'r';
+	board[row - 45][col + 164] = 'e';
+	board[row - 45][col + 165] = ' ';
+	board[row - 45][col + 166] = 'i';
+	board[row - 45][col + 167] = 's';
+	board[row - 45][col + 168] = ' ';
+	board[row - 45][col + 169] = 'n';
+	board[row - 45][col + 170] = 'o';
+	board[row - 45][col + 171] = ' ';
+	board[row - 45][col + 172] = 'e';
+	board[row - 45][col + 173] = 's';
+	board[row - 45][col + 174] = 'c';
+	board[row - 45][col + 175] = 'a';
+	board[row - 45][col + 176] = 'p';
+	board[row - 45][col + 177] = 'e';
+	board[row - 45][col + 178] = '!';
+	board[row - 45][col + 179] = '!';
+	board[row - 45][col + 180] = '!';
+
+	board[row - 44][col + 170] = '|';
+	board[row - 43][col + 170] = '|';
+	board[row - 42][col + 170] = '|';
+	board[row - 41][col + 170] = '|';
+	board[row - 40][col + 169] = '\\';
+	board[row - 40][col + 171] = '/';
+	board[row - 40][col + 170] = '-';
+	
+
+
+
+	int teleport2x = 70, teleport2y = 860;
 	if (isTeleClicked == 0) {
 		if (Player.coins >= 250) {
 			board[row - 16][col + 4] = 'B';
