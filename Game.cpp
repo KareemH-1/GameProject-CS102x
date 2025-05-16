@@ -314,6 +314,13 @@ void displayInstructions() {
 	cout << "||  7. A powerful weapon is hidden on the map.  ||" << endl;
 	cout << "||     Find it to increase your attack power.   ||" << endl;
 	cout << "||                                              ||" << endl;
+	cout << "||  8. After reaching the boss area:            ||" << endl;
+	cout << "||     You must defeat the two minion skeletons ||" << endl;
+	cout << "||     in order to kill the boss.               ||" << endl;
+	cout << "||     But beware! There are spikes ,and        ||" << endl;
+	cout << "||     The boss keeps shooting lazer.			 ||" << endl;
+	cout << "||     So stay on the move!!!                   ||" << endl;
+	cout << "||                                              ||" << endl;
 	cout << "==================================================" << endl;
 	cout << "||  Press any key to return to main menu...     ||" << endl;
 	cout << "==================================================" << endl;
