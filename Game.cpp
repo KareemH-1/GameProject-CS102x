@@ -1,20 +1,3 @@
-//NEXT STEPS::
-
-/*
-ADD ASSUALT RIFLE
-
-ADD TELEPORTER
-ADD ENEMIES AND THIER LOGIC
-
-BUILD MAP
-ADD BOSS FIGHT
-ADD THE ASSUALT RIFLE COLLECTABLE
-END SCREEN
-*/
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 #include <iostream>
 #include <conio.h>
 #include <ctime>
@@ -4520,9 +4503,8 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 				for (int j = 0; j < 9; j++) {
 					int check = checkEnemyHit(AssaultR[i], AssaultC[i], enemyKill[j]);
 					if (check == 1) {
-						if (j >= 7) {
+						if (i >= 7) {
 							enemyKill[6].Health -= 7;
-
 						}
 						enemyKill[j].Health -= 7;
 						isHit = 1;
@@ -4681,7 +4663,6 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 	}
 	else {
 		// Reset if invalid
-
 		whatGun = 0;
 		isShooting = 0;
 		for (int i = 0; i < 20; i++) {
