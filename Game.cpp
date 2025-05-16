@@ -4520,7 +4520,7 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 				for (int j = 0; j < 9; j++) {
 					int check = checkEnemyHit(AssaultR[i], AssaultC[i], enemyKill[j]);
 					if (check == 1) {
-						if (i >= 7) {
+						if (j >= 7) {
 							enemyKill[6].Health -= 7;
 
 						}
