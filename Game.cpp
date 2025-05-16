@@ -5135,10 +5135,10 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 			}
 		}
 
-		for (int col = pY; col < pY + pWidth; col++) {
-			int lr_index = col - pY;
-			if (lr_index >= 0 && lr_index < 15) {
-				if (LR[lr_index] - 2 < 0 || (board[LR[lr_index] - 2][col] != ' ')) {
+		for (int row = pX; row < pX - pHeight+1; row--) {
+			int lc_index = pX - row ;
+			if (lc_index >= 0 && lc_index <= 8) {
+				if (LC[lc_index]+2  >= 999 || (board[LC[lc_index]+ 2][row] != ' ')) {
 					canJump2ndCol = 0;
 					break;
 				}
