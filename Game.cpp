@@ -2112,25 +2112,23 @@ void drawEnemyBirdRight(char board[100][1000], Enemy bird) {
 
 
 void controlBird(char board[100][1000], Enemy& bird, int startC, int endC, int rEggs[], int cEggs[], int& count, player& Player) {
-
-	if (bird.Col == startC) {
-		bird.direction = 0;
-	}
-
-	else if (bird.Col == endC) {
-		bird.direction = 1;
-	}
+	// move th bird
+	if (bird.Col == startC) bird.direction = 0;
+	else if (bird.Col == endC) bird.direction = 1;
 
 	if (bird.direction == 0) {
 		drawEnemyBirdRight(board, bird);
 		bird.Col++;
 	}
-	else if (bird.direction == 1) {
+	else {
 		drawEnemyBirdLeft(board, bird);
 		bird.Col--;
 	}
+
 	count++;
-	if (count % 4 == 0) {
+
+	//drop egg only every 6 frame
+	if (count % 6 == 0) {
 		for (int i = 0; i < 5; i++) {
 			if (rEggs[i] == -1 && cEggs[i] == -1) {
 				rEggs[i] = bird.Row;
@@ -2138,41 +2136,40 @@ void controlBird(char board[100][1000], Enemy& bird, int startC, int endC, int r
 				break;
 			}
 		}
+	}
 
-		for (int i = 0; i < 5; i++) {
+	
+	for (int i = 0; i < 5; i++) {
+		if (rEggs[i] != -1 && cEggs[i] != -1) {
+			int check = 1;
+
+			if (board[rEggs[i] + 1][cEggs[i]] != ' ') {
+				check = 0;
+			}
+
+			if (Player.Row - Player.maxHeight < rEggs[i] && rEggs[i] < Player.Row &&
+				Player.Col + Player.maxWidth >= cEggs[i] && Player.Col <= cEggs[i]) {
+				check = 2;
+			}
+
+			if (check == 1) {
+				rEggs[i]++;
+			}
+			else if (check == 0) {
+				rEggs[i] = -1;
+				cEggs[i] = -1;
+			}
+			else {
+				Player.Health -= bird.attackPower;
+				rEggs[i] = -1;
+				cEggs[i] = -1;
+			}
+
 			if (rEggs[i] != -1 && cEggs[i] != -1) {
-				int check = 1;
-
-				if (board[rEggs[i] + 1][cEggs[i]] != ' ') {
-					check = 0;
-				}
-
-				if (Player.Row - Player.maxHeight < rEggs[i] && rEggs[i] < Player.Row && Player.Col + Player.maxWidth >= cEggs[i] && Player.Col <= cEggs[i]) {
-					check = 2;
-				}
-
-
-
-				if (check == 1) {
-					rEggs[i]++;
-				}
-				else if (check == 0) {
-					rEggs[i] = -1;
-					cEggs[i] = -1;
-				}
-				else {
-					Player.Health -= bird.attackPower;
-					rEggs[i] = -1;
-					cEggs[i] = -1;
-				}
-
 				board[rEggs[i]][cEggs[i]] = 'o';
 			}
 		}
-
-
 	}
-
 
 }
 
@@ -4302,6 +4299,9 @@ void callObj(char board[100][1000], coin coins[], Enemy isKill[], hearts heart[]
 
 	drawLadder(board, 50, 600, 21);
 	drawTerrain(board, 30, 614, 1, 86);
+
+	drawWall(board, 2, 614+86, 29, 1, 0, 1);
+	
 	drawCoin(board, coins[3].Row, coins[3].Col, coins[3].isCollected);
 	drawCoin(board, coins[6].Row, coins[6].Col, coins[6].isCollected);
 
@@ -4473,11 +4473,11 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 		for (int i = 0; i < 20; i++) {
 			if (AssaultR[i] != -1) {
 				if (assaultDirection[i] == 0) {
-					
+
 					//check if could move 2 cols
 					if (AssaultC[i] + 1 < 999 && AssaultC[i] + 1 <= startCAssault[i] + 20 && board[AssaultR[i]][AssaultC[i] + 1] == ' ' && AssaultC[i] + 2 < 999 && AssaultC[i] + 2 <= startCAssault[i] + 20 && board[AssaultR[i]][AssaultC[i] + 2] == ' ')
 					{
-						AssaultC[i]+=2;
+						AssaultC[i] += 2;
 					}
 					else if (AssaultC[i] + 1 < 999 && AssaultC[i] + 1 <= startCAssault[i] + 20 && board[AssaultR[i]][AssaultC[i] + 1] == ' ') {
 						AssaultC[i]++;
@@ -4492,8 +4492,8 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 				}
 
 				else if (assaultDirection[i] == 1) {
-					if (AssaultC[i] - 1 >= 1 && AssaultC[i] - 1 >= startCAssault[i] - 20 && board[AssaultR[i]][AssaultC[i] - 1] == ' '&& AssaultC[i] - 2 >= 1 && AssaultC[i] - 2 >= startCAssault[i] - 20 && board[AssaultR[i]][AssaultC[i] - 2] == ' ') {
-						AssaultC[i]-=2;
+					if (AssaultC[i] - 1 >= 1 && AssaultC[i] - 1 >= startCAssault[i] - 20 && board[AssaultR[i]][AssaultC[i] - 1] == ' ' && AssaultC[i] - 2 >= 1 && AssaultC[i] - 2 >= startCAssault[i] - 20 && board[AssaultR[i]][AssaultC[i] - 2] == ' ') {
+						AssaultC[i] -= 2;
 
 					}
 					else if (AssaultC[i] - 1 >= 1 && AssaultC[i] - 1 >= startCAssault[i] - 20 && board[AssaultR[i]][AssaultC[i] - 1] == ' ') {
@@ -4513,7 +4513,10 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 				for (int j = 0; j < 9; j++) {
 					int check = checkEnemyHit(AssaultR[i], AssaultC[i], enemyKill[j]);
 					if (check == 1) {
-						if (i >= 7) enemyKill[6].Health -= 7;
+						if (i >= 7) {
+							enemyKill[6].Health -= 7;
+
+						}
 						enemyKill[j].Health -= 7;
 						isHit = 1;
 
@@ -4587,8 +4590,10 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 			for (int i = 0; i < 9; i++) {
 				int check = checkEnemyHit(posXLaz, posYLaz[whatLaz], enemyKill[i]);
 				if (check == 1) {
-					if (i >= 7) enemyKill[6].Health -= 50;
-					enemyKill[i].Health -= 50;
+					if (i >= 7) {
+						enemyKill[6].Health -= 50;
+					}
+						enemyKill[i].Health -= 50;
 					if (enemyKill[i].Health <= 0) {
 						enemyKill[i].isKillable = -1;
 						enemyKill[i].Row = -100;
@@ -4628,15 +4633,15 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 			secCol = posYGun[whatGun] - 2;
 
 		}
-		if (nextGunY >= 0 && nextGunY < 1000 && board[posXGUn][nextGunY] == ' ' && nextGunY -1 >= 0 && nextGunY +1 < 1000 && board[posXGUn][secCol] == ' ' && whatGun <= 22) {
-			whatGun+=2;
+		if (nextGunY >= 0 && nextGunY < 1000 && board[posXGUn][nextGunY] == ' ' && nextGunY - 1 >= 0 && nextGunY + 1 < 1000 && board[posXGUn][secCol] == ' ' && whatGun <= 22) {
+			whatGun += 2;
 			posYGun[whatGun] = secCol;
 			board[posXGUn][posYGun[whatGun]] = '*';
 		}
 		// Make sure nextY is valid and space is empty
-		else if (nextGunY >= 0 && nextGunY < 1000 && board[posXGUn][nextGunY] == ' ') {
-			whatGun++;
-			posYGun[whatGun] = nextGunY;
+		else if (nextGunY >= 0 && nextGunY < 1000 && board[posXGUn][nextGunY] == ' ' && whatGun + 1 < 25) {
+				whatGun++;
+				posYGun[whatGun] = nextGunY;
 
 			// Draw bullet (use * character for bullets rather than _ for laser)
 			board[posXGUn][posYGun[whatGun]] = '*';
@@ -4646,7 +4651,9 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 			for (int i = 0; i < 9; i++) {
 				int check = checkEnemyHit(posXGUn, posYGun[whatGun], enemyKill[i]);
 				if (check == 1) {
-					if (i >= 7) enemyKill[6].Health -= 30;
+					if (i >= 7) {
+						enemyKill[6].Health -= 30;
+					}
 					enemyKill[i].Health -= 30;
 					if (enemyKill[i].Health <= 0) {
 						enemyKill[i].isKillable = -1;
@@ -5153,10 +5160,10 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 			}
 		}
 
-		for (int row = pX; row < pX - pHeight+1; row--) {
-			int lc_index = pX - row ;
+		for (int row = pX; row < pX - pHeight + 1; row--) {
+			int lc_index = pX - row;
 			if (lc_index >= 0 && lc_index <= 8) {
-				if (LC[lc_index]+2  >= 999 || (board[LC[lc_index]+ 2][row] != ' ')) {
+				if (LC[lc_index] + 2 >= 999 || (board[LC[lc_index] + 2][row] != ' ')) {
 					canJump2ndCol = 0;
 					break;
 				}
@@ -5567,6 +5574,9 @@ int main() {
 		int posYGun[25] = { -1 };
 		int isGunShooting = 0, countGun = 0;
 
+		for (int i = 0; i < 25; i++) {
+			posYGun[i] = -1;
+		}
 
 		int posXLaz = -1;
 		int posYLaz[20] = { -1 };
@@ -5736,9 +5746,6 @@ int main() {
 		enemyKill[8].direction = 1;
 
 		int DFireBallR = -1, DFireBallC = -1, chance = -1, endR = -1, endC = -1; //intializeValues for devil shooting
-
-
-
 		//20 frames , could drop every count % 4 ==0; so its 5 eggs max
 		int rEggs[5] = { -1 };
 		int cEggs[5] = { -1 };
@@ -6039,15 +6046,15 @@ int main() {
 							board[row - 16][col + 13] = '!';
 
 
-							board[row - 15][col + 4+1] = 'P';
-							board[row - 15][col + 5+1] = 'R';
-							board[row - 15][col + 6+1] = 'E';
-							board[row - 15][col + 7+1] = 'S';
-							board[row - 15][col + 8+1] = 'S';
+							board[row - 15][col + 4 + 1] = 'P';
+							board[row - 15][col + 5 + 1] = 'R';
+							board[row - 15][col + 6 + 1] = 'E';
+							board[row - 15][col + 7 + 1] = 'S';
+							board[row - 15][col + 8 + 1] = 'S';
 
-							board[row - 15][col + 9 +1] = '\'';
-							board[row - 15][col + 10+1] = 'E';
-							board[row - 15][col + 11+1] = '\'';
+							board[row - 15][col + 9 + 1] = '\'';
+							board[row - 15][col + 10 + 1] = 'E';
+							board[row - 15][col + 11 + 1] = '\'';
 
 							Player.Row = teleport2X - 5;
 							Player.Col = teleport2Y + 20;
