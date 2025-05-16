@@ -4473,7 +4473,13 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 		for (int i = 0; i < 20; i++) {
 			if (AssaultR[i] != -1) {
 				if (assaultDirection[i] == 0) {
-					if (AssaultC[i] + 1 < 999 && AssaultC[i] + 1 <= startCAssault[i] + 20 && board[AssaultR[i]][AssaultC[i] + 1] == ' ') {
+					
+					//check if could move 2 cols
+					if (AssaultC[i] + 1 < 999 && AssaultC[i] + 1 <= startCAssault[i] + 20 && board[AssaultR[i]][AssaultC[i] + 1] == ' ' && AssaultC[i] + 2 < 999 && AssaultC[i] + 2 <= startCAssault[i] + 20 && board[AssaultR[i]][AssaultC[i] + 2] == ' ')
+					{
+						AssaultC[i]+=2;
+					}
+					else if (AssaultC[i] + 1 < 999 && AssaultC[i] + 1 <= startCAssault[i] + 20 && board[AssaultR[i]][AssaultC[i] + 1] == ' ') {
 						AssaultC[i]++;
 					}
 					else {
@@ -4486,7 +4492,11 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 				}
 
 				else if (assaultDirection[i] == 1) {
-					if (AssaultC[i] - 1 >= 1 && AssaultC[i] - 1 >= startCAssault[i] - 20 && board[AssaultR[i]][AssaultC[i] - 1] == ' ') {
+					if (AssaultC[i] - 1 >= 1 && AssaultC[i] - 1 >= startCAssault[i] - 20 && board[AssaultR[i]][AssaultC[i] - 1] == ' '&& AssaultC[i] - 2 >= 1 && AssaultC[i] - 2 >= startCAssault[i] - 20 && board[AssaultR[i]][AssaultC[i] - 2] == ' ') {
+						AssaultC[i]-=2;
+
+					}
+					else if (AssaultC[i] - 1 >= 1 && AssaultC[i] - 1 >= startCAssault[i] - 20 && board[AssaultR[i]][AssaultC[i] - 1] == ' ') {
 						AssaultC[i]--;
 					}
 					else {
@@ -4607,16 +4617,24 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 	else if (whatGun <= 25 && isShooting == 1 && posXGUn >= 0 && posYGun[0] >= 0) {
 		int nextGunY;
 
+		int secCol;
 		// Decide nextY based on direction
 		if (direction == 0) {
 			nextGunY = posYGun[whatGun] + 1;
+			secCol = posYGun[whatGun] + 2;
 		}
 		else if (direction == 1) {
 			nextGunY = posYGun[whatGun] - 1;
-		}
+			secCol = posYGun[whatGun] - 2;
 
+		}
+		if (nextGunY >= 0 && nextGunY < 1000 && board[posXGUn][nextGunY] == ' ' && nextGunY -1 >= 0 && nextGunY +1 < 1000 && board[posXGUn][secCol] == ' ' && whatGun <= 22) {
+			whatGun+=2;
+			posYGun[whatGun] = secCol;
+			board[posXGUn][posYGun[whatGun]] = '*';
+		}
 		// Make sure nextY is valid and space is empty
-		if (nextGunY >= 0 && nextGunY < 1000 && board[posXGUn][nextGunY] == ' ') {
+		else if (nextGunY >= 0 && nextGunY < 1000 && board[posXGUn][nextGunY] == ' ') {
 			whatGun++;
 			posYGun[whatGun] = nextGunY;
 
@@ -5556,9 +5574,6 @@ int main() {
 
 
 		int HiddenladderButtonClicked = 0, btnrow = 98, btnmaxR = 98 - 15, btnCol = 290, btnmaxC = 290 + 10;
-
-
-
 
 		int assaultR[20] = { -1 };
 		int assaultC[20] = { -1 };
