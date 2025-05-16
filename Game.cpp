@@ -1,20 +1,3 @@
-//NEXT STEPS::
-
-/*
-ADD ASSUALT RIFLE
-
-ADD TELEPORTER
-ADD ENEMIES AND THIER LOGIC
-
-BUILD MAP
-ADD BOSS FIGHT
-ADD THE ASSUALT RIFLE COLLECTABLE
-END SCREEN
-*/
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 #include <iostream>
 #include <conio.h>
 #include <ctime>
