@@ -314,6 +314,13 @@ void displayInstructions() {
 	cout << "||  7. A powerful weapon is hidden on the map.  ||" << endl;
 	cout << "||     Find it to increase your attack power.   ||" << endl;
 	cout << "||                                              ||" << endl;
+	cout << "||  8. After reaching the boss area:            ||" << endl;
+	cout << "||     You must defeat the two minion skeletons ||" << endl;
+	cout << "||     in order to kill the boss.               ||" << endl;
+	cout << "||     But beware! There are spikes ,and        ||" << endl;
+	cout << "||     The boss keeps shooting lazer.			 ||" << endl;
+	cout << "||     So stay on the move!!!                   ||" << endl;
+	cout << "||                                              ||" << endl;
 	cout << "==================================================" << endl;
 	cout << "||  Press any key to return to main menu...     ||" << endl;
 	cout << "==================================================" << endl;
@@ -4473,11 +4480,11 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 		for (int i = 0; i < 20; i++) {
 			if (AssaultR[i] != -1) {
 				if (assaultDirection[i] == 0) {
-					
+
 					//check if could move 2 cols
 					if (AssaultC[i] + 1 < 999 && AssaultC[i] + 1 <= startCAssault[i] + 20 && board[AssaultR[i]][AssaultC[i] + 1] == ' ' && AssaultC[i] + 2 < 999 && AssaultC[i] + 2 <= startCAssault[i] + 20 && board[AssaultR[i]][AssaultC[i] + 2] == ' ')
 					{
-						AssaultC[i]+=2;
+						AssaultC[i] += 2;
 					}
 					else if (AssaultC[i] + 1 < 999 && AssaultC[i] + 1 <= startCAssault[i] + 20 && board[AssaultR[i]][AssaultC[i] + 1] == ' ') {
 						AssaultC[i]++;
@@ -4492,8 +4499,8 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 				}
 
 				else if (assaultDirection[i] == 1) {
-					if (AssaultC[i] - 1 >= 1 && AssaultC[i] - 1 >= startCAssault[i] - 20 && board[AssaultR[i]][AssaultC[i] - 1] == ' '&& AssaultC[i] - 2 >= 1 && AssaultC[i] - 2 >= startCAssault[i] - 20 && board[AssaultR[i]][AssaultC[i] - 2] == ' ') {
-						AssaultC[i]-=2;
+					if (AssaultC[i] - 1 >= 1 && AssaultC[i] - 1 >= startCAssault[i] - 20 && board[AssaultR[i]][AssaultC[i] - 1] == ' ' && AssaultC[i] - 2 >= 1 && AssaultC[i] - 2 >= startCAssault[i] - 20 && board[AssaultR[i]][AssaultC[i] - 2] == ' ') {
+						AssaultC[i] -= 2;
 
 					}
 					else if (AssaultC[i] - 1 >= 1 && AssaultC[i] - 1 >= startCAssault[i] - 20 && board[AssaultR[i]][AssaultC[i] - 1] == ' ') {
@@ -4628,8 +4635,8 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 			secCol = posYGun[whatGun] - 2;
 
 		}
-		if (nextGunY >= 0 && nextGunY < 1000 && board[posXGUn][nextGunY] == ' ' && nextGunY -1 >= 0 && nextGunY +1 < 1000 && board[posXGUn][secCol] == ' ' && whatGun <= 22) {
-			whatGun+=2;
+		if (nextGunY >= 0 && nextGunY < 1000 && board[posXGUn][nextGunY] == ' ' && nextGunY - 1 >= 0 && nextGunY + 1 < 1000 && board[posXGUn][secCol] == ' ' && whatGun <= 22) {
+			whatGun += 2;
 			posYGun[whatGun] = secCol;
 			board[posXGUn][posYGun[whatGun]] = '*';
 		}
@@ -5153,10 +5160,10 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 			}
 		}
 
-		for (int row = pX; row < pX - pHeight+1; row--) {
-			int lc_index = pX - row ;
+		for (int row = pX; row < pX - pHeight + 1; row--) {
+			int lc_index = pX - row;
 			if (lc_index >= 0 && lc_index <= 8) {
-				if (LC[lc_index]+2  >= 999 || (board[LC[lc_index]+ 2][row] != ' ')) {
+				if (LC[lc_index] + 2 >= 999 || (board[LC[lc_index] + 2][row] != ' ')) {
 					canJump2ndCol = 0;
 					break;
 				}
@@ -6039,15 +6046,15 @@ int main() {
 							board[row - 16][col + 13] = '!';
 
 
-							board[row - 15][col + 4+1] = 'P';
-							board[row - 15][col + 5+1] = 'R';
-							board[row - 15][col + 6+1] = 'E';
-							board[row - 15][col + 7+1] = 'S';
-							board[row - 15][col + 8+1] = 'S';
+							board[row - 15][col + 4 + 1] = 'P';
+							board[row - 15][col + 5 + 1] = 'R';
+							board[row - 15][col + 6 + 1] = 'E';
+							board[row - 15][col + 7 + 1] = 'S';
+							board[row - 15][col + 8 + 1] = 'S';
 
-							board[row - 15][col + 9 +1] = '\'';
-							board[row - 15][col + 10+1] = 'E';
-							board[row - 15][col + 11+1] = '\'';
+							board[row - 15][col + 9 + 1] = '\'';
+							board[row - 15][col + 10 + 1] = 'E';
+							board[row - 15][col + 11 + 1] = '\'';
 
 							Player.Row = teleport2X - 5;
 							Player.Col = teleport2Y + 20;
