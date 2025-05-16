@@ -3465,7 +3465,7 @@ void controlBoss(char board[100][1000], Enemy& boss, int startRLazer[], int rLaz
 		countLazBoss++;
 
 		// Laser spawning logic
-		if (countLazBoss % 20 == 0) {
+		if (countLazBoss % 12 == 0) {
 			for (int i = 0; i < 10; i++) {
 				if (rLazer[i] == -1 && cLazer[i] == -1) {
 					startRLazer[i] = enemyKill[6].Row + 1;
