@@ -39,7 +39,7 @@ A fully terminal-based adventure-style ASCII game built in C++. This project sho
 
 ## 🧑‍💻 Creators
 
-This project is a collaboration by:
+This project is a collaboration for a college project by:
 
 - [KareemH-1](https://github.com/KareemH-1)
 - [MazenMDev](https://github.com/MazenMDev)
