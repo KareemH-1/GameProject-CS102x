@@ -1,69 +1,107 @@
-# ASCII Game Project
+# CS102x Game Project
 
-## 🎮 Game Overview
-A fully terminal-based adventure-style ASCII game built in C++. This project showcases rich gameplay features and physics, all rendered in a 2D character-based world.
+A large-scale, terminal-based platformer game written in C++ for the CS102x course project. This game features platforming, shooting, enemies, collectables, and a boss fight, all rendered using ASCII graphics.
 
-### 🔧 Core Features
+## Table of Contents
 
-- **Smooth Movement & Physics**
-  - Jump, fall, gravity simulation
-  - Platforming logic including ladders and elevators
-  - Horizontal moving platforms
-
-- **Combat System**
-  - Three weapons: pistol, laser, and assault rifle
-  - Bullet physics and enemy hitboxes
-  - Multiple enemy types with unique attack patterns
-
-- **Enemies**
-  - Devil that shoots fireballs
-  - Falling crystals
-  - Spikes
-  - Skeletons
-  - Aliens
-  - Birds that throw eggs
-  - Final boss battle with complex behavior
-  - And more..
-
-- **Interactive Elements**
-  - Collect coins, health pickups, and collectable weapon
-  - Hidden ladder activated by button
-  - Teleporter unlocked once player reaches 250 coins to go to boss.
-
-- **Player Mechanics**
-  - Switchable weapons (pistol, laser, assault rifle)
-  - Jumping, falling, climbing ladders
-  - HP system and item pickups
+- [Game Overview](#game-overview)
+- [Gameplay](#gameplay)
+- [Controls](#controls)
+- [Features](#features)
+- [How to Build and Run](#how-to-build-and-run)
+- [Credits](#credits)
 
 ---
 
-## 🧑‍💻 Creators
+## Game Overview
 
-This project is a collaboration for a college project by:
+You are the hero in a vast ASCII world, filled with platforms, elevators, ladders, enemies, and traps. Your mission is to collect coins, regain health with hearts, find a secret weapon, and ultimately defeat the boss. The game is single-player, played entirely in the terminal, and controlled via keyboard input.
 
+## Gameplay
+
+- **Main Objective:**  
+  Collect **10 coins** scattered across the map to unlock the teleporter, which grants access to the boss room. Defeat the boss (after defeating its minions) to win the game.
+
+- **Losing Condition:**  
+  If your health reaches zero, you lose.
+
+- **Interaction:**  
+  Navigate through various obstacles, avoid enemies and traps, and seek out hidden items. Use ladders and elevators to traverse different map sections.
+
+- **Combat:**  
+  Switch between different weapons (laser, pistol, rifle) and use ammo wisely. Enemies have different behaviors and attack patterns.
+
+## Controls
+
+| Key         | Action                                  |
+|-------------|-----------------------------------------|
+| **W**/Space | Jump / Climb Up                         |
+| **A**       | Move Left                               |
+| **D**       | Move Right                              |
+| **S**       | Climb Down                              |
+| **F**       | Shoot                                   |
+| **R**       | Reload                                  |
+| **T**       | Switch Weapons                          |
+| **E**       | Interact (use teleporter, button, etc.) |
+
+## Features
+
+- **ASCII Art Graphics:**  
+  All characters, enemies, and objects are drawn using ASCII art.
+
+- **Multiple Enemies:**  
+  Including birds, blobs, skeletons, crystals, a "devil", and a boss with unique attacks.
+
+- **Dynamic Map:**  
+  Large, scrollable map with platforms, spikes, collectables, hidden ladders, moving elevators, and more.
+
+- **Weapons System:**  
+  Switchable weapons (laser, pistol, rifle) with distinct ammo and power.
+
+- **Power-Ups:**  
+  Collect hearts to recover health and find a hidden rifle.
+
+- **Challenging Boss Fight:**  
+  Defeat minions before being able to kill the boss, while dodging lasers and spikes.
+
+- **HUD:**  
+  Displays health, coins, current weapon, and ammo.
+
+- **Sound Effects:**  
+  (If supported by your terminal and OS, otherwise sound is not included.)
+
+## How to Build and Run
+
+### Requirements
+
+- **Compiler:**  
+  Any C++ compiler that supports C++11 or newer (e.g., g++, clang, MSVC).
+- **Operating System:**  
+  Windows is recommended (for `<conio.h>` support). On Linux, substitute `_getch()` and `_kbhit()` with suitable alternatives.
+- **Terminal:**  
+  Large enough to display at least 80x24 characters.
+
+### Build Instructions (Windows, using g++)
+
+```sh
+g++ -o cs102x_game Game.cpp
+```
+
+### Run
+
+```sh
+./cs102x_game
+```
+
+If you're on Linux, you must replace `#include <conio.h>` and related functions with appropriate alternatives.
+
+## Credits
+
+Game developed by:
 - [KareemH-1](https://github.com/KareemH-1)
 - [MazenMDev](https://github.com/MazenMDev)
 - [AhmedEmad375](https://github.com/AhmedEmad375)
 
 ---
 
-## 📸 Screenshots
-
-*Coming soon!*
-
----
-
-## 🛠️ Built With
-
-- **Language**: C++
-
-- **Rendering**: ASCII (Console-based)
-
----
-
-## 🚀 How to Run
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/KareemH-1/ascii-game-project.git
-   
+Enjoy the game and have fun exploring!
