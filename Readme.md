@@ -1,10 +1,16 @@
 # CS102x Game Project
 
+<p align="right">
+  <b>Built using</b>
+  <img alt="C++" src="https://img.shields.io/badge/C++-00599C?logo=c%2B%2B&logoColor=white&style=for-the-badge"/>
+</p>
+
 A large-scale, terminal-based platformer game written in C++ for the CS102x course project. This game features platforming, shooting, enemies, collectables, and a boss fight, all rendered using ASCII graphics.
 
 ## Table of Contents
 
 - [Game Overview](#game-overview)
+- [Screenshots](#screenshots)
 - [Gameplay](#gameplay)
 - [Controls](#controls)
 - [Features](#features)
@@ -16,6 +22,45 @@ A large-scale, terminal-based platformer game written in C++ for the CS102x cour
 ## Game Overview
 
 You are the hero in a vast ASCII world, filled with platforms, elevators, ladders, enemies, and traps. Your mission is to collect coins, regain health with hearts, find a secret weapon, and ultimately defeat the boss. The game is single-player, played entirely in the terminal, and controlled via keyboard input.
+
+---
+
+## Screenshots
+
+<table>
+  <tr>
+    <td align="center">
+      <b>Main Menu</b><br>
+      <img src="ScreenShots/Menu.png" alt="Menu" width="300"/>
+    </td>
+    <td align="center">
+      <b>Game Start</b><br>
+      <img src="ScreenShots/Start.png" alt="Start" width="300"/>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <b>Devil Enemy</b><br>
+      <img src="ScreenShots/Devil.png" alt="Devil" width="300"/>
+    </td>
+    <td align="center">
+      <b>Moving Platform</b><br>
+      <img src="ScreenShots/Moving_Platform.png" alt="Moving Platform" width="300"/>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <b>Lazer Weapon</b><br>
+      <img src="ScreenShots/Lazer.png" alt="Lazer" width="300"/>
+    </td>
+    <td align="center">
+      <b>Final Boss</b><br>
+      <img src="ScreenShots/FinalBoss.png" alt="Final Boss" width="300"/>
+    </td>
+  </tr>
+</table>
+
+---
 
 ## Gameplay
 
