@@ -1,6 +1,6 @@
 # CS102x Game Project
 
-<p align="right">
+<p align="center">
   <b>Built using</b>
   <img alt="C++" src="https://img.shields.io/badge/C++-00599C?logo=c%2B%2B&logoColor=white&style=for-the-badge"/>
 </p>
