@@ -1,8 +1,18 @@
 #include <iostream>
 #include <conio.h>
 #include <ctime>
+#include<windows.h>
+
 using namespace std;
 
+
+
+void gotoxy(int x, int y) {
+	COORD coord;
+	coord.X = x;
+	coord.Y = y;
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
 
 struct player {
 	int Row, Col; //Position
@@ -51,6 +61,9 @@ struct ladder {
 	int Row = -1, Col = -1; //Position
 	int length = -1;
 };
+
+ 
+
 
 struct coin {
 	int Row = -1, Col = -1; //Position
@@ -418,9 +431,9 @@ void initializeBoard(char border[100][1000]) {
 	border[23][999] = char(188);
 }
 
+
 void dispBar(int health, int coins, int ammo[], int maxAmmo, int gun) {
-
-
+	gotoxy(0, 0); 
 	cout << char(201);
 	for (int i = 1; i < 79; i++) {
 		cout << char(205);
@@ -491,22 +504,27 @@ void dispBar(int health, int coins, int ammo[], int maxAmmo, int gun) {
 		cout << bullet << " / " << maxBullet;
 	}
 	else {
-		usedChars += 7; // length of "NO AMMO"
+		usedChars += 7;
 		cout << "NO AMMO";
 	}
 
 
-	//put the rest of spaces
 	for (int i = usedChars; i < 77; i++) {
 		cout << " ";
 	}
 
 	cout << char(186) << endl;
+
+	cout << char(200);
+	for (int j = 1; j < 79; j++) {
+		cout << char(205);
+	}
+	cout << char(188) << endl;
 }
 
 
 void dispBoard(char board[100][1000]) {
-
+	gotoxy(0, 4); 
 
 	for (int i = 0; i < 80; i++) {
 		cout << board[0][i];
@@ -2128,7 +2146,7 @@ void controlBird(char board[100][1000], Enemy& bird, int startC, int endC, int r
 		}
 	}
 
-	
+
 	for (int i = 0; i < 5; i++) {
 		if (rEggs[i] != -1 && cEggs[i] != -1) {
 			int check = 1;
@@ -4290,8 +4308,8 @@ void callObj(char board[100][1000], coin coins[], Enemy isKill[], hearts heart[]
 	drawLadder(board, 50, 600, 21);
 	drawTerrain(board, 30, 614, 1, 86);
 
-	drawWall(board, 2, 614+86, 29, 1, 0, 1);
-	
+	drawWall(board, 2, 614 + 86, 29, 1, 0, 1);
+
 	drawCoin(board, coins[3].Row, coins[3].Col, coins[3].isCollected);
 	drawCoin(board, coins[6].Row, coins[6].Col, coins[6].isCollected);
 
@@ -4582,7 +4600,7 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 					if (i >= 7) {
 						enemyKill[6].Health -= 50;
 					}
-						enemyKill[i].Health -= 50;
+					enemyKill[i].Health -= 50;
 					if (enemyKill[i].Health <= 0) {
 						enemyKill[i].isKillable = -1;
 						enemyKill[i].Row = -100;
@@ -4629,8 +4647,8 @@ void callDynamicObj(char board[100][1000], Elevator elevator[], int& posXLaz, in
 		}
 		// Make sure nextY is valid and space is empty
 		else if (nextGunY >= 0 && nextGunY < 1000 && board[posXGUn][nextGunY] == ' ' && whatGun + 1 < 25) {
-				whatGun++;
-				posYGun[whatGun] = nextGunY;
+			whatGun++;
+			posYGun[whatGun] = nextGunY;
 
 			// Draw bullet (use * character for bullets rather than _ for laser)
 			board[posXGUn][posYGun[whatGun]] = '*';
@@ -5036,7 +5054,6 @@ void jumpStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 			else if (animation == 1 || animation == -2) {
 				jumpleftframe(board, pX, pY, LC, LR); // Draw the player jumping up
 			}
-			system("cls");
 			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, Player.gun); // Display the bar first
 			Clear_LoadMap(board, dispR, dispC); // Clear the screen and load the map
 
@@ -5090,7 +5107,6 @@ void FallStraight(char board[100][1000], int& pX, int& pY, int pHeight, int pWid
 			jumpleftframe(board, pX, pY, LC, LR);
 		}
 
-		system("cls");
 		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, Player.gun);
 		Clear_LoadMap(board, dispR, dispC);
 
@@ -5186,7 +5202,6 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		addBorders(board, dispR, dispC);
 		jumprightframe(board, pX, pY, LC, LR);
 
-		system("cls");
 		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, Player.gun);
 		Clear_LoadMap(board, dispR, dispC);
 		isJumping = 1;
@@ -5274,7 +5289,6 @@ void jumpRight(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth,
 		addBorders(board, dispR, dispC);
 		jumprightframe(board, pX, pY, LC, LR);
 
-		system("cls");
 		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, Player.gun);
 		Clear_LoadMap(board, dispR, dispC);
 		isFalling = 1;
@@ -5364,7 +5378,6 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 		addBorders(board, dispR, dispC);
 		jumpleftframe(board, pX, pY, LC, LR);
 
-		system("cls");
 		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, Player.gun);
 		Clear_LoadMap(board, dispR, dispC);
 		isJumping = 1;
@@ -5437,7 +5450,6 @@ void jumpLeft(char board[100][1000], int& pX, int& pY, int pHeight, int pWidth, 
 		addBorders(board, dispR, dispC);
 		jumpleftframe(board, pX, pY, LC, LR);
 
-		system("cls");
 		dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, Player.gun);
 		Clear_LoadMap(board, dispR, dispC);
 		isFalling = 1;
@@ -5828,7 +5840,6 @@ int main() {
 				DrawPlayerLeftFrame1(board, Player.Row, Player.Col, Player.shootR, Player.shootC, lastCellCol);
 			}
 
-			system("cls");
 			dispBar(Player.Health, Player.coins, Player.ammo, Player.maxAmmo, Player.gun);
 			Clear_LoadMap(board, dispR, dispC);
 
